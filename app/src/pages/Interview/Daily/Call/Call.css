@@ -1,0 +1,140 @@
+/*
+  CSS grid is great for making video layouts.
+  For the purposes of this demo, we're keeping things relatively simple.
+  If you're interested in dynamic video grids, make sure to check out this blog post:
+   https://www.daily.co/blog/add-pagination-to-a-custom-daily-video-chat-app-to-support-larger-meetings/
+ */
+.call {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  /* Adjust minimum size */
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  /* Space between tiles */
+  max-width: calc(100% - 710px);
+  /* Account for sidebar width and gap */
+  height: auto;
+  flex: 1;
+}
+.call-external {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  /* Adjust minimum size */
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  /* Space between tiles */
+  /* Account for sidebar width and gap */
+  height: auto;
+  flex: 1;
+}
+
+@media only screen and (min-width: 1600px) {
+  /* Styling for screenshare layout */
+  /* Styling for screenshare layout */
+  .is-screenshare {
+    display: grid;
+    padding: 5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-row-gap: 15px;
+  }
+
+  /* When someone is sharing their screen, resize the participants' videos */
+  .is-screenshare .self-view,
+  .is-screenshare .tile-video {
+    width: 100%; /* Adjust as needed */
+    aspect-ratio: 16 / 9; /* Maintain a 16:9 aspect ratio for video */
+  }
+}
+
+.is-screenshare {
+  display: grid;
+  padding: 5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-row-gap: 15px;
+}
+
+/*
+  When someone is sharing their screen, we want to resize the participants' videos,
+  so the biggest screen in our grid is the screen share.
+ */
+.is-screenshare .self-view {
+  width: 240px;
+  height: 135px;
+}
+
+/* Resize remote participants when a screen is being shared */
+.is-screenshare .tile-video {
+  width: 240px;
+  height: 135px;
+}
+
+.room-url {
+  padding: 0 1rem;
+  word-break: break-word;
+  font-weight: normal;
+  font-size: 12px;
+}
+.content {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  padding: 18px;
+}
+
+.join-now-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #303030;
+  border-radius: 8px;
+  aspect-ratio: 1 / 1;
+  /* New: Maintain a square aspect ratio */
+  width: 100%;
+  /* Width will be determined by the grid */
+  object-fit: cover;
+  /* Optional: for video fit */
+  overflow-x: hidden;
+  /* Prevent horizontal overflow */
+}
+
+.meeting-link {
+  background-color: #9b9b9b;
+  align-items: center;
+  border-radius: 10px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  overflow-x: scroll;
+  min-width: 60%;
+  /* Use flexbox to align items */
+}
+
+.meeting-container {
+  display: flex;
+  flex-direction: row;
+  height: 63px;
+  width: 500px;
+  gap: 8px;
+  overflow-x: auto;
+  width: 98%;
+
+  justify-content: center;
+  /* Add horizontal scroll if content overflows */
+
+  /* Allow items to wrap on smaller screens */
+}
+
+@media only screen and (max-width: 1300px) {
+  .meeting-container {
+    flex-direction: column;
+
+    /* Stack items vertically on smaller screens */
+  }
+}

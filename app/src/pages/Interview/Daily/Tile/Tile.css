@@ -1,0 +1,44 @@
+.tile-video {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  /* New: Maintain a square aspect ratio */
+  width: 100%;
+  /* Width will be determined by the grid */
+  object-fit: cover;
+  /* Optional: for video fit */
+}
+
+@media only screen and (max-width: 900px) {
+  /* No need for specific width and height here, aspect-ratio will handle it */
+}
+
+@media only screen and (max-width: 900px) {
+}
+
+.no-video {
+  background-color: var(--dark-blue-border);
+}
+
+.no-video video {
+  visibility: hidden;
+}
+
+/* Hard-code the self-view size if there's no one else in the call, just to make it align with the info-box */
+.self-view.alone {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  /* New: Maintain a square aspect ratio */
+  width: 100%;
+  /* Width will be determined by the grid */
+  object-fit: cover;
+  /* Optional: for video fit */
+}
+
+@media only screen and (max-width: 900px) {
+}
+
+/* Put screen share front and center in our grid when there is one active */
+.tile-screenshare {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}

@@ -1,0 +1,41 @@
+.interview-qna-item {
+  margin-top: "10px" !important;
+}
+
+/* .question-heading::after {
+  content: "v";
+  float: right;
+} */
+
+.question-answer {
+  display: none;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.interview-qna-item.active .question-answer {
+  display: block;
+  max-height: 500px; /* Set an appropriate max height */
+}
+
+.question-answer.show {
+  display: block;
+  max-height: 500px; /* Set an appropriate max height */
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 2px !important;
+  margin-left: 2px !important; /* Adjust the spacing between the icon and text */
+}
+
+.text {
+  font-size: 10px !important;
+  font-weight: 100 !important;
+  margin-top: -3px;
+  padding: 0px 5px !important; /* Adjust the font size as needed */
+}

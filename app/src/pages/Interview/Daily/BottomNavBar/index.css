@@ -1,0 +1,8 @@
+@media (max-width: 768px) {
+  .screen-share {
+    display: none;
+  }
+  .record-label {
+    display: none;
+  }
+}

@@ -1,0 +1,139 @@
+import { Meta, Story, Canvas, Controls } from "@storybook/blocks";
+import * as TextIconBtnStories from "./TextIconBtn.stories";
+
+<Meta title="MDX/TextIconBtn" of={TextIconBtnStories} />
+
+# TextIconBtn
+
+---
+
+### A button with Text and Icon
+
+- To use the enum type `BackgroundColor.WHITE` or `BackgroundColor.ACCENT_PURPLE` to assign a class name and change the color accordingly.
+
+<Canvas>
+  <div>
+    <div>
+      <Story of={TextIconBtnStories.PrimaryTextIconBtnPXL} />
+      # &nbsp;
+      <Story of={TextIconBtnStories.DisableTextIconBtnPXL} />
+    </div>
+    # &nbsp;
+    <div>
+      <Story of={TextIconBtnStories.PrimaryTextIconBtnWXL} />
+      # &nbsp;
+      <Story of={TextIconBtnStories.DisableTextIconBtnWXL} />
+    </div>
+      # &nbsp;
+    <div>
+      <Story of={TextIconBtnStories.PrimaryTextIconBtnPLL} />
+      # &nbsp;
+      <Story of={TextIconBtnStories.DisableTextIconBtnPLL} />
+    </div>
+  </div>
+
+<div>
+  <Story of={TextIconBtnStories.PrimaryTextIconBtnPL} />
+  # &nbsp;
+  <Story of={TextIconBtnStories.DisableTextIconBtnPL} />
+  # &nbsp;
+  <Story of={TextIconBtnStories.PrimaryTextIconBtnWL} />
+  # &nbsp;
+  <Story of={TextIconBtnStories.DisableTextIconBtnWL} />
+</div>
+
+</Canvas>
+
+<Controls />
+
+## TextIconBtnXL
+
+### For Text Icon button XL:
+
+### How to use
+
+```jsx
+
+const arg = {
+  label: "Create Custom Role",
+  icon: <AsteriskIcon />,
+  disable: true or false,
+  className: BackgroundColor.WHITE or BackgroundColor.ACCENT_PURPLE,
+}
+
+<TextIconBtnXL {...args} />
+
+```
+
+<Canvas>
+  <div>
+    <div>
+      <Story of={TextIconBtnStories.PrimaryTextIconBtnPXL} />
+      # &nbsp;
+      <Story of={TextIconBtnStories.DisableTextIconBtnPXL} />
+    </div>
+    # &nbsp;
+    <div>
+      <Story of={TextIconBtnStories.PrimaryTextIconBtnWXL} />
+      # &nbsp;
+      <Story of={TextIconBtnStories.DisableTextIconBtnWXL} />
+    </div>
+  </div>
+</Canvas>
+
+## TextIconBtnLL
+
+### For Text icon button LL
+
+### How to use
+
+```jsx
+
+const arg = {
+  label: "Drop or Browse your file",
+  icon: <ArrowDownIcon />,
+  disable: true or false,
+  className: BackgroundColor.WHITE or BackgroundColor.ACCENT_PURPLE,
+}
+
+<TextIconBtnLL {...args} />
+
+```
+
+<Canvas>
+  <div>
+    <div>
+      <Story of={TextIconBtnStories.PrimaryTextIconBtnPLL} />
+      # &nbsp;
+      <Story of={TextIconBtnStories.DisableTextIconBtnPLL} />
+    </div>
+  </div>
+</Canvas>
+
+## TextIconBtnL
+
+### For Text icon button L
+
+### How to use
+
+```jsx
+
+const arg = {
+  label: "Create",
+  icon: <PlusIcon />,
+}
+
+<TextIconBtnL {...args} />
+```
+
+<Canvas>
+  <div>
+    <Story of={TextIconBtnStories.PrimaryTextIconBtnPL} />
+    # &nbsp;
+    <Story of={TextIconBtnStories.DisableTextIconBtnPL} />
+    # &nbsp;
+    <Story of={TextIconBtnStories.PrimaryTextIconBtnWL} />
+    # &nbsp;
+    <Story of={TextIconBtnStories.DisableTextIconBtnWL} />
+  </div>
+</Canvas>

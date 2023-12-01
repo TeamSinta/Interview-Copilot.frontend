@@ -1,0 +1,38 @@
+import { Meta, Story, Canvas, Controls } from "@storybook/blocks";
+import * as DropdownFilterStories from "./DropdownFilter.stories";
+
+<Meta title="MDX/DropdownFilter" of={DropdownFilterStories} />
+
+# DropdownFilter
+
+### The dropdown elements used in the filter bar (separately using an element for the 'Status' option).
+
+- In terms of layout, there are two options: Flex and Block.
+- To use the enum type `DropdownLayoutType.BLOCK` or `DropdownLayoutType.FLEX`
+- The content inside the filter is written as an array object and passed as props
+
+<Canvas>
+  <Story of={DropdownFilterStories.DropdownFilter} />
+</Canvas>
+
+<Controls />
+
+## DropdownFilter
+
+### How to use
+
+```jsx
+
+const arg = {
+  label: "stage",
+    optionArr: [
+      { name: "BANANA", value: "banana" },
+      { name: "APPLE", value: "apple" },
+      { name: "ORANGE", value: "orange" },
+    ],
+    dropdownName: "fruit",
+}
+
+<Dropdown {...arg}/>
+
+```

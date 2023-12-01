@@ -1,0 +1,22 @@
+/* Styles for general buttons */
+.decision-button {
+  flex: 1;
+}
+
+/* Media query for Mac screens */
+@media only screen and (min-device-width: 3024px) and (max-device-width: 3024px) {
+  /* Customize button styles for Mac screens here */
+  /* .decision-button {
+    width: 50% !important;
+    height: 8em;
+  } */
+}
+
+/* Media query for MacBook screens */
+@media only screen and (min-device-width: 2880px) and (max-device-width: 3024px) {
+  /* Customize button styles for MacBook screens here */
+  /* .decision-button {
+    width: 50% !important;
+    height: 8em;
+  } */
+}

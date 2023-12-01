@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./app
+      dockerfile: dev.Dockerfile
+    ports:
+      - 3001:80
+    volumes:
+      - /app/node_modules
+      - ./app:/app
+    environment:
+      - BACKEND_URL=http://backend:8000
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    external: false

@@ -1,0 +1,117 @@
+/* styles.css */
+.bar {
+  background-color: #f6f6fb;
+  display: flex;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px !important;
+}
+.bar p,
+.bar div {
+  margin-top: 10px !important;
+}
+
+.column {
+  flex: 1;
+  background-color: white;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 14px 14px !important;
+}
+
+.first-column {
+  flex: 2;
+}
+
+.bio-data-name {
+  font-weight: bold;
+}
+.bio-data-stage-name {
+  font-weight: bold;
+}
+.bio-data-designation {
+  margin-top: 10px;
+}
+.bio-data-stage {
+  margin-top: 10px;
+}
+
+#myProgress {
+  background-color: #cecdee;
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  position: relative;
+  outline: "1px solid black";
+}
+
+#myProgress::-webkit-progress-bar {
+  background-color: #cecdee;
+  border-radius: 5px;
+  border: 1px solid #000;
+  border-bottom: 3px solid black;
+}
+
+#myProgress::-webkit-progress-value {
+  background-color: #6462f1;
+  border-radius: 5px;
+}
+
+#myProgress::-moz-progress-bar {
+  background-color: #6462f1;
+  border-radius: 10px;
+  border: 1px solid #000;
+}
+
+#myProgress::-ms-fill {
+  background-color: #cecdee;
+  border-radius: 10px;
+}
+
+.positiveSentimentIcon {
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #000;
+  color: #dbfddc !important;
+  margin-right: 5px;
+}
+
+.negativeSentimentIcon {
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #000;
+  color: #fddbdb !important;
+  margin-right: 5px;
+}
+.sentiment-meta {
+  color: #121212;
+  opacity: 0.5;
+}
+.sentiment-type {
+  font-weight: bold !important;
+}
+
+.rightTabs {
+  justify-content: center;
+}
+
+.video-player-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-left: -20px;
+}
+
+.video-player-wrapper .video-player-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.tab-content {
+  background-color: #f6f6fb;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}

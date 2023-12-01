@@ -1,0 +1,108 @@
+import { Meta, Story, Canvas, Controls } from "@storybook/blocks";
+import * as StatusFilterStories from "./StatusFilter.stories";
+
+<Meta title="MDX/StatusFilter" of={StatusFilterStories} />
+
+# StatusFilterStories
+
+### The dropdown element for the status in the filter bar.
+
+- To use the `<ElWrap w={56} h={134}></ElWrap>` element, simply input the appropriate numbers for the 'w' and 'h' parameters to adjust the size accordingly.
+
+<Canvas>
+  <div>
+    <div>
+      <Story of={StatusFilterStories.PrimaryStatusFilter} />
+    </div>
+    <div>&nbsp; </div>
+    <div>
+      <Story of={StatusFilterStories.ActiveStatusFilter} />
+    </div>
+    <div>&nbsp; </div>
+    <div>
+      <Story of={StatusFilterStories.WaitingStatusFilter} />
+    </div>
+    <div>&nbsp; </div>
+    <div>
+      <Story of={StatusFilterStories.ClosedStatusFilter} />
+    </div>
+  </div>
+</Canvas>
+
+<Controls />
+
+## StatusDropdownFilter Primary
+
+- When the status is not selected
+
+### How to use
+
+```jsx
+
+const args = {
+  status: null
+}
+
+<StatusFilter {...arg} />
+```
+
+<Canvas>
+  <Story of={StatusFilterStories.PrimaryStatusFilter} />
+</Canvas>
+
+## DropdownFilter Active
+
+- When the status is `Active`.
+
+### How to use
+
+```jsx
+
+const arg = {
+  status: StatusDropdownFilter.ACTIVE,
+}
+
+<StatusFilter {...arg} />
+```
+
+<Canvas>
+  <Story of={StatusFilterStories.ActiveStatusFilter} />
+</Canvas>
+
+## DropdownFilter Waiting
+
+- When the status is `Waiting`.
+
+### How to use
+
+```jsx
+
+const arg = {
+  status: StatusDropdownFilter.WAITING,
+}
+
+<StatusFilter {...arg} />
+```
+
+<Canvas>
+  <Story of={StatusFilterStories.WaitingStatusFilter} />
+</Canvas>
+
+## DropdownFilter Closed
+
+- When the status is `Closed`.
+
+### How to use
+
+```jsx
+
+const arg = {
+  status: StatusDropdownFilter.CLOSED,
+}
+
+<StatusFilter {...arg} />
+```
+
+<Canvas>
+  <Story of={StatusFilterStories.ClosedStatusFilter} />
+</Canvas>

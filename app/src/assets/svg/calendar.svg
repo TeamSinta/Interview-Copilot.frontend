@@ -1,0 +1,15 @@
+<svg width="12" height="12" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+<rect x="2.25" y="4.5" width="13.5" height="11.25" rx="2.25" stroke="current" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.75 9V6.75V6.75C15.75 5.50736 14.7426 4.5 13.5 4.5H4.5C3.25736 4.5 2.25 5.50736 2.25 6.75V6.75V9" stroke="current" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2.25 7.5H15.75" stroke="current" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M6.75 4.5V3.75C6.75 2.92157 6.07843 2.25 5.25 2.25V2.25C4.42157 2.25 3.75 2.92157 3.75 3.75V4.5" stroke="current" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.5 4.5V3.75C10.5 2.92157 9.82843 2.25 9 2.25V2.25C8.17157 2.25 7.5 2.92157 7.5 3.75V4.5" stroke="current" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14.25 4.5V3.75C14.25 2.92157 13.5784 2.25 12.75 2.25V2.25C11.9216 2.25 11.25 2.92157 11.25 3.75V4.5" stroke="current" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="4.5" y="12" width="1.5" height="1.5" rx="0.75" fill="#121212"/>
+<rect x="4.5" y="9" width="1.5" height="1.5" rx="0.75" fill="#121212"/>
+<rect x="8.25" y="12" width="1.5" height="1.5" rx="0.75" fill="#121212"/>
+<rect x="8.25" y="9" width="1.5" height="1.5" rx="0.75" fill="#121212"/>
+<rect x="12" y="12" width="1.5" height="1.5" rx="0.75" fill="#121212"/>
+<rect x="12" y="9" width="1.5" height="1.5" rx="0.75" fill="#121212"/>
+</svg>
+

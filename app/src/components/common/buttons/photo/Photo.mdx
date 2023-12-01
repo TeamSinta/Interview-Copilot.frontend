@@ -1,0 +1,88 @@
+import { Meta, Story, Canvas, Controls } from "@storybook/blocks";
+import * as PhotoStories from "./Photo.stories";
+
+<Meta title="MDX/Photo" of={PhotoStories} />
+
+# Photo
+
+### A button filled with a photo or initials.
+
+- It is filled with the user's profile photo. If there is no photo, it is filled with the initial letter of the name.
+- To use the `<ElWrap w={56} h={134}></ElWrap>` element, simply input the appropriate numbers for the 'w' and 'h' parameters to adjust the size accordingly.
+
+<Canvas>
+  <Story of={PhotoStories.PhotoL} />
+  <Story of={PhotoStories.SelectedPhotoL} />
+  <Story of={PhotoStories.InitialL} />
+  <Story of={PhotoStories.SelectedInitialL} />
+  <Story of={PhotoStories.PhotoS} />
+  <Story of={PhotoStories.SelectedPhotoS} />
+  <Story of={PhotoStories.InitialS} />
+  <Story of={PhotoStories.SelectedInitialS} />
+</Canvas>
+
+<Controls />
+
+## PhotoL
+
+### For Photo L, there are two different types available:
+
+- filled with the user's profile photo
+- filled with the user's initial letter of the name
+
+### How to use
+
+```jsx
+const arg = {
+  selected: false,
+  onSelect: () => {},
+  member_idx: 1,
+  member_name: "Mohamed Shegow",
+  member_url:
+    "https://ca.slack-edge.com/T04C82XCPRU-U04D4BRG8CQ-c4ccf8605ed3-512",
+  photoType: PhotoType.L,
+};
+
+<ElWrap w={40} h={40}>
+  <Photo {...arg} />
+</ElWrap>;
+```
+
+<Canvas>
+  <Story of={PhotoStories.PhotoL} />
+  <Story of={PhotoStories.SelectedPhotoL} />
+  <Story of={PhotoStories.InitialL} />
+  <Story of={PhotoStories.SelectedInitialL} />
+</Canvas>
+
+## PhotoS
+
+### For Photo S, there are two different types available:
+
+- filled with the user's profile photo
+- filled with the user's initial letter of the name
+
+### How to use
+
+```jsx
+const arg = {
+  selected: false,
+  onSelect: () => {},
+  member_idx: 1,
+  member_name: "Mohamed Shegow",
+  member_url:
+    "https://ca.slack-edge.com/T04C82XCPRU-U04D4BRG8CQ-c4ccf8605ed3-512",
+  photoType: PhotoType.S,
+};
+
+<ElWrap w={32} h={23}>
+  <Photo {...arg} />
+</ElWrap>;
+```
+
+<Canvas>
+  <Story of={PhotoStories.PhotoS} />
+  <Story of={PhotoStories.SelectedPhotoS} />
+  <Story of={PhotoStories.InitialS} />
+  <Story of={PhotoStories.SelectedInitialS} />
+</Canvas>

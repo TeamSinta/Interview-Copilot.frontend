@@ -1,0 +1,168 @@
+import { Meta, Story, Canvas, Controls } from "@storybook/blocks";
+import * as IconBtnStories from "./IconBtn.stories";
+import { BackgroundColor } from "@/features/utils/utilEnum";
+import { IconBtnL, IconBtnM } from "./IconBtn";
+import {
+  ArrowDownIcon,
+  AsteriskIcon,
+  DoorIcon,
+  GoogleIcon,
+  PlusIcon,
+  RightBracketIcon,
+} from "@/components/common/svgIcons/Icons";
+
+<Meta title="MDX/IconBtn" of={IconBtnStories} />
+
+# IconBtn
+
+---
+
+### A button with only an icon.
+
+- To use the `<ElWrap w={56} h={134}></ElWrap>` element, simply input the appropriate numbers for the 'w' and 'h' parameters to adjust the size accordingly.
+- To use the enum type `BackgroundColor.WHITE` or `BackgroundColor.ACCENT_PURPLE` to assign a class name and change the color accordingly.
+
+<Canvas>
+    <Story of={IconBtnStories.PrimaryIconBtnPL} />
+    <Story of={IconBtnStories.DisableIconBtnPL} />
+    <Story of={IconBtnStories.PrimaryIconBtnWL} />
+    <Story of={IconBtnStories.DisableIconBtnWL} />
+    <Story of={IconBtnStories.PrimaryIconBtnW} />
+    <Story of={IconBtnStories.DisableIconBtnW} />
+    <Story of={IconBtnStories.PrimaryIconBtnP} />
+    <Story of={IconBtnStories.DisableIconBtnP} />
+    <Story of={IconBtnStories.PrimaryIconBtnPLM} />
+    <Story of={IconBtnStories.DisableIconBtnPLM} />
+    <Story of={IconBtnStories.PrimaryIconBtnWLM} />
+    <Story of={IconBtnStories.DisableIconBtnWLM} />
+
+    <Story of={IconBtnStories.PrimaryIconBtnPML} />
+    <Story of={IconBtnStories.DisableIconBtnPML} />
+    <Story of={IconBtnStories.PrimaryIconBtnWML} />
+    <Story of={IconBtnStories.DisableIconBtnWML} />
+    <Story of={IconBtnStories.PrimaryIconBtnPM} />
+    <Story of={IconBtnStories.DisableIconBtnPM} />
+    <Story of={IconBtnStories.PrimaryIconBtnWM} />
+    <Story of={IconBtnStories.DisableIconBtnWM} />
+
+    <Story of={IconBtnStories.PrimaryIconBtnS} />
+    <Story of={IconBtnStories.DisableIconBtnS} />
+
+</Canvas>
+
+<Controls />
+
+## IconBtnL
+
+### For icon button L, there are three different types available:
+
+- Vertical elongated type
+- Horizontal elongated type
+- Square type
+
+### How to use
+
+```jsx
+
+const arg = {
+  icon: <PlusIcon />,
+  disable: true,
+  className: BackgroundColor.WHITE or className: BackgroundColor.ACCENT_PURPLE,
+  onClick: action("Click Handler"),
+}
+
+//Vertical elongated
+<ElWrap w={56} h={134}>
+  <IconBtnL {...args} />
+</ElWrap>
+
+//Horizontal elongated
+<ElWrap w={93} h={40}>
+  <IconBtnL {...args} />
+</ElWrap>
+
+//Square type
+<ElWrap w={40} h={40}>
+  <IconBtnL {...args} />
+</ElWrap>
+```
+
+<Canvas>
+  <Story of={IconBtnStories.PrimaryIconBtnPL} />
+  <Story of={IconBtnStories.DisableIconBtnPL} />
+  <Story of={IconBtnStories.PrimaryIconBtnWL} />
+  <Story of={IconBtnStories.DisableIconBtnWL} />
+  <Story of={IconBtnStories.PrimaryIconBtnW} />
+  <Story of={IconBtnStories.DisableIconBtnW} />
+  <Story of={IconBtnStories.PrimaryIconBtnP} />
+  <Story of={IconBtnStories.DisableIconBtnP} />
+  <Story of={IconBtnStories.PrimaryIconBtnPLM} />
+  <Story of={IconBtnStories.DisableIconBtnPLM} />
+  <Story of={IconBtnStories.PrimaryIconBtnWLM} />
+  <Story of={IconBtnStories.DisableIconBtnWLM} />
+</Canvas>
+
+## IconBtnM
+
+### For icon button M, there are two different types available:
+
+- Horizontal elongated type
+- Square type
+
+### How to use
+
+```jsx
+
+const arg = {
+  icon: <PlusIcon />,
+  disable: true,
+  className: BackgroundColor.WHITE or className: BackgroundColor.ACCENT_PURPLE,
+  onClick: action("Click Handler"),
+}
+
+<ElWrap w={48}>
+  <IconBtnM {...arg}/>
+</ElWrap>
+
+<ElWrap w={32}>
+  <IconBtnM {...arg}/>
+</ElWrap>
+```
+
+<Canvas>
+  <Story of={IconBtnStories.PrimaryIconBtnPML} />
+  <Story of={IconBtnStories.DisableIconBtnPML} />
+  <Story of={IconBtnStories.PrimaryIconBtnWML} />
+  <Story of={IconBtnStories.DisableIconBtnWML} />
+  <Story of={IconBtnStories.PrimaryIconBtnPM} />
+  <Story of={IconBtnStories.DisableIconBtnPM} />
+  <Story of={IconBtnStories.PrimaryIconBtnWM} />
+  <Story of={IconBtnStories.DisableIconBtnWM} />
+</Canvas>
+
+## IconBtnS
+
+### For icon button S, there is one type available:
+
+- Square type
+
+### How to use
+
+```jsx
+
+const arg = {
+  icon: <PlusIcon />,
+  disable: true,
+  className: BackgroundColor.WHITE or className: BackgroundColor.ACCENT_PURPLE,
+  onClick: action("Click Handler"),
+}
+
+<ElWrap w={32} h={32}>
+  <IconBtnS {...arg}/>
+</ElWrap>
+```
+
+<Canvas>
+  <Story of={IconBtnStories.PrimaryIconBtnS} />
+  <Story of={IconBtnStories.DisableIconBtnS} />
+</Canvas>

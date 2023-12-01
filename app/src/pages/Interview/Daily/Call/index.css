@@ -1,0 +1,48 @@
+.interview-content {
+  padding: 15px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  position: relative;
+  height: 90vh;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    background-color: white;
+    border-radius: 10px;
+    padding: 0px;
+    margin: 0px;
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #f6f6fb;
+    border-radius: 5px;
+    padding: 0px;
+    margin: 0px;
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+    padding: 1px;
+    padding: 0px;
+    margin: 0px;
+    width: 5px;
+  }
+}
+.bottom-section {
+  padding: 15px;
+  background-color: #f6f6fb;
+  height: fit-content;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.bottom-section-inner {
+  padding: 15px;
+  background-color: #f6f6fb;
+  height: fit-content;
+  border-radius: 10px;
+}

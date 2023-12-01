@@ -1,0 +1,122 @@
+import { Meta, Story, Canvas, Controls } from "@storybook/blocks";
+import * as TextBtnStories from "./TextBtn.stories";
+
+<Meta title="MDX/TextBtn" of={TextBtnStories} />
+
+# TextBtn
+
+---
+
+### A button with only Text
+
+- To use the `<ElWrap w={56} h={134}></ElWrap>` element, simply input the appropriate numbers for the 'w' and 'h' parameters to adjust the size accordingly.
+- To use the enum type `BackgroundColor.WHITE` or `BackgroundColor.ACCENT_PURPLE` to assign a class name and change the color accordingly.
+
+<Canvas>
+  <Story of={TextBtnStories.PrimaryTextBtnPLL} />
+  <Story of={TextBtnStories.DisableTextBtnPLL} />
+  <Story of={TextBtnStories.PrimaryTextBtnWLL} />
+  <Story of={TextBtnStories.DisableTextBtnWLL} />
+  <Story of={TextBtnStories.PrimaryTextBtnPL} />
+  <Story of={TextBtnStories.DisableTextBtnPL} />
+  <Story of={TextBtnStories.PrimaryTextBtnWL} />
+  <Story of={TextBtnStories.DisableTextBtnWL} />
+  <Story of={TextBtnStories.PrimaryTextBtnPM} />
+  <Story of={TextBtnStories.DisableTextBtnPM} />
+  <Story of={TextBtnStories.PrimaryTextBtnWM} />
+  <Story of={TextBtnStories.DisableTextBtnWM} />
+  <Story of={TextBtnStories.PrimaryTextBtnS} />
+  <Story of={TextBtnStories.DisableTextBtnS} />
+</Canvas>
+
+<Controls />
+
+## TextBtnL
+
+### For Text button L, there are two different types available:
+
+- width 223px type
+- width 119px type
+
+### How to use
+
+```jsx
+
+const arg = {
+  label: "Create",
+  disable: true or false,
+  className: BackgroundColor.WHITE or BackgroundColor.ACCENT_PURPLE,
+}
+
+<ElWrap w={223}>
+  <TextBtnL {...args} />
+</ElWrap>
+
+<ElWrap w={119}>
+  <TextBtnL {...args} />
+</ElWrap>
+
+```
+
+<Canvas>
+  <Story of={TextBtnStories.PrimaryTextBtnPLL} />
+  <Story of={TextBtnStories.DisableTextBtnPLL} />
+  <Story of={TextBtnStories.PrimaryTextBtnWLL} />
+  <Story of={TextBtnStories.DisableTextBtnWLL} />
+  <Story of={TextBtnStories.PrimaryTextBtnPL} />
+  <Story of={TextBtnStories.DisableTextBtnPL} />
+  <Story of={TextBtnStories.PrimaryTextBtnWL} />
+  <Story of={TextBtnStories.DisableTextBtnWL} />
+</Canvas>
+
+## TextBtnM
+
+### For Text button M, there is one type available:
+
+### How to use
+
+```jsx
+
+const arg = {
+  label: "Create",
+  disable: true or false,
+  className: BackgroundColor.WHITE or BackgroundColor.ACCENT_PURPLE,
+}
+
+<ElWrap w={84}>
+  <IconBtnM {...arg}/>
+</ElWrap>
+
+```
+
+<Canvas>
+  <Story of={TextBtnStories.PrimaryTextBtnPM} />
+  <Story of={TextBtnStories.DisableTextBtnPM} />
+  <Story of={TextBtnStories.PrimaryTextBtnWM} />
+  <Story of={TextBtnStories.DisableTextBtnWM} />
+</Canvas>
+
+## TextBtnS
+
+### For Text button S, there is one type available:
+
+- S size don't need calssName
+
+### How to use
+
+```jsx
+
+const arg = {
+  label: "No, leave them",
+  disable: true or false,
+}
+
+<ElWrap w={153} h={38}>
+  <TextBtnS {...args} />
+</ElWrap>
+```
+
+<Canvas>
+  <Story of={TextBtnStories.PrimaryTextBtnS} />
+  <Story of={TextBtnStories.DisableTextBtnS} />
+</Canvas>
