@@ -11,6 +11,7 @@ const initialState: AuthState = {
     last_name: null,
     email: null,
     profile_picture: null,
+    id: null,
     companies: [],
   },
 };
@@ -51,6 +52,7 @@ export const userSlice = createSlice({
         state.user.first_name = action.payload.first_name;
         state.user.last_name = action.payload.last_name;
         state.user.profile_picture = action.payload.profile_picture;
+        state.user.id = action.payload.pk;
         state.user.companies = action.payload.companies;
         state.status = "AUTHENTICATED";
       })

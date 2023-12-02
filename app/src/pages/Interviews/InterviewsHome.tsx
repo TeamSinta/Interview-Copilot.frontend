@@ -199,7 +199,7 @@ export default function BasicTabs() {
           )}
           {activeTab === TABS.ARCHIVED && (
             <CustomTabPanel value={activeTab} index={TABS.ARCHIVED}>
-              Item Two
+
             </CustomTabPanel>
           )}
         </Box>

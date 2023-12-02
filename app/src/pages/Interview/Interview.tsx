@@ -74,6 +74,8 @@ const Interview = ({ leaveCall, interviewDetails }) => {
   const stage = "Round 3";
   const stageName = "Pair-Programming";
   const commentInputRef = useRef<HTMLInputElement>(null);
+  const { user } = useSelector((state: RootState) => state.user);
+
   const [activeTab, setActiveTab] = useState(1);
   const [initTime, setInitTime] = useState("");
   const [templateQuestionsAndTopics, setTemplateQuestionsAndTopics] =
@@ -826,7 +828,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     // send feedback
     const data = {
       interview_round: interviewDetails.id,
-      user: interviewDetails.candidate_id,
+      user: user.id,
       reaction: emojiNumber,
       time: getEmojiClickTime(),
     };
@@ -848,7 +850,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     // send feedback
     const data = {
       interview_round: interviewDetails.id,
-      user: interviewDetails.candidate_id,
+      user: user.id,
       note: notes,
     };
 

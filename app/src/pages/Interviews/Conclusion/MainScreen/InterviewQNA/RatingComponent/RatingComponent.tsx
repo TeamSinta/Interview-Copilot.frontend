@@ -328,7 +328,7 @@ export const PredefinedRatingsAndCompetency: React.FC<any> = ({
   rating,
 }) => {
   const getCompetencyStyle = (rating: string) => {
-    console.log("buttons", rating);
+
 
     const color = buttons.find((button) => button.rate === rating)?.color;
 

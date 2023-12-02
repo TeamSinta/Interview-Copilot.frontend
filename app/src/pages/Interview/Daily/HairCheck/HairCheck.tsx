@@ -86,6 +86,7 @@ export default function HairCheck({
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
     null
   );
+  console.log(user);
   const [cookies, ,] = useCookies(["access_token"]);
 
   //setQuestions
@@ -117,8 +118,6 @@ export default function HairCheck({
 
     try {
       const title = newTitle;
-      const candidateId = 1;
-
       const meeting_room_id = getRoomNameFromUrl(callObject?.properties.url);
       const response = await createInterviewRound(
         title,
@@ -133,7 +132,7 @@ export default function HairCheck({
         template_id: response.template_id,
         email: "support@sintahr.com",
         name: "Template Details",
-        candidate_id: candidateId,
+        // candidate_id: candidateId,
       };
 
       setInterviewRoundDetails(interviewDetails).then(() => {
