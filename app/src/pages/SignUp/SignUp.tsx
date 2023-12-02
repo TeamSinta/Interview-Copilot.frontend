@@ -12,6 +12,7 @@ import {
   MainContainer,
   StyledImage,
   StyledLogo,
+  SuperContainer,
   TextBox,
   TextRow,
 } from "./StyledSignUp";
@@ -23,10 +24,10 @@ import { Link } from "react-router-dom";
 const SignUpScreen = () => {
   return (
     <>
-      <Stack direction="row" style={{ height: "100vh" }}>
-        <MainContainer>
-          <StyledLogo src={LogoImage} alt="sinta_logo" />
+      <StyledLogo src={LogoImage} alt="sinta_logo" />
 
+      <SuperContainer>
+        <MainContainer>
           <Container>
             <Stack gap="8px">
               <H2Bold>Sign up to Sinta</H2Bold>
@@ -56,7 +57,7 @@ const SignUpScreen = () => {
           </TextBox>
         </MainContainer>
         <StyledImage src={LoginPageImage} alt="loginpage_picture" />
-      </Stack>
+      </SuperContainer>
     </>
   );
 };

@@ -3,7 +3,7 @@ import {
   BodyLMedium,
   BodyMMedium,
 } from "@/components/common/typeScale/StyledTypeScale";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 export const Container = styled(Box)`
   max-width: 480px;
@@ -15,6 +15,28 @@ export const Container = styled(Box)`
   justify-content: center;
   gap: 32px;
 `;
+
+
+
+export const SuperContainer = styled.div`
+display: flex;
+flex-direction: row;
+height: 90vh;
+margin-right: 66px;
+justify-content:flex-end;
+gap: 98px;
+
+@media (max-width: 900px) {
+    /* Adjust styles for screens with a max width of 768px */
+    margin-top: 100px;
+    margin-right: 0px;
+
+    gap: 28px;
+
+    flex-direction: column-reverse;
+  }
+`;
+
 
 export const TextBox = styled(Box)`
   max-width: 500px;
@@ -28,18 +50,25 @@ export const StyledImage = styled.img`
 
   margin-bottom: 4px;
   width: 40%;
+  height: 100% ;
+  max-height: 900px;
 
-  @media (max-width: 1000px) {
+
+  @media (max-width: 900px) {
     /* Adjust styles for screens with a max width of 768px */
-    width: 90%;
+    max-height: 490px;
+    width: 90%
   }
 `;
 
 export const StyledLogo = styled.img`
   width: 96px;
   height: 38px;
-  margin: 30px;
+  margin-top: 30px;
+  margin-left: 30px;
   align-self: flex-start;
+
+
 `;
 
 export const TextRow = styled.div`
@@ -59,9 +88,14 @@ export const GrayBodyMMedium = styled(BodyMMedium)`
 export const MainContainer = styled(Box)`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-around;
   align-items: center;
   padding-left: 52px;
   height: 100%;
-  width: 50%;
+  @media (max-width: 900px) {
+    /* Adjust styles for screens with a max width of 768px */
+
+    width: 90%
+  }
+
 `;
