@@ -152,46 +152,7 @@ const Templates = () => {
 
     if (templateData === null) {
       return <Loading />;
-    } else if (templateData.length === 0 && showEmptyState) {
-      return (
-        <>
-          <H1>Templates</H1>
-
-          <Stack
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            spacing={4}
-            mt={12}
-          >
-            <img src={templateImage} alt="template_empty_screen" />
-
-            <H1>Work’s always better together.</H1>
-            <Box sx={{ textAlign: "center" }}>
-              <BodyLMedium style={{ color: "#6C6685" }}>
-                {" "}
-                Start by creating a interview template.
-                <br /> Invite your teammates to collaborate and quickly get a
-                sense of what’s happening
-                <br /> with interviews.{" "}
-              </BodyLMedium>
-            </Box>
-            <ElWrap w={400} h={40}>
-              <TextIconBtnL
-                disable={false}
-                label="Create New Template"
-                icon={<PlusIcon />}
-                onClick={() => {
-                  onClickModalOpen(MODAL_TYPE.CREATE_INT);
-                }}
-                className={BackgroundColor.ACCENT_PURPLE}
-              />
-            </ElWrap>
-            <GlobalModal></GlobalModal>
-          </Stack>
-        </>
-      );
-    } else {
+    } else if (templateData.length > 0 && !showEmptyState) {
       return (
         <>
           <Stack direction="column" spacing={1}>
@@ -295,6 +256,45 @@ const Templates = () => {
                 </Stack>
               )
             )}
+            <GlobalModal></GlobalModal>
+          </Stack>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <H1>Templates</H1>
+
+          <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            spacing={4}
+            mt={12}
+          >
+            <img src={templateImage} alt="template_empty_screen" />
+
+            <H1>Work’s always better together.</H1>
+            <Box sx={{ textAlign: "center" }}>
+              <BodyLMedium style={{ color: "#6C6685" }}>
+                {" "}
+                Start by creating a interview template.
+                <br /> Invite your teammates to collaborate and quickly get a
+                sense of what’s happening
+                <br /> with interviews.{" "}
+              </BodyLMedium>
+            </Box>
+            <ElWrap w={400} h={40}>
+              <TextIconBtnL
+                disable={false}
+                label="Create New Template"
+                icon={<PlusIcon />}
+                onClick={() => {
+                  onClickModalOpen(MODAL_TYPE.CREATE_INT);
+                }}
+                className={BackgroundColor.ACCENT_PURPLE}
+              />
+            </ElWrap>
             <GlobalModal></GlobalModal>
           </Stack>
         </>
