@@ -152,7 +152,7 @@ export const StyledImage = styled.img`
     /* Adjust styles for screens with a max width of 768px */
     flex: 1;
     width: 100%;
-    padding: 24px;
+    padding: 0 24px 24px 24px;
 
   }
 
