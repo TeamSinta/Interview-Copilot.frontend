@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Stack, Box } from "@mui/material";
 import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
 import { BackgroundColor } from "@/features/utils/utilEnum";
-import { PlusIcon, RightBracketIcon } from "@/components/common/svgIcons/Icons";
+import { RightBracketIcon } from "@/components/common/svgIcons/Icons";
 import TemplateHomeCard from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
 import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
 import {
@@ -26,10 +26,14 @@ import { AppDispatch, RootState } from "@/app/store";
 import { useNavigate } from "react-router-dom";
 import ElWrap from "@/components/layouts/elWrap/ElWrap";
 import Loading from "@/components/common/elements/loading/Loading";
-import { TemplateResponse } from "@/features/templates/templatesInterface";
+import {
+  TemplateQuestions,
+  TemplateResponse,
+} from "@/features/templates/templatesInterface";
 import { createCall } from "@/utils/dailyVideoService/videoCallSlice";
 import { BodyLMedium } from "@/components/common/typeScale/StyledTypeScale";
 import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
+import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
 
 const DashBoard = () => {
   const navigate = useNavigate();
@@ -59,6 +63,43 @@ const DashBoard = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const { data: templateQuestions } = useGetTemplateQuestionsQuery();
+
+  const getFilteredTemplateQuestionsLength = (
+    templateQuestions: Record<string, TemplateQuestions> | null,
+    templateId: number | null
+  ): object => {
+    if (!templateQuestions || !templateId) {
+      return [];
+    }
+
+    const filteredQuestions = Object.values(templateQuestions).filter(
+      (templateQuestion) => templateQuestion.template_id === templateId
+    );
+
+    console.log(filteredQuestions);
+
+    return filteredQuestions;
+  };
+
+  const getFilteredTemplateTopicsLength = (
+    templateQuestions: Record<string, TemplateQuestions> | null,
+    templateId: number | null
+  ): object => {
+    if (!templateQuestions || !templateId) {
+      return {};
+    }
+
+    const filteredQuestions = Object.values(templateQuestions).filter(
+      (templateQuestion) => templateQuestion.template_id === templateId
+    );
+
+    const topics = Array.from(
+      new Set(filteredQuestions.map((question) => question.topic))
+    );
+    return topics;
+  };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -222,8 +263,14 @@ const DashBoard = () => {
                   key={interviewRound.id}
                   title={interviewRound.role_title}
                   disable={false}
-                  questions={new Array(8)} // or you can provide actual data if available
-                  sections={new Array(15)} // or you can provide actual data if available
+                  questions={getFilteredTemplateQuestionsLength(
+                    templateQuestions,
+                    interviewRound.id
+                  )}
+                  sections={getFilteredTemplateTopicsLength(
+                    templateQuestions,
+                    interviewRound.id
+                  )}
                   imageUrl={interviewRound.image}
                   members={interviewRound.interviewers || []}
                   onClick={() => handleCardClick(interviewRound.id)} // Use interviewRound.id as the template ID

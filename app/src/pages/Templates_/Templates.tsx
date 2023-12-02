@@ -30,6 +30,8 @@ import DropdownFilter from "@/components/common/filters/dropdownFilter/DropdownF
 import Loading from "@/components/common/elements/loading/Loading";
 import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
 import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
+import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
+import { TemplateQuestions } from "@/features/templates/templatesInterface";
 
 export interface Template {
   roundId: Key | null | undefined;
@@ -49,6 +51,42 @@ const Templates = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [showEmptyState, setShowEmptyState] = useState(false);
+  const { data: templateQuestions } = useGetTemplateQuestionsQuery();
+
+  const getFilteredTemplateQuestionsLength = (
+    templateQuestions: Record<string, TemplateQuestions> | null,
+    templateId: number | null
+  ): object => {
+    if (!templateQuestions || !templateId) {
+      return [];
+    }
+
+    const filteredQuestions = Object.values(templateQuestions).filter(
+      (templateQuestion) => templateQuestion.template_id === templateId
+    );
+
+    console.log(filteredQuestions);
+
+    return filteredQuestions;
+  };
+
+  const getFilteredTemplateTopicsLength = (
+    templateQuestions: Record<string, TemplateQuestions> | null,
+    templateId: number | null
+  ): object => {
+    if (!templateQuestions || !templateId) {
+      return {};
+    }
+
+    const filteredQuestions = Object.values(templateQuestions).filter(
+      (templateQuestion) => templateQuestion.template_id === templateId
+    );
+
+    const topics = Array.from(
+      new Set(filteredQuestions.map((question) => question.topic))
+    );
+    return topics;
+  };
 
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(
@@ -243,8 +281,14 @@ const Templates = () => {
                           key={template.id}
                           title={template.role_title}
                           disable={template.disable || false}
-                          questions={new Array(8)} // or you can provide actual data if available
-                          sections={new Array(15)}
+                          questions={getFilteredTemplateQuestionsLength(
+                            templateQuestions,
+                            template.id
+                          )}
+                          sections={getFilteredTemplateTopicsLength(
+                            templateQuestions,
+                            template.id
+                          )}
                           imageUrl={template.image}
                           members={template.interviewers || []}
                           // Include other template information as needed
