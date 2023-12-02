@@ -9,7 +9,7 @@ import { Box } from "@mui/material";
 export const YourNewContainer = styled.div`
   display: flex;
   height: 100%;
-  gap: 80px;
+  gap: 60px;
   flex-direction: column;
   justify-content: space-between;
 `;
@@ -20,16 +20,18 @@ export const YourMainContentContainer = styled.div`
   align-items: flex-end;
   justify-content: flex-end;
 
-  @media (min-width: 1450px) {
+  @media (min-width: 1500px) {
     /* Adjust styles for screens with a max width of 768px */
     padding-left: 248px;
-  }
-
-  @media (min-height: 1150px) {
+    @media (min-height: 1150px) {
     /* Adjust styles for screens with a max width of 768px */
     padding-top: 100px;
     padding-bottom: 100px;
   }
+  }
+
+
+
 `;
 export const WelcomeHeading = styled(H2Medium)`
   font-size: 52px;
@@ -37,7 +39,7 @@ export const WelcomeHeading = styled(H2Medium)`
   font-weight: 700;
   padding-bottom: 8px;
 
-  @media (max-width: 1450px) {
+  @media (max-width: 1500px) {
     /* Adjust styles for screens with a max width of 768px */
     text-align: center;
     font-size: 38px;
@@ -53,7 +55,7 @@ export const DescriptionText = styled(BodySMedium)`
   align-items: center;
   text-align: center;
 
-  @media (max-width: 1450px) {
+  @media (max-width: 1500px) {
     /* Adjust styles for screens with a max width of 768px */
 
     width: 600px;
@@ -72,7 +74,7 @@ export const Container = styled(Box)`
   justify-content: center;
   gap: 24px;
   align-content: flex-end;
-  @media (max-width: 1450px) {
+  @media (max-width: 1500px) {
     /* Adjust styles for screens with a max width of 768px */
     gap: 28px;
     align-items: center;
@@ -87,10 +89,23 @@ export const TemplateCardsBox = styled(Box)`
   display: flex; // Set to flex to enable horizontal scrolling
   gap: 20px;
   align-items: center;
+
   margin-top: 22px;
   width: 100%;
   overflow-x: auto; // Enable horizontal scrolling
   cursor: grab; // Set cursor style for dragging
+  padding: 24px 0px 24px 24px;
+`;
+
+export const TemplateEmptyBox = styled(Box)`
+  border-radius: 28px;
+  border: 1px solid #e0e0e0;
+  display: flex; // Set to flex to enable horizontal scrolling
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 22px;
+  width: 100%;
   padding: 24px 0px 24px 24px;
 `;
 
@@ -119,7 +134,7 @@ export const MainContainer = styled(Box)`
     justify-content: space-between;
   }
 
-  @media (max-width: 1450px) {
+  @media (max-width: 1500px) {
     /* Adjust styles for screens with a max width of 768px */
 
     gap: 28px;
@@ -131,18 +146,22 @@ export const MainContainer = styled(Box)`
 export const StyledImage = styled.img`
   flex: 1;
   width: 1000px;
+  opacity: 75%;
 
-  @media (max-width: 1450px) {
+  @media (max-width: 1500px) {
     /* Adjust styles for screens with a max width of 768px */
     flex: 1;
-    width: 650px;
-    padding-bottom: 30px;
+    width: 100%;
+    padding: 24px;
+
   }
+
+
 
   @media (min-width: 1700px) {
     /* Adjust styles for screens with a max width of 768px */
     flex: 1;
-    min-width: 1200px;
+    min-width: 1000px;
   }
 `;
 
@@ -157,4 +176,24 @@ export const ButtonContainer = styled.div`
     flex-direction: column;
     gap: 8px;
   }
+`;
+
+
+export const EmptySectionContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  gap: 16px;
+  flex-direction: column;
+  text-align: center;
+  opacity: 65%;
+  max-width: 375px;
+`;
+
+export const StyledEmptyImage = styled.img`
+  flex: 1;
+  max-width: 100px;
+  max-height: 100px;
+
 `;

@@ -16,22 +16,27 @@ import {
   YourNewContainer,
   YourMainContentContainer,
   ButtonContainer,
+  EmptySectionContainer,
+  TemplateEmptyBox,
 } from "./StyledDashboard";
 import dashboardImage from "src/assets/svg/SintaHomeFullScreen.svg";
-import { StyledImage } from "./StyledDashboard";
+import { StyledImage, StyledEmptyImage } from "./StyledDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
+import { AppDispatch, RootState } from "@/app/store";
 import { useNavigate } from "react-router-dom";
 import ElWrap from "@/components/layouts/elWrap/ElWrap";
 import Loading from "@/components/common/elements/loading/Loading";
 import { TemplateResponse } from "@/features/templates/templatesInterface";
 import { createCall } from "@/utils/dailyVideoService/videoCallSlice";
+import { BodyLMedium } from "@/components/common/typeScale/StyledTypeScale";
+import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
 
 const DashBoard = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.user);
   const [newTemplates, setTemplates] = useState<TemplateResponse[]>([]);
   const dispatch: AppDispatch = useDispatch();
+
   const handleButtonClick = () => {
     navigate("/templates");
   };
@@ -40,6 +45,13 @@ const DashBoard = () => {
     label: "Show All",
     icon: <RightBracketIcon />,
     className: BackgroundColor.ACCENT_PURPLE,
+    onClick: handleButtonClick,
+    disable: false,
+  };
+  const arg_empty = {
+    label: "Go to Templates",
+    icon: <RightBracketIcon />,
+    className: BackgroundColor.WHITE,
     onClick: handleButtonClick,
     disable: false,
   };
@@ -160,43 +172,66 @@ const DashBoard = () => {
             </MainContainer>
           </Stack>
         </YourMainContentContainer>
-        <Stack direction="column" spacing={2}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <PendingReviewsHeading>Recent Templates</PendingReviewsHeading>
-            <Box
-              style={{
-                width: "148px",
-              }}
-            >
-              <TextIconBtnL {...arg} />
-            </Box>
-          </Stack>
 
-          <TemplateCardsBox
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseUp}
-            ref={scrollContainerRef}
-          >
-            {newTemplates.map((interviewRound) => (
-              <TemplateHomeCard
-                key={interviewRound.id}
-                title={interviewRound.role_title}
-                disable={false}
-                questions={new Array(8)} // or you can provide actual data if available
-                sections={new Array(15)} // or you can provide actual data if available
-                imageUrl={interviewRound.image}
-                members={interviewRound.interviewers || []}
-                onClick={() => handleCardClick(interviewRound.id)} // Use interviewRound.id as the template ID
+        {newTemplates.length === 0 ? (
+          <TemplateEmptyBox>
+            <EmptySectionContainer>
+              {" "}
+              <StyledEmptyImage
+                src={EmptySectionsImage}
+                alt="dashboard_picture"
               />
-            ))}
-          </TemplateCardsBox>
-        </Stack>
+              <BodyLMedium>
+                Create a Template to be used during interviews or share with a
+                teammate.
+              </BodyLMedium>
+              <Box
+                style={{
+                  width: "248px",
+                }}
+              >
+                <TextIconBtnL {...arg_empty} />
+              </Box>
+            </EmptySectionContainer>
+          </TemplateEmptyBox>
+        ) : (
+          <Stack direction="column" spacing={2}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <PendingReviewsHeading>Recent Templates</PendingReviewsHeading>
+              <Box
+                style={{
+                  width: "148px",
+                }}
+              >
+                <TextIconBtnL {...arg} />
+              </Box>
+            </Stack>
+            <TemplateCardsBox
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseUp}
+              ref={scrollContainerRef}
+            >
+              {newTemplates.map((interviewRound) => (
+                <TemplateHomeCard
+                  key={interviewRound.id}
+                  title={interviewRound.role_title}
+                  disable={false}
+                  questions={new Array(8)} // or you can provide actual data if available
+                  sections={new Array(15)} // or you can provide actual data if available
+                  imageUrl={interviewRound.image}
+                  members={interviewRound.interviewers || []}
+                  onClick={() => handleCardClick(interviewRound.id)} // Use interviewRound.id as the template ID
+                />
+              ))}
+            </TemplateCardsBox>
+          </Stack>
+        )}
       </YourNewContainer>
     </>
   );
