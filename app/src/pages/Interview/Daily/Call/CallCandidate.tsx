@@ -53,7 +53,7 @@ export default function CandidateCallScreen() {
     () => remoteParticipantIds?.length! < 1 || screens?.length! < 1,
     [remoteParticipantIds, screens]
   );
-  console.log(localParticipant);
+
 
   const copyToClipboard = () => {
     const textField = document.createElement("textarea");

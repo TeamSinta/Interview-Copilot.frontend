@@ -9,7 +9,7 @@ function CheckType() {
     (state: RootState) => state.user
   );
 
-  console.log(user, isAuthenticated);
+
 
   if (user && isAuthenticated) {
     return <VideoCallComponent />;

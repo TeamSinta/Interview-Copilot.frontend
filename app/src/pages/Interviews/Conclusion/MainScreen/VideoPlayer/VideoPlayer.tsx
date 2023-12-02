@@ -285,7 +285,6 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
       setQuestionData(response?.questionData);
       setEmoticonData(emojisData);
       // setTotalDuration(response?.videoDuration);
-      console.log(emoticonData);
     },
     [
       // response?.emoticonData,
@@ -306,10 +305,6 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
       video.currentTime.toFixed(0) ===
       convertTimeToSeconds(totalDuration)?.toFixed(0)
     ) {
-      console.log(
-        video.currentTime.toFixed(0),
-        convertTimeToSeconds(totalDuration)?.toFixed(0)
-      );
       setIsPlaying(false);
       video.pause();
     }

@@ -137,7 +137,6 @@ const Interview = ({ leaveCall, interviewDetails }) => {
         interviewDetails.template_id,
         cookies.access_token
       );
-      console.log(response);
       setTemplateQuestionsAndTopics(response);
     };
 
@@ -375,9 +374,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       setCollapseQuestion(false);
     }, [activeData]);
 
-    useEffect(() => {
-      console.log(activeQuestionInfo);
-    }, [activeQuestionInfo]);
+    useEffect(() => {}, [activeQuestionInfo]);
 
     function resetList() {
       setCollapseQuestion(false);
@@ -517,7 +514,6 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                                 parseInt(activeNumber) === 1 ? "0.5" : "1",
                             }}
                             onClick={() => {
-                              console.log(activeNumber);
                               if (parseInt(activeNumber) !== 1) {
                                 setNextNum(nextNum - 1);
                                 setActiveNumber(prevNum);
@@ -654,7 +650,6 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                     activeQuestionID={activeQuestionInfo.id}
                     reactClicked={reactClicked}
                   />
-                  {console.log(activeQuestionInfo.id)}
                 </InputLabelDiv>
               </Stack>
             </BottomQuestionButtons>

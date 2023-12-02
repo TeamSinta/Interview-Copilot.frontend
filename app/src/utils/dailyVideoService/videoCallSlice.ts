@@ -19,7 +19,6 @@ const initialState: VideoCallState = {
 export const createCall = createAsyncThunk("videoCall/createCall", async () => {
   try {
     const room = await videoApi.createRoom();
-    console.log(room);
     return room.url;
   } catch (error) {
     console.error("Error creating room", error);

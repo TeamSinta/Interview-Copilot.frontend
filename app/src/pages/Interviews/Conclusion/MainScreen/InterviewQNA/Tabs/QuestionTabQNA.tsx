@@ -157,8 +157,6 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
   handleClick,
   activeIndex,
 }) => {
-  console.log("question", duration);
-
   return (
     <>
       <InterviewContainerStyle>
@@ -193,7 +191,6 @@ export const QuestionsTabQNA: React.FC<QuestionsTabQNAProps> = ({
   data,
   handleClick,
 }) => {
-  console.log("data", data);
   return (
     <div>
       {data?.map((question, index) => (

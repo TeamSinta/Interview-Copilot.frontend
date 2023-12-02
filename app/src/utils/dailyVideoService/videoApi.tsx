@@ -4,6 +4,7 @@ const RoomService = {
     const exp = Math.round(Date.now() / 1000) + 60 * 30;
     const options = {
       properties: {
+        exp,
         enable_recording: "cloud",
         recordings_bucket: {
           bucket_name: "team-sinta",
@@ -15,7 +16,7 @@ const RoomService = {
     };
 
     const VITE_DAILY_API_KEY = import.meta.env.VITE_DAILY_API_KEY;
-    console.log(VITE_DAILY_API_KEY);
+
     const response = await fetch("https://api.daily.co/v1/rooms/", {
       method: "POST",
       body: JSON.stringify(options),
@@ -25,8 +26,7 @@ const RoomService = {
         Authorization: `Bearer ${VITE_DAILY_API_KEY}`,
       },
     });
-    console.log(VITE_DAILY_API_KEY);
-    console.log(response);
+
 
     return await response.json();
   },

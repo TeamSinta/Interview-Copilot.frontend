@@ -29,6 +29,7 @@ import {
 import DropdownFilter from "@/components/common/filters/dropdownFilter/DropdownFilter";
 import Loading from "@/components/common/elements/loading/Loading";
 import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
+import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
 
 export interface Template {
   roundId: Key | null | undefined;
@@ -163,10 +164,7 @@ const Templates = () => {
             spacing={4}
             mt={12}
           >
-            <img
-              src="src/assets/svg/'Empty Roles' Page Illustration.svg"
-              alt="template_empty_screen"
-            />
+            <img src={templateImage} alt="template_empty_screen" />
 
             <H1>Work’s always better together.</H1>
             <Box sx={{ textAlign: "center" }}>

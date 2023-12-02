@@ -33,7 +33,6 @@ const HttpService = (): AxiosInstance => {
 
   // Request Error Handler
   const onRequestError = async (error: AxiosError): Promise<AxiosError> => {
-    console.log("Here");
     console.error(`[request error] [${JSON.stringify(error)}]`);
     return await Promise.reject(error);
   };

@@ -40,7 +40,7 @@ const TopNavBar = (): JSX.Element => {
     try {
       // response after creating a room
       const responseRoom = await dispatch(createCall());
-      console.log("Room created successfully", responseRoom.payload);
+
       navigate(`/video-call/?roomUrl=${encodeURIComponent(responseRoom.payload)}
       `);
     } catch (error) {

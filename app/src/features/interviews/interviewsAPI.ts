@@ -33,7 +33,6 @@ export const createInterviewRound = async (
     room_id: meeting_room_id,
   };
 
-  console.log(data);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,

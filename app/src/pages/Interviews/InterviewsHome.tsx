@@ -121,7 +121,6 @@ export default function BasicTabs() {
   React.useEffect(() => {
     const fetchInterviews = async () => {
       const response = await getInterviews(cookies.access_token);
-      console.log(response);
       setInterviews(response);
     };
 

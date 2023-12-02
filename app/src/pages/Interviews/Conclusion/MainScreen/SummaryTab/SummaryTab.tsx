@@ -59,8 +59,6 @@ export const DecisionButton = ({
       : "#FABBCF"
     : "#FFFFFF"; // default background color
 
-  console.log("background color", backgroundColors, activeValue);
-
   return (
     <StyledDecisionButton
       activeValue={activeValue}
@@ -115,8 +113,6 @@ export const SubmitDecision = ({ active, setActive }) => (
 
 const SummaryTab = ({ summaryInfo }) => {
   const [active, setActive] = useState(0);
-
-  console.log("active", active);
 
   return (
     <StyledSummaryTab>

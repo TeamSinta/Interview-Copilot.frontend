@@ -176,7 +176,6 @@ export default function HairCheck({
     const filteredQuestions = Object.values(templateQuestions).filter(
       (templateQuestion) => templateQuestion.template_id === templateId
     );
-    console.log(filteredQuestions.length);
 
     return filteredQuestions.length;
   };

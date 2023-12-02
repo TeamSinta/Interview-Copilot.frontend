@@ -49,10 +49,8 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
       if (!isAuthenticated) {
         // User is not authenticated, handle it accordingly
         if (accessToken) {
-          console.log("Authenticating user with access token:", accessToken);
           await authenticateUser(accessToken);
         } else {
-          console.log("Handling token refresh");
           await handleTokenRefresh();
         }
       }
@@ -66,7 +64,6 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
       setDefaultWorkspace();
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.log("Authentication check failed:", error.message);
         failedAuthentication();
       } else {
         failedAuthentication();
@@ -124,20 +121,12 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 
   useEffect(() => {
     const initAuth = async () => {
-      console.log("Status:", status);
-      console.log("IsAuthenticated:", isAuthenticated);
       switch (status) {
         case "IDLE":
           if (!isAuthenticated) {
             if (accessToken) {
-              console.log(
-                "Authenticating user with access token:",
-                accessToken
-              );
               await authenticateUser(accessToken);
             } else {
-              console.log("Handling token refresh");
-
               await handleTokenRefresh();
             }
           }

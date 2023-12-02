@@ -59,7 +59,6 @@ export default function VideoCall() {
   const setDetails = async (details: any) => {
     new Promise((res, rej) => {
       setInterviewRoundDetails(details);
-      console.log(details);
       localStorage.setItem("interviewRoundId", details.id);
       res(true);
     });
@@ -130,7 +129,6 @@ export default function VideoCall() {
         case "left-meeting":
           const interviewRoundId = localStorage.getItem("interviewRoundId");
           localStorage.clear();
-          console.log(interviewRoundId);
           callObject.destroy().then(() => {
             setRoomUrl(null);
             setCallObject(null);
