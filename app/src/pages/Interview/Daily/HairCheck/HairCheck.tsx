@@ -54,6 +54,10 @@ import DropdownFilter from "../../../../components/common/filters/dropdownFilter
 import IconButton from "@mui/material/IconButton";
 import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
 import { Template } from "@/pages/Templates_/Templates";
+import {
+  AccessToken,
+  CompanyID,
+} from "@/features/settingsDetail/userSettingTypes";
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -86,8 +90,18 @@ export default function HairCheck({
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
     null
   );
-  console.log(user);
+
   const [cookies, ,] = useCookies(["access_token"]);
+  const workspace = useSelector((state: RootState) => state.workspace);
+
+  const [departmentId, setDepartmentId] = useState("");
+  const [sortCriteria, setSortCritiera] = useState("");
+
+  const accessToken = cookies.access_token as AccessToken;
+  // definitely should look over this, idk what TS is doing here om on the companyId type.
+  const companyId: CompanyID = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyID;
 
   //setQuestions
 
@@ -152,11 +166,14 @@ export default function HairCheck({
 
   const {
     data: templatesData,
-    isLoading,
+
     isSuccess,
-    isError,
-    error,
-  } = useGetTemplatesQuery();
+  } = useGetTemplatesQuery({
+    access: accessToken, // Pass your access token
+    company_id: companyId, // Pass your companyId
+    department_id: departmentId, // Pass your departmentId
+    sort_by: sortCriteria, // Pass your sort criteria
+  });
 
   useEffect(() => {
     if (isSuccess) {

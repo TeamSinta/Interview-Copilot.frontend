@@ -37,11 +37,18 @@ const EditInterviewers = () => {
   const [cookies, ,] = useCookies(["access_token"]);
   const accessToken = cookies.access_token as AccessToken;
   const { templateId } = useParams();
-  const { data: templateData } = useGetTemplateDetailQuery(templateId);
 
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
+
+  const { data: templateData, isLoading } = useGetTemplateDetailQuery({
+    access: accessToken,
+    company_id: companyId,
+    id: templateId,
+  });
+
+
   const { members } = useFetchCompanyMembers({
     access: accessToken,
     company_id: companyId,

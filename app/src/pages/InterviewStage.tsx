@@ -31,16 +31,22 @@ import { getInterviewDetailAsync } from "@/features/interviewDetail/interviewDet
 import { openModal } from "@/features/modal/modalSlice";
 import { BackgroundColor } from "@/features/utils/utilEnum";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import InterviewRoundCard from "@/components/common/cards/interviewRoundCard/InterviewRoundCard";
 import { Template } from "./Templates_/Templates";
 import { IMember } from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
-import { AppDispatch } from "@/app/store";
+import { AppDispatch, RootState } from "@/app/store";
 import Loading from "@/components/common/elements/loading/Loading";
 import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
 import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
 import { TemplateQuestions } from "@/features/templates/templatesInterface";
+import {
+  AccessToken,
+  CompanyID,
+} from "@/features/settingsDetail/userSettingTypes";
+import { useCookies } from "react-cookie";
+import { useFetchCompanyDepartments } from "@/components/pages/settings/memberTab/useFetchAndSortMembers";
 
 const InterviewStage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -50,6 +56,18 @@ const InterviewStage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [departmentId, setDepartmentId] = useState("");
+  const [sortCriteria, setSortCritiera] = useState("");
+
+  const user = useSelector((state: RootState) => state.user.user);
+  const workspace = useSelector((state: RootState) => state.workspace);
+
+  const [cookies, ,] = useCookies(["access_token"]);
+  const accessToken = cookies.access_token as AccessToken;
+  // definitely should look over this, idk what TS is doing here om on the companyId type.
+  const companyId: CompanyID = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyID;
 
   const {
     data: templates,
@@ -57,9 +75,27 @@ const InterviewStage = () => {
     isSuccess,
     isError,
     error,
-  } = useGetTemplatesQuery();
+  } = useGetTemplatesQuery({
+    access: accessToken, // Pass your access token
+    company_id: companyId, // Pass your companyId
+    department_id: departmentId, // Pass your departmentId
+    sort_by: sortCriteria, // Pass your sort criteria
+  });
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
+
+  const departments = useFetchCompanyDepartments(
+    accessToken,
+    companyId as CompanyID
+  );
+
+  const handleSetDepartment = (value: string) => {
+    setDepartmentId(value);
+  };
+  const handleSortMembers = (value: string) => {
+    setSortCritiera(value);
+  };
+
 
   useEffect(() => {
     if (templateId) {

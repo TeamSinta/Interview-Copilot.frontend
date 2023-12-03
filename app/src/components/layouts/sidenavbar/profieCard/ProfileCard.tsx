@@ -39,7 +39,9 @@ const FrameContainer = styled("div")({
 
 const EmailText = styled("div")({
   textAlign: `left`,
-  whiteSpace: `pre-wrap`,
+  whiteSpace: `nowrap`, // Keep text on one line
+  overflow: `hidden`, // Hide overflow
+  textOverflow: `ellipsis`,
   fontSynthesis: `none`,
   color: `rgba(18, 18, 18, 1)`,
   fontStyle: `normal`,
@@ -53,11 +55,14 @@ const EmailText = styled("div")({
   position: `absolute`,
   left: `70px`,
   top: `44px`, // Adjust this value as needed
+  width: `125px`, // Limit the width of the container
 });
 
 const NameText = styled("div")({
   textAlign: `left`,
-  whiteSpace: `pre-wrap`,
+  whiteSpace: `nowrap`, // Keep text on one line
+  overflow: `hidden`, // Hide overflow
+  textOverflow: `ellipsis`,
   fontSynthesis: `none`,
   color: `rgba(18, 18, 18, 1)`,
   fontStyle: `normal`,
@@ -70,7 +75,8 @@ const NameText = styled("div")({
   textTransform: `none`,
   position: `absolute`,
   left: `70px`,
-  top: `22px`, // Adjust this value as needed
+  top: `22px`,
+  width: `130px`, // Adjust this value as needed
 });
 
 function ProfileCard() {

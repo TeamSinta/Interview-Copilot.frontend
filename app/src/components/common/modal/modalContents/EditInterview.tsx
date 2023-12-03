@@ -1,4 +1,4 @@
-import { AppDispatch } from "@/app/store";
+import { AppDispatch, RootState } from "@/app/store";
 import { TextBtnL } from "@/components/common/buttons/textBtn/TextBtn";
 import { InputLayout } from "@/components/common/form/input/StyledInput";
 import TextArea from "@/components/common/form/textArea/TextArea";
@@ -6,7 +6,7 @@ import TextInput from "@/components/common/form/textInput/TextInput";
 import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
 import { closeModal } from "@/features/modal/modalSlice";
 import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ModalContentWrap } from "./StyledModalContents";
 import { useEffect, useState } from "react";
 
@@ -28,6 +28,11 @@ import {
 } from "../../svgIcons/Icons";
 import ElWrap from "@/components/layouts/elWrap/ElWrap";
 import { PhotoIcon } from "../../cards/card/StyledCard";
+import {
+  AccessToken,
+  CompanyID,
+} from "@/features/settingsDetail/userSettingTypes";
+import { useCookies } from "react-cookie";
 
 const titleInputArg = {
   error: false,
@@ -53,6 +58,15 @@ const EditInterviews = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { templateId } = useParams();
   const navigate = useNavigate();
+  const [cookies, ,] = useCookies(["access_token"]);
+  const accessToken = cookies.access_token as AccessToken;
+  const user = useSelector((state: RootState) => state.user);
+  const workspace = useSelector((state: RootState) => state.workspace);
+
+  // definitely should look over this, idk what TS is doing here om on the companyId type.
+  const companyId: CompanyID = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyID;
 
   const [inputValue, setInputValue] = useState<IState>({
     role_title: "",
@@ -60,8 +74,11 @@ const EditInterviews = () => {
   });
 
   // Example hook to fetch template details - replace with your actual implementation
-  const { data: templateData, isLoading } =
-    useGetTemplateDetailQuery(templateId);
+  const { data: templateData, isLoading } = useGetTemplateDetailQuery({
+    access: accessToken,
+    company_id: companyId,
+    id: templateId,
+  });
 
   useEffect(() => {
     if (templateData) {

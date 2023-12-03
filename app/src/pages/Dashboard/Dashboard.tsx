@@ -34,11 +34,19 @@ import { createCall } from "@/utils/dailyVideoService/videoCallSlice";
 import { BodyLMedium } from "@/components/common/typeScale/StyledTypeScale";
 import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
 import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
+import { useFetchCompanyDepartments } from "@/components/pages/settings/memberTab/useFetchAndSortMembers";
+import {
+  AccessToken,
+  CompanyID,
+} from "@/features/settingsDetail/userSettingTypes";
+import { useCookies } from "react-cookie";
 
 const DashBoard = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.user);
   const [newTemplates, setTemplates] = useState<TemplateResponse[]>([]);
+  const [departmentId, setDepartmentId] = useState("");
+  const [sortCriteria, setSortCritiera] = useState("");
   const dispatch: AppDispatch = useDispatch();
 
   const handleButtonClick = () => {
@@ -133,13 +141,39 @@ const DashBoard = () => {
     navigate(`/templates/${templateId}`);
   };
 
+  const workspace = useSelector((state: RootState) => state.workspace);
+
+  const [cookies, ,] = useCookies(["access_token"]);
+  const accessToken = cookies.access_token as AccessToken;
+  // definitely should look over this, idk what TS is doing here om on the companyId type.
+  const companyId: CompanyID = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyID;
+
   const {
     data: templates,
     isLoading,
     isSuccess,
     isError,
     error,
-  } = useGetTemplatesQuery();
+  } = useGetTemplatesQuery({
+    access: accessToken, // Pass your access token
+    company_id: companyId, // Pass your companyId
+    department_id: departmentId, // Pass your departmentId
+    sort_by: sortCriteria, // Pass your sort criteria
+  });
+
+  const departments = useFetchCompanyDepartments(
+    accessToken,
+    companyId as CompanyID
+  );
+
+  const handleSetDepartment = (value: string) => {
+    setDepartmentId(value);
+  };
+  const handleSortMembers = (value: string) => {
+    setSortCritiera(value);
+  };
 
   useEffect(() => {
     if (isSuccess) {

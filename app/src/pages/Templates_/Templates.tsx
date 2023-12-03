@@ -1,4 +1,4 @@
-import { AppDispatch } from "@/app/store";
+import { AppDispatch, RootState } from "@/app/store";
 import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
 import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
 import { EditIcon, PlusIcon } from "@/components/common/svgIcons/Icons";
@@ -13,7 +13,7 @@ import ElWrap from "@/components/layouts/elWrap/ElWrap";
 import { openModal } from "@/features/modal/modalSlice";
 import { BackgroundColor } from "@/features/utils/utilEnum";
 import { Key, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Stack, Box } from "@mui/material";
 import TemplateHomeCard, {
   IMember,
@@ -32,6 +32,11 @@ import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
 import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
 import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
 import { TemplateQuestions } from "@/features/templates/templatesInterface";
+import { useCookies } from "react-cookie";
+import {
+  AccessToken,
+  CompanyID,
+} from "@/features/settingsDetail/userSettingTypes";
 
 export interface Template {
   roundId: Key | null | undefined;
@@ -52,6 +57,17 @@ const Templates = () => {
   const [startX, setStartX] = useState(0);
   const [showEmptyState, setShowEmptyState] = useState(false);
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
+  const workspace = useSelector((state: RootState) => state.workspace);
+  const user = useSelector((state: RootState) => state.user);
+  const [departmentId, setDepartmentId] = useState("");
+  const [sortCriteria, setSortCritiera] = useState("");
+
+  const [cookies, ,] = useCookies(["access_token"]);
+  const accessToken = cookies.access_token as AccessToken;
+  // definitely should look over this, idk what TS is doing here om on the companyId type.
+  const companyId: CompanyID = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyID;
 
   const getFilteredTemplateQuestionsLength = (
     templateQuestions: Record<string, TemplateQuestions> | null,
@@ -111,7 +127,12 @@ const Templates = () => {
     isSuccess,
     isError,
     error,
-  } = useGetTemplatesQuery();
+  } = useGetTemplatesQuery({
+    access: accessToken, // Pass your access token
+    company_id: companyId, // Pass your companyId
+    department_id: departmentId, // Pass your departmentId
+    sort_by: sortCriteria, // Pass your sort criteria
+  });
 
   useEffect(() => {
     if (isSuccess) {
