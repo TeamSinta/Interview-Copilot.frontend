@@ -4,15 +4,15 @@ services:
   frontend-dev:
     container_name: dev
     build:
-      context: ./app
-      dockerfile: dev.Dockerfile
+      context: .
+      dockerfile: app/dev.Dockerfile
     ports:
       - 3001:3001
     volumes:
       - ./app:/app
       - /app/node_modules
     env_file:
-      - .env
+      - ./.env
     environment:
       - BACKEND_URL=http://backend:8000
       - CHOKIDAR_USEPOLLING=true

@@ -13,13 +13,16 @@ ARG VITE_BASE_URL
 WORKDIR /app
 
 # Copy package.json and package-lock.json to the container
-COPY package.json ./
+COPY app/package.json ./
 
 # Install project dependencies
 RUN npm install
 
 # Copy all frontend files to the container
-COPY . /app/
+COPY app/ /app/
+
+# Set environment file
+COPY .env.staging ./.env
 
 RUN npm run build
 
@@ -29,7 +32,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=build /app/dist .
 
-COPY .nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY app/.nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

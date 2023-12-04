@@ -26,9 +26,17 @@ run-dev:
 run-staging:
 	docker compose -f docker-compose-staging.yaml up
 
-.PHONY: docker down
-docker-down:
+.PHONY: dev-down
+dev-down:
 	docker compose -f docker-compose-dev.yaml down
+
+.PHONY:
+staging-down:
+	docker compose -f docker-compose-staging.yaml down
+
+.PHONY:
+docker-down:
+	dev-down staging down
 # TODO
 # storybook
 # lint
