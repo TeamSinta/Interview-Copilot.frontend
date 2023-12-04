@@ -22,6 +22,15 @@ lint:
 run-dev:
 	docker compose -f docker-compose-dev.yaml up
 
-# TODO
 .PHONY: run-staging
-run:
+run-staging:
+	docker compose -f docker-compose-staging.yaml up
+
+.PHONY: docker down
+docker-down:
+	docker compose -f docker-compose-dev.yaml down
+# TODO
+# storybook
+# lint
+# test
+# format

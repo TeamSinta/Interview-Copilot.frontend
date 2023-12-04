@@ -39,7 +39,7 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"start:prod": "serve dist -s -n -L -p $PORT",
+		"start": "serve dist -s -n -L -p $PORT",
 		"dev": "vite",
 		"mock": "VITE_BACKEND_URL=http://localhost:3001 VITE_ENV=mock vite",
 		"build": "vite build",

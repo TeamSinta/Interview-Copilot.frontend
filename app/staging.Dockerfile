@@ -21,7 +21,17 @@ RUN npm install
 # Copy all frontend files to the container
 COPY . /app/
 
-EXPOSE 3001
+RUN npm run build
+
+# Expose the port on which the frontend will run (usually 3000 for React)
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+RUN rm -rf ./*
+COPY --from=build /app/dist .
+
+COPY .nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
 
 # Start the React development server
-CMD ["npm", "run", "dev"]
+CMD ["nginx", "-g", "daemon off;"]
