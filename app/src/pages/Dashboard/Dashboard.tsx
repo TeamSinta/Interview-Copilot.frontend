@@ -18,6 +18,7 @@ import {
   ButtonContainer,
   EmptySectionContainer,
   TemplateEmptyBox,
+  WavingHand,
 } from "./StyledDashboard";
 import dashboardImage from "src/assets/svg/SintaHomeFullScreen.svg";
 import { StyledImage, StyledEmptyImage } from "./StyledDashboard";
@@ -54,7 +55,6 @@ const DashBoard = () => {
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyID | null =
     user.companies.map((company) => company.id)[0] || null;
-
 
   const {
     data: templates,
@@ -166,7 +166,6 @@ const DashBoard = () => {
     navigate(`/templates/${templateId}`);
   };
 
-
   const handleSetDepartment = (value: string) => {
     setDepartmentId(value);
   };
@@ -219,13 +218,13 @@ const DashBoard = () => {
               <Container>
                 <TextBox>
                   <WelcomeHeading>
-                    Welcome back, {user.first_name} 👋
+                    Welcome back, {user.first_name} <WavingHand>👋</WavingHand>
                   </WelcomeHeading>
                   <DescriptionText>
                     Helping teams hire faster and better. Get{" "}
                     <DescriptionText>
                       {" "}
-                      started by creating a template or launch a meeting.{" "}
+                      started by creating a template or launch a meeting .{" "}
                     </DescriptionText>
                   </DescriptionText>
                 </TextBox>

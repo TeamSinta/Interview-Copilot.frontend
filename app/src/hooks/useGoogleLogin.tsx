@@ -24,7 +24,7 @@ const GoogleLogin = (): GoogleLoginReturnType => {
 				if (result) {
 					setCookies('access_token', result['access'], { path: '/' });
 					setCookies('refresh_token', result['refresh'], { path: '/' });
-					navigate('/dashboard');
+					navigate("/dashboard");
 				}
 			} catch (error) {
 				console.log('Failed to login: ', error);

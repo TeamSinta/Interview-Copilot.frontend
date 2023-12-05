@@ -14,7 +14,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const getInterviewTemplate = async (templateId: string) => {
   const response = await instance.get(
-    `${BASE_URL}/templates/templates/${templateId}/`
+    `${BASE_URL}/templates/${templateId}/`
   );
   return response.data;
 };

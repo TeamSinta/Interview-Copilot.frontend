@@ -5,9 +5,9 @@ import MainScreen from "./MainScreen/MainScreen.js";
 import { RightArrowIcon } from "@/components/common/svgIcons/Icons.js";
 import { StyledIconBtnM } from "@/components/common/buttons/button/StyledBtn.js";
 import styled from "styled-components";
-import Loading from "../../../components/common/elements/loading/Loading";
 
 import { useNavigate, useLocation } from "react-router-dom"; // <-- Import useNavigate
+import SummarizerLoader from "@/components/common/elements/longLoading/LongLoading.js";
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -63,7 +63,7 @@ const Conclusion: React.FC = () => {
   return (
     <>
       {showLoader && location.state.useTimer ? (
-        <Loading /> // Show loader if showLoader is true
+        <SummarizerLoader /> // Show loader if showLoader is true
       ) : (
         <>
           {header}
