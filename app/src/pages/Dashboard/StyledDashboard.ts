@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from 'styled-components';
 import {
   H2Bold,
   BodySMedium,
@@ -33,6 +33,29 @@ export const YourMainContentContainer = styled.div`
 
 
 `;
+
+
+
+
+export const waveAnimation = keyframes`
+ 0% { transform: rotate( 0.0deg) }
+   10% { transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
+   20% { transform: rotate(-8.0deg) }
+   30% { transform: rotate(14.0deg) }
+   40% { transform: rotate(-4.0deg) }
+   50% { transform: rotate(10.0deg) }
+   60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
+  100% { transform: rotate( 0.0deg) }
+`;
+
+// Create a styled component for the waving hand emoji
+export const WavingHand = styled.span`
+  animation: ${waveAnimation} 3s 1;;
+  animation-duration: 2.5s;
+  transform-origin: 70% 70%;
+  display: inline-block;
+`;
+
 export const WelcomeHeading = styled(H2Medium)`
   font-size: 52px;
   width: 400px;
