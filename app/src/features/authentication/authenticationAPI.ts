@@ -25,7 +25,7 @@ export const authAPI = createApi({
 		}),
 		getUser: builder.mutation<UserReadSerializer, AccessToken>({
 			query: (access) => {
-				// console.log("Query: ", access);
+				console.log("Query: ", access);
 				return {
 					url: '/user/userdetails/',
 					method: 'GET',

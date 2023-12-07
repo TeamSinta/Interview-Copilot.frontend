@@ -8,6 +8,7 @@ import styled from "styled-components";
 
 import { useNavigate, useLocation } from "react-router-dom"; // <-- Import useNavigate
 import SummarizerLoader from "@/components/common/elements/longLoading/LongLoading.js";
+import { Grid } from "@mui/material";
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -46,17 +47,23 @@ const Conclusion: React.FC = () => {
 
   const header = useMemo(() => {
     return (
-      <HeaderWrapper>
-        <IconWrapper>
-          <StyledIconBtnM onClick={() => navigate(-1)}>
-            {/* <-- Use the navigate function here */}
-            <RightArrowIcon />
-          </StyledIconBtnM>
-        </IconWrapper>
-        <Title>
-          <H1>Conclusions</H1>
-        </Title>
-      </HeaderWrapper>
+      <>
+        <Grid container spacing={2} className="bar ">
+          <Grid item={true} xs={12} md={12} lg={3}>
+            <HeaderWrapper>
+              <IconWrapper>
+                <StyledIconBtnM onClick={() => navigate(-1)}>
+                  {/* <-- Use the navigate function here */}
+                  <RightArrowIcon />
+                </StyledIconBtnM>
+              </IconWrapper>
+              <Title>
+                <H1>Conclusions</H1>
+              </Title>
+            </HeaderWrapper>
+          </Grid>
+        </Grid>
+      </>
     );
   }, [navigate]);
 

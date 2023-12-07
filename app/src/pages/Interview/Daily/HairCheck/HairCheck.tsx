@@ -166,14 +166,11 @@ export default function HairCheck({
 
   const {
     data: templatesData,
-
+    isLoading,
     isSuccess,
-  } = useGetTemplatesQuery({
-    access: accessToken, // Pass your access token
-    company_id: companyId, // Pass your companyId
-    department_id: departmentId, // Pass your departmentId
-    sort_by: sortCriteria, // Pass your sort criteria
-  });
+    isError,
+    error,
+  } = useGetTemplatesQuery();
 
   useEffect(() => {
     if (isSuccess) {
