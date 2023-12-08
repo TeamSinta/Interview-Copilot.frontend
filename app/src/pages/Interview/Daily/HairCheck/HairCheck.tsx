@@ -100,7 +100,7 @@ export default function HairCheck({
   const accessToken = cookies.access_token as AccessToken;
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyID = (!workspace.id
-    ? user.companies[0].id
+    ? user?.companies?.[0]?.id ?? workspace.id
     : workspace.id)! as unknown as CompanyID;
 
   //setQuestions

@@ -43,6 +43,7 @@ const Routers = () => {
           element={<QuestionBankStage />}
         />
         <Route path="/interviews/Conclusion" element={<Conclusion />} />
+        <Route path="/interviews/:id" element={<Conclusion />} />
         <Route path="/video-call" element={<VideoCallComponent />} />
         <Route path="*" element={<NotFound />} />
       </Route>

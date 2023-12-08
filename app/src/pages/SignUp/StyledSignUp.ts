@@ -28,7 +28,7 @@ gap: 98px;
 
 @media (max-width: 900px) {
     /* Adjust styles for screens with a max width of 768px */
-    margin-top: 100px;
+    margin-top: 30px;
     margin-right: 0px;
 
     gap: 28px;
@@ -56,7 +56,7 @@ export const StyledImage = styled.img`
 
   @media (max-width: 900px) {
     /* Adjust styles for screens with a max width of 768px */
-    max-height: 490px;
+    max-height: 390px;
     width: 90%
   }
 `;
