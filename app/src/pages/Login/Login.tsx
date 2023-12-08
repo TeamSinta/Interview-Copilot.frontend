@@ -21,6 +21,8 @@ import LogoImage from 'src/assets/images/SintaLogo.png';
 import { Link } from 'react-router-dom';
 
 const LoginScreen = () => {
+	console.log('HI');
+	console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
 	return (
 		<>
 			<Stack
