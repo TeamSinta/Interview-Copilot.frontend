@@ -13,7 +13,7 @@ ARG VITE_BASE_URL
 WORKDIR /app
 
 # Copy package.json and package-lock.json to the container
-COPY package.json ./
+COPY app/package.json ./
 
 # Install project dependencies
 RUN npm install
