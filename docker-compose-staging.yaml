@@ -7,12 +7,12 @@ services:
       context: .
       dockerfile: app/staging.Dockerfile
     ports:
-      - 3002:80
+      - 3000:80
     volumes:
       - /app/node_modules
       - ./app:/app
     env_file:
-      - ./.env.staging
+      - app/.env.staging
     environment:
       - BACKEND_URL=https://backend-staging-2fa7.up.railway.app
       - CHOKIDAR_USEPOLLING=true

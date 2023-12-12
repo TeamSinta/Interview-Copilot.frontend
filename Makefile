@@ -15,8 +15,6 @@ install:
 lint:
 		cd app && npm run lint
 
-# FE
-
 # Run Commands #
 .PHONY: run-dev
 run-dev:
@@ -36,7 +34,8 @@ staging-down:
 
 .PHONY:
 docker-down:
-	dev-down staging down
+	dev-down staging-down
+
 # TODO
 # storybook
 # lint

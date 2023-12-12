@@ -12,9 +12,9 @@ services:
       - ./app:/app
       - /app/node_modules
     env_file:
-      - ./.env
+      - app/.env
     environment:
-      - BACKEND_URL=http://backend:8000
+      - BACKEND_URL=http://localhost:8000
       - CHOKIDAR_USEPOLLING=true
     networks:
       - backend-network

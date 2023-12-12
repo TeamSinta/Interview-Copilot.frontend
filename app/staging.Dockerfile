@@ -22,7 +22,7 @@ RUN npm install
 COPY app/ /app/
 
 # Set environment file
-COPY .env.staging ./.env
+COPY app/.env.staging ./.env
 
 RUN npm run build
 
