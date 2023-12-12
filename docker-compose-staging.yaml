@@ -14,5 +14,5 @@ services:
     env_file:
       - app/.env.staging
     environment:
-      - BACKEND_URL=https://backend-staging-2fa7.up.railway.app
+      - BACKEND_URL=http://localhost:8000
       - CHOKIDAR_USEPOLLING=true
