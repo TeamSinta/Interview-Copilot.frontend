@@ -10,7 +10,7 @@ import {
 export const authAPI = createApi({
 	reducerPath: 'api',
 	baseQuery: fetchBaseQuery({
-		baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api`
+		baseUrl: `${import.meta.env.VITE_BACKEND_URL}`
 	}),
 	endpoints: (builder) => ({
 		googleLogin: builder.mutation<Token, GoogleCode>({

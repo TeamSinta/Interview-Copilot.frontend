@@ -10,7 +10,7 @@ import {
 export const userAPI = createApi({
 	reducerPath: 'userApi',
 	baseQuery: fetchBaseQuery({
-		baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api`
+		baseUrl: `${import.meta.env.VITE_BACKEND_URL}`
 	}),
 	tagTypes: ['Departments'],
 	endpoints: (builder) => ({

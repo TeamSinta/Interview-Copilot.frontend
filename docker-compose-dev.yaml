@@ -14,7 +14,6 @@ services:
     env_file:
       - app/.env
     environment:
-      - BACKEND_URL=http://localhost:8000
       - CHOKIDAR_USEPOLLING=true
     networks:
       - backend-network
