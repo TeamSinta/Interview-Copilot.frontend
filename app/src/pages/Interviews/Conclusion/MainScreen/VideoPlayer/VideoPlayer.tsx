@@ -592,7 +592,10 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
 
   return (
     <>
-      <div className="video-player-container" style={{ position: "relative" }}>
+      <div
+        className="video-player-container"
+        style={{ position: "relative", width: "96%" }}
+      >
         {" "}
         <div
           style={{
@@ -620,7 +623,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                 className={`${isPlaying ? "" : "blurred"}`}
                 ref={videoRef}
                 onLoadedMetadata={handleLoadedMetadata}
-                src={videoUrl}
+                src="/src/pages/Interviews/Conclusion/MainScreen/VideoPlayer/interview_video.mp4"
                 onTimeUpdate={handleTimeUpdate}
               ></video>
             </div>

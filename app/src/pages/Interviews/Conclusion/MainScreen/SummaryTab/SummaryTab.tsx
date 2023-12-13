@@ -3,26 +3,16 @@ import {
   BodyLBold,
   BodyMMedium,
 } from "@/components/common/typeScale/StyledTypeScale";
-import { useState } from "react";
 import InterviewQNA from "../InterviewQNA/InterviewQNA";
-import { Grid } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 
 import "./SummaryTab.css";
-import {
-  LikeButton,
-  UnlikeIcon,
-} from "@/components/common/svgIcons/CustomIcons";
+
 import {
   StyledSummaryDescription,
-  StyledDecisionButton,
   StyledRoundBox,
-  StyledSubmitDecision,
   StyledSummaryTab,
   AIGeneratedImageContainer,
-  StyledButtonContent,
-  ButtonContainer,
-  ButtonStyling,
-  StyledImage,
 } from "./StyledSummaryTab";
 
 const AIGeneratedImage = () => (
@@ -47,90 +37,21 @@ const AIGeneratedImage = () => (
   </AIGeneratedImageContainer>
 );
 
-export const DecisionButton = ({
-  activeValue,
-  onClick,
-  children,
-  isActive,
-}) => {
-  const backgroundColors = isActive
-    ? activeValue === 1
-      ? "#DBFDDC"
-      : "#FABBCF"
-    : "#FFFFFF"; // default background color
-
-  return (
-    <StyledDecisionButton
-      activeValue={activeValue}
-      onClick={onClick}
-      style={{ backgroundColor: backgroundColors }}
-    >
-      <StyledButtonContent>
-        <ButtonStyling>{children}</ButtonStyling>
-      </StyledButtonContent>
-    </StyledDecisionButton>
-  );
-};
-
-export const SubmitDecision = ({ active, setActive }) => (
-  <StyledSubmitDecision>
-    <Grid>
-      <BodyLBold>Submit your decision</BodyLBold>
-    </Grid>
-    <Grid>
-      <StyledRoundBox>
-        <ButtonContainer>
-          <Grid lg={6} md={6} sm={6} xl={6}>
-            <DecisionButton
-              activeValue={1}
-              onClick={() => setActive(1)}
-              isActive={active === 1}
-            >
-              <LikeButton width={10} height={10} active={1} />
-              <BodyMMedium>Hire</BodyMMedium>
-            </DecisionButton>
-          </Grid>
-
-          <Grid lg={6} md={6} sm={6} xl={6}>
-            <DecisionButton
-              activeValue={2}
-              onClick={() => setActive(2)}
-              isActive={active === 2}
-            >
-              <BodyMMedium>Don't Hire</BodyMMedium>
-              <UnlikeIcon width={10} height={10} active={1} />
-            </DecisionButton>
-          </Grid>
-        </ButtonContainer>
-        <StyledImage
-          src="/src/assets/images/ImageConclusion.JPG"
-          alt="dashboard_picture"
-        />
-      </StyledRoundBox>
-    </Grid>
-  </StyledSubmitDecision>
-);
-
 const SummaryTab = ({ summaryInfo }) => {
-  const [active, setActive] = useState(0);
-
   return (
     <StyledSummaryTab>
       <Grid container spacing={1}>
-        <Grid xs={12} md={6}>
-          <BodyLBold>
-            {summaryInfo.title}
+        <Grid xs={12} md={12}>
+          <Stack direction={"row"} spacing={2}>
+            <BodyLBold>{summaryInfo.title}</BodyLBold>
             <AIGeneratedImage />
-          </BodyLBold>
+          </Stack>
           <StyledSummaryDescription>
             <BodyMMedium>{summaryInfo.description}</BodyMMedium>
           </StyledSummaryDescription>
           <StyledRoundBox>
             <InterviewQNA propData={summaryInfo.faq} screen={"summary"} />
           </StyledRoundBox>
-        </Grid>
-        <Grid xs={12} md={6}>
-          <SubmitDecision active={active} setActive={setActive} />
         </Grid>
       </Grid>
     </StyledSummaryTab>

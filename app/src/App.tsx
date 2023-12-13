@@ -20,13 +20,15 @@ function App() {
     return <Routers />;
   }
 
+  const hideTopNavBarRoute = location.pathname === "/interviews/conclusion/"; // Replace with your specific route
+
   // After this point, the user is either authenticated or on the login page
   return (
     <>
       {isAuthenticated ? (
         <Container>
           <SideNavBar />
-          <TopNavBar />
+          {hideTopNavBarRoute ? <></> : <TopNavBar />}
           <StyledMain>
             <Routers />
           </StyledMain>

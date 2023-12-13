@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./InterviewQNA.css";
 import styled from "styled-components";
 import { QuestionsTabQNA, SummaryTabQNA, TranscriptionTabQNA } from "./Tabs";
+import { NotesTabQNA } from "./Tabs/NotesTabQNA";
 
 export const ChatStyled = styled.div`
   svg {
@@ -42,6 +43,8 @@ const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
     setData(propData);
   }, [screen, propData]);
 
+  console.log(propData);
+
   const handleClick = (index: number) => {
     if (activeIndex === index) {
       setActiveIndex(null);
@@ -74,6 +77,17 @@ const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
           data={propData}
           handleClick={handleClick}
         />
+      );
+    if (view === "notes")
+      return (
+        <>
+          <NotesTabQNA
+            activeIndex={activeIndex}
+            data={propData}
+            handleClick={handleClick}
+          />
+          {console.log("here")}
+        </>
       );
     return null;
   };

@@ -1,5 +1,5 @@
 import React, { useMemo, useState, ReactNode } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import { NavButton } from "@/components/layouts/sidenavbar/StyledSideNavBar";
 import "../index.css";
 import VideoPlayer from "./VideoPlayer/VideoPlayer";
@@ -8,6 +8,7 @@ import styled from "styled-components";
 import ConclusionData from "@/services/conclusionService";
 import InterviewQNA from "./InterviewQNA/InterviewQNA";
 import SummaryTab from "./SummaryTab/SummaryTab";
+import { SubmitDecision } from "./SubmitDecisonButton/DecisionButton";
 
 interface MainScreenProps {
   interviewRoundId: string;
@@ -62,9 +63,10 @@ const ContentContainer = styled.div`
   margin-top: 0px;
   overflow-y: auto;
   max-height: calc(100vh - 40vh);
+  min-height: 490px;
 
   @media (min-width: 1200px) {
-    padding: 20px 40px;
+    padding: 20px 20px;
   }
 `;
 
@@ -96,6 +98,8 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     error,
   ] = ConclusionData(interviewRoundId);
 
+  console.log(emojisData);
+
   const infoTabs = useMemo(
     () => (
       <TabContainer>
@@ -119,6 +123,13 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
           isActive={activeTab === 3}
         >
           Transcription
+        </TabButton>
+        <TabButton
+          setActiveTab={setActiveTab}
+          tabNumber={4}
+          isActive={activeTab === 4}
+        >
+          Notes
         </TabButton>
       </TabContainer>
     ),
@@ -144,14 +155,17 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
           lg={6}
           style={{ display: "flex", flexDirection: "column", gap: "22px" }}
         >
-          <H3Bold>Behavioral Interview</H3Bold>
-          <div className="video-player-wrapper">
-            <VideoPlayer
-              questionsTranscript={questionsTranscript?.data}
-              videoUrl={videoUrl?.url}
-              emojisData={emojisData}
-            />
-          </div>
+          <Stack direction={"column"} spacing={1}>
+            <H3Bold>Behavioral Interview</H3Bold>
+            <div className="video-player-wrapper">
+              <VideoPlayer
+                questionsTranscript={questionsTranscript?.data}
+                videoUrl={videoUrl?.url}
+                emojisData={emojisData}
+              />
+            </div>
+            <div className="bar-decision">test</div>
+          </Stack>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={6}>
           {infoTabs}
@@ -172,6 +186,9 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
                 propData={questionsTranscript?.data}
                 screen={"transcription"}
               />
+            )}
+            {activeTab === 4 && (
+              <InterviewQNA propData={emojisData} screen={"notes"} />
             )}
           </ContentContainer>
         </Grid>

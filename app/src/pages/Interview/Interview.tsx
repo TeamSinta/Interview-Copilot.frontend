@@ -89,7 +89,9 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       top: 0,
     },
   });
-  const [startTime, setStartTime] = useState(null);
+  const [startTime, setStartTime] = useState<Date | null>(null);
+  const now = new Date();
+  setStartTime(now);
   const [isInterviewSideBarCollapsed, setIsInterviewSideBarCollapsed] =
     useState(false);
   const [cookies, ,] = useCookies(["access_token"]);
@@ -116,6 +118,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     setInitTime(getCurrentTime());
     // placeholder dispatch for functionality, sets call as active to allow correct fullscreen rendering in App
     dispatch(startCall(true));
+
     // placeholder dispatch end //
   }, [active_call, dispatch]);
 
@@ -852,6 +855,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       interview_round: interviewDetails.id,
       user: user.id,
       note: notes,
+      time: getEmojiClickTime(),
     };
 
     sendFeedback(data, cookies.access_token);

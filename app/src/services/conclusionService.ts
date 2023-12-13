@@ -42,12 +42,7 @@ const ConclusionData = (interviewRoundId: string) => {
     };
 
     fetchData();
-  }, [
-    ,
-    // questionsTranscriptAPI
-    summarizedAnswersAPI,
-    summaryInfoAPI,
-  ]);
+  }, [emojiFeedbackApi, summarizedAnswersAPI, summaryInfoAPI, videoUrlAPI]);
 
   return [
     summarizedAnswers,
