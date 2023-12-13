@@ -17,13 +17,9 @@ const GoogleLogin = (): GoogleLoginReturnType => {
 		flow: 'auth-code',
 		onSuccess: async (codeResponse) => {
 			const code = codeResponse.code;
-			console.log('Sign in initiatied');
-			console.log(code);
 
 			try {
-				console.log('try');
 				const result = await googleLogin({ code }).unwrap();
-				console.log(result);
 
 				if (result) {
 					setCookies('access_token', result['access'], { path: '/' });

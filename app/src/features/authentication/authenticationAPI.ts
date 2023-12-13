@@ -43,7 +43,6 @@ export const authAPI = createApi({
 		}),
 		getAccessToken: builder.mutation<void, RefreshToken>({
 			query: (refresh) => {
-				// console.log("Refresh Query: ", refresh);
 				return {
 					url: '/auth/token/refresh/',
 					method: 'POST',
