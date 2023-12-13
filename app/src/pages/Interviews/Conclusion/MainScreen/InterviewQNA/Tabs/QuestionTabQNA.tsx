@@ -8,6 +8,10 @@ import {
 } from "@/components/common/svgIcons/CustomIcons";
 import { PredefinedRatingsAndCompetency } from "../RatingComponent";
 import styled from "styled-components";
+import {
+  BodyLMedium,
+  BodySBold,
+} from "@/components/common/typeScale/StyledTypeScale";
 
 interface QuestionSummarizedAnswers {
   question: string;
@@ -53,6 +57,7 @@ const FlexContainer = styled.div`
 
 const IndexContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const IconContainer = styled.div`
@@ -134,7 +139,7 @@ export const QuestionTextDisplay: React.FC<QuestionTextDisplayProps> = ({
       <Grid item xs={12} md={12}>
         <IndexContainer>
           <IndexStyle>
-            <span>{index + 1}</span>
+            <BodySBold>{index + 1}</BodySBold>
           </IndexStyle>
           <QuestionCollapsible
             index={index}
@@ -178,7 +183,7 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
       <AnswerContainer
         className={`question-answer ${activeIndex === index ? "show" : ""}`}
       >
-        {answer}
+        <BodyLMedium>{answer}</BodyLMedium>
       </AnswerContainer>
 
       <hr style={{ opacity: "0.25" }} />

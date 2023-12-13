@@ -594,7 +594,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
     <>
       <div
         className="video-player-container"
-        style={{ position: "relative", width: "96%" }}
+        style={{ position: "relative", width: "95%" }}
       >
         {" "}
         <div
@@ -604,6 +604,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
             display: "flex",
             flexDirection: "column",
             borderRadius: "10px",
+            height: "98%",
           }}
         >
           <div
@@ -698,7 +699,6 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
               display: "flex",
               flexDirection: "column",
               borderRadius: "10px",
-              paddingBottom: "20px",
             }}
           >
             <div className="currentQuestionLabel">

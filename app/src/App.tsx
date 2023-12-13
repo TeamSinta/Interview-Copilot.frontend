@@ -7,37 +7,48 @@ import { useSelector } from "react-redux";
 import { RootState } from "./app/store";
 import Loading from "./components/common/elements/loading/Loading";
 import { useLocation, useNavigate } from "react-router-dom";
+import ConclusionContainer from "./components/layouts/container/conclusionContainer/ConclusionContainer";
+import { ConclusionStyledMain } from "./components/layouts/container/conclusionContainer/StyledConclusionContianer";
 
 function App() {
   const location = useLocation();
-  const { isAuthenticated, status } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { isAuthenticated } = useSelector((state: RootState) => state.user);
 
   const isVideoCallRoute = location.pathname.startsWith("/video-call/");
+  const isConclusionRoute = location.pathname === "/interviews/conclusion/";
 
   if (isVideoCallRoute) {
     return <Routers />;
   }
 
-  const hideTopNavBarRoute = location.pathname === "/interviews/conclusion/"; // Replace with your specific route
+  if (isConclusionRoute && isAuthenticated) {
+    return (
+      <>
+        <ConclusionContainer>
+          <ConclusionStyledMain>
+            <SideNavBar />
+            <Routers />
+          </ConclusionStyledMain>
+        </ConclusionContainer>
+      </>
+    );
+  }
 
-  // After this point, the user is either authenticated or on the login page
   return (
     <>
       {isAuthenticated ? (
         <Container>
           <SideNavBar />
-          {hideTopNavBarRoute ? <></> : <TopNavBar />}
+          <TopNavBar />
           <StyledMain>
             <Routers />
           </StyledMain>
         </Container>
       ) : (
-        // If not authenticated, render the login or other public routes
         <Routers />
       )}
     </>
   );
 }
+
 export default App;

@@ -328,14 +328,12 @@ export const PredefinedRatingsAndCompetency: React.FC<any> = ({
   rating,
 }) => {
   const getCompetencyStyle = (rating: string) => {
-
-
     const color = buttons.find((button) => button.rate === rating)?.color;
 
     return {
       borderRadius: "10px",
       backgroundColor: color ?? "white",
-      padding: "7px 16px",
+      padding: "8px 16px",
       border: "1px solid #121212",
       fontSize: "10px",
       gap: "10px",
@@ -344,7 +342,15 @@ export const PredefinedRatingsAndCompetency: React.FC<any> = ({
 
   return (
     <>
-      <Grid xs={12} md={6}>
+      <Grid
+        xs={12}
+        md={6}
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          paddingLeft: "8px",
+        }}
+      >
         <div>
           <span style={getCompetencyStyle(rating)}>{competency}</span>{" "}
         </div>

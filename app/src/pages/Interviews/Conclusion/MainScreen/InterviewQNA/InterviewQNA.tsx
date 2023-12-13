@@ -13,25 +13,22 @@ export const ChatStyled = styled.div`
 `;
 
 export const InterviewContainerStyle = styled.div`
-   {
-    font-weight: bold !important;
-    cursor: pointer;
-    padding: 10px;
-    padding-left: 0px;
-    padding-right: 10px;
-    margin-bottom: 20px;
-  }
+  font-weight: bold !important;
+  cursor: pointer;
+  padding: 10px;
+  padding-left: 0px;
+  padding-right: 10px;
+  margin-bottom: 20px;
 `;
 
 export const IndexStyle = styled.div`
-  span {
-    border-radius: 5px;
-    background-color: white;
-    padding: 2px 10px;
-    font-size: 10px;
-    margin-right: 10px;
-  }
+  border-radius: 5px;
+  background-color: white;
+  padding: 8px 16px;
+  font-size: 10px;
+  margin-right: 10px;
 `;
+
 
 const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
   const [activeIndex, setActiveIndex] = useState<any>(null);

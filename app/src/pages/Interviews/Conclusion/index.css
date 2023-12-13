@@ -12,6 +12,16 @@
   margin-top: 10px !important;
 }
 
+.button-container {
+  background-color: #f6f6fb;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px;
+  width: 95%;
+
+
+}
 .content-box {
   display: flex;
   gap: 16px;
@@ -54,7 +64,7 @@
   margin: 14px 14px !important;
   display: flex;
     align-items: center;
-  
+
     min-width: 200px;
     max-height: 136px;
 }
