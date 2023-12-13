@@ -15,14 +15,8 @@ export const authAPI = createApi({
 	endpoints: (builder) => ({
 		googleLogin: builder.mutation<Token, GoogleCode>({
 			query: (code) => {
-				console.log('inside login query');
-				console.log('code:' + code.code);
-				console.log(
-					'VITE_GOOGLE_OAUTH_CALLBACK_URL:' +
-						import.meta.env.VITE_GOOGLE_OAUTH_CALLBACK_URL
-				);
 				return {
-					url: import.meta.env.VITE_GOOGLE_OAUTH_CALLBACK_URL,
+					url: '/auth/login/',
 					method: 'POST',
 					body: { code: code.code },
 					credentials: 'include'
