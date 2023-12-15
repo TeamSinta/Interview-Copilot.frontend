@@ -15,13 +15,29 @@ install:
 lint:
 		cd app && npm run lint
 
-# FE
-
 # Run Commands #
 .PHONY: run-dev
 run-dev:
 	docker compose -f docker-compose-dev.yaml up
 
-# TODO
 .PHONY: run-staging
-run:
+run-staging:
+	docker compose -f docker-compose-staging.yaml up
+
+.PHONY: dev-down
+dev-down:
+	docker compose -f docker-compose-dev.yaml down
+
+.PHONY:
+staging-down:
+	docker compose -f docker-compose-staging.yaml down
+
+.PHONY:
+docker-down:
+	dev-down staging-down
+
+# TODO
+# storybook
+# lint
+# test
+# format
