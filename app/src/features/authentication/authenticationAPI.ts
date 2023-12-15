@@ -10,13 +10,16 @@ import {
 export const authAPI = createApi({
 	reducerPath: 'api',
 	baseQuery: fetchBaseQuery({
-		baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api`
+		baseUrl: `${import.meta.env.VITE_BACKEND_URL}`
 	}),
 	endpoints: (builder) => ({
 		googleLogin: builder.mutation<Token, GoogleCode>({
 			query: (code) => {
+				const urlPath = import.meta.env.VITE_USE_MOCK_LOGIN
+					? '/auth/mocklogin/'
+					: 'auth/login/';
 				return {
-					url: import.meta.env.VITE_GOOGLE_OAUTH_CALLBACK_URL,
+					url: urlPath,
 					method: 'POST',
 					body: { code: code.code },
 					credentials: 'include'
@@ -25,7 +28,6 @@ export const authAPI = createApi({
 		}),
 		getUser: builder.mutation<UserReadSerializer, AccessToken>({
 			query: (access) => {
-				// console.log("Query: ", access);
 				return {
 					url: '/user/userdetails/',
 					method: 'GET',
@@ -44,7 +46,6 @@ export const authAPI = createApi({
 		}),
 		getAccessToken: builder.mutation<void, RefreshToken>({
 			query: (refresh) => {
-				// console.log("Refresh Query: ", refresh);
 				return {
 					url: '/auth/token/refresh/',
 					method: 'POST',
