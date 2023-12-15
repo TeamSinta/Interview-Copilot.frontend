@@ -26,17 +26,6 @@ export const createCall = createAsyncThunk("videoCall/createCall", async () => {
   }
 });
 
-export const uploadRecording = createAsyncThunk(
-  "videoCall/uploadRecording",
-  async (room: string) => {
-    try {
-      await videoApi.uploadVideo(room);
-    } catch (error) {
-      console.error("Error creating room", error);
-      throw new Error("Could not create room");
-    }
-  }
-);
 
 export const startHairCheck = createAsyncThunk(
   "videoCall/startHairCheck",
