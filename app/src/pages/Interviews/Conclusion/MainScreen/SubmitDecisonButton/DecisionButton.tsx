@@ -1,17 +1,16 @@
-import React from "react"; // Import React
+import React, { useRef } from "react"; // Import React
 import {
   StyledDecisionButton,
   StyledButtonContent,
   ButtonStyling,
   StyledSubmitDecision,
-  StyledRoundBox,
   ButtonContainer,
-  StyledImage,
 } from "./StyledDecisionBtn";
 import {
   BodyLBold,
   BodyMMedium,
 } from "@/components/common/typeScale/StyledTypeScale";
+import confetti from "canvas-confetti";
 
 import {
   LikeButton,
@@ -26,16 +25,42 @@ export const DecisionButton = ({
   children,
   isActive,
 }) => {
+  const buttonRef = useRef(null); // Create a ref for the button
+
   const backgroundColors = isActive
     ? activeValue === 1
       ? "#DBFDDC"
       : "#FABBCF"
     : "#FFFFFF"; // default background color
 
+  const handleConfetti = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const confettiOrigin = {
+        x: (rect.left + rect.right) / 2 / window.innerWidth, // Calculate the X position
+        y: (rect.top + rect.bottom) / 2 / window.innerHeight, // Calculate the Y position
+      };
+
+      confetti({
+        // ... (other confetti options)
+        origin: confettiOrigin,
+      });
+    }
+  };
+  const handleClick = () => {
+    if (onClick) {
+      onClick(); // Call the passed onClick function
+    }
+    if (activeValue === 1) {
+      // Trigger confetti for "Hire" button
+      handleConfetti();
+    }
+  };
   return (
     <StyledDecisionButton
+      ref={buttonRef} // Attach the ref to the button
       activeValue={activeValue}
-      onClick={onClick}
+      onClick={handleClick}
       style={{ backgroundColor: backgroundColors }}
     >
       <StyledButtonContent>
