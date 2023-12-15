@@ -15,8 +15,11 @@ export const authAPI = createApi({
 	endpoints: (builder) => ({
 		googleLogin: builder.mutation<Token, GoogleCode>({
 			query: (code) => {
+				const urlPath = import.meta.env.VITE_USE_MOCK_LOGIN
+					? '/auth/mocklogin/'
+					: 'auth/login/';
 				return {
-					url: '/auth/login/',
+					url: urlPath,
 					method: 'POST',
 					body: { code: code.code },
 					credentials: 'include'

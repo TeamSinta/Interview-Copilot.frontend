@@ -20,7 +20,6 @@ const GoogleLogin = (): GoogleLoginReturnType => {
 
 			try {
 				const result = await googleLogin({ code }).unwrap();
-
 				if (result) {
 					setCookies('access_token', result['access'], { path: '/' });
 					setCookies('refresh_token', result['refresh'], { path: '/' });

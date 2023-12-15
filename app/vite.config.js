@@ -10,6 +10,8 @@ import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfil
 // You don't need to add this to deps, it's included by @esbuild-plugins/node-modules-polyfill
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
 
+const BACKEND_BASE_URL = process.env.VITE_BACKEND_BASE_URL;
+
 export default defineConfig({
 	plugins: [
 		svgr({
@@ -63,6 +65,15 @@ export default defineConfig({
 		}
 	},
 	server: {
+		proxy: BACKEND_BASE_URL
+			? {
+					'/api': {
+						target: BACKEND_BASE_URL,
+						changeOrigin: true,
+						rewrite: (path) => path.replace(/^\/api/, '')
+					}
+			  }
+			: undefined,
 		open: false,
 		port: 3001,
 		host: true
