@@ -19,7 +19,7 @@ RUN npm install
 # Copy all frontend files to the container
 COPY . /app/
 
-EXPOSE 300
+EXPOSE 3001
 
 # Start the React development server
 CMD ["npm", "run", "dev"]
