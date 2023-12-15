@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 const WebSocketComponent = ({ interviewRoundId, endLoader }) => {
   useEffect(() => {
     const socket = new WebSocket(
-      `ws://localhost:8000/ws/transcription_consumer/${interviewRoundId}/`
+      `ws://${import.meta.env.VITE_BACKEND_URL}/ws/transcription_consumer/${interviewRoundId}/`
     );
 
     // Event listener for WebSocket open
