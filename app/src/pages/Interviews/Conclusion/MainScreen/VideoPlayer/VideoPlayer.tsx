@@ -624,7 +624,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                 className={`${isPlaying ? "" : "blurred"}`}
                 ref={videoRef}
                 onLoadedMetadata={handleLoadedMetadata}
-                src="/src/pages/Interviews/Conclusion/MainScreen/VideoPlayer/interview_video.mp4"
+                src={videoUrl}
                 onTimeUpdate={handleTimeUpdate}
               ></video>
             </div>

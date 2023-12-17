@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 import { instance } from "@/utils/axiosService/customAxios";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 type FeedbackData = {
   user: string;
@@ -14,7 +14,7 @@ type FeedbackData = {
 
 export const getQuestionsBank = async () => {
   return await instance
-    .get(`${BASE_URL}/question/question-banks/`)
+    .get(`${BACKEND_URL}/question/question-banks/`)
     .then((result) => {
       return result.data;
     })
@@ -25,12 +25,14 @@ export const createInterviewRound = async (
   title: string,
   template_id: string | null,
   token: string,
-  meeting_room_id: string
+  meeting_room_id: string,
+  candidate_id: number
 ) => {
   const data = {
     title: title,
     template_id: template_id,
     room_id: meeting_room_id,
+    candidate_id: candidate_id,
   };
 
   const config = {
@@ -40,7 +42,7 @@ export const createInterviewRound = async (
     },
   };
   const result = await instance.post(
-    `${BASE_URL}/interview-rounds/create/`,
+    `${BACKEND_URL}/interview-rounds/create/`,
     data,
     config
   );
@@ -52,11 +54,14 @@ export const getTemplate = async (
   template_id: string | null,
   token: string
 ) => {
-  const result = await instance.get(`${BASE_URL}/templates/${template_id}/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const result = await instance.get(
+    `${BACKEND_URL}/templates/${template_id}/`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   return result.data;
 };
@@ -80,7 +85,7 @@ export const updateInterviewQuestionRating = async (
     rating: rating,
   };
   const result = await instance.post(
-    `${BASE_URL}/interview-rounds/rateInterviewRoundQuestion/`,
+    `${BACKEND_URL}/interview-rounds/rateInterviewRoundQuestion/`,
     data,
     config
   );
@@ -98,7 +103,7 @@ export const sendFeedback = async (data: FeedbackData, token: string) => {
     };
 
     const response = await instance.post(
-      `${BASE_URL}/question_response/interviewer-feedback/`,
+      `${BACKEND_URL}/question_response/interviewer-feedback/`,
       data,
       config
     );
@@ -121,7 +126,7 @@ export const getInterviewRoundQuestions = async (
     };
 
     const response = await instance.get(
-      `${BASE_URL}/interview-rounds/interviewroundquestions/?interviewRound=${interviewRoundId}`,
+      `${BACKEND_URL}/interview-rounds/interviewroundquestions/?interviewRound=${interviewRoundId}`,
       config
     );
     return response.data;
@@ -135,7 +140,7 @@ export const getCandidateByUsername = async (
   token: string
 ) => {
   const result = await instance.get(
-    `${BASE_URL}/user/usersbyusername/${username}/`,
+    `${BACKEND_URL}/user/usersbyusername/${username}/`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -147,7 +152,7 @@ export const getCandidateByUsername = async (
 };
 
 export const getCandidateById = async (id: string, token: string) => {
-  const result = await instance.get(`${BASE_URL}/user/usersbyid/${id}/`, {
+  const result = await instance.get(`${BACKEND_URL}/user/usersbyid/${id}/`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -157,7 +162,7 @@ export const getCandidateById = async (id: string, token: string) => {
 };
 
 export const getInterviews = async (token: string) => {
-  const result = await instance.get(`${BASE_URL}/interview-rounds/`, {
+  const result = await instance.get(`${BACKEND_URL}/interview-rounds/`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -168,7 +173,7 @@ export const getInterviews = async (token: string) => {
 
 export const getInterview = async (interviewRoundId: string, token: string) => {
   const result = await instance.get(
-    `${BASE_URL}/interview-rounds/${interviewRoundId}`,
+    `${BACKEND_URL}/interview-rounds/${interviewRoundId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -184,7 +189,7 @@ export const getTemplateQuestionsAndTopics = async (
   token: string
 ) => {
   const result = await instance.get(
-    `${BASE_URL}/templates/${template_id}/questions/`,
+    `${BACKEND_URL}/templates/${template_id}/questions/`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -200,7 +205,7 @@ export const getInterviewRoundQuestion = async (
   token: string
 ) => {
   const result = await instance.get(
-    `${BASE_URL}/interview-rounds/${interview_round_id}/${question_id}/`,
+    `${BACKEND_URL}/interview-rounds/${interview_round_id}/${question_id}/`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

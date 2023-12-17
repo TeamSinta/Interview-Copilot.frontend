@@ -54,7 +54,6 @@ export default function CandidateCallScreen() {
     [remoteParticipantIds, screens]
   );
 
-
   const copyToClipboard = () => {
     const textField = document.createElement("textarea");
     textField.innerText = callObject.properties.url;

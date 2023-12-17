@@ -28,7 +28,6 @@ export const LoadingWrapper = styled.div`
   width: fit-content;
 `;
 
-
 export const LoadingCircle = styled.div`
   position: absolute;
   border: 2px solid #ccc; /* Adjust the stroke style as needed */

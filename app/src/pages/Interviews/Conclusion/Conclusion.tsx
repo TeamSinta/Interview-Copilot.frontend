@@ -8,27 +8,20 @@ import MainScreen from "./MainScreen/MainScreen.js";
 import {
   BottomArrowIcon,
   CandidateIcon,
-  LeftArrowIcon,
   RightArrowIcon,
 } from "@/components/common/svgIcons/Icons.js";
-import { StyledIconBtnM } from "@/components/common/buttons/button/StyledBtn.js";
 import styled from "styled-components";
 
 import { useNavigate, useLocation } from "react-router-dom"; // <-- Import useNavigate
 import SummarizerLoader from "@/components/common/elements/longLoading/LongLoading.js";
 import { Divider, Grid, Stack } from "@mui/material";
-import {
-  getInterview,
-  getTemplate,
-} from "@/features/interviews/interviewsAPI.js";
+import { getInterview } from "@/features/interviews/interviewsAPI.js";
 import { useCookies } from "react-cookie";
 import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn.js";
 import { BackgroundColor } from "@/features/utils/utilEnum.js";
 import ElWrap from "@/components/layouts/elWrap/ElWrap.js";
-import {
-  IconBtnM,
-  IconBtnS,
-} from "@/components/common/buttons/iconBtn/IconBtn.js";
+import { IconBtnM } from "@/components/common/buttons/iconBtn/IconBtn.js";
+import WebSockComp from "../../../components/common/socket/websock";
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -73,9 +66,6 @@ const Conclusion: React.FC = () => {
 
   useEffect(() => {
     // Set a timeout to hide the loader after 2 minutes
-    const timeoutId = setTimeout(() => {
-      setShowLoader(false);
-    }, 60000); // 2 minutes in milliseconds
 
     const fetchRatings = async () => {
       const interviewRound = await getInterview(
@@ -83,10 +73,6 @@ const Conclusion: React.FC = () => {
         cookies.access_token
       );
 
-      const template = await getTemplate(
-        interviewRound.template_id,
-        cookies.access_token
-      );
       setInterviewTitle(interviewRound.title);
       setInterviewerPicture(interviewRound.interviewer.profile_picture);
 
@@ -99,8 +85,11 @@ const Conclusion: React.FC = () => {
 
     fetchRatings();
     // Clear the timeout if the component unmounts or if the loader is hidden before the timeout
-    return () => clearTimeout(timeoutId);
   }, [cookies.access_token, location.state.id]);
+
+  const endLoader = () => {
+    setShowLoader(false);
+  };
 
   const header = useMemo(() => {
     return (
@@ -177,6 +166,7 @@ const Conclusion: React.FC = () => {
 
   return (
     <>
+      <WebSockComp interviewRoundId={location.state.id} endLoader={endLoader} />
       {showLoader && location.state.useTimer ? (
         <SummarizerLoader /> // Show loader if showLoader is true
       ) : (

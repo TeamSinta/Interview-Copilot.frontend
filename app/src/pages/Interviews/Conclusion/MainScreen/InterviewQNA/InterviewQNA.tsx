@@ -29,7 +29,6 @@ export const IndexStyle = styled.div`
   margin-right: 10px;
 `;
 
-
 const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
   const [activeIndex, setActiveIndex] = useState<any>(null);
   const [, setData] = useState<any>("");

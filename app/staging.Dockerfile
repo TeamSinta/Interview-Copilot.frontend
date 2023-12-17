@@ -8,9 +8,10 @@ ARG ASSEMBLY_AI_KEY
 
 # Set the working directory in the container
 WORKDIR /app
-
 # Copy package.json and package-lock.json to the container
 COPY app/package.json ./
+# Set environment file
+COPY app/.env.staging ./.env
 
 # Install project dependencies
 RUN npm install

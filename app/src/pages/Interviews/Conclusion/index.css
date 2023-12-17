@@ -19,15 +19,12 @@
   border-radius: 10px;
   padding: 10px;
   width: 95%;
-
-
 }
 .content-box {
   display: flex;
   gap: 16px;
   flex-direction: column;
   margin-top: 10px !important;
-
 }
 
 .text {
@@ -37,7 +34,6 @@
   justify-content: center;
   padding-top: 10px;
   text-align: center;
-
 }
 
 .bar-container {
@@ -46,15 +42,12 @@
   border-radius: 10px;
   padding: 10px;
   flex: 1;
-
-
 }
 
 .bar-decision {
   background-color: #f6f6fb;
   display: flex;
   border-radius: 10px;
-
 }
 .column {
   flex: 1;
@@ -63,10 +56,10 @@
   padding: 26px;
   margin: 14px 14px !important;
   display: flex;
-    align-items: center;
+  align-items: center;
 
-    min-width: 200px;
-    max-height: 136px;
+  min-width: 200px;
+  max-height: 136px;
 }
 
 .first-column {
@@ -104,7 +97,7 @@
 
 #myProgress::-webkit-progress-value {
   background-color: #6462f1;
-    border-radius: 0px 4px 4px 0px;
+  border-radius: 0px 4px 4px 0px;
 }
 
 #myProgress::-moz-progress-bar {

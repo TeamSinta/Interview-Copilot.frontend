@@ -1,7 +1,6 @@
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/material";
 import React from "react";
-import { LogoImage } from "./StyledTopBarNav";
 import SearchInput from "@/components/common/form/serchInput/SearchInput";
 import {
   CalendarIcon,
@@ -12,13 +11,10 @@ import { BackgroundColor } from "@/features/utils/utilEnum";
 import ElWrap from "../elWrap/ElWrap";
 import { DropDownButton } from "@/components/common/buttons/dropDownBtn/DropDownBtn";
 import { StyledTopNavBar } from "./StyledTopBarNav";
-import { Link, redirect, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../app/store";
-import {
-  createCall,
-  startHairCheck,
-} from "../../../utils/dailyVideoService/videoCallSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../app/store";
+import { createCall } from "../../../utils/dailyVideoService/videoCallSlice";
 
 export interface IButton {
   to: string;

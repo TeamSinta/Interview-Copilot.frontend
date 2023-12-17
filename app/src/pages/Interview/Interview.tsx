@@ -70,10 +70,8 @@ const components = {
 };
 
 const Interview = ({ leaveCall, interviewDetails }) => {
-  const title = "FrontEnd Developer";
   const stage = "Round 3";
   const stageName = "Pair-Programming";
-  const commentInputRef = useRef<HTMLInputElement>(null);
   const { user } = useSelector((state: RootState) => state.user);
 
   const [activeTab, setActiveTab] = useState(1);
@@ -89,9 +87,13 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       top: 0,
     },
   });
+
   const [startTime, setStartTime] = useState<Date | null>(null);
-  const now = new Date();
-  setStartTime(now);
+
+  useEffect(() => {
+    const now = new Date();
+    setStartTime(now);
+  }, []);
   const [isInterviewSideBarCollapsed, setIsInterviewSideBarCollapsed] =
     useState(false);
   const [cookies, ,] = useCookies(["access_token"]);

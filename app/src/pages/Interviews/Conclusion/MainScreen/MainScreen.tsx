@@ -8,7 +8,6 @@ import styled from "styled-components";
 import ConclusionData from "@/services/conclusionService";
 import InterviewQNA from "./InterviewQNA/InterviewQNA";
 import SummaryTab from "./SummaryTab/SummaryTab";
-import { SubmitDecision } from "./SubmitDecisonButton/DecisionButton";
 import { ReactionButtonBox } from "./reactionBox/ReactionBox";
 
 interface MainScreenProps {

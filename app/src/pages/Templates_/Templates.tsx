@@ -71,20 +71,20 @@ const Templates = () => {
 
   console.log(user);
 
-    const getFilteredTemplateQuestionsLength = (
-      templateQuestions: Record<string, TemplateQuestions> | null,
-      templateId: number | null
-    ): object => {
-      if (!templateQuestions || !templateId) {
-        return [];
-      }
+  const getFilteredTemplateQuestionsLength = (
+    templateQuestions: Record<string, TemplateQuestions> | null,
+    templateId: number | null
+  ): object => {
+    if (!templateQuestions || !templateId) {
+      return [];
+    }
 
-      const filteredQuestions = Object.values(templateQuestions).filter(
-        (templateQuestion) => templateQuestion.template_id === templateId
-      );
+    const filteredQuestions = Object.values(templateQuestions).filter(
+      (templateQuestion) => templateQuestion.template_id === templateId
+    );
 
-      return filteredQuestions;
-    };
+    return filteredQuestions;
+  };
 
   const getFilteredTemplateTopicsLength = (
     templateQuestions: Record<string, TemplateQuestions> | null,

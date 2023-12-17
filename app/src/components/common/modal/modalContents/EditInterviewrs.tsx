@@ -48,7 +48,6 @@ const EditInterviewers = () => {
     id: templateId,
   });
 
-
   const { members } = useFetchCompanyMembers({
     access: accessToken,
     company_id: companyId,

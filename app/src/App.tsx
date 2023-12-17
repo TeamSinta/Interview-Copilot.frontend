@@ -5,8 +5,7 @@ import Container from "./components/layouts/container/Container";
 import Routers from "./router/Routers";
 import { useSelector } from "react-redux";
 import { RootState } from "./app/store";
-import Loading from "./components/common/elements/loading/Loading";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import ConclusionContainer from "./components/layouts/container/conclusionContainer/ConclusionContainer";
 import { ConclusionStyledMain } from "./components/layouts/container/conclusionContainer/StyledConclusionContianer";
 

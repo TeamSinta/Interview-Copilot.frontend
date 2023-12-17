@@ -69,13 +69,13 @@ const InterviewStage = () => {
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
 
-    const {
-      data: templates,
-      isLoading,
-      isSuccess,
-      isError,
-      error,
-    } = useGetTemplatesQuery();
+  const {
+    data: templates,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetTemplatesQuery();
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
 
@@ -90,7 +90,6 @@ const InterviewStage = () => {
   const handleSortMembers = (value: string) => {
     setSortCritiera(value);
   };
-
 
   useEffect(() => {
     if (templateId) {

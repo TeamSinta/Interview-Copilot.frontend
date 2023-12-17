@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const templatesAPI = createApi({
   reducerPath: "templatesAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${import.meta.env.VITE_BACKEND_URL}`,
+  }),
   tagTypes: ["Templates", "Topics"],
   endpoints: (builder) => ({
     getTemplates: builder.query<object, void>({

@@ -123,6 +123,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
     const initAuth = async () => {
       switch (status) {
         case "IDLE":
+          console.log("Checking authentication");
           if (!isAuthenticated) {
             if (accessToken) {
               await authenticateUser(accessToken);
@@ -141,14 +142,15 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
             await getUser({ access: accessToken });
           }
           setDefaultWorkspace();
+          console.log("Authenticated");
           break;
 
         case "LOADING":
-          console.log("CASE LOADING");
+          console.log("Authentication Loading");
           break;
 
         case "FAILED":
-          console.log("CASE FAILED");
+          console.log("Authentication Failed");
           failedAuthentication();
           break;
       }

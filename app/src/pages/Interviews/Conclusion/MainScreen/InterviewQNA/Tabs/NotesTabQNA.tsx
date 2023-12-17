@@ -107,7 +107,7 @@ export const NotesTabQNA: React.FC<TranscriptionTabQNAProps> = ({
                     color: "var(--Black-main, rgba(32, 14, 50, 0.50)",
                   }}
                 >
-                  {note.created_at}
+                  {note.time}
                 </BodySMedium>
                 <BodySMedium>{note.note}</BodySMedium>
               </Stack>

@@ -13,6 +13,7 @@ import {
 import confetti from "canvas-confetti";
 
 import {
+  DoubleLike,
   LikeButton,
   UnlikeIcon,
 } from "@/components/common/svgIcons/CustomIcons";
@@ -28,7 +29,7 @@ export const DecisionButton = ({
   const buttonRef = useRef(null); // Create a ref for the button
 
   const backgroundColors = isActive
-    ? activeValue === 1
+    ? activeValue === 1 || 3
       ? "#DBFDDC"
       : "#FABBCF"
     : "#FFFFFF"; // default background color
@@ -79,27 +80,49 @@ export const SubmitDecision = ({ active, setActive }) => (
       <Stack direction="row">
         <Grid>
           <ButtonContainer>
-            <DecisionButton
-              activeValue={1}
-              onClick={() => setActive(1)}
-              isActive={active === 1}
-            >
-              <LikeButton width={10} height={10} active={1} />
-              <BodyMMedium>Hire</BodyMMedium>
-            </DecisionButton>
-
-            <DecisionButton
-              activeValue={2}
-              onClick={() => setActive(2)}
-              isActive={active === 2}
-            >
-              <BodyMMedium>Don't Hire</BodyMMedium>
-              <UnlikeIcon width={10} height={10} active={1} />
-            </DecisionButton>
+            <div style={{ width: "106px", height: "66px" }}>
+              <DecisionButton
+                activeValue={1}
+                onClick={() => setActive(1)}
+                isActive={active === 1}
+              >
+                <LikeButton width={10} height={10} active={1} />
+                <BodyMMedium>Hire</BodyMMedium>
+              </DecisionButton>
+            </div>
+            <div style={{ width: "106px", height: "66px" }}>
+              <DecisionButton
+                activeValue={2}
+                onClick={() => setActive(2)}
+                isActive={active === 2}
+              >
+                <BodyMMedium>Don't Hire</BodyMMedium>
+                <UnlikeIcon width={10} height={10} active={1} />
+              </DecisionButton>
+            </div>
           </ButtonContainer>
         </Grid>
-        {/* <StyledImage src={image}></StyledImage> */}
       </Stack>
+      <div style={{ width: "60%", height: "40px" }}>
+        <DecisionButton
+          activeValue={3}
+          onClick={() => setActive(3)}
+          isActive={active === 3}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "8px",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <BodyMMedium>Strong Hire</BodyMMedium>
+            <DoubleLike padding-bottom={8} width={10} height={10} active={1} />
+          </div>
+        </DecisionButton>
+      </div>
     </Stack>
   </StyledSubmitDecision>
 );

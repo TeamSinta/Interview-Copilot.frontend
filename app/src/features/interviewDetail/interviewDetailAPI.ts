@@ -8,21 +8,20 @@
 
 import { instance } from "@/utils/axiosService/customAxios";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 /*  TODO: Update APIS with interface stastify TS */
 
 export const getInterviewTemplate = async (templateId: string) => {
   const response = await instance.get(
-    `${BASE_URL}/templates/templates/${templateId}/`
+    `${BACKEND_URL}/templates/templates/${templateId}/`
   );
   return response.data;
 };
 
-
 export const getInterviewSections = async (templateId: string) => {
   try {
-    const response = await instance.get(`${BASE_URL}/templates/topics/`);
+    const response = await instance.get(`${BACKEND_URL}/templates/topics/`);
     const topics = response.data;
     const filteredTopics = topics.filter(
       (topic) => topic.template_id.toString() === templateId
@@ -38,7 +37,7 @@ export const getInterviewSections = async (templateId: string) => {
 export const getInterviewDetail = async (templateId: string) => {
   try {
     const response = await instance.get(
-      `${BASE_URL}/templates/template_questions/`
+      `${BACKEND_URL}/templates/template_questions/`
     );
     const questions = response.data;
     const filteredQuestions = questions.filter(

@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  frontend:
+    container_name: staging
+    build:
+      context: .
+      dockerfile: app/staging.Dockerfile
+    ports:
+      - 3001:3001
+    volumes:
+      - /app/node_modules
+      - ./app:/app
+    env_file:
+      - app/.env.staging
+    environment:
+      - CHOKIDAR_USEPOLLING=true

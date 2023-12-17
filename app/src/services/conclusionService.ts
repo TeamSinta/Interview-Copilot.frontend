@@ -1,5 +1,4 @@
 import axios from "axios";
-import config from "@/config.json";
 import { useState, useEffect } from "react";
 
 const ConclusionData = (interviewRoundId: string) => {
@@ -13,22 +12,22 @@ const ConclusionData = (interviewRoundId: string) => {
 
   // TODO: Swap out '1' with the interview ID.
 
-  // const questionsTranscriptAPI = `${config.apiURL}/transcription/get_transcripts_for_questions/${interviewRoundId}/`;
-  const summarizedAnswersAPI = `${config.apiURL}/question_response/question_summarized_answers/${interviewRoundId}/`;
-  const summaryInfoAPI = `${config.apiURL}/summary/generate/${interviewRoundId}/`;
-  const videoUrlAPI = `${config.apiURL}/interview-rounds/interviewRoundVideo/${interviewRoundId}/`;
-  const emojiFeedbackApi = `${config.apiURL}/question_response/interviewer-feedback/${interviewRoundId}/`;
+  const TranscriptAPI = `${import.meta.env.VITE_BACKEND_URL}/transcription/get_transcripts_for_questions/${interviewRoundId}/`;
+  const summarizedAnswersAPI = `${import.meta.env.VITE_BACKEND_URL}/question_response/question_summarized_answers/${interviewRoundId}/`;
+  const summaryInfoAPI = `${import.meta.env.VITE_BACKEND_URL}/summary/generate/${interviewRoundId}/`;
+  const videoUrlAPI = `${import.meta.env.VITE_BACKEND_URL}/interview-rounds/interviewRoundVideo/${interviewRoundId}/`;
+  const emojiFeedbackApi = `${import.meta.env.VITE_BACKEND_URL}/question_response/interviewer-feedback/${interviewRoundId}/`;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response1 = await axios.get(questionsTranscriptAPI);
+        const response1 = await axios.get(TranscriptAPI);
         const response2 = await axios.get(summarizedAnswersAPI);
         const response3 = await axios.get(summaryInfoAPI);
         const response4 = await axios.get(videoUrlAPI);
         const response5 = await axios.get(emojiFeedbackApi);
 
-        setQuestionsTranscript([]);
+        setQuestionsTranscript(response1.data);
         setSummarizedAnswers(response2.data);
         setSummaryInfo(response3.data);
         setVideoUrl(response4.data);
