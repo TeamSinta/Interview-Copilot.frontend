@@ -3,7 +3,14 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const templatesAPI = createApi({
 	reducerPath: 'templatesAPI',
 	baseQuery: fetchBaseQuery({
-		baseUrl: `${import.meta.env.VITE_BACKEND_URL}`
+		baseUrl: `${import.meta.env.VITE_BACKEND_URL}`,
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as any)?.user?.token?.access;
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
 	}),
 	tagTypes: ['Templates', 'Topics'],
 	endpoints: (builder) => ({

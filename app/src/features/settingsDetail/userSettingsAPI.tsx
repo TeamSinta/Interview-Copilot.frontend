@@ -10,7 +10,14 @@ import {
 export const userAPI = createApi({
 	reducerPath: 'userApi',
 	baseQuery: fetchBaseQuery({
-		baseUrl: `${import.meta.env.VITE_BACKEND_URL}`
+		baseUrl: `${import.meta.env.VITE_BACKEND_URL}`,
+		prepareHeaders: (headers, { getState }) => {
+			const token = (getState() as any)?.user?.token?.access;
+			if (token) {
+			  headers.set("Authorization", `Bearer ${token}`);
+			}
+			return headers;
+		  },
 	}),
 	tagTypes: ['Departments'],
 	endpoints: (builder) => ({
