@@ -135,9 +135,6 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 							await handleTokenRefresh();
 						}
 					}
-					if (!user.email) {
-						await getUser({ access: accessToken });
-					}
 					setDefaultWorkspace();
 					break;
 

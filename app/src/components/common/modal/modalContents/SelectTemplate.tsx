@@ -35,6 +35,8 @@ import {
 import TemplateList from './TemplateList';
 import QuestionList from './QuestionList';
 import axios from 'axios';
+import { instance } from '@/utils/axiosService/customAxios';
+
 
 const SelectTemplate = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -53,7 +55,7 @@ const SelectTemplate = () => {
 				question_id: question.id // Assuming the question object has an 'id' property
 			}));
 
-			const response = await axios.post(
+			const response = await instance.post(
 				`${import.meta.env.VITE_BACKEND_URL}/templates/${
 					templateID.templateID
 				}/questions/add/`,
@@ -79,7 +81,7 @@ const SelectTemplate = () => {
 		// Fetch the template topics from the API when the component mounts.
 		const fetchTemplateTopics = async () => {
 			try {
-				const response = await axios.get(
+				const response = await instance.get(
 					`${import.meta.env.VITE_BACKEND_URL}/templates/${
 						templateID.templateID
 					}/topics/`
