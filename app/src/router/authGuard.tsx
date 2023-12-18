@@ -77,9 +77,9 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 		try {
 			const result = await validateToken({ access: accessToken });
 			if ('data' in result) {
+        dispatch(setIsAuthenticated(true));
+        dispatch(setTokens({ access: accessToken, refresh: refreshToken }));
 				await getUser({ access: accessToken });
-				dispatch(setIsAuthenticated(true));
-        		dispatch(setTokens({ access: accessToken, refresh: refreshToken }));
 			} else {
 				handleTokenRefresh();
 			}
@@ -99,7 +99,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 				const { access } = newAccessToken.data;
 				setCookies('access_token', access);
 				dispatch(setIsAuthenticated(true));
-        		dispatch(setTokens({ access: access, refresh: refreshToken }));
+        dispatch(setTokens({ access: access, refresh: refreshToken }));
 				await getUser({ access: access });
 			} else {
 				failedAuthentication();
