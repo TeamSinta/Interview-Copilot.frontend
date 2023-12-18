@@ -31,6 +31,11 @@ format-lint-all:
 		make prettier linting check-types
 
 # Run Commands #
+.PHONY: run
+run:
+	vlt config init
+	vlt run -c "make run-dev"
+
 .PHONY: run-dev
 run-dev:
 	docker compose -f docker-compose-dev.yaml up
