@@ -15,12 +15,13 @@ import MemberSettings from "./userSettingsModal/MemberSettings";
 import EditInterviews from "./modalContents/EditInterview";
 import EditInterviewers from "./modalContents/EditInterviewrs";
 import SelectAllQuestions from "./modalContents/SelectAllQuestions";
-import VideoSettings from "./modalContents/videoSettingsModal/VideoSettings";
 import VideoSettingsContent from "./modalContents/videoSettingsModal/VideoSettingsContent";
+import CreateQuestionBank from "./modalContents/CreateQuestionBank";
 
 export enum MODAL_TYPE {
   CREATE_DEP = "CREATE_DEP",
   CREATE_INT = "CREATE_INT",
+  CREATE_QUEST_BANK = "CREATE_QUEST_BANK",
   SELECT_VAL = "SELECT_VAL",
   SELECT_TEM = "SELECT_TEM",
   MEMBER_SET = "MEMBER_SET",
@@ -82,6 +83,12 @@ const GlobalModal = (): JSX.Element => {
         return (
           <Modal title="Create New Interview">
             <CreateInterviews />
+          </Modal>
+        );
+      case MODAL_TYPE.CREATE_QUEST_BANK:
+        return (
+          <Modal title="Create New Question Bank">
+            <CreateQuestionBank />
           </Modal>
         );
       case MODAL_TYPE.EDIT_INT:
