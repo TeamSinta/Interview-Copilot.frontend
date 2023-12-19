@@ -6,7 +6,8 @@ import { useCookies } from 'react-cookie';
 import {
 	setIsAuthenticated,
 	resetUserState,
-	checkUserAuthentication
+	checkUserAuthentication,
+  	setTokens
 } from '@/features/authentication/authenticationSlice';
 import { RootState, AppDispatch } from '@/app/store';
 import {
@@ -16,6 +17,7 @@ import {
 } from '@/features/authentication/authenticationAPI';
 import { setCurrentWorkspace } from '@/features/workspace/userWorkspaceSlice';
 import Loading from '@/components/common/elements/loading/Loading';
+import { AccessToken } from "@/features/settingsDetail/userSettingTypes";
 
 interface AuthGuardProps {
 	children: ReactNode;
@@ -33,8 +35,8 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 		'refresh_token',
 		'access_token'
 	]);
-	const accessToken: string | undefined = cookies.access_token;
-	const refreshToken: string | undefined = cookies.refresh_token;
+  const accessToken: AccessToken = cookies.access_token;
+  const refreshToken: AccessToken = cookies.refresh_token;
 
 	const [validateToken] = useValidateTokenMutation();
 	const [getUser] = useGetUserMutation();
@@ -71,12 +73,13 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 		}
 	};
 
-	const authenticateUser = async (accessToken: string) => {
+	const authenticateUser = async (accessToken: AccessToken) => {
 		try {
 			const result = await validateToken({ access: accessToken });
 			if ('data' in result) {
+        dispatch(setIsAuthenticated(true));
+        dispatch(setTokens({ access: accessToken, refresh: refreshToken }));
 				await getUser({ access: accessToken });
-				dispatch(setIsAuthenticated(true));
 			} else {
 				handleTokenRefresh();
 			}
@@ -96,6 +99,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 				const { access } = newAccessToken.data;
 				setCookies('access_token', access);
 				dispatch(setIsAuthenticated(true));
+        dispatch(setTokens({ access: access, refresh: refreshToken }));
 				await getUser({ access: access });
 			} else {
 				failedAuthentication();
@@ -106,7 +110,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 	};
 
 	const setDefaultWorkspace = () => {
-		if (user.companies && user.companies.length > 0 && !workspace.id) {
+		if (user?.companies?.length > 0 && !workspace.id) {
 			const defaultCompany = user.companies[0];
 			dispatch(setCurrentWorkspace(defaultCompany));
 		}
@@ -130,9 +134,6 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 						} else {
 							await handleTokenRefresh();
 						}
-					}
-					if (!user.email) {
-						await getUser({ access: accessToken });
 					}
 					setDefaultWorkspace();
 					break;

@@ -12,10 +12,23 @@ import { useNavigate } from "react-router-dom";
 import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
 import { PlusIcon } from "@/components/common/svgIcons/Icons";
 import { BackgroundColor } from "@/features/utils/utilEnum";
+import { openModal } from "@/features/modal/modalSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/app/store";
+import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
 
 const QuestionBankTab = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const [loadedQuestionBanks, setQuestionBanks] = useState<string[]>([]);
+
+  const onClickModalOpen = () => {
+    dispatch(
+      openModal({
+        modalType: MODAL_TYPE.CREATE_QUEST_BANK,
+      })
+    );
+  };
 
   const {
     data: questionBanks,
@@ -59,7 +72,7 @@ const QuestionBankTab = () => {
         <ElWrap w={180}>
           <TextIconBtnL
             disable={false}
-            onClick={() => {}}
+            onClick={onClickModalOpen}
             className={BackgroundColor.ACCENT_PURPLE}
             icon={<PlusIcon />}
             label="Add New"
@@ -98,6 +111,7 @@ const QuestionBankTab = () => {
           />
         ))}
       </GridContainer>
+      <GlobalModal />
     </>
   );
 };
