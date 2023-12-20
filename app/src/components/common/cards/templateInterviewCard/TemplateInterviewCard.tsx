@@ -5,7 +5,7 @@ import { IconBtnM } from "../../buttons/iconBtn/IconBtn";
 import { PlusIcon, RightBracketIcon } from "../../svgIcons/Icons";
 import { BodyMBold, BodySMedium } from "../../typeScale/StyledTypeScale";
 
-import { IQuestion } from "@/features/interviews/interviewsInterface";
+import { IQuestionsBanks } from "@/features/interviews/interviewsInterface";
 import {
   Card,
   CardButtons,
@@ -15,13 +15,11 @@ import {
 } from "../card/StyledCard";
 import TempCover from "@/assets/svg/questions_cover.svg";
 
-interface ITemplateInterviewCardProps {
-  title: string;
+interface ITemplateInterviewCardProps extends IQuestionsBanks {
   //temporary
-  questions: IQuestion[];
   disable: boolean;
   onClick: () => void;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 const TemplateInterviewCard = (props: ITemplateInterviewCardProps) => {
@@ -74,7 +72,7 @@ const TemplateInterviewCard = (props: ITemplateInterviewCardProps) => {
             {title}
           </BodyMBold>
           <CardSubTitle>
-            <BodySMedium>{questions.length} Questions</BodySMedium>
+            <BodySMedium>{questions?.length} Questions</BodySMedium>
           </CardSubTitle>
         </CardContent>
       </Card>

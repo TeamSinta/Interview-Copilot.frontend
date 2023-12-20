@@ -5,6 +5,7 @@ import TextArea from "@/components/common/form/textArea/TextArea";
 import TextInput from "@/components/common/form/textInput/TextInput";
 import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
 import { closeModal } from "@/features/modal/modalSlice";
+import { addNewQuestionBank } from "@/features/questions/questionBankSlice";
 import { useAddQuestionBankMutation } from "@/features/questions/questionsAPISlice";
 import { BackgroundColor } from "@/features/utils/utilEnum";
 import { useState } from "react";
@@ -42,10 +43,10 @@ const CreateQuestionBank = () => {
     try {
       const requestData = {
         title: inputValue.title,
-        description: null,
+        description: inputValue.description,
       };
-
-      await addQuestionBank(requestData)?.unwrap();
+      const newQuestionBank = await addQuestionBank(requestData)?.unwrap();
+      dispatch(addNewQuestionBank(newQuestionBank));
       dispatch(closeModal());
     } catch (error) {
       console.error("Failed to add template:", error);

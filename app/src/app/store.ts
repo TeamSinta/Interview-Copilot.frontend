@@ -15,6 +15,7 @@ import { userAPI } from "@/features/settingsDetail/userSettingsAPI";
 import { templatesAPI } from "@/features/templates/templatesAPISlice";
 import { QuestionsAPI } from "@/features/questions/questionsAPISlice";
 import { templateQuestionsAPI } from "@/features/templates/templatesQuestionsAPISlice";
+import questionsBankSliceReducer from "@/features/questions/questionBankSlice";
 
 export const store = configureStore({
   reducer: {
@@ -33,6 +34,7 @@ export const store = configureStore({
     inviteMember: inviteMemberReducer,
     questionBanks: questionBanksReducer,
     interviewDetail: interviewDetailReducer,
+    questionsBankSlice: questionsBankSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
