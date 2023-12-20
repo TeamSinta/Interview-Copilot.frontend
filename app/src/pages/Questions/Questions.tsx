@@ -1,19 +1,12 @@
-import DropdownFilter from "@/components/common/filters/dropdownFilter/DropdownFilter";
+import { RootState } from "@/app/store";
 import TextIconFilter from "@/components/common/filters/textIconFilter/TextIconFilter";
 import SearchInput from "@/components/common/form/serchInput/SearchInput";
 import { BodySMedium, H1 } from "@/components/common/typeScale/StyledTypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
 import { Box, Stack } from "@mui/material";
 import * as React from "react";
-import { GridContainer } from "./StyledQuestions";
-import TemplateInterviewCard from "@/components/common/cards/templateInterviewCard/TemplateInterviewCard";
 import { useSelector } from "react-redux";
-import { IQuestionsBank } from "@/features/interviews/interviewsInterface";
-import { RootState } from "@/app/store";
-import QuestionsStage from "./QuestionsTab/QuestionsStage";
-import { useGetQuestionBanksQuery } from "@/features/questions/questionsAPISlice";
-import Loading from "@/components/common/elements/loading/Loading";
 import QuestionBankTab from "./QuestionBanksTab/QuestionBankTab";
+import QuestionsStage from "./QuestionsTab/QuestionsStage";
 
 const Questions = () => {
   const TABS = {
