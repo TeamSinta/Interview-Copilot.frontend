@@ -9,6 +9,8 @@ import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom"; // <-- Import useNavigate
 import SummarizerLoader from "@/components/common/elements/longLoading/LongLoading.js";
 import { Grid } from "@mui/material";
+import WebSockComp from "../../../components/common/socket/websock";
+
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -35,15 +37,9 @@ const Conclusion: React.FC = () => {
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(true);
 
-  useEffect(() => {
-    // Set a timeout to hide the loader after 2 minutes
-    const timeoutId = setTimeout(() => {
-      setShowLoader(false);
-    }, 60000); // 2 minutes in milliseconds
-
-    // Clear the timeout if the component unmounts or if the loader is hidden before the timeout
-    return () => clearTimeout(timeoutId);
-  }, []);
+const endLoader = () =>{
+  setShowLoader(false);
+}
 
   const header = useMemo(() => {
     return (
@@ -69,6 +65,7 @@ const Conclusion: React.FC = () => {
 
   return (
     <>
+      <WebSockComp interviewRoundId={location.state.id} endLoader={endLoader} />
       {showLoader && location.state.useTimer ? (
         <SummarizerLoader /> // Show loader if showLoader is true
       ) : (

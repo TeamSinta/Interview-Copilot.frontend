@@ -30,22 +30,6 @@ const RoomService = {
 
     return await response.json();
   },
-  async uploadVideo(room: string) {
-    // const options = {
-    // };
-
-    const VITE_DAILY_API_KEY = import.meta.env.VITE_DAILY_API_KEY;
-    const response = await fetch(`https://api.daily.co/v1/rooms/${room}`, {
-      method: "POST",
-      // body: JSON.stringify(options),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${VITE_DAILY_API_KEY}`,
-      },
-    });
-
-    return await response.json();
-  },
 };
 
 export default RoomService; // Export the named default export

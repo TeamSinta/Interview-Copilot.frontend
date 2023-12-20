@@ -39,7 +39,6 @@ import "./index.css";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { AppDispatch, RootState } from "../../../../app/store";
 import { useDispatch } from "react-redux";
-import { uploadRecording } from "../../../../utils/dailyVideoService/videoCallSlice";
 import { Cookies, useCookies } from "react-cookie";
 import Chat from "../Chat/Chat";
 import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
@@ -105,10 +104,7 @@ function BottomNavBar(props: any) {
     const shouldUpload = isRecording;
     isRecording ? stopRecording() : startRecording();
     const room = await callObject?.room();
-    if (shouldUpload) {
-      const response = await dispatch(uploadRecording(room?.name));
-    } else {
-      // recording has started, set the starting time
+    if (!shouldUpload) {
       setStartTime(new Date());
     }
   };

@@ -1,4 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import { getCookieValue } from '../cookieUtils';
 
 export const instance = axios.create({
   //Temporary suspension of service due to the current utilization of Mock API.
@@ -13,23 +14,26 @@ enum Env {
 
 
 //Temporary suspension of service due to the incomplete implementation of the login function.
-const requestHandler = (
+const requestHandler = async (
   config: InternalAxiosRequestConfig
-): InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig> => {
-  if (import.meta.env.VITE_ENV === Env.DEVELOPE) {
-    const token = localStorage.getItem("token");
-    if (token != null) {
-      switch (config.url) {
-        case import.meta.env.VITE_GOOGLE_CLIENT_ID:
-          return config;
-        default:
-          if (config.headers != null) {
-            config.headers.Authorization = `Bearer ${token}`;
-          }
-          return config;
-      }
-    }
-  }
+): Promise<InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>> => {
+  const access_token = await getCookieValue("access_token")
+    config.headers.Authorization = `Bearer ${access_token}`;
+  //  Todo: Need to confirm with @mohamed shegow
+  // if (import.meta.env.VITE_ENV === Env.DEVELOPE) {
+  //   const token = localStorage.getItem("token");
+  //   if (token != null) {
+  //     switch (config.url) {
+  //       case import.meta.env.VITE_GOOGLE_CLIENT_ID:
+  //         return config;
+  //       default:
+  //         if (config.headers != null) {
+  //           config.headers.Authorization = `Bearer ${token}`;
+  //         }
+  //         return config;
+  //     }
+  //   }
+  // }
   return config;
 };
 

@@ -14,6 +14,10 @@ const initialState: AuthState = {
     id: null,
     companies: [],
   },
+  token: {
+    access: null,
+    refresh: null,
+  }
 };
 
 export const userSlice = createSlice({
@@ -30,15 +34,20 @@ export const userSlice = createSlice({
     setIsAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
     },
+    setTokens: (state, action) => {
+      state.token = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addMatcher(authAPI.endpoints.googleLogin.matchPending, (state) => {
         state.status = "LOADING";
       })
-      .addMatcher(authAPI.endpoints.googleLogin.matchFulfilled, (state) => {
+      .addMatcher(authAPI.endpoints.googleLogin.matchFulfilled, (state, action) => {
         state.isAuthenticated = true;
         state.status = "AUTHENTICATED";
+        state.token.access = action.payload.access;
+        state.token.refresh = action.payload.refresh;
       })
       .addMatcher(authAPI.endpoints.googleLogin.matchRejected, (state) => {
         state.status = "FAILED";
@@ -83,6 +92,6 @@ export const checkUserAuthentication = createAsyncThunk(
   }
 );
 
-export const { setStatus, resetUserState, setIsAuthenticated } =
+export const { setStatus, resetUserState, setIsAuthenticated, setTokens } =
   userSlice.actions;
 export default userSlice.reducer;

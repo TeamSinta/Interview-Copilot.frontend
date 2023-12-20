@@ -16,14 +16,14 @@ import {
   selectInterview,
   selectQuestionBank,
 } from "@/features/interviews/interviewsSlice";
-import { IQuestionsBank } from "@/features/interviews/interviewsInterface";
+import { IQuestionsBanks } from "@/features/interviews/interviewsInterface";
 import { DataLoading } from "@/features/utils/utilEnum";
 
 const TemplateList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { questionBanks, status } = useSelector(selectInterview);
 
-  const onSelectQuestionBank = (template: IQuestionsBank) => {
+  const onSelectQuestionBank = (template: IQuestionsBanks) => {
     dispatch(selectQuestionBank(template));
   };
 
@@ -51,14 +51,13 @@ const TemplateList = () => {
       </TemplateListInputWrap>
       <TemplateListContentWrap>
         {status === DataLoading.FULFILLED ? (
-          questionBanks.map((template: IQuestionsBank) => (
+          questionBanks.map((template: IQuestionsBanks) => (
             <TemplateInterviewCard
-              title={template.title}
-              questions={template.questions}
+              {...template}
               disable={false}
               key={template.id}
               onClick={() => {
-                onSelectQuestionBank({ questionBank: template });
+                onSelectQuestionBank(template);
               }}
             />
           ))

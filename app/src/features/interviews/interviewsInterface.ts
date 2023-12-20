@@ -26,3 +26,10 @@ export interface IQuestionsBank {
   id: number;
   questionBank: [];
 }
+
+export interface IQuestionsBanks {
+  id: number;
+  title: string;
+  description: string;
+  questions: IQuestion[];
+}
