@@ -33,13 +33,11 @@ import {
   StyledColumns,
   StyledFinishBtn,
 } from "./StyledBottomNavBar";
-import { sendFeedback } from "../../../../features/interviews/interviewsAPI";
 import { Grid } from "@mui/material";
 import "./index.css";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import { AppDispatch, RootState } from "../../../../app/store";
+import { AppDispatch } from "../../../../app/store";
 import { useDispatch } from "react-redux";
-import { Cookies, useCookies } from "react-cookie";
 import Chat from "../Chat/Chat";
 import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
 import { openModal } from "@/features/modal/modalSlice";
@@ -48,7 +46,6 @@ function BottomNavBar(props: any) {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
   const [isEmojiTrayOpened, setIsEmojiTrayOpened] = useState<boolean>(false);
-  const [cookies, ,] = useCookies(["access_token"]);
   const {
     setReactClicked,
     reactClicked,

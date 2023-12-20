@@ -5,7 +5,6 @@ import { fetchMembers } from "./rolesAPI";
 import { IMember, IMockMembers, RolesCreateSlice } from "./rolesInterface";
 import { useGetCompanyMembersQuery } from "../settingsDetail/userSettingsAPI";
 import {
-  AccessToken,
   CompanyID,
   DepartmentID,
 } from "../settingsDetail/userSettingTypes";
@@ -26,12 +25,10 @@ export const initialState: RolesCreateSlice = {
 };
 
 export const useFetchSelectMembers = ({
-  access,
   company_id,
   department_id,
   sortCriteria,
 }: {
-  access: AccessToken;
   company_id: CompanyID;
   department_id: DepartmentID;
   sortCriteria: string;
@@ -39,7 +36,6 @@ export const useFetchSelectMembers = ({
   const [members, setMembers] = useState<IMockMembers[]>([]);
 
   const { data, isSuccess } = useGetCompanyMembersQuery({
-    access,
     company_id,
     department_id,
     sort_by: sortCriteria,

@@ -1,7 +1,11 @@
+import { AppDispatch, RootState } from "@/app/store";
 import {
   IconBtnL,
   IconBtnM,
 } from "@/components/common/buttons/iconBtn/IconBtn";
+import InterviewRoundCard from "@/components/common/cards/interviewRoundCard/InterviewRoundCard";
+import { IMember } from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
+import Loading from "@/components/common/elements/loading/Loading";
 import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
 import {
   EditIcon,
@@ -14,9 +18,6 @@ import {
   H2Bold,
 } from "@/components/common/typeScale/StyledTypeScale";
 import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import InterviewOverviewDetails from "@/components/pages/interview/overview_detail/InterviewOverviewDetails";
-import InterviewOverviewInterviewer from "@/components/pages/interview/overview_interviewer/InterviewOverviewInterviewer";
-import InterviewOverviewSections from "@/components/pages/interview/overview_section/InterviewOverviewSections";
 import {
   InterviewOverviewContainer,
   InterviewOverviewLayout,
@@ -27,26 +28,21 @@ import {
   Subtitle,
   Title,
 } from "@/components/pages/interview/StyledInterview";
+import InterviewOverviewDetails from "@/components/pages/interview/overview_detail/InterviewOverviewDetails";
+import InterviewOverviewInterviewer from "@/components/pages/interview/overview_interviewer/InterviewOverviewInterviewer";
+import InterviewOverviewSections from "@/components/pages/interview/overview_section/InterviewOverviewSections";
+import { useFetchCompanyDepartments } from "@/components/pages/settings/memberTab/useFetchAndSortMembers";
 import { getInterviewDetailAsync } from "@/features/interviewDetail/interviewDetailSlice";
 import { openModal } from "@/features/modal/modalSlice";
+import { CompanyID } from "@/features/settingsDetail/userSettingTypes";
+import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
+import { TemplateQuestions } from "@/features/templates/templatesInterface";
+import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
 import { BackgroundColor } from "@/features/utils/utilEnum";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import InterviewRoundCard from "@/components/common/cards/interviewRoundCard/InterviewRoundCard";
 import { Template } from "./Templates_/Templates";
-import { IMember } from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
-import { AppDispatch, RootState } from "@/app/store";
-import Loading from "@/components/common/elements/loading/Loading";
-import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
-import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
-import { TemplateQuestions } from "@/features/templates/templatesInterface";
-import {
-  AccessToken,
-  CompanyID,
-} from "@/features/settingsDetail/userSettingTypes";
-import { useCookies } from "react-cookie";
-import { useFetchCompanyDepartments } from "@/components/pages/settings/memberTab/useFetchAndSortMembers";
 
 const InterviewStage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -62,8 +58,6 @@ const InterviewStage = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
 
-  const [cookies, ,] = useCookies(["access_token"]);
-  const accessToken = cookies.access_token as AccessToken;
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
@@ -79,10 +73,7 @@ const InterviewStage = () => {
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
 
-  const departments = useFetchCompanyDepartments(
-    accessToken,
-    companyId as CompanyID
-  );
+  const departments = useFetchCompanyDepartments(companyId as CompanyID);
 
   const handleSetDepartment = (value: string) => {
     setDepartmentId(value);

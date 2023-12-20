@@ -5,10 +5,8 @@ import { openModal } from "@/features/modal/modalSlice";
 import Stack from "@mui/material/Stack";
 import StyledInvitationBox from "@/components/common/form/inviteBox/InviteBox";
 import { useDispatch, useSelector } from "react-redux";
-import { useCookies } from "react-cookie";
 import { RootState } from "@/app/store";
 import {
-  AccessToken,
   CompanyID,
 } from "@/features/settingsDetail/userSettingTypes";
 import MemberList from "./MemberList";
@@ -27,14 +25,11 @@ const MemberTab = () => {
   const [sortCriteria, setSortCritiera] = useState("");
   const [departmentId, setDepartmentId] = useState("");
 
-  const [cookies, ,] = useCookies(["access_token"]);
-  const accessToken = cookies.access_token as AccessToken;
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
   const { members } = useFetchCompanyMembers({
-    access: accessToken,
     company_id: companyId,
     department_id: departmentId,
     sortCriteria: sortCriteria,
@@ -52,10 +47,7 @@ const MemberTab = () => {
     setSortCritiera(value);
   };
 
-  const departments = useFetchCompanyDepartments(
-    accessToken,
-    companyId as CompanyID
-  );
+  const departments = useFetchCompanyDepartments( companyId as CompanyID);
 
   const handleSetDepartment = (value: string) => {
     setDepartmentId(value);

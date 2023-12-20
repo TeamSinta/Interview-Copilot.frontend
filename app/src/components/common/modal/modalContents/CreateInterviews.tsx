@@ -4,7 +4,6 @@ import Photos from "@/components/common/buttons/photo/Photos";
 import { PhotoContainer } from "@/components/common/buttons/photo/StyledPhoto";
 import { TextBtnL } from "@/components/common/buttons/textBtn/TextBtn";
 import { InputLayout } from "@/components/common/form/input/StyledInput";
-import Invite from "@/components/common/form/invite/Invite";
 import TextArea from "@/components/common/form/textArea/TextArea";
 import TextInput from "@/components/common/form/textInput/TextInput";
 import { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
@@ -18,14 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ModalContentWrap } from "./StyledModalContents";
 import { useEffect, useState } from "react";
 import { RootState } from "@/app/store";
-import {
-  AccessToken,
-  CompanyID,
-} from "@/features/settingsDetail/userSettingTypes";
-import { useCookies } from "react-cookie";
+import { CompanyID } from "@/features/settingsDetail/userSettingTypes";
 import { useAddTemplateMutation } from "@/features/templates/templatesAPISlice";
-import StatusFilter from "../../filters/statusFilter/StatusFilter";
-import DropdownFilter from "../../filters/dropdownFilter/DropdownFilter";
 import DepartmentDropDown from "@/components/pages/settings/memberTab/DepartmentDropdown";
 import { useFetchCompanyDepartments } from "@/components/pages/settings/memberTab/useFetchAndSortMembers";
 import NewDepartment from "../../form/newDepartment/newDepartment";
@@ -58,15 +51,12 @@ const CreateInterviews = () => {
   const [departmentId, setDepartmentId] = useState("");
   const [selectedMembers, setSelectedMembers] = useState<IMember[]>([]);
 
-  const [cookies, ,] = useCookies(["access_token"]);
-  const accessToken = cookies.access_token as AccessToken;
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
 
   const { members } = useFetchSelectMembers({
-    access: accessToken,
     company_id: companyId,
     department_id: departmentId,
     sortCriteria: sortCriteria,
@@ -147,10 +137,7 @@ const CreateInterviews = () => {
     );
   };
 
-  const departments = useFetchCompanyDepartments(
-    accessToken,
-    companyId as CompanyID
-  );
+  const departments = useFetchCompanyDepartments(companyId as CompanyID);
 
   const handleSetDepartment = (value: string) => {
     setDepartmentId(value);

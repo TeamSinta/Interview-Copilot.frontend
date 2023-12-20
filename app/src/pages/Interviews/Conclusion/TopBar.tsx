@@ -8,10 +8,9 @@ import {
   getCandidateById,
   getTemplate,
 } from "../../../features/interviews/interviewsAPI";
-import { useCookies } from "react-cookie";
+
 const TopBar = ({ interviewRoundId }) => {
   const { BIO_DATA, OVERALL_SCORE, SENTIMENT } = TOP_BAR_INFO;
-  const [cookies, ,] = useCookies(["access_token"]);
   const [average, setAverage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [overallScore, setOverallScore] = useState(0);
@@ -21,25 +20,15 @@ const TopBar = ({ interviewRoundId }) => {
   useEffect(() => {
     const fetchRatings = async () => {
       setIsLoading(true);
-      const questions = await getInterviewRoundQuestions(
-        interviewRoundId,
-        cookies.access_token
-      );
+      const questions = await getInterviewRoundQuestions(interviewRoundId);
 
       const interviewRound = await getInterview(
         interviewRoundId,
-        cookies.access_token
       );
 
-      const candidate = await getCandidateById(
-        interviewRound.candidate_id,
-        cookies.access_token
-      );
+      const candidate = await getCandidateById(interviewRound.candidate_id);
 
-      const template = await getTemplate(
-        interviewRound.template_id,
-        cookies.access_token
-      );
+      const template = await getTemplate(interviewRound.template_id);
       setCandidateName(candidate.first_name + " " + candidate.last_name);
       setTemplateTitle(template.role_title);
       let ratingTotal = 0;
@@ -59,13 +48,13 @@ const TopBar = ({ interviewRoundId }) => {
 
   return (
     <React.Fragment>
-      <Grid container spacing={2} className="bar ">
-        <Grid item={true} xs={12} md={12} lg={3} className="column">
+      <Grid container spacing={2} className='bar '>
+        <Grid item={true} xs={12} md={12} lg={3} className='column'>
           <div>
-            <p className="bio-data-name">{candidateName}</p>
-            <p className="bio-data-designation">{templateTitle}</p>
-            <p className="bio-data-stage">
-              <span className="bio-data-stage-label">
+            <p className='bio-data-name'>{candidateName}</p>
+            <p className='bio-data-designation'>{templateTitle}</p>
+            <p className='bio-data-stage'>
+              <span className='bio-data-stage-label'>
                 {/* {BIO_DATA.STAGE_LABEL}:{" "} */}
               </span>{" "}
               <span
@@ -80,23 +69,23 @@ const TopBar = ({ interviewRoundId }) => {
             </p>
           </div>
         </Grid>
-        <Grid item={true} xs={12} md={12} lg={3} className="column">
+        <Grid item={true} xs={12} md={12} lg={3} className='column'>
           <div>
             <p>{OVERALL_SCORE.LABEL}</p>
-            <div id="progressContainer">
+            <div id='progressContainer'>
               <progress
-                id="myProgress"
+                id='myProgress'
                 style={{
                   height: "20px",
                 }}
                 value={overallScore.toFixed(0)}
-                max="100"
+                max='100'
               ></progress>
             </div>
             <p>{!isLoading ? overallScore.toFixed(0) : "Loading..."}%</p>
           </div>
         </Grid>
-        <Grid item={true} xs={12} md={12} lg={3} className="column">
+        <Grid item={true} xs={12} md={12} lg={3} className='column'>
           <div>
             {" "}
             <p>{SENTIMENT.LABEL}</p>
@@ -124,7 +113,7 @@ const TopBar = ({ interviewRoundId }) => {
             </div>
             <p>
               {!isLoading ? average.toFixed(0) : "Loading..."}{" "}
-              <span className="sentiment-meta">/ 5</span>{" "}
+              <span className='sentiment-meta'>/ 5</span>{" "}
             </p>
           </div>
         </Grid>

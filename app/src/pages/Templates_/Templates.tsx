@@ -1,42 +1,37 @@
 import { AppDispatch, RootState } from "@/app/store";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { EditIcon, PlusIcon } from "@/components/common/svgIcons/Icons";
-import {
-  H1,
-  BodyLMedium,
-  H2Medium,
-  H2Bold,
-  BodyMMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { openModal } from "@/features/modal/modalSlice";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { Key, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Stack, Box } from "@mui/material";
-import TemplateHomeCard, {
-  IMember,
-} from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
-import { useState } from "react";
-import { TemplateCardsBox } from "../Dashboard/StyledDashboard";
-import { useNavigate } from "react-router-dom";
-import { CreateInterviewBox, DepartmentHeading } from "./StyledTemplates";
+import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
 import {
   IconBtnL,
   IconBtnM,
 } from "@/components/common/buttons/iconBtn/IconBtn";
-import DropdownFilter from "@/components/common/filters/dropdownFilter/DropdownFilter";
+import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
+import TemplateHomeCard, {
+  IMember,
+} from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
 import Loading from "@/components/common/elements/loading/Loading";
-import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
-import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
-import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
-import { TemplateQuestions } from "@/features/templates/templatesInterface";
-import { useCookies } from "react-cookie";
+import DropdownFilter from "@/components/common/filters/dropdownFilter/DropdownFilter";
+import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
+import { EditIcon, PlusIcon } from "@/components/common/svgIcons/Icons";
 import {
-  AccessToken,
-  CompanyID,
-} from "@/features/settingsDetail/userSettingTypes";
+  BodyLMedium,
+  BodyMMedium,
+  H1,
+  H2Bold,
+  H2Medium,
+} from "@/components/common/typeScale/StyledTypeScale";
+import ElWrap from "@/components/layouts/elWrap/ElWrap";
+import { openModal } from "@/features/modal/modalSlice";
+import { CompanyID } from "@/features/settingsDetail/userSettingTypes";
+import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
+import { TemplateQuestions } from "@/features/templates/templatesInterface";
+import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
+import { BackgroundColor } from "@/features/utils/utilEnum";
+import { Box, Stack } from "@mui/material";
+import { Key, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { TemplateCardsBox } from "../Dashboard/StyledDashboard";
+import { CreateInterviewBox, DepartmentHeading } from "./StyledTemplates";
 
 export interface Template {
   roundId: Key | null | undefined;
@@ -62,8 +57,6 @@ const Templates = () => {
   const [departmentId, setDepartmentId] = useState("");
   const [sortCriteria, setSortCritiera] = useState("");
 
-  const [cookies, ,] = useCookies(["access_token"]);
-  const accessToken = cookies.access_token as AccessToken;
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyID = (!workspace.id
     ? user?.companies?.[0]?.id ?? workspace.id

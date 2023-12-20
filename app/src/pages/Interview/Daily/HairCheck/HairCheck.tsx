@@ -43,9 +43,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import {
   createInterviewRound,
-  getCandidateByUsername,
 } from "../../../../features/interviews/interviewsAPI";
-import { useCookies } from "react-cookie";
 import { IMember } from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
 import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
 import DropUpBtn from "@/components/common/dropUpBtn/dropUpBtn";
@@ -55,7 +53,6 @@ import IconButton from "@mui/material/IconButton";
 import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
 import { Template } from "@/pages/Templates_/Templates";
 import {
-  AccessToken,
   CompanyID,
 } from "@/features/settingsDetail/userSettingTypes";
 
@@ -91,13 +88,8 @@ export default function HairCheck({
     null
   );
 
-  const [cookies, ,] = useCookies(["access_token"]);
   const workspace = useSelector((state: RootState) => state.workspace);
 
-  const [departmentId, setDepartmentId] = useState("");
-  const [sortCriteria, setSortCritiera] = useState("");
-
-  const accessToken = cookies.access_token as AccessToken;
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyID = (!workspace.id
     ? user?.companies?.[0]?.id ?? workspace.id
@@ -136,7 +128,6 @@ export default function HairCheck({
       const response = await createInterviewRound(
         title,
         selectedTemplateId,
-        cookies.access_token,
         meeting_room_id
       );
 
