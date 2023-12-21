@@ -14,7 +14,7 @@
 
 ```bash
 # installs the project
-make install
+make setup
 
 # builds the docker container
 make build

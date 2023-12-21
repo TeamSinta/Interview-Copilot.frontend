@@ -9,13 +9,33 @@ build:
 install:
 		cd app && npm install
 
-# Linting # not working yet
+# Linting
+.PHONY: install-pre-commit
+install-pre-commit:
+	cd app && pre-commit uninstall && pre-commit install -c ../.pre-commit-config.yaml
 
-.PHONY: lint
+.PHONY: prettier
+prettier:
+		cd app && npm run format
+
+.PHONY: linting
 lint:
 		cd app && npm run lint
 
+.PHONY: check-types
+check-types:
+		cd app && npm run check-types
+
+.PHONY: format-lint-all
+format-lint-all:
+		make prettier linting check-types
+
 # Run Commands #
+.PHONY: run
+run:
+	vlt config init
+	vlt run -c "make run-dev"
+
 .PHONY: run-dev
 run-dev:
 	docker compose -f docker-compose-dev.yaml up
@@ -36,8 +56,7 @@ staging-down:
 docker-down:
 	dev-down staging-down
 
-# TODO
-# storybook
-# lint
-# test
-# format
+# Setup Command
+.PHONY: setup
+setup:
+	make install install-pre-commit
