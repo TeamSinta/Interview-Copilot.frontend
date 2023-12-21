@@ -1,21 +1,21 @@
-import React, { ChangeEvent, useState } from "react";
-import styled from "styled-components";
+import React, { ChangeEvent, useState } from 'react';
+import styled from 'styled-components';
 import {
   DailyVideo,
   useDevices,
   useLocalParticipant,
-} from "@daily-co/daily-react";
-import { ModalContentWrap, SelectContentWrap } from "../StyledModalContents";
+} from '@daily-co/daily-react';
+import { ModalContentWrap, SelectContentWrap } from '../StyledModalContents';
 import {
   CamHideIcon,
   NavCamIcon,
   VideoCam,
   VideoMic,
   VideoSound,
-} from "@/components/common/svgIcons/Icons";
+} from '@/components/common/svgIcons/Icons';
 
-import { CamIcon } from "../../../svgIcons/CustomIcons";
-import { BodyMMedium, BodySMedium } from "../../../typeScale/StyledTypeScale";
+import { CamIcon } from '../../../svgIcons/CustomIcons';
+import { BodyMMedium, BodySMedium } from '../../../typeScale/StyledTypeScale';
 
 const SettingsOptionsContainer = styled.div`
   display: flex;
@@ -78,9 +78,9 @@ const VideoSettingsContent: React.FC<VideoSettingsContentProps> = ({}) => {
   const [isSpeakerDropdownOpen, setSpeakerDropdownOpen] = useState(false);
   const [isCameraDropdownOpen, setCameraDropdownOpen] = useState(false);
 
-  const [selectedMicrophone, setSelectedMicrophone] = useState(""); // State to store selected microphone
-  const [selectedSpeaker, setSelectedSpeaker] = useState(""); // State to store selected speaker
-  const [selectedCamera, setSelectedCamera] = useState(""); // State to store selected camera
+  const [selectedMicrophone, setSelectedMicrophone] = useState(''); // State to store selected microphone
+  const [selectedSpeaker, setSelectedSpeaker] = useState(''); // State to store selected speaker
+  const [selectedCamera, setSelectedCamera] = useState(''); // State to store selected camera
 
   const toggleMicrophoneDropdown = () => {
     setMicrophoneDropdownOpen(!isMicrophoneDropdownOpen);
@@ -118,25 +118,25 @@ const VideoSettingsContent: React.FC<VideoSettingsContentProps> = ({}) => {
         <DailyVideo
           automirror
           sessionId={localParticipant.session_id}
-          type={"video"}
+          type={'video'}
           style={{
-            height: "100%",
-            minWidth: "100%",
-            flex: "1",
+            height: '100%',
+            minWidth: '100%',
+            flex: '1',
           }}
-          fit={"cover"}
+          fit={'cover'}
         />
         <SettingsOptionsContainer>
           <CustomDropdown>
             <BodySMedium> Select Microphone</BodySMedium>
-            <div style={{ display: "flex" }}></div>
+            <div style={{ display: 'flex' }}></div>
             <CustomDropdownButton onClick={toggleMicrophoneDropdown}>
               <BodyMMedium>
                 {selectedMicrophone
                   ? microphones?.find(
                       (mic) => mic.device.deviceId === selectedMicrophone
                     )?.device.label
-                  : "Select Microphone"}
+                  : 'Select Microphone'}
               </BodyMMedium>
             </CustomDropdownButton>
             {isMicrophoneDropdownOpen && (
@@ -161,7 +161,7 @@ const VideoSettingsContent: React.FC<VideoSettingsContentProps> = ({}) => {
                   ? speakers?.find(
                       (speaker) => speaker.device.deviceId === selectedSpeaker
                     )?.device.label
-                  : "Select Microphone"}
+                  : 'Select Microphone'}
               </BodyMMedium>
             </CustomDropdownButton>
             {isSpeakerDropdownOpen && (
@@ -186,7 +186,7 @@ const VideoSettingsContent: React.FC<VideoSettingsContentProps> = ({}) => {
                   ? cameras?.find(
                       (camera) => camera.device.deviceId === selectedCamera
                     )?.device.label
-                  : "Select Camera"}
+                  : 'Select Camera'}
               </BodyMMedium>
             </CustomDropdownButton>
 

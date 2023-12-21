@@ -1,49 +1,43 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Stack, Box, Container } from "@mui/material";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { RightBracketIcon } from "@/components/common/svgIcons/Icons";
-import TemplateHomeCard from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
-import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
+import React, { useRef, useEffect, useState } from 'react';
+import { Stack, Box, Container } from '@mui/material';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { RightBracketIcon } from '@/components/common/svgIcons/Icons';
+import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
+import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import {
   WelcomeHeading,
   DescriptionText,
   PendingReviewsHeading,
   TextBox,
   TemplateCardsBox,
-  ButtonContainer,
   EmptySectionContainer,
   TemplateEmptyBox,
   WavingHand,
   InterviewsBox,
-  TextContainer,
   UpgradeButton,
   WorkspaceTextBox,
-} from "./StyledDashboard";
-import dashboardImage from "src/assets/svg/HomePage_2.svg";
-import { StyledImage, StyledEmptyImage } from "./StyledDashboard";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/app/store";
-import { useNavigate } from "react-router-dom";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import Loading from "@/components/common/elements/loading/Loading";
+} from './StyledDashboard';
+import dashboardImage from 'src/assets/svg/HomePage_2.svg';
+import { StyledImage, StyledEmptyImage } from './StyledDashboard';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/app/store';
+import { useNavigate } from 'react-router-dom';
+import Loading from '@/components/common/elements/loading/Loading';
 import {
   TemplateQuestions,
   TemplateResponse,
-} from "@/features/templates/templatesInterface";
-import { createCall } from "@/utils/dailyVideoService/videoCallSlice";
+} from '@/features/templates/templatesInterface';
+import { createCall } from '@/utils/dailyVideoService/videoCallSlice';
 import {
   BodyLBold,
   BodyLMedium,
-  BodyLSemiBold,
-  H3Medium,
-} from "@/components/common/typeScale/StyledTypeScale";
+} from '@/components/common/typeScale/StyledTypeScale';
 import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
-import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
-import Grid from "@mui/material/Unstable_Grid2";
-import TopNavBarDash from "@/components/layouts/topnavbar/TopNavBarDash";
-import { H3 } from "@/components/common/typeScale/TypeScale";
-import Workspace from "./WorkSpaceCounter";
+import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
+import Grid from '@mui/material/Unstable_Grid2';
+import TopNavBarDash from '@/components/layouts/topnavbar/TopNavBarDash';
+import Workspace from './WorkSpaceCounter';
 
 const DashBoard = () => {
   const navigate = useNavigate();
@@ -52,15 +46,15 @@ const DashBoard = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const workspaceData = {
-    title: "Workspace",
+    title: 'Workspace',
     items: [
-      { label: "Plan type", value: "Free" },
-      { label: "Collaborators", value: "2 of 3" },
-      { label: "Summaries", value: "1 of 3" },
-      { label: "Interviews", value: "1" },
-      { label: "Templates", value: "12" },
+      { label: 'Plan type', value: 'Free' },
+      { label: 'Collaborators', value: '2 of 3' },
+      { label: 'Summaries', value: '1 of 3' },
+      { label: 'Interviews', value: '1' },
+      { label: 'Templates', value: '12' },
     ],
-    buttonText: "Upgrade",
+    buttonText: 'Upgrade',
   };
 
   const {
@@ -72,18 +66,18 @@ const DashBoard = () => {
   } = useGetTemplatesQuery();
 
   const handleButtonClick = () => {
-    navigate("/templates");
+    navigate('/templates');
   };
 
   const arg = {
-    label: "Show All",
+    label: 'Show All',
     icon: <RightBracketIcon />,
     className: BackgroundColor.ACCENT_PURPLE,
     onClick: handleButtonClick,
     disable: false,
   };
   const arg_empty = {
-    label: "Go to Templates",
+    label: 'Go to Templates',
     icon: <RightBracketIcon />,
     className: BackgroundColor.WHITE,
     onClick: handleButtonClick,
@@ -199,9 +193,9 @@ const DashBoard = () => {
   return (
     <>
       <Container
-        maxWidth={"lg"}
-        minWidth={"sm"}
-        style={{ marginTop: "20px", marginBottom: "20px" }}
+        maxWidth={'lg'}
+        minWidth={'sm'}
+        style={{ marginTop: '20px', marginBottom: '20px' }}
       >
         <TopNavBarDash />
 
@@ -213,49 +207,49 @@ const DashBoard = () => {
             lg={8}
             justifyContent="center"
             alignItems="center"
-            minWidth={"xs"}
+            minWidth={'xs'}
           >
-            <Container style={{ padding: "0px" }}>
+            <Container style={{ padding: '0px' }}>
               <StyledImage src={dashboardImage} alt="dashboard_picture" />
             </Container>
           </Grid>
-          <Grid xs={12} md={12} lg={4} minWidth={"xs"}>
+          <Grid xs={12} md={12} lg={4} minWidth={'xs'}>
             <div
               style={{
-                display: "flex",
-                gap: "16px",
-                flexDirection: "column",
-                width: "100%",
-                height: "100%",
-                justifyContent: "space-between",
+                display: 'flex',
+                gap: '16px',
+                flexDirection: 'column',
+                width: '100%',
+                height: '100%',
+                justifyContent: 'space-between',
               }}
             >
-              <Container style={{ minWidth: "320px", padding: "0px" }}>
-                <InterviewsBox style={{ padding: "36px" }}>
+              <Container style={{ minWidth: '320px', padding: '0px' }}>
+                <InterviewsBox style={{ padding: '36px' }}>
                   <TextBox>
                     <WelcomeHeading>
-                      Welcome back, {user.first_name}{" "}
+                      Welcome back, {user.first_name}{' '}
                       <WavingHand>👋</WavingHand>
                     </WelcomeHeading>
                     <DescriptionText>
                       Helping teams hire faster and better. Get started by
-                      creating a template or launch a meeting.{" "}
+                      creating a template or launch a meeting.{' '}
                       <DescriptionText> </DescriptionText>
                     </DescriptionText>
                   </TextBox>
                 </InterviewsBox>
-              </Container>{" "}
-              <Container style={{ minWidth: "320px", padding: "0px" }}>
-                {" "}
-                <InterviewsBox style={{ padding: "36px" }}>
-                  {" "}
+              </Container>{' '}
+              <Container style={{ minWidth: '320px', padding: '0px' }}>
+                {' '}
+                <InterviewsBox style={{ padding: '36px' }}>
+                  {' '}
                   <WorkspaceTextBox>
                     <BodyLBold>Workspace</BodyLBold>
                     <UpgradeButton>Upgrade</UpgradeButton>
                   </WorkspaceTextBox>
                   <Workspace {...workspaceData} />
                 </InterviewsBox>
-              </Container>{" "}
+              </Container>{' '}
             </div>
           </Grid>
 
@@ -263,7 +257,7 @@ const DashBoard = () => {
             <Grid xs={12}>
               <TemplateEmptyBox>
                 <EmptySectionContainer>
-                  {" "}
+                  {' '}
                   <StyledEmptyImage
                     src={EmptySectionsImage}
                     alt="dashboard_picture"
@@ -274,7 +268,7 @@ const DashBoard = () => {
                   </BodyLMedium>
                   <Box
                     style={{
-                      width: "248px",
+                      width: '248px',
                     }}
                   >
                     <TextIconBtnL {...arg_empty} />

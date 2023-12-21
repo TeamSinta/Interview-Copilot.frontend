@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { Grid, Tooltip } from "@mui/material";
-import Image from "@/assets/images/empty_user_pic.jpeg";
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
+import React from 'react';
+import styled from 'styled-components';
+import { Grid, Tooltip } from '@mui/material';
+import Image from '@/assets/images/empty_user_pic.jpeg';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 
 interface QuestionData {
   name: string;
@@ -27,15 +27,14 @@ export const TranscriptionTabQNA: React.FC<TranscriptionTabQNAProps> = ({
   data,
   handleClick,
 }) => {
-
   return (
     <div
       style={{
-        fontWeight: "500",
-        borderRadius: "10px",
-        backgroundColor: "white",
-        fontSize: "14px",
-        marginTop: "10px",
+        fontWeight: '500',
+        borderRadius: '10px',
+        backgroundColor: 'white',
+        fontSize: '14px',
+        marginTop: '10px',
       }}
     >
       {data?.map((item, index) => (
@@ -46,11 +45,11 @@ export const TranscriptionTabQNA: React.FC<TranscriptionTabQNAProps> = ({
               xs={1}
               md={1}
               style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "flex-start",
-                paddingTop: "16px",
-                paddingLeft: "16px",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                paddingTop: '16px',
+                paddingLeft: '16px',
               }}
             >
               <Tooltip title={item.name} arrow>
@@ -58,24 +57,24 @@ export const TranscriptionTabQNA: React.FC<TranscriptionTabQNAProps> = ({
                   src={item.picture || Image} // Replace with the correct path to your assets
                   alt="user"
                   style={{
-                    borderRadius: "10px",
-                    width: "30px",
-                    height: "30px",
+                    borderRadius: '10px',
+                    width: '30px',
+                    height: '30px',
                   }}
                 />
               </Tooltip>
             </Grid>
-            <Grid item xs={9} md={10} style={{ padding: "15px 15px" }}>
+            <Grid item xs={9} md={10} style={{ padding: '15px 15px' }}>
               <div>
-                <BodySMedium>{item.speech}</BodySMedium>{" "}
+                <BodySMedium>{item.speech}</BodySMedium>{' '}
                 {/* Using speech field */}
               </div>
               <div>
                 <BodySMedium
                   style={{
-                    color: "#121212",
+                    color: '#121212',
                     opacity: 0.5,
-                    marginTop: "5px",
+                    marginTop: '5px',
                   }}
                 >
                   {item.timestamp} {/* Using timestamp field */}

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledCompetencies = styled.div`
   background: ${(props) => props.theme.colors.white};

@@ -1,14 +1,14 @@
-import React, { useMemo, useState, ReactNode } from "react";
-import { Divider, Grid, Stack } from "@mui/material";
-import { NavButton } from "@/components/layouts/sidenavbar/StyledSideNavBar";
-import "../index.css";
-import VideoPlayer from "./VideoPlayer/VideoPlayer";
-import { H3Bold } from "@/components/common/typeScale/StyledTypeScale";
-import styled from "styled-components";
-import ConclusionData from "@/services/conclusionService";
-import InterviewQNA from "./InterviewQNA/InterviewQNA";
-import SummaryTab from "./SummaryTab/SummaryTab";
-import { ReactionButtonBox } from "./reactionBox/ReactionBox";
+import React, { useMemo, useState, ReactNode } from 'react';
+import { Divider, Grid, Stack } from '@mui/material';
+import { NavButton } from '@/components/layouts/sidenavbar/StyledSideNavBar';
+import '../index.css';
+import VideoPlayer from './VideoPlayer/VideoPlayer';
+import { H3Bold } from '@/components/common/typeScale/StyledTypeScale';
+import styled from 'styled-components';
+import ConclusionData from '@/services/conclusionService';
+import InterviewQNA from './InterviewQNA/InterviewQNA';
+import SummaryTab from './SummaryTab/SummaryTab';
+import { ReactionButtonBox } from './reactionBox/ReactionBox';
 
 interface MainScreenProps {
   interviewRoundId: string;
@@ -79,7 +79,7 @@ const TabButton: React.FC<TabButtonProps> = ({
   <StyledNavButton
     onClick={() => setActiveTab(tabNumber)}
     direction="row"
-    className={isActive ? "rightTabs active" : "rightTabs"}
+    className={isActive ? 'rightTabs active' : 'rightTabs'}
   >
     <span>{children}</span>
   </StyledNavButton>
@@ -97,7 +97,6 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     loading,
     error,
   ] = ConclusionData(interviewRoundId);
-
 
   const infoTabs = useMemo(
     () => (
@@ -152,9 +151,9 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
           sm={12}
           md={12}
           lg={5}
-          style={{ display: "flex", flexDirection: "column", gap: "22px" }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}
         >
-          <Stack direction={"column"} spacing={2}>
+          <Stack direction={'column'} spacing={2}>
             <H3Bold>Technical Interview</H3Bold>
             <div className="video-player-wrapper">
               <VideoPlayer
@@ -165,8 +164,8 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
             </div>
             <Divider
               style={{
-                width: "50%",
-                alignSelf: "center",
+                width: '50%',
+                alignSelf: 'center',
               }}
             />
             <div className="button-container">
@@ -184,18 +183,18 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
             {activeTab === 2 && (
               <InterviewQNA
                 propData={summarizedAnswers?.data}
-                screen={"question"}
+                screen={'question'}
               />
             )}
 
             {activeTab === 3 && (
               <InterviewQNA
                 propData={questionsTranscript?.data}
-                screen={"transcription"}
+                screen={'transcription'}
               />
             )}
             {activeTab === 4 && (
-              <InterviewQNA propData={emojisData} screen={"notes"} />
+              <InterviewQNA propData={emojisData} screen={'notes'} />
             )}
           </ContentContainer>
         </Grid>

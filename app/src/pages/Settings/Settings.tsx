@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Box } from "@mui/material";
-import { H1 } from "@/components/common/typeScale/StyledTypeScale";
-import TextIconFilter from "@/components/common/filters/textIconFilter/TextIconFilter";
-import { SettingsContainer, PageContainer } from "./StyledSettings";
-import MemberTab from "@/components/pages/settings/memberTab/MemberTab";
-import { TABS } from "@/features/utils/utilEnum";
-import UserTab from "@/components/pages/settings/Profiletab/UserTab";
+import { useState } from 'react';
+import { Box } from '@mui/material';
+import { H1 } from '@/components/common/typeScale/StyledTypeScale';
+import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconFilter';
+import { SettingsContainer, PageContainer } from './StyledSettings';
+import MemberTab from '@/components/pages/settings/memberTab/MemberTab';
+import { TABS } from '@/features/utils/utilEnum';
+import UserTab from '@/components/pages/settings/Profiletab/UserTab';
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState(TABS.PROFILE);
@@ -19,23 +19,23 @@ const SettingsPage = () => {
       <H1>Settings</H1>
       <Box
         sx={{
-          paddingTop: "20px",
-          paddingBottom: "28px",
-          display: "flex",
-          gap: "4px",
+          paddingTop: '20px',
+          paddingBottom: '28px',
+          display: 'flex',
+          gap: '4px',
         }}
       >
         <TextIconFilter
           label="Profile"
           icon={false}
-          select={activeTab === "profile"}
+          select={activeTab === 'profile'}
           onClick={() => handleTabChange(TABS.PROFILE)}
         />
 
         <TextIconFilter
           label="Members"
           icon={false}
-          select={activeTab === "members"}
+          select={activeTab === 'members'}
           onClick={() => handleTabChange(TABS.MEMBERS)}
         />
       </Box>

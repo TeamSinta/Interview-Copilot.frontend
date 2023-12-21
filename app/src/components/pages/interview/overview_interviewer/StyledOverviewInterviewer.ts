@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { BoderBox, Title } from "../StyledInterview";
+import styled from 'styled-components';
+import { BoderBox, Title } from '../StyledInterview';
 
 export const OverviewInterviewers = styled(BoderBox)`
   height: 136px;

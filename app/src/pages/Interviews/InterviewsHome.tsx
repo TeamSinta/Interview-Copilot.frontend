@@ -42,21 +42,20 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 const TABS = {
-  INTERVIEWS: "interviews",
-  ARCHIVED: "archived",
+  INTERVIEWS: 'interviews',
+  ARCHIVED: 'archived',
 };
 
 export default function BasicTabs() {
   const [activeTab, setActiveTab] = React.useState(TABS.INTERVIEWS);
   const [interviews, setInterviews] = React.useState([]);
-
-  const [cookies, ,] = useCookies(["access_token"]);
+  const [cookies, ,] = useCookies(['access_token']);
 
   const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchInterviews = async () => {
-      const response = await getInterviews(cookies.access_token);
+      const response = await getInterviews();
       setInterviews(response);
     };
 
@@ -73,7 +72,7 @@ export default function BasicTabs() {
         <Box>
           <BodySMedium
             style={{
-              color: "grey",
+              color: 'grey',
             }}
           >
             My Library
@@ -81,12 +80,12 @@ export default function BasicTabs() {
           <H1>Interviews</H1>
         </Box>
 
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: '100%' }}>
           <Box
             sx={{
-              marginBottom: "24px",
-              gap: "12px",
-              display: "flex",
+              marginBottom: '24px',
+              gap: '12px',
+              display: 'flex',
             }}
           >
             <TextIconFilter
@@ -105,11 +104,11 @@ export default function BasicTabs() {
           <Box
             sx={{
               borderBottom: 1,
-              borderColor: "divider",
-              padding: "2px",
-              gap: "12px",
-              display: "flex",
-              marginBottom: "24px",
+              borderColor: 'divider',
+              padding: '2px',
+              gap: '12px',
+              display: 'flex',
+              marginBottom: '24px',
             }}
           ></Box>
           {activeTab === TABS.INTERVIEWS && (
@@ -118,7 +117,7 @@ export default function BasicTabs() {
                 {interviews.map((interviewRound: IInterviewRound, index) => (
                   <div
                     onClick={() => {
-                      navigate("/interviews/conclusion/", {
+                      navigate('/interviews/conclusion/', {
                         state: { id: interviewRound.id, useTimer: false },
                       });
                     }}
@@ -128,7 +127,7 @@ export default function BasicTabs() {
                       key={index}
                       title={interviewRound.title}
                       disable={false}
-                      name={"default name"}
+                      name={'default name'}
                       date={new Date().getTime() - 1000 * 60 * 60 * 24 * 15}
                     />
                   </div>

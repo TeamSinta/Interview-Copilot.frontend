@@ -1,2 +1,2 @@
-import Conclusion from "./Conclusion";
+import Conclusion from './Conclusion';
 export { Conclusion };

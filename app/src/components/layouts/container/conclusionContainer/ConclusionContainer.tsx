@@ -1,4 +1,4 @@
-import { ConclusionStyledContainer } from "./StyledConclusionContianer";
+import { ConclusionStyledContainer } from './StyledConclusionContianer';
 
 interface IContainer {
   children: JSX.Element[] | JSX.Element;

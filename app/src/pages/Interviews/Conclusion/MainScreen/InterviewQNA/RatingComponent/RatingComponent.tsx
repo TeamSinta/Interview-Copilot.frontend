@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   StyledIconBtnM,
   StyledRatingBtnL,
   StyledRatingBtnM,
-} from "@/components/common/buttons/button/StyledBtn";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { ICustomIconProps } from "@/components/common/svgIcons/CustomIcons";
+} from '@/components/common/buttons/button/StyledBtn';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { ICustomIconProps } from '@/components/common/svgIcons/CustomIcons';
 import {
   DislikeIcon,
   NeutralIcon,
   WrongIcon,
   LikeIcon,
   TopStarIcon,
-} from "@/components/common/svgIcons/Icons";
-import { Grid } from "@mui/material";
-import { getInterviewRoundQuestion } from "../../../../../../features/interviews/interviewsAPI";
+} from '@/components/common/svgIcons/Icons';
+import { Grid } from '@mui/material';
 
 interface RatingButtonProps extends ICustomIconProps {
   Icon: React.FunctionComponent;
@@ -27,24 +26,24 @@ interface PredefinedRatingsProps {
 }
 
 export const buttons = [
-  { Icon: WrongIcon, color: "#FABBCF", rate: 1 },
-  { Icon: DislikeIcon, color: "#FABBCF", rate: 2 },
-  { Icon: NeutralIcon, color: "#FFFABF", rate: 3 },
-  { Icon: LikeIcon, color: "#DBFDDC", rate: 4 },
-  { Icon: TopStarIcon, color: "#DBFDDC", rate: 5 },
+  { Icon: WrongIcon, color: '#FABBCF', rate: 1 },
+  { Icon: DislikeIcon, color: '#FABBCF', rate: 2 },
+  { Icon: NeutralIcon, color: '#FFFABF', rate: 3 },
+  { Icon: LikeIcon, color: '#DBFDDC', rate: 4 },
+  { Icon: TopStarIcon, color: '#DBFDDC', rate: 5 },
 ];
 
 export const RatingButton: React.FC<RatingButtonProps> = ({
   activeIcon,
   Icon,
-  activeColor = "",
+  activeColor = '',
 }) => {
   return (
-    <div style={{ marginRight: "5px" }}>
+    <div style={{ marginRight: '5px' }}>
       <ElWrap w={24}>
         <StyledRatingBtnM
           style={
-            activeIcon ? { background: activeColor, boxShadow: "none" } : {}
+            activeIcon ? { background: activeColor, boxShadow: 'none' } : {}
           }
         >
           <Icon />
@@ -58,15 +57,15 @@ export const WrongButtonL = (props: ICustomIconProps): JSX.Element => {
   const { active } = props;
   if (active === 1) {
     return (
-      <div style={{ marginRight: "5px" }}>
-        {" "}
+      <div style={{ marginRight: '5px' }}>
+        {' '}
         <ElWrap w={40}>
           <StyledRatingBtnL
             style={{
-              background: "#FABBCF",
-              boxShadow: "none",
-              outline: "1.7px solid black",
-              outlineOffset: "-1",
+              background: '#FABBCF',
+              boxShadow: 'none',
+              outline: '1.7px solid black',
+              outlineOffset: '-1',
             }}
           >
             <WrongIcon />
@@ -76,10 +75,10 @@ export const WrongButtonL = (props: ICustomIconProps): JSX.Element => {
     );
   } else {
     return (
-      <div style={{ marginRight: "5px" }}>
+      <div style={{ marginRight: '5px' }}>
         <ElWrap w={40}>
           <StyledRatingBtnL
-            style={{ outline: "1.7px solid black", outlineOffset: "-1" }}
+            style={{ outline: '1.7px solid black', outlineOffset: '-1' }}
           >
             <WrongIcon />
           </StyledRatingBtnL>
@@ -93,14 +92,14 @@ export const DislikeButtonL = (props: ICustomIconProps): JSX.Element => {
   const { active } = props;
   if (active === 2) {
     return (
-      <div style={{ marginRight: "5px" }}>
+      <div style={{ marginRight: '5px' }}>
         <ElWrap w={40}>
           <StyledRatingBtnL
             style={{
-              background: "#FABBCF",
-              boxShadow: "none",
-              outline: "1.7px solid black",
-              outlineOffset: "-1",
+              background: '#FABBCF',
+              boxShadow: 'none',
+              outline: '1.7px solid black',
+              outlineOffset: '-1',
             }}
           >
             <DislikeIcon />
@@ -110,11 +109,11 @@ export const DislikeButtonL = (props: ICustomIconProps): JSX.Element => {
     );
   } else {
     return (
-      <div style={{ marginRight: "5px" }}>
-        {" "}
+      <div style={{ marginRight: '5px' }}>
+        {' '}
         <ElWrap w={40}>
           <StyledRatingBtnL
-            style={{ outline: "1.7px solid black", outlineOffset: "-1" }}
+            style={{ outline: '1.7px solid black', outlineOffset: '-1' }}
           >
             <DislikeIcon />
           </StyledRatingBtnL>
@@ -128,15 +127,15 @@ export const NeutralButtonL = (props: ICustomIconProps): JSX.Element => {
   const { active } = props;
   if (active === 3) {
     return (
-      <div style={{ marginRight: "5px" }}>
-        {" "}
+      <div style={{ marginRight: '5px' }}>
+        {' '}
         <ElWrap w={40}>
           <StyledRatingBtnL
             style={{
-              background: "#FFFABF",
-              boxShadow: "none",
-              outline: "1.7px solid black",
-              outlineOffset: "-1",
+              background: '#FFFABF',
+              boxShadow: 'none',
+              outline: '1.7px solid black',
+              outlineOffset: '-1',
             }}
           >
             <NeutralIcon />
@@ -146,11 +145,11 @@ export const NeutralButtonL = (props: ICustomIconProps): JSX.Element => {
     );
   } else {
     return (
-      <div style={{ marginRight: "5px" }}>
-        {" "}
+      <div style={{ marginRight: '5px' }}>
+        {' '}
         <ElWrap w={40}>
           <StyledRatingBtnL
-            style={{ outline: "1.7px solid black", outlineOffset: "-1" }}
+            style={{ outline: '1.7px solid black', outlineOffset: '-1' }}
           >
             <NeutralIcon />
           </StyledRatingBtnL>
@@ -164,14 +163,14 @@ export const LikeButtonL = (props: ICustomIconProps): JSX.Element => {
   const { active } = props;
   if (active === 4) {
     return (
-      <div style={{ marginRight: "5px" }}>
+      <div style={{ marginRight: '5px' }}>
         <ElWrap w={40}>
           <StyledRatingBtnL
             style={{
-              background: "#DBFDDC",
-              boxShadow: "none",
-              outline: "1.7px solid black",
-              outlineOffset: "-1",
+              background: '#DBFDDC',
+              boxShadow: 'none',
+              outline: '1.7px solid black',
+              outlineOffset: '-1',
             }}
           >
             <LikeIcon />
@@ -181,11 +180,11 @@ export const LikeButtonL = (props: ICustomIconProps): JSX.Element => {
     );
   } else {
     return (
-      <div style={{ marginRight: "5px" }}>
-        {" "}
+      <div style={{ marginRight: '5px' }}>
+        {' '}
         <ElWrap w={40}>
           <StyledRatingBtnL
-            style={{ outline: "1.7px solid black", outlineOffset: "-1" }}
+            style={{ outline: '1.7px solid black', outlineOffset: '-1' }}
           >
             <LikeIcon />
           </StyledRatingBtnL>
@@ -202,10 +201,10 @@ export const TopStarButtonL = (props: ICustomIconProps): JSX.Element => {
       <ElWrap w={40}>
         <StyledRatingBtnL
           style={{
-            background: "#DBFDDC",
-            boxShadow: "none",
-            outline: "1.7px solid black",
-            outlineOffset: "-1",
+            background: '#DBFDDC',
+            boxShadow: 'none',
+            outline: '1.7px solid black',
+            outlineOffset: '-1',
           }}
         >
           <TopStarIcon />
@@ -216,7 +215,7 @@ export const TopStarButtonL = (props: ICustomIconProps): JSX.Element => {
     return (
       <ElWrap w={40}>
         <StyledRatingBtnL
-          style={{ outline: "1.7px solid black", outlineOffset: "-1" }}
+          style={{ outline: '1.7px solid black', outlineOffset: '-1' }}
         >
           <TopStarIcon />
         </StyledRatingBtnL>
@@ -243,7 +242,7 @@ export const RatingComponent: React.FC<any> = ({
   }, [interviewRoundId]);
 
   return (
-    <div style={{ display: "flex", margin: "0px" }}>
+    <div style={{ display: 'flex', margin: '0px' }}>
       {buttons.map(({ Icon, color, rate }) => (
         <span onClick={() => handleRating(rate)}>
           <RatingButton
@@ -277,40 +276,40 @@ export function RatingComponentL({
   return (
     <div
       style={{
-        display: "flex",
-        marginLeft: "4px",
-        gap: "16px",
-        marginRight: "0.5%",
-        justifyContent: "flex-start",
+        display: 'flex',
+        marginLeft: '4px',
+        gap: '16px',
+        marginRight: '0.5%',
+        justifyContent: 'flex-start',
       }}
     >
       <ElWrap w={35}>
         <StyledIconBtnM>
           <span onClick={() => handleRating(1)}>
             <WrongButtonL width={width} height={height} active={activeTab} />
-          </span>{" "}
+          </span>{' '}
         </StyledIconBtnM>
       </ElWrap>
       <ElWrap w={35}>
         <StyledIconBtnM>
           <span onClick={() => handleRating(2)}>
             <DislikeButtonL width={width} height={height} active={activeTab} />
-          </span>{" "}
-        </StyledIconBtnM>{" "}
+          </span>{' '}
+        </StyledIconBtnM>{' '}
       </ElWrap>
       <ElWrap w={35}>
         <StyledIconBtnM>
           <span onClick={() => handleRating(3)}>
             <NeutralButtonL width={width} height={height} active={activeTab} />
-          </span>{" "}
-        </StyledIconBtnM>{" "}
+          </span>{' '}
+        </StyledIconBtnM>{' '}
       </ElWrap>
       <ElWrap w={35}>
         <StyledIconBtnM>
           <span onClick={() => handleRating(4)}>
             <LikeButtonL width={width} height={height} active={activeTab} />
-          </span>{" "}
-        </StyledIconBtnM>{" "}
+          </span>{' '}
+        </StyledIconBtnM>{' '}
       </ElWrap>
       <ElWrap w={35}>
         <StyledIconBtnM>
@@ -331,12 +330,12 @@ export const PredefinedRatingsAndCompetency: React.FC<any> = ({
     const color = buttons.find((button) => button.rate === rating)?.color;
 
     return {
-      borderRadius: "10px",
-      backgroundColor: color ?? "white",
-      padding: "8px 16px",
-      border: "1px solid #121212",
-      fontSize: "10px",
-      gap: "10px",
+      borderRadius: '10px',
+      backgroundColor: color ?? 'white',
+      padding: '8px 16px',
+      border: '1px solid #121212',
+      fontSize: '10px',
+      gap: '10px',
     };
   };
 
@@ -346,24 +345,24 @@ export const PredefinedRatingsAndCompetency: React.FC<any> = ({
         xs={12}
         md={6}
         style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          paddingLeft: "8px",
+          display: 'flex',
+          justifyContent: 'flex-start',
+          paddingLeft: '8px',
         }}
       >
         <div>
-          <span style={getCompetencyStyle(rating)}>{competency}</span>{" "}
+          <span style={getCompetencyStyle(rating)}>{competency}</span>{' '}
         </div>
       </Grid>
       <Grid
         xs={12}
         md={6}
-        style={{ display: "flex", justifyContent: "flex-end" }}
+        style={{ display: 'flex', justifyContent: 'flex-end' }}
       >
         <div className="container">
-          {" "}
+          {' '}
           <div className="icon">
-            <PredefinedRatingsComponent rating={rating} />{" "}
+            <PredefinedRatingsComponent rating={rating} />{' '}
           </div>
         </div>
       </Grid>
@@ -375,7 +374,7 @@ export const PredefinedRatingsComponent: React.FC<PredefinedRatingsProps> = ({
   rating,
 }) => {
   return (
-    <div style={{ display: "flex", margin: "0px" }}>
+    <div style={{ display: 'flex', margin: '0px' }}>
       {buttons.map(({ Icon, color, rate }) => (
         <span key={rate}>
           <RatingButton

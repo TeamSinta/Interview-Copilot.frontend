@@ -1,6 +1,6 @@
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import Stack from "@mui/material/Stack";
-import styled from "styled-components";
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import Stack from '@mui/material/Stack';
+import styled from 'styled-components';
 
 export const StyledStack = styled(Stack)`
   background-color: ${(props) => props.theme.colors.whisperGrey};
@@ -83,7 +83,7 @@ export const StyledLink = styled.link`
 `;
 
 export const StyledSideNavBarTitle = styled(BodySMedium)`
-  color: "#7B7B7E";
+  color: '#7B7B7E';
   padding-left: 16px;
   margin-bottom: 4px;
 `;

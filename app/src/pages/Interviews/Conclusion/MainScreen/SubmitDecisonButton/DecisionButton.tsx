@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"; // Import React
+import React, { useRef, useState } from 'react'; // Import React
 import {
   StyledDecisionButton,
   StyledButtonContent,
@@ -6,21 +6,21 @@ import {
   StyledSubmitDecision,
   ButtonContainer,
   SubmittedPrompt,
-} from "./StyledDecisionBtn";
+} from './StyledDecisionBtn';
 import {
   BodyLBold,
   BodyMMedium,
   BodySMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import confetti from "canvas-confetti";
+} from '@/components/common/typeScale/StyledTypeScale';
+import confetti from 'canvas-confetti';
 
 import {
   DoubleLike,
   LikeButton,
   UnlikeIcon,
-} from "@/components/common/svgIcons/CustomIcons";
-import { Grid, Stack } from "@mui/material";
-import image from "@/assets/svg/DecisionImage.svg";
+} from '@/components/common/svgIcons/CustomIcons';
+import { Grid, Stack } from '@mui/material';
+import image from '@/assets/svg/DecisionImage.svg';
 
 export const DecisionButton = ({
   activeValue,
@@ -32,9 +32,9 @@ export const DecisionButton = ({
 
   const backgroundColors = isActive
     ? activeValue === 1 || 3
-      ? "#DBFDDC"
-      : "#FABBCF"
-    : "#FFFFFF"; // default background color
+      ? '#DBFDDC'
+      : '#FABBCF'
+    : '#FFFFFF'; // default background color
 
   const handleConfetti = () => {
     if (buttonRef.current) {
@@ -86,25 +86,25 @@ export const SubmitDecision = ({ active, setActive }) => {
     <StyledSubmitDecision
       style={{
         backgroundImage: `url(${image})`,
-        display: "flex",
-        flexDirection: "column",
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
-      <Stack spacing={1} style={{ padding: "18px 12px 18px 12px" }}>
+      <Stack spacing={1} style={{ padding: '18px 12px 18px 12px' }}>
         <Stack
           direction="row"
-          style={{ width: "100%" }}
-          justifyContent={"space-between"}
+          style={{ width: '100%' }}
+          justifyContent={'space-between'}
         >
           <BodyLBold>Submit your decision</BodyLBold>
-          <SubmittedPrompt className={submitted ? "show" : ""}>
+          <SubmittedPrompt className={submitted ? 'show' : ''}>
             <BodySMedium>Submitted in Greenhouse 🎉</BodySMedium>
           </SubmittedPrompt>
         </Stack>
         <Stack direction="row">
           <Grid>
             <ButtonContainer>
-              <div style={{ width: "106px", height: "66px" }}>
+              <div style={{ width: '106px', height: '66px' }}>
                 <DecisionButton
                   activeValue={1}
                   onClick={() => setActive(1)}
@@ -114,7 +114,7 @@ export const SubmitDecision = ({ active, setActive }) => {
                   <BodyMMedium>Hire</BodyMMedium>
                 </DecisionButton>
               </div>
-              <div style={{ width: "106px", height: "66px" }}>
+              <div style={{ width: '106px', height: '66px' }}>
                 <DecisionButton
                   activeValue={2}
                   onClick={() => setActive(2)}
@@ -127,7 +127,7 @@ export const SubmitDecision = ({ active, setActive }) => {
             </ButtonContainer>
           </Grid>
         </Stack>
-        <div style={{ width: "60%", height: "40px" }}>
+        <div style={{ width: '60%', height: '40px' }}>
           <DecisionButton
             activeValue={3}
             onClick={handleStrongHireClick}
@@ -135,11 +135,11 @@ export const SubmitDecision = ({ active, setActive }) => {
           >
             <div
               style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "8px",
-                alignItems: "center",
-                justifyContent: "center",
+                display: 'flex',
+                flexDirection: 'row',
+                gap: '8px',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <BodyMMedium>Strong Hire</BodyMMedium>

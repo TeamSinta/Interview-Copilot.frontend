@@ -1,55 +1,48 @@
-import { AppDispatch } from "@/app/store";
-import Photo from "@/components/common/buttons/photo/Photo";
-import Photos from "@/components/common/buttons/photo/Photos";
-import { PhotoContainer } from "@/components/common/buttons/photo/StyledPhoto";
-import { TextBtnL } from "@/components/common/buttons/textBtn/TextBtn";
-import Invite from "@/components/common/form/invite/Invite";
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { closeModal } from "@/features/modal/modalSlice";
+import { AppDispatch } from '@/app/store';
+import Photo from '@/components/common/buttons/photo/Photo';
+import Photos from '@/components/common/buttons/photo/Photos';
+import { PhotoContainer } from '@/components/common/buttons/photo/StyledPhoto';
+import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
+import Invite from '@/components/common/form/invite/Invite';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { closeModal } from '@/features/modal/modalSlice';
 // import { selectedMember } from "@/features/roles/rolesSlice";
-import { BackgroundColor, PhotoType } from "@/features/utils/utilEnum";
-import { useDispatch, useSelector } from "react-redux";
-import { ModalContentWrap } from "./StyledModalContents";
-import { useEffect, useState } from "react";
-import { RootState } from "@/app/store";
+import { RootState } from '@/app/store';
+import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ModalContentWrap } from './StyledModalContents';
 
-import {
-  AccessToken,
-  CompanyID,
-} from "@/features/settingsDetail/userSettingTypes";
-import { useCookies } from "react-cookie";
-import { useFetchCompanyMembers } from "@/components/pages/settings/memberTab/useFetchAndSortMembers";
+import { useFetchCompanyMembers } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import {
   useGetTemplateDetailQuery,
   useUpdateTemplateMutation,
-} from "@/features/templates/templatesAPISlice";
-import { useParams } from "react-router-dom";
+} from '@/features/templates/templatesAPISlice';
+import { useParams } from 'react-router-dom';
+import { IMember } from '../../cards/teamplateHomeCard/TemplateHomeCard';
 
 const EditInterviewers = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
-  const [sortCriteria] = useState("");
-  const [departmentId] = useState("");
+  const [sortCriteria] = useState('');
+  const [departmentId] = useState('');
   const [selectedMembers, setSelectedMembers] = useState<IMember[]>([]);
 
-  const [cookies, ,] = useCookies(["access_token"]);
-  const accessToken = cookies.access_token as AccessToken;
   const { templateId } = useParams();
 
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
 
-  const { data: templateData, isLoading } = useGetTemplateDetailQuery({
-    access: accessToken,
+  const { data: templateData } = useGetTemplateDetailQuery({
     company_id: companyId,
     id: templateId,
   });
 
   const { members } = useFetchCompanyMembers({
-    access: accessToken,
     company_id: companyId,
     department_id: departmentId,
     sortCriteria: sortCriteria,
@@ -98,7 +91,7 @@ const EditInterviewers = () => {
       dispatch(closeModal());
     } catch (error) {
       // Handle the error, e.g., show an error message
-      console.error("Error updating template:", error);
+      console.error('Error updating template:', error);
     }
   };
 
@@ -124,7 +117,7 @@ const EditInterviewers = () => {
       </PhotoContainer>
 
       <Invite />
-      <div style={{ marginTop: "8px" }}>
+      <div style={{ marginTop: '8px' }}>
         <TextBtnL
           label="Save"
           disable={false}

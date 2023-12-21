@@ -1,6 +1,6 @@
 // ButtonBoxStyles.ts
-import { StyledButton } from "@/components/common/buttons/button/StyledBtn";
-import styled from "styled-components";
+import { StyledButton } from '@/components/common/buttons/button/StyledBtn';
+import styled from 'styled-components';
 
 export const ButtonContainer = styled.div`
   display: flex;

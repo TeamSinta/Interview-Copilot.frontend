@@ -40,9 +40,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "serve dist -s -n -L -p 3001",
-    "mock": "VITE_BACKEND_URL=http://localhost:8000 VITE_ENV=mock vite",
+    "start": "serve dist -s -n -L -p $PORT",
     "dev": "vite",
+    "mock": "VITE_BACKEND_URL=http://localhost:8000/api VITE_ENV=mock vite",
     "build": "vite build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

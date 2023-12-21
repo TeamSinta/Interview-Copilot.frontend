@@ -5,22 +5,22 @@ import {
   resetQuestionBank,
   selectInterview,
   setSelectedQuestion,
-} from "@/features/interviews/interviewsSlice";
-import { closeModal } from "@/features/modal/modalSlice";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
-import { IconBtnM } from "../../buttons/iconBtn/IconBtn";
-import { TextBtnL } from "../../buttons/textBtn/TextBtn";
-import { TextIconBtnL } from "../../buttons/textIconBtn/TextIconBtn";
-import Competencies from "../../elements/competencies/Competencies";
-import { CloseIcon, PlusIcon } from "../../svgIcons/Icons";
+} from '@/features/interviews/interviewsSlice';
+import { closeModal } from '@/features/modal/modalSlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { IconBtnM } from '../../buttons/iconBtn/IconBtn';
+import { TextBtnL } from '../../buttons/textBtn/TextBtn';
+import { TextIconBtnL } from '../../buttons/textIconBtn/TextIconBtn';
+import Competencies from '../../elements/competencies/Competencies';
+import { CloseIcon, PlusIcon } from '../../svgIcons/Icons';
 import {
   BodyLBold,
   BodyLMedium,
   H2Bold,
-} from "../../typeScale/StyledTypeScale";
+} from '../../typeScale/StyledTypeScale';
 import {
   QuestionBody,
   QuestionLayout,
@@ -31,10 +31,11 @@ import {
   SelectedQuestionListWrap,
   TemplateBody,
   TemplateLayout,
-} from "./StyledModalContents";
-import TemplateList from "./TemplateList";
-import QuestionList from "./QuestionList";
-import axios from "axios";
+} from './StyledModalContents';
+import TemplateList from './TemplateList';
+import QuestionList from './QuestionList';
+import axios from 'axios';
+import { instance } from '@/utils/axiosService/customAxios';
 
 const SelectTemplate = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -53,7 +54,7 @@ const SelectTemplate = () => {
         question_id: question.id, // Assuming the question object has an 'id' property
       }));
 
-      const response = await axios.post(
+      const response = await instance.post(
         `${import.meta.env.VITE_BACKEND_URL}/templates/${
           templateID.templateID
         }/questions/add/`,
@@ -67,11 +68,11 @@ const SelectTemplate = () => {
         navigate(0);
       } else {
         // Handle unsuccessful response here
-        console.error("Failed to add questions to the template.");
+        console.error('Failed to add questions to the template.');
       }
     } catch (error) {
       // Handle the error here
-      console.error("Error making API request:", error);
+      console.error('Error making API request:', error);
     }
   };
 
@@ -79,7 +80,7 @@ const SelectTemplate = () => {
     // Fetch the template topics from the API when the component mounts.
     const fetchTemplateTopics = async () => {
       try {
-        const response = await axios.get(
+        const response = await instance.get(
           `${import.meta.env.VITE_BACKEND_URL}/templates/${
             templateID.templateID
           }/topics/`
@@ -91,7 +92,7 @@ const SelectTemplate = () => {
           setSelectedTopic(response.data[0]);
         }
       } catch (error) {
-        console.error("Error fetching template topics:", error);
+        console.error('Error fetching template topics:', error);
       }
     };
 

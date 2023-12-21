@@ -1,40 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import {
   H3Bold,
   BodyLBold,
   BodySMedium,
   BodyLMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
+} from '@/components/common/typeScale/StyledTypeScale';
 import {
   OverviewSections,
   SectionLists,
   SectionList,
   EmptySectionContainer,
-} from "./StyledOverviewSection";
-import { DataLoading } from "@/features/utils/utilEnum";
-import { Title } from "../StyledInterview";
-import { useDispatch } from "react-redux";
-import { setSelectedSection } from "@/features/interviewDetail/interviewDetailSlice";
+} from './StyledOverviewSection';
+import { DataLoading } from '@/features/utils/utilEnum';
+import { Title } from '../StyledInterview';
+import { useDispatch } from 'react-redux';
+import { setSelectedSection } from '@/features/interviewDetail/interviewDetailSlice';
 
 import {
   TimeIcon,
   QuestionIcon,
   PlusIcon,
   BinIcon,
-} from "@/components/common/svgIcons/Icons";
-import { TimeQuestionDiv } from "../overview_detail/StyledOverviewDetail";
-import { selectInterviewDetail } from "@/features/interviewDetail/interviewDetailSlice";
-import { ISection } from "@/features/interviewDetail/inverviewDetailInterface";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { openModal } from "@/features/modal/modalSlice";
-import { useNavigate, useParams } from "react-router-dom";
-import { IconBtnM } from "@/components/common/buttons/iconBtn/IconBtn";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { Stack } from "@mui/material";
-import { useDeleteTopicMutation } from "@/features/templates/templatesAPISlice";
+} from '@/components/common/svgIcons/Icons';
+import { TimeQuestionDiv } from '../overview_detail/StyledOverviewDetail';
+import { selectInterviewDetail } from '@/features/interviewDetail/interviewDetailSlice';
+import { ISection } from '@/features/interviewDetail/inverviewDetailInterface';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { openModal } from '@/features/modal/modalSlice';
+import { useNavigate, useParams } from 'react-router-dom';
+import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { Stack } from '@mui/material';
+import { useDeleteTopicMutation } from '@/features/templates/templatesAPISlice';
 
 const InterviewOverviewSections: React.FC = () => {
   const { sections, status, selectedSection, questions } = useSelector(
@@ -102,7 +102,7 @@ const InterviewOverviewSections: React.FC = () => {
       // Handle success, e.g., show a success message
     } catch (error) {
       // Handle the error, e.g., show an error message
-      console.error("Error updating template:", error);
+      console.error('Error updating template:', error);
     }
   };
   return (
@@ -120,7 +120,7 @@ const InterviewOverviewSections: React.FC = () => {
               return (
                 <SectionList
                   key={index}
-                  className={activeSectionId === sectionItem.id ? "active" : ""}
+                  className={activeSectionId === sectionItem.id ? 'active' : ''}
                   onClick={() => handleButtonClick(sectionItem)}
                   onMouseEnter={() => setHoveredSection(index)}
                   onMouseLeave={() => setHoveredSection(null)}
@@ -128,19 +128,19 @@ const InterviewOverviewSections: React.FC = () => {
                   <Stack
                     direction="row"
                     justifyContent="space-between"
-                    style={{ width: "100%" }}
+                    style={{ width: '100%' }}
                   >
                     <div
                       style={{
-                        alignItems: "center",
+                        alignItems: 'center',
                       }}
                     >
                       <div
                         style={{
-                          textAlign: "start",
-                          gap: "8px",
-                          display: "flex",
-                          flexDirection: "column",
+                          textAlign: 'start',
+                          gap: '8px',
+                          display: 'flex',
+                          flexDirection: 'column',
                         }}
                       >
                         <BodyLBold>{sectionItem.topics_text}</BodyLBold>
@@ -158,7 +158,7 @@ const InterviewOverviewSections: React.FC = () => {
                     </div>
 
                     {hoveredSection === index && (
-                      <div style={{ display: "flex", alignItems: "center" }}>
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
                         <ElWrap w={32} h={32}>
                           <IconBtnM
                             icon={<BinIcon />}
@@ -180,7 +180,7 @@ const InterviewOverviewSections: React.FC = () => {
           )
         ) : (
           <EmptySectionContainer>
-            {" "}
+            {' '}
             <BodyLMedium>
               To get started, start by adding a topic or section for your
               interview
@@ -188,7 +188,7 @@ const InterviewOverviewSections: React.FC = () => {
           </EmptySectionContainer>
         )}
       </SectionLists>
-      <div style={{ borderTop: "16px solid white" }}>
+      <div style={{ borderTop: '16px solid white' }}>
         <TextIconBtnL
           disable={false}
           onClick={() => {

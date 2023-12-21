@@ -6,7 +6,7 @@
 //   );
 // };
 
-import { instance } from "@/utils/axiosService/customAxios";
+import { instance } from '@/utils/axiosService/customAxios';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 

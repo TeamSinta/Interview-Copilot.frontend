@@ -1,5 +1,5 @@
-import { DefaultTheme } from "@/styles/StyleType";
-import styled, { keyframes } from "styled-components";
+import { DefaultTheme } from '@/styles/StyleType';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;

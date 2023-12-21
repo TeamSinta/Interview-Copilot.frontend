@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 interface IDropdownOpen {
   open: boolean;
@@ -59,9 +59,8 @@ export const DropdownArrowIconDiv = styled.div<IDropdownOpen>`
   align-items: center;
   height: 40px;
 
-
   svg {
-    stroke: ${(props) => props.theme.colors.black} ;
+    stroke: ${(props) => props.theme.colors.black};
   }
 
   ${(props) =>

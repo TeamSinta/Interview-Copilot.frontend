@@ -5,38 +5,32 @@ import { TOP_BAR_INFO } from "./Constants";
 import {
   getInterviewRoundQuestions,
   getInterview,
-  getCandidateById,
   getTemplate,
-} from "../../../features/interviews/interviewsAPI";
+} from '../../../features/interviews/interviewsAPI';
 import { useCookies } from "react-cookie";
 
 import { SubmitDecision } from "./MainScreen/SubmitDecisonButton/DecisionButton";
 import {
   BodyLBold,
   BodyLMedium,
-  BodyLSemiBold,
-  H3Bold,
-  H3Medium,
-} from "@/components/common/typeScale/StyledTypeScale";
+} from '@/components/common/typeScale/StyledTypeScale';
 const TopBar = ({ interviewRoundId }) => {
-  const { BIO_DATA, OVERALL_SCORE, SENTIMENT } = TOP_BAR_INFO;
-  const [cookies, ,] = useCookies(["access_token"]);
+  const { OVERALL_SCORE, SENTIMENT } = TOP_BAR_INFO;
   const [average, setAverage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [overallScore, setOverallScore] = useState(0);
-  const [candidateName, setCandidateName] = useState("");
-  const [templateTitle, setTemplateTitle] = useState("");
-  const [interviewDate, setInterviewRoundDate] = useState("");
-  const [departmentTitle, setDepartmentTitle] = useState("");
+  const [candidateName, setCandidateName] = useState('');
+  const [templateTitle, setTemplateTitle] = useState('');
+  const [interviewDate, setInterviewRoundDate] = useState('');
+  const [departmentTitle, setDepartmentTitle] = useState('');
   const [active, setActive] = useState(0);
+
+  const [cookies, ,] = useCookies(['access_token']);
 
   useEffect(() => {
     const fetchRatings = async () => {
       setIsLoading(true);
-      const questions = await getInterviewRoundQuestions(
-        interviewRoundId,
-        cookies.access_token
-      );
+      const questions = await getInterviewRoundQuestions(interviewRoundId);
 
       const interviewRound = await getInterview(
         interviewRoundId,
@@ -63,34 +57,34 @@ const TopBar = ({ interviewRoundId }) => {
     };
 
     fetchRatings();
-  }, []);
+  }, [cookies.access_token, interviewRoundId]);
 
-  const departmentName = departmentTitle || "General";
-  const candidateTitle = candidateName || "Unknown Contact";
+  const departmentName = departmentTitle || 'General';
+  const candidateTitle = candidateName || 'Unknown Contact';
   return (
     <React.Fragment>
-      <Grid container spacing={1} style={{ gap: "8px" }}>
-        <Grid item className="bar-container" style={{ width: "70%" }}>
+      <Grid container spacing={1} style={{ gap: '8px' }}>
+        <Grid item className="bar-container" style={{ width: '70%' }}>
           <Grid item={true} xs={12} md={12} lg={7} className="column">
             <Stack
               spacing={1}
               alignContent="center"
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: '10px' }}
             >
-              <BodyLBold style={{ fontSize: "20px", fontWeight: "bold" }}>
+              <BodyLBold style={{ fontSize: '20px', fontWeight: 'bold' }}>
                 {candidateTitle}
               </BodyLBold>
-              <BodyLMedium style={{ fontSize: "16px" }}>
+              <BodyLMedium style={{ fontSize: '16px' }}>
                 {departmentName}
               </BodyLMedium>
 
               <BodyLBold
-                style={{ fontSize: "14px", display: "flex", gap: "6px" }}
+                style={{ fontSize: '14px', display: 'flex', gap: '6px' }}
               >
-                {" "}
-                {templateTitle}{" "}
-                <BodyLMedium style={{ fontSize: "14px" }}>
-                  {" "}
+                {' '}
+                {templateTitle}{' '}
+                <BodyLMedium style={{ fontSize: '14px' }}>
+                  {' '}
                   · {interviewDate}
                 </BodyLMedium>
               </BodyLBold>
@@ -98,11 +92,11 @@ const TopBar = ({ interviewRoundId }) => {
               <p className="bio-data-stage">
                 <span className="bio-data-stage-label">
                   {/* {BIO_DATA.STAGE_LABEL}:{" "} */}
-                </span>{" "}
+                </span>{' '}
                 <span
                   style={{
-                    fontFamily: "ChillaxSemi",
-                    fontWeight: "600",
+                    fontFamily: 'ChillaxSemi',
+                    fontWeight: '600',
                   }}
                 >
                   {/* {BIO_DATA.STAGE_NAME} .{" "} */}
@@ -118,46 +112,46 @@ const TopBar = ({ interviewRoundId }) => {
                 <progress
                   id="myProgress"
                   style={{
-                    height: "20px",
+                    height: '20px',
                   }}
                   value={overallScore.toFixed(0)}
                   max="100"
                 ></progress>
               </div>
               <BodyLBold>
-                {!isLoading ? overallScore.toFixed(0) : "Loading..."}%
+                {!isLoading ? overallScore.toFixed(0) : 'Loading...'}%
               </BodyLBold>
             </div>
           </Grid>
           <Grid item={true} xs={12} md={12} lg={2} className="column">
             <div className="content-box">
-              {" "}
+              {' '}
               <p>{SENTIMENT.LABEL}</p>
               <div>
                 <span>
                   <i
                     className={
-                      "fa fa-" +
-                      (average > 2.5 ? "thumbs-up" : "thumbs-down") +
-                      " " +
+                      'fa fa-' +
+                      (average > 2.5 ? 'thumbs-up' : 'thumbs-down') +
+                      ' ' +
                       (average > 2.5
-                        ? "positiveSentimentIcon"
-                        : "negativeSentimentIcon")
+                        ? 'positiveSentimentIcon'
+                        : 'negativeSentimentIcon')
                     }
                   ></i>
                 </span>
                 <span
                   style={{
-                    fontFamily: "ChillaxSemi",
-                    fontWeight: "600",
+                    fontFamily: 'ChillaxSemi',
+                    fontWeight: '600',
                   }}
                 >
-                  {average > 2.5 ? "Positive" : "Negative"}
+                  {average > 2.5 ? 'Positive' : 'Negative'}
                 </span>
               </div>
               <BodyLBold>
-                {!isLoading ? average.toFixed(0) : "Loading..."}{" "}
-                <span className="sentiment-meta">/ 5</span>{" "}
+                {!isLoading ? average.toFixed(0) : 'Loading...'}{' '}
+                <span className="sentiment-meta">/ 5</span>{' '}
               </BodyLBold>
             </div>
           </Grid>

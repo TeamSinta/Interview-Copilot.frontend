@@ -1,6 +1,6 @@
-import { createGlobalStyle } from "styled-components";
-import ChillaxSemi from "../font/Chillax-Semibold.otf";
-import Chillax from "../font/Chillax-Medium.otf";
+import { createGlobalStyle } from 'styled-components';
+import ChillaxSemi from '../font/Chillax-Semibold.otf';
+import Chillax from '../font/Chillax-Medium.otf';
 
 export default createGlobalStyle`
     @font-face {

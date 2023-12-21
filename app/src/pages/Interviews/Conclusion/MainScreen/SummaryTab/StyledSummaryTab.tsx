@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Grid } from "@mui/material";
+import styled from 'styled-components';
+import { Grid } from '@mui/material';
 export const StyledSummaryTitle = styled.span`
    {
     font-weight: bold;
@@ -84,10 +84,10 @@ export const StyledDecisionButton = styled.div`
     width: 100%;
     background-color: ${(props) =>
       props.activeValue === 1
-        ? "#DBFDDC"
+        ? '#DBFDDC'
         : props.activeValue === 2
-        ? "#FABBCF"
-        : "#FFFFFF"};
+        ? '#FABBCF'
+        : '#FFFFFF'};
 
     :hover {
       cursor: pointer;
@@ -95,10 +95,10 @@ export const StyledDecisionButton = styled.div`
       transition: 0.5s;
       background-color: ${(props) =>
         props.activeValue === 1
-          ? "#B3E2B2"
+          ? '#B3E2B2'
           : props.activeValue === 2
-          ? "#F49FB4"
-          : "#D3D3D3"};  // Lighter colors on hover
+          ? '#F49FB4'
+          : '#D3D3D3'};  // Lighter colors on hover
     }
 
     :active {

@@ -3,8 +3,8 @@ import {
   BodyLMedium,
   BodyLSemiBold,
   BodyMSemiBold,
-} from "@/components/common/typeScale/StyledTypeScale";
-import GoogleLoginButton from "@/components/pages/login/googleLoginBtn/GoogleLoginButton";
+} from '@/components/common/typeScale/StyledTypeScale';
+import GoogleLoginButton from '@/components/pages/login/googleLoginBtn/GoogleLoginButton';
 import {
   Container,
   GrayBodyLMedium,
@@ -14,11 +14,11 @@ import {
   StyledLogo,
   TextBox,
   TextRow,
-} from "../Login/StyledLogin";
-import { Stack } from "@mui/material";
-import LoginPageImage from "src/assets/svg/LogInPageIllustration.svg";
-import LogoImage from "src/assets/images/SintaLogo.png";
-import { Link } from "react-router-dom";
+} from '../Login/StyledLogin';
+import { Stack } from '@mui/material';
+import LoginPageImage from 'src/assets/svg/LogInPageIllustration.svg';
+import LogoImage from 'src/assets/images/SintaLogo.png';
+import { Link } from 'react-router-dom';
 
 const LoginScreen = () => {
   return (
@@ -27,7 +27,7 @@ const LoginScreen = () => {
         direction="column"
         alignItems="center"
         justifyContent="space-between"
-        style={{ height: "100vh" }}
+        style={{ height: '100vh' }}
       >
         <StyledLogo src={LogoImage} alt="sinta_logo" />
         <MainContainer>
@@ -43,8 +43,8 @@ const LoginScreen = () => {
             </Stack>
             <TextRow>
               <GrayBodyLMedium>New to Sinta?</GrayBodyLMedium>
-              <Link to={"/sign-up"}>
-                {" "}
+              <Link to={'/sign-up'}>
+                {' '}
                 <BodyLSemiBold> Join.</BodyLSemiBold>
               </Link>
             </TextRow>

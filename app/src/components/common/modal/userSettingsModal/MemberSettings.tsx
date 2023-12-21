@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { TextIconBtnL } from "../../buttons/textIconBtn/TextIconBtn";
-import { BackgroundColor } from "@/features/utils/utilEnum";
+import React, { useEffect, useState } from 'react';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { TextIconBtnL } from '../../buttons/textIconBtn/TextIconBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
 import {
   DeleteBox,
   MemberDetailsContainer,
   MemberActionContainer,
   MemberInformationContainer,
   ProfilePicture,
-} from "./StyledMemberSettings";
-import { ModalContentWrap } from "../modalContents/StyledModalContents";
+} from './StyledMemberSettings';
+import { ModalContentWrap } from '../modalContents/StyledModalContents';
 import {
   BodyLMedium,
   BodyMMedium,
   H3Bold,
-} from "../../typeScale/StyledTypeScale";
-import DropdownFilter from "../../filters/dropdownFilter/DropdownFilter";
-import CheckBox from "../../form/checkBox/CheckBox";
-import { TextBtnS } from "../../buttons/textBtn/TextBtn";
-import { selectSetMember } from "@/features/members/memberSlice";
-import { useSelector } from "react-redux";
-import { useGetUserDepartmentsMutation } from "@/features/settingsDetail/userSettingsAPI";
-import { RootState } from "@/app/store";
+} from '../../typeScale/StyledTypeScale';
+import DropdownFilter from '../../filters/dropdownFilter/DropdownFilter';
+import CheckBox from '../../form/checkBox/CheckBox';
+import { TextBtnS } from '../../buttons/textBtn/TextBtn';
+import { selectSetMember } from '@/features/members/memberSlice';
+import { useSelector } from 'react-redux';
+import { useGetUserDepartmentsMutation } from '@/features/settingsDetail/userSettingsAPI';
+import { RootState } from '@/app/store';
 
 interface UserModalProps {
   user: {
@@ -44,7 +44,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
   useEffect(() => {
     getMemberDepartments({ user_id: member.id, company_id: workspace.id }).then(
       (response) => {
-        if ("data" in response) {
+        if ('data' in response) {
           const transformedData = response.data.map((department) => ({
             name: department.title,
             value: department.id.toString(),
@@ -97,7 +97,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
             />
           </ElWrap>
           <BodyMMedium style={{ opacity: 0.5 }}>
-            {" "}
+            {' '}
             your team members from all workspaces.
           </BodyMMedium>
         </DeleteBox>

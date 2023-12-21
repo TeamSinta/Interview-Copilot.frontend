@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import checkS from "@/assets/svg/checkS.svg";
-import { PhotoType } from "@/features/utils/utilEnum";
+import styled from 'styled-components';
+import checkS from '@/assets/svg/checkS.svg';
+import { PhotoType } from '@/features/utils/utilEnum';
 
 export const Checked = styled.div`
   width: 100%;
@@ -66,7 +66,7 @@ export const PhotoCheckBoxDiv = styled.div<IPhotoCheckBoxDiv>`
   width: 100%;
   height: 100%;
   border-radius: ${(props) =>
-    props.photoType === PhotoType.S ? "8px" : "12px"};
+    props.photoType === PhotoType.S ? '8px' : '12px'};
   &:hover {
     ${PhotoCheckBoxCover} {
       display: block;

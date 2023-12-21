@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState } from 'react';
 import {
   useDaily,
   useScreenShare,
@@ -7,7 +7,7 @@ import {
   useAudioTrack,
   useDailyEvent,
   useRecording,
-} from "@daily-co/daily-react";
+} from '@daily-co/daily-react';
 
 import {
   NavBookmarkIcon,
@@ -22,7 +22,7 @@ import {
   EmojiIcon,
   ChatIcon,
   SettingIcon,
-} from "@/components/common/svgIcons/Icons";
+} from '@/components/common/svgIcons/Icons';
 
 import {
   BottomBarColumnsContainer,
@@ -32,23 +32,20 @@ import {
   StyledBottomNavButtons,
   StyledColumns,
   StyledFinishBtn,
-} from "./StyledBottomNavBar";
-import { sendFeedback } from "../../../../features/interviews/interviewsAPI";
-import { Grid } from "@mui/material";
-import "./index.css";
-import { useWindowSize } from "@/hooks/useWindowSize";
-import { AppDispatch, RootState } from "../../../../app/store";
-import { useDispatch } from "react-redux";
-import { Cookies, useCookies } from "react-cookie";
-import Chat from "../Chat/Chat";
-import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { openModal } from "@/features/modal/modalSlice";
+} from './StyledBottomNavBar';
+import { Grid } from '@mui/material';
+import './index.css';
+import { useWindowSize } from '@/hooks/useWindowSize';
+import { AppDispatch } from '../../../../app/store';
+import { useDispatch } from 'react-redux';
+import Chat from '../Chat/Chat';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { openModal } from '@/features/modal/modalSlice';
 
 function BottomNavBar(props: any) {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
   const [isEmojiTrayOpened, setIsEmojiTrayOpened] = useState<boolean>(false);
-  const [cookies, ,] = useCookies(["access_token"]);
   const {
     setReactClicked,
     reactClicked,
@@ -88,7 +85,7 @@ function BottomNavBar(props: any) {
   const dispatch: AppDispatch = useDispatch();
 
   useDailyEvent(
-    "app-message",
+    'app-message',
     useCallback(() => {
       if (!showChat) {
         setNewChatMessage(true);
@@ -129,7 +126,7 @@ function BottomNavBar(props: any) {
 
   return (
     <>
-      {" "}
+      {' '}
       <StyledBottomBar>
         <BottomBarColumnsContainer>
           {width && width > 1120 && (
@@ -137,17 +134,17 @@ function BottomNavBar(props: any) {
               <StyledColumns>
                 <StyledBottomNavButtons
                   onClick={toggleScreenRecord}
-                  style={{ marginLeft: "20px" }}
+                  style={{ marginLeft: '20px' }}
                 >
                   {/* Your custom button */}
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                     <span
                       className="record-label"
-                      style={{ marginLeft: "5px", marginRight: "5px" }}
+                      style={{ marginLeft: '5px', marginRight: '5px' }}
                     >
-                      {isRecording ? "Stop " : "Start "} Recording
-                    </span>{" "}
-                    <span className="icon" style={{ marginLeft: "5px" }}>
+                      {isRecording ? 'Stop ' : 'Start '} Recording
+                    </span>{' '}
+                    <span className="icon" style={{ marginLeft: '5px' }}>
                       <NavFullScreenIcon />
                     </span>
                   </div>
@@ -161,9 +158,9 @@ function BottomNavBar(props: any) {
                 <StyledBottomNavButtons onClick={openSettingsModal}>
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      stroke: "white",
+                      display: 'flex',
+                      alignItems: 'center',
+                      stroke: 'white',
                     }}
                   >
                     <SettingIcon />
@@ -175,7 +172,7 @@ function BottomNavBar(props: any) {
 
           {width && width > 1120 && (
             <Grid lg={6} md={6} sm={6} xl={6} xs={6}>
-              {" "}
+              {' '}
               <StyledColumns>
                 {/* Integrate Daily's tray components here */}
 
@@ -183,21 +180,21 @@ function BottomNavBar(props: any) {
 
                 <StyledBottomNavButtons
                   onClick={(e) => {
-                    emojiClicked(e, "👍", 2);
+                    emojiClicked(e, '👍', 2);
                   }}
                 >
                   👍
                 </StyledBottomNavButtons>
                 <StyledBottomNavButtons
                   onClick={(e) => {
-                    emojiClicked(e, "👎", 3);
+                    emojiClicked(e, '👎', 3);
                   }}
                 >
                   👎
                 </StyledBottomNavButtons>
                 <StyledBottomNavButtons
                   onClick={(e) => {
-                    emojiClicked(e, "🔥", 1);
+                    emojiClicked(e, '🔥', 1);
                   }}
                 >
                   🔥
@@ -205,19 +202,19 @@ function BottomNavBar(props: any) {
 
                 <StyledBottomNavButtons
                   onClick={(e) => {
-                    emojiClicked(e, "😂", 5);
+                    emojiClicked(e, '😂', 5);
                   }}
                 >
                   😂
                 </StyledBottomNavButtons>
                 <StyledBottomNavButtons
                   onClick={(e) => {
-                    emojiClicked(e, "❤️", 4);
+                    emojiClicked(e, '❤️', 4);
                   }}
                 >
-                  <i className="fa fa-heart" style={{ color: "#FF3D2F" }}></i>
+                  <i className="fa fa-heart" style={{ color: '#FF3D2F' }}></i>
                 </StyledBottomNavButtons>
-                <div style={{ paddingLeft: "16px", paddingRight: "16px" }}>
+                <div style={{ paddingLeft: '16px', paddingRight: '16px' }}>
                   <NavCircle />
                 </div>
                 <StyledBottomNavButtons>
@@ -230,19 +227,19 @@ function BottomNavBar(props: any) {
                 <StyledBottomNavButtons
                   onClick={toggleScreenShare}
                   type="button"
-                  style={{ gap: "4px" }}
+                  style={{ gap: '4px' }}
                 >
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                     <span
                       className="record-label"
-                      style={{ marginLeft: "5px", marginRight: "5px" }}
+                      style={{ marginLeft: '5px', marginRight: '5px' }}
                     >
                       {isSharingScreen
-                        ? " Stop sharing screen"
-                        : " Share screen"}{" "}
-                    </span>{" "}
-                    <span className="icon" style={{ marginLeft: "5px" }}>
-                      <div style={{ display: "flex", stroke: "white" }}>
+                        ? ' Stop sharing screen'
+                        : ' Share screen'}{' '}
+                    </span>{' '}
+                    <span className="icon" style={{ marginLeft: '5px' }}>
+                      <div style={{ display: 'flex', stroke: 'white' }}>
                         <NavScreenShareIcon />
                       </div>
                     </span>
@@ -252,27 +249,27 @@ function BottomNavBar(props: any) {
                 <StyledBottomNavButtons onClick={toggleChat} type="button">
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                   >
                     <span
                       className="record-label"
-                      style={{ marginLeft: "5px", marginRight: "5px" }}
+                      style={{ marginLeft: '5px', marginRight: '5px' }}
                     >
-                      {showChat ? "Hide Chat" : "Chat"}
-                    </span>{" "}
-                    <span className="icon" style={{ marginLeft: "5px" }}>
+                      {showChat ? 'Hide Chat' : 'Chat'}
+                    </span>{' '}
+                    <span className="icon" style={{ marginLeft: '5px' }}>
                       {showChat ? (
-                        <div style={{ display: "flex", stroke: "white" }}>
-                          {" "}
-                          <ChatIcon />{" "}
+                        <div style={{ display: 'flex', stroke: 'white' }}>
+                          {' '}
+                          <ChatIcon />{' '}
                         </div>
                       ) : (
-                        <div style={{ display: "flex", stroke: "white" }}>
-                          {" "}
-                          <ChatIcon />{" "}
+                        <div style={{ display: 'flex', stroke: 'white' }}>
+                          {' '}
+                          <ChatIcon />{' '}
                         </div>
                       )}
                     </span>
@@ -283,22 +280,22 @@ function BottomNavBar(props: any) {
           )}
 
           <FinishButtonContainer>
-            {" "}
+            {' '}
             {width && width < 1120 && (
               <StyledColumns>
                 <StyledBottomNavButtons
                   onClick={toggleScreenRecord}
-                  style={{ marginLeft: "20px" }}
+                  style={{ marginLeft: '20px' }}
                 >
                   {/* Your custom button */}
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                     <span
                       className="record-label"
-                      style={{ marginLeft: "5px", marginRight: "5px" }}
+                      style={{ marginLeft: '5px', marginRight: '5px' }}
                     >
-                      {isRecording ? "Stop " : "Start "} Recording
-                    </span>{" "}
-                    <span className="icon" style={{ marginLeft: "5px" }}>
+                      {isRecording ? 'Stop ' : 'Start '} Recording
+                    </span>{' '}
+                    <span className="icon" style={{ marginLeft: '5px' }}>
                       <NavFullScreenIcon />
                     </span>
                   </div>
@@ -323,7 +320,7 @@ function BottomNavBar(props: any) {
                           onClick={() => {
                             setReactClicked({
                               clicked: reactClicked?.clicked + 1,
-                              message: "🔥",
+                              message: '🔥',
                             });
                           }}
                         >
@@ -333,7 +330,7 @@ function BottomNavBar(props: any) {
                           onClick={() => {
                             setReactClicked({
                               clicked: reactClicked?.clicked + 1,
-                              message: "👎",
+                              message: '👎',
                             });
                           }}
                         >
@@ -343,7 +340,7 @@ function BottomNavBar(props: any) {
                           onClick={() => {
                             setReactClicked({
                               clicked: reactClicked?.clicked + 1,
-                              message: "👍",
+                              message: '👍',
                             });
                           }}
                         >
@@ -353,7 +350,7 @@ function BottomNavBar(props: any) {
                           onClick={() => {
                             setReactClicked({
                               clicked: reactClicked?.clicked + 1,
-                              message: "😂",
+                              message: '😂',
                             });
                           }}
                         >
@@ -363,13 +360,13 @@ function BottomNavBar(props: any) {
                           onClick={() => {
                             setReactClicked({
                               clicked: reactClicked?.clicked + 1,
-                              message: "❤️",
+                              message: '❤️',
                             });
                           }}
                         >
                           <i
                             className="fa fa-heart"
-                            style={{ color: "#FF3D2F" }}
+                            style={{ color: '#FF3D2F' }}
                           ></i>
                         </StyledBottomNavButtons>
                       </EmojiTray>
@@ -381,7 +378,7 @@ function BottomNavBar(props: any) {
               </StyledColumns>
             )}
             <Chat showChat={showChat} toggleChat={toggleChat} />
-            <StyledColumns style={{ paddingRight: "20px", float: "right" }}>
+            <StyledColumns style={{ paddingRight: '20px', float: 'right' }}>
               <StyledFinishBtn className="accentPurple" onClick={leaveCall}>
                 Finish
               </StyledFinishBtn>

@@ -1,25 +1,32 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const QuestionsAPI = createApi({
-  reducerPath: "QuestionsAPI",
+  reducerPath: 'QuestionsAPI',
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_BACKEND_URL}`,
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as any)?.user?.token?.access;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
-  tagTypes: ["Questions", "QuestionBanks"],
+  tagTypes: ['Questions', 'QuestionBanks'],
   endpoints: (builder) => ({
     getQuestions: builder.query<any, undefined>({
-      query: () => "/question/",
+      query: () => '/question/',
       transformResponse: (res) =>
         res.sort((a: string[], b: string[]) => b.id - a.id),
-      providesTags: ["Questions"],
+      providesTags: ['Questions'],
     }),
     addQuestion: builder.mutation({
       query: (template) => ({
         url: `/question/`,
-        method: "POST",
+        method: 'POST',
         body: template,
       }),
-      invalidatesTags: ["Questions"],
+      invalidatesTags: ['Questions'],
     }),
     getQuestionDetail: builder.query({
       query: (id) => ({
@@ -29,29 +36,29 @@ export const QuestionsAPI = createApi({
     updateQuestion: builder.mutation({
       query: (question) => ({
         url: `/question/${question.id}/`,
-        method: "PATCH",
+        method: 'PATCH',
         body: question,
       }),
-      invalidatesTags: ["Questions"],
+      invalidatesTags: ['Questions'],
     }),
     deleteQuestion: builder.mutation({
       query: (id) => ({
         url: `/question/${id}/`,
-        method: "DELETE",
+        method: 'DELETE',
         body: id,
       }),
-      invalidatesTags: ["Questions"],
+      invalidatesTags: ['Questions'],
     }),
     getQuestionBanks: builder.query<any, undefined>({
-      query: () => "/question/question-banks/",
+      query: () => '/question/question-banks/',
       transformResponse: (res) =>
         res.sort((a: string[], b: string[]) => b.id - a.id),
-      providesTags: ["QuestionBanks"],
+      providesTags: ['QuestionBanks'],
     }),
     addQuestionBank: builder.mutation({
       query: (template) => ({
-        url: "/question/question-banks/",
-        method: "POST",
+        url: '/question/question-banks/',
+        method: 'POST',
         body: template,
       }),
     }),
@@ -63,18 +70,18 @@ export const QuestionsAPI = createApi({
     updateQuestionBank: builder.mutation({
       query: (questionBank) => ({
         url: `/question/question-banks/${questionBank.id}/update/`,
-        method: "PATCH",
+        method: 'PATCH',
         body: questionBank,
       }),
-      invalidatesTags: ["QuestionBanks"],
+      invalidatesTags: ['QuestionBanks'],
     }),
     deleteQuestionBank: builder.mutation({
       query: (id) => ({
         url: `/question/question-banks/${id}/`,
-        method: "DELETE",
+        method: 'DELETE',
         body: id,
       }),
-      invalidatesTags: ["QuestionBanks"],
+      invalidatesTags: ['QuestionBanks'],
     }),
   }),
 });

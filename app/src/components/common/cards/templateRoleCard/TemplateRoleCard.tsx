@@ -1,7 +1,7 @@
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
 
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useState } from "react";
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useState } from 'react';
 import {
   Card,
   CardButtons,
@@ -9,13 +9,13 @@ import {
   CardCover,
   CardSubTitle,
   CardSubTitleContent,
-} from "../card/StyledCard";
-import { IconBtnM } from "@/components/common/buttons/iconBtn/IconBtn";
-import { PlusIcon, RightBracketIcon } from "@/components/common/svgIcons/Icons";
+} from '../card/StyledCard';
+import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn';
+import { PlusIcon, RightBracketIcon } from '@/components/common/svgIcons/Icons';
 import {
   BodyMMedium,
   BodySMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
+} from '@/components/common/typeScale/StyledTypeScale';
 
 interface ITemplateRoleCard {
   title: string;
@@ -31,7 +31,7 @@ const TemplateRoleCard = (props: ITemplateRoleCard) => {
   return (
     <ElWrap w={370} h={216}>
       <Card
-        className={(hover ? "hover" : "").concat(disable ? " disable" : "")}
+        className={(hover ? 'hover' : '').concat(disable ? ' disable' : '')}
       >
         <CardButtons>
           <ElWrap w={32}>
@@ -51,7 +51,7 @@ const TemplateRoleCard = (props: ITemplateRoleCard) => {
             />
           </ElWrap>
         </CardButtons>
-        <CardCover imgUrl={""}></CardCover>
+        <CardCover imgUrl={''}></CardCover>
         <CardContent
           onMouseEnter={() => {
             setHover(disable ? false : true);

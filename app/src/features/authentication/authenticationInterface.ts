@@ -2,8 +2,22 @@ export interface Company {
   id: number | null;
   name: string | null;
 }
+export interface Token {
+  access: string | undefined | null;
+  refresh: string | undefined | null;
+}
+
+export interface UserReadSerializer {
+  username: string | null;
+  email: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  profile_picture: string | null;
+  companies: Company[];
+  pk: string | null;
+}
 export interface AuthState {
-  status: "IDLE" | "LOADING" | "AUTHENTICATED" | "FAILED";
+  status: 'IDLE' | 'LOADING' | 'AUTHENTICATED' | 'FAILED';
   isAuthenticated: boolean;
   user: {
     username: string | null;
@@ -14,15 +28,7 @@ export interface AuthState {
     companies: Company[];
     id: string | null;
   };
-}
-export interface UserReadSerializer {
-  username: string | null;
-  email: string | null;
-  first_name: string | null;
-  last_name: string | null;
-  profile_picture: string | null;
-  companies: Company[];
-  pk: string | null;
+  token: Token;
 }
 
 export interface Credentials {
@@ -35,11 +41,6 @@ export interface AccessToken {
 }
 
 export interface RefreshToken {
-  refresh: string | undefined;
-}
-
-export interface Token {
-  access: string | undefined;
   refresh: string | undefined;
 }
 

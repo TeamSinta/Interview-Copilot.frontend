@@ -1,2 +1,2 @@
-import { TranscriptionCollapsible } from "./TranscriptionCollapsible";
+import { TranscriptionCollapsible } from './TranscriptionCollapsible';
 export { TranscriptionCollapsible };

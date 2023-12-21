@@ -1,20 +1,20 @@
-import Stack from "@mui/material/Stack";
-import { Box } from "@mui/material";
-import React from "react";
-import SearchInput from "@/components/common/form/serchInput/SearchInput";
+import Stack from '@mui/material/Stack';
+import { Box } from '@mui/material';
+import React from 'react';
+import SearchInput from '@/components/common/form/serchInput/SearchInput';
 import {
   CalendarIcon,
   PlusIcon,
   RightBracketIcon,
-} from "@/components/common/svgIcons/Icons";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import ElWrap from "../elWrap/ElWrap";
-import { DropDownButton } from "@/components/common/buttons/dropDownBtn/DropDownBtn";
-import { StyledTopNavBar } from "./StyledTopBarNav";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../app/store";
-import { createCall } from "../../../utils/dailyVideoService/videoCallSlice";
+} from '@/components/common/svgIcons/Icons';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import ElWrap from '../elWrap/ElWrap';
+import { DropDownButton } from '@/components/common/buttons/dropDownBtn/DropDownBtn';
+import { StyledTopNavBar } from './StyledTopBarNav';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../app/store';
+import { createCall } from '../../../utils/dailyVideoService/videoCallSlice';
 
 export interface IButton {
   to: string;
@@ -45,10 +45,10 @@ const TopNavBar = (): JSX.Element => {
   };
 
   return (
-    <StyledTopNavBar sx={{ width: "100%" }}>
+    <StyledTopNavBar sx={{ width: '100%' }}>
       <Stack direction="row" spacing={2}>
-        <Box sx={{ width: "100%" }}>
-          <SearchInput disable={false} placeholder={"Search"} error={false} />
+        <Box sx={{ width: '100%' }}>
+          <SearchInput disable={false} placeholder={'Search'} error={false} />
         </Box>
 
         <ElWrap w={460}>
@@ -60,12 +60,12 @@ const TopNavBar = (): JSX.Element => {
             className={BackgroundColor.ACCENT_PURPLE}
             buttons={[
               {
-                label: "Start a Meeting",
+                label: 'Start a Meeting',
                 icon: <PlusIcon />,
                 onClick: startDemo, // Use the function reference here
               },
               {
-                label: "Plan a Meeting",
+                label: 'Plan a Meeting',
                 icon: <CalendarIcon />,
                 onClick: () => {},
               },

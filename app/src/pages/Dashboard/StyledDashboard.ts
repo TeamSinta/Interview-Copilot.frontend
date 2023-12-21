@@ -1,14 +1,11 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 import {
   H2Bold,
   BodySMedium,
-  H2Medium,
-  H3Medium,
   BodyLBold,
   BodyMMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { Box } from "@mui/material";
-import { H3 } from "@/components/common/typeScale/TypeScale";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { Box } from '@mui/material';
 
 export const YourNewContainer = styled.div`
   display: flex;
@@ -66,7 +63,6 @@ export const WelcomeHeading = styled(H2Bold)`
 
     font-size: 24px;
     padding-bottom: 8px;
-
   }
 `;
 
@@ -76,8 +72,6 @@ export const DescriptionText = styled(BodySMedium)`
 
   align-items: center;
   text-align: center;
-
-
 `;
 
 export const PendingReviewsHeading = styled(BodyLBold)`
@@ -108,7 +102,6 @@ export const InterviewsBox = styled(Box)`
   border: 1px solid #e0e0e0;
   width: 100%;
   padding: 24px 0px 24px 24px;
-
 `;
 
 export const TemplateCardsBox = styled(Box)`
@@ -122,7 +115,6 @@ export const TemplateCardsBox = styled(Box)`
   width: 100%;
   overflow-x: auto; // Enable horizontal scrolling
   cursor: grab; // Set cursor style for dragging
-
 `;
 
 export const TemplateEmptyBox = styled(Box)`
@@ -141,15 +133,12 @@ export const TextBox = styled(Box)`
   display: flex;
   gap: 16px;
   flex-direction: column;
-
-
 `;
 export const WorkspaceTextBox = styled(Box)`
   display: flex;
   gap: 16px;
   flex-direction: row;
   justify-content: space-between;
-
 `;
 
 export const IconStyle = styled.div`
@@ -185,9 +174,6 @@ export const StyledImage = styled.img`
   width: 100%;
   opacity: 100%;
   height: 100%;
-
-
-
 `;
 
 export const ButtonContainer = styled.div`
@@ -221,10 +207,9 @@ export const StyledEmptyImage = styled.img`
   max-height: 100px;
 `;
 
-
 export const UpgradeButton = styled(BodyMMedium)`
-    background-color: white;
-  color: #625DF3;
+  background-color: white;
+  color: #625df3;
   border: none;
   cursor: pointer;
   &:hover {

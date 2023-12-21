@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import { TextBtnM } from "../../buttons/textBtn/TextBtn";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { Stack } from "@mui/material";
+import React from 'react';
+import styled from 'styled-components';
+import { TextBtnM } from '../../buttons/textBtn/TextBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { Stack } from '@mui/material';
 
 const InvitationBoxContainer = styled.div`
   height: 128px;

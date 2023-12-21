@@ -1,39 +1,46 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const templateQuestionsAPI = createApi({
-  reducerPath: "templateQuestionsAPI",
+  reducerPath: 'templateQuestionsAPI',
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_BACKEND_URL}/templates/`,
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as any)?.user?.token?.access;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
-  tagTypes: ["TQuestions"],
+  tagTypes: ['TQuestions'],
   endpoints: (builder) => ({
     getTemplateQuestions: builder.query<object, void>({
-      query: () => "template_questions/",
-      providesTags: ["TQuestions"],
+      query: () => 'template_questions/',
+      providesTags: ['TQuestions'],
     }),
     addTemplateQuestion: builder.mutation({
       query: (template) => ({
         url: `template_questions/`,
-        method: "POST",
+        method: 'POST',
         body: template,
       }),
-      invalidatesTags: ["TQuestions"],
+      invalidatesTags: ['TQuestions'],
     }),
     updateTemplateQuestion: builder.mutation({
       query: (question) => ({
         url: `template_questions/${question.id}/`,
-        method: "PATCH",
+        method: 'PATCH',
         body: question,
       }),
-      invalidatesTags: ["TQuestions"],
+      invalidatesTags: ['TQuestions'],
     }),
     deleteTemplateQuestion: builder.mutation({
       query: (id) => ({
         url: `template_questions/${id}/`,
-        method: "DELETE",
+        method: 'DELETE',
         body: id,
       }),
-      invalidatesTags: ["TQuestions"],
+      invalidatesTags: ['TQuestions'],
     }),
   }),
 });

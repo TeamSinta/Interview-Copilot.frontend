@@ -1,4 +1,4 @@
-import { PhotosWrap } from "./StyledPhoto";
+import { PhotosWrap } from './StyledPhoto';
 
 interface IPhotosProps {
   children: JSX.Element[] | JSX.Element;

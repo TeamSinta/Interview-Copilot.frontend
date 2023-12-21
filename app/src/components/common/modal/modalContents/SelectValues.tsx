@@ -1,17 +1,17 @@
-import { AppDispatch, RootState } from "@/app/store";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { openModal } from "@/features/modal/modalSlice";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { IconBtnM } from "../../buttons/iconBtn/IconBtn";
-import { TextBtnL } from "../../buttons/textBtn/TextBtn";
-import Competencies from "../../elements/competencies/Competencies";
-import { InputLayout } from "../../form/input/StyledInput";
-import TextInput from "../../form/textInput/TextInput";
-import { PlusIcon } from "../../svgIcons/Icons";
-import { BodySMedium } from "../../typeScale/StyledTypeScale";
-import { MODAL_TYPE } from "../GlobalModal";
+import { AppDispatch, RootState } from '@/app/store';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { openModal } from '@/features/modal/modalSlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { IconBtnM } from '../../buttons/iconBtn/IconBtn';
+import { TextBtnL } from '../../buttons/textBtn/TextBtn';
+import Competencies from '../../elements/competencies/Competencies';
+import { InputLayout } from '../../form/input/StyledInput';
+import TextInput from '../../form/textInput/TextInput';
+import { PlusIcon } from '../../svgIcons/Icons';
+import { BodySMedium } from '../../typeScale/StyledTypeScale';
+import { MODAL_TYPE } from '../GlobalModal';
 import {
   CompetencesWrap,
   ModalContentWrap,
@@ -20,11 +20,11 @@ import {
   SelectContentWrap,
   SelectedButtonWrap,
   SelectedValueWrap,
-} from "./StyledModalContents";
-import { CompanyID } from "@/features/settingsDetail/userSettingTypes";
-import { useAddTopicMutation } from "@/features/templates/templatesAPISlice";
-import { useGetQuestionsQuery } from "@/features/questions/questionsAPISlice";
-import Loading from "../../elements/loading/Loading";
+} from './StyledModalContents';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { useAddTopicMutation } from '@/features/templates/templatesAPISlice';
+import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import Loading from '../../elements/loading/Loading';
 
 const iconBtnMProps = {
   icon: <PlusIcon />,
@@ -37,7 +37,7 @@ const SelectValue = () => {
   const workspace = useSelector((state: RootState) => state.workspace);
   const [selectedComp, setSelectedComp] = useState<Array<string>>([]);
   const [competencies, setCompetencies] = useState<string[]>([]);
-  const [newComp, setNewComp] = useState<string>("");
+  const [newComp, setNewComp] = useState<string>('');
   const [showNewCompInput, setShowNewCompInput] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const templateID = useSelector((state: RootState) => state.modal.templateID);
@@ -72,7 +72,7 @@ const SelectValue = () => {
           onClickModalOpen(MODAL_TYPE.SELECT_TEM, { templateID });
         }
       } catch (error) {
-        console.error("Failed to add topics:", error);
+        console.error('Failed to add topics:', error);
         // Optionally, break out of the loop on error
         break;
       }
@@ -104,7 +104,7 @@ const SelectValue = () => {
       competencies.push(newComp);
       onSelectComp(newComp);
     }
-    setNewComp("");
+    setNewComp('');
   };
 
   const {
@@ -169,15 +169,15 @@ const SelectValue = () => {
                 </ElWrap>
               </SelectedValueWrap>
             </InputLayout>
-            <NewComInputWrap className={showNewCompInput ? "show" : ""}>
+            <NewComInputWrap className={showNewCompInput ? 'show' : ''}>
               <TextInput
                 disable={false}
-                placeholder={"New Section"}
+                placeholder={'New Section'}
                 error={false}
                 onChange={(e) => {
                   setNewComp(e.target.value);
                 }}
-                name={"Section"}
+                name={'Section'}
                 value={newComp}
               />
               <ElWrap w={119} h={40}>

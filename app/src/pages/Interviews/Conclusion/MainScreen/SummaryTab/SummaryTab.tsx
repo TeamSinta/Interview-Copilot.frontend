@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   BodyLBold,
   BodyMMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import InterviewQNA from "../InterviewQNA/InterviewQNA";
-import { Grid, Stack } from "@mui/material";
+} from '@/components/common/typeScale/StyledTypeScale';
+import InterviewQNA from '../InterviewQNA/InterviewQNA';
+import { Grid, Stack } from '@mui/material';
 
-import "./SummaryTab.css";
+import './SummaryTab.css';
 
 import {
   StyledSummaryDescription,
   StyledRoundBox,
   StyledSummaryTab,
   AIGeneratedImageContainer,
-} from "./StyledSummaryTab";
+} from './StyledSummaryTab';
 
 const AIGeneratedImage = () => (
   <AIGeneratedImageContainer>
@@ -42,7 +42,7 @@ const SummaryTab = ({ summaryInfo }) => {
     <StyledSummaryTab>
       <Grid container spacing={1}>
         <Grid xs={12} md={12}>
-          <Stack direction={"row"} spacing={2}>
+          <Stack direction={'row'} spacing={2}>
             <BodyLBold>{summaryInfo.title}</BodyLBold>
             <AIGeneratedImage />
           </Stack>
@@ -50,7 +50,7 @@ const SummaryTab = ({ summaryInfo }) => {
             <BodyMMedium>{summaryInfo.description}</BodyMMedium>
           </StyledSummaryDescription>
           <StyledRoundBox>
-            <InterviewQNA propData={summaryInfo.faq} screen={"summary"} />
+            <InterviewQNA propData={summaryInfo.faq} screen={'summary'} />
           </StyledRoundBox>
         </Grid>
       </Grid>

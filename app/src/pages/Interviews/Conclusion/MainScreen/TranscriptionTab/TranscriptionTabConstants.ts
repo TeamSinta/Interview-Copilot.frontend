@@ -1,48 +1,48 @@
 const transcriptionInfo = {
   questionData: [
     {
-      index: "1",
-      duration: "00:00:23 - 00:02:59",
-      question: "What is UX design?",
+      index: '1',
+      duration: '00:00:23 - 00:02:59',
+      question: 'What is UX design?',
       transcription: [
         {
-          name: "Danny",
+          name: 'Danny',
           speech:
-            "Hello, Bill, hope everything is alright! So..Lets Start! The first question for you is ‘What skills does a front-end developer need?’",
-          timestamp: "00:00:23",
+            'Hello, Bill, hope everything is alright! So..Lets Start! The first question for you is ‘What skills does a front-end developer need?’',
+          timestamp: '00:00:23',
           userImageUrl:
-            "https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?q=10&h=200",
+            'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?q=10&h=200',
         },
         {
-          name: "Bill",
+          name: 'Bill',
           speech:
-            "HTML: HyperText Markup Language depicts the content on the page like buttons, links, headings, paragraphs, and lists. It is the building block of websites and is utilized to define and mark content, so a browser shows it correctly. For instance, on a blog post, an image can be seen as an <img> in HTML code, so browsers will understand that they have to display an image.",
-          timestamp: "00:02:59",
+            'HTML: HyperText Markup Language depicts the content on the page like buttons, links, headings, paragraphs, and lists. It is the building block of websites and is utilized to define and mark content, so a browser shows it correctly. For instance, on a blog post, an image can be seen as an <img> in HTML code, so browsers will understand that they have to display an image.',
+          timestamp: '00:02:59',
           userImageUrl:
-            "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
         },
       ],
     },
     {
-      index: "2",
-      duration: "00:00:23 - 00:02:59",
-      question: "Tell me about some of your favorite examples of good UX.",
+      index: '2',
+      duration: '00:00:23 - 00:02:59',
+      question: 'Tell me about some of your favorite examples of good UX.',
       transcription: [
         {
-          name: "Danny",
+          name: 'Danny',
           speech:
-            "Hello, Bill, hope everything is alright! So..Lets Start! The first question for you is ‘What skills does a front-end developer need?’",
-          timestamp: "00:00:23",
+            'Hello, Bill, hope everything is alright! So..Lets Start! The first question for you is ‘What skills does a front-end developer need?’',
+          timestamp: '00:00:23',
           userImageUrl:
-            "https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?q=10&h=200",
+            'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?q=10&h=200',
         },
         {
-          name: "Bill",
+          name: 'Bill',
           speech:
-            "Hi, Danny, thanks, I’m okey! Maybe a little stressful Frontend developers utilize different web technologies to change coded data into user-friendly interfaces. Many among these are Cascading Style Sheets (CSS), JavaScript, HyperText Markup Language (HTML), etc. Mentioned below are brief explanations of these technologies that frontend developers must be acquainted with.",
-          timestamp: "00:00:41",
+            'Hi, Danny, thanks, I’m okey! Maybe a little stressful Frontend developers utilize different web technologies to change coded data into user-friendly interfaces. Many among these are Cascading Style Sheets (CSS), JavaScript, HyperText Markup Language (HTML), etc. Mentioned below are brief explanations of these technologies that frontend developers must be acquainted with.',
+          timestamp: '00:00:41',
           userImageUrl:
-            "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
         },
       ],
     },

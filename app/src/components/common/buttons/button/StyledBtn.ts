@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export interface IBtnProps {
   label?: string;
@@ -184,7 +184,7 @@ export const SmallButtonLayout = styled.div<IButtonLayout>`
           width: 100%;
           height: inherit;
           background: ${props.theme.colors.white};
-          content: " ";
+          content: ' ';
           opacity: 0.3;
           position: absolute;
         }

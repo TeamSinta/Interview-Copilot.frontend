@@ -1,13 +1,13 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // import { IMockMembers } from "../roles/rolesInterface";
 // import { InterviewDetailResponse } from "./inverviewDetailInterface";
-import { RootState } from "@/app/store";
-import { DataLoading } from "../utils/utilEnum";
+import { RootState } from '@/app/store';
+import { DataLoading } from '../utils/utilEnum';
 import {
   getInterviewTemplate,
   getInterviewSections,
   getInterviewDetail,
-} from "./interviewDetailAPI";
+} from './interviewDetailAPI';
 
 export const initialState = {
   template: {
@@ -17,14 +17,14 @@ export const initialState = {
   questions: [],
   selectedSection: {
     id: null,
-    topics_text: "",
-    time: "",
+    topics_text: '',
+    time: '',
   },
   status: DataLoading.UNSEND,
 };
 
 export const getInterviewDetailAsync = createAsyncThunk(
-  "interviews/interviewDetail",
+  'interviews/interviewDetail',
   async (templateId: string) => {
     const template = await getInterviewTemplate(templateId);
     const sections = await getInterviewSections(templateId);
@@ -35,7 +35,7 @@ export const getInterviewDetailAsync = createAsyncThunk(
 );
 
 export const interviewDetailSlice = createSlice({
-  name: "interviewDetail",
+  name: 'interviewDetail',
   initialState,
   extraReducers: (builder) => {
     builder.addCase(getInterviewDetailAsync.fulfilled, (state, action) => {

@@ -162,7 +162,7 @@ video {
 }
 
 .comment-container::before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -10px;
   left: 30%;
@@ -257,7 +257,7 @@ video {
 }
 
 .tooltip::before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -10px;
   left: 1%;

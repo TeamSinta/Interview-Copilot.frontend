@@ -1,27 +1,27 @@
 import {
   BodyMMedium,
   H1,
-} from "@/components/common/typeScale/StyledTypeScale.js";
-import React, { useMemo, useState, useEffect } from "react";
-import TopBar from "./TopBar.js";
-import MainScreen from "./MainScreen/MainScreen.js";
+} from '@/components/common/typeScale/StyledTypeScale.js';
+import React, { useMemo, useState, useEffect } from 'react';
+import TopBar from './TopBar.js';
+import MainScreen from './MainScreen/MainScreen.js';
 import {
   BottomArrowIcon,
   CandidateIcon,
   RightArrowIcon,
-} from "@/components/common/svgIcons/Icons.js";
-import styled from "styled-components";
+} from '@/components/common/svgIcons/Icons.js';
+import styled from 'styled-components';
 
-import { useNavigate, useLocation } from "react-router-dom"; // <-- Import useNavigate
-import SummarizerLoader from "@/components/common/elements/longLoading/LongLoading.js";
-import { Divider, Grid, Stack } from "@mui/material";
-import { getInterview } from "@/features/interviews/interviewsAPI.js";
-import { useCookies } from "react-cookie";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn.js";
-import { BackgroundColor } from "@/features/utils/utilEnum.js";
-import ElWrap from "@/components/layouts/elWrap/ElWrap.js";
-import { IconBtnM } from "@/components/common/buttons/iconBtn/IconBtn.js";
-import WebSockComp from "../../../components/common/socket/websock";
+import { useNavigate, useLocation } from 'react-router-dom'; // <-- Import useNavigate
+import SummarizerLoader from '@/components/common/elements/longLoading/LongLoading.js';
+import { Divider, Grid, Stack } from '@mui/material';
+import { getInterview } from '@/features/interviews/interviewsAPI.js';
+import { useCookies } from 'react-cookie';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn.js';
+import { BackgroundColor } from '@/features/utils/utilEnum.js';
+import ElWrap from '@/components/layouts/elWrap/ElWrap.js';
+import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn.js';
+import WebSockComp from '../../../components/common/socket/websock';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -59,10 +59,10 @@ const Conclusion: React.FC = () => {
   const navigate = useNavigate(); // <-- Get the navigate function
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(true);
-  const [cookies, ,] = useCookies(["access_token"]);
-  const [interviewTitle, setInterviewTitle] = useState("");
-  const [interviewerName, setInterviewerName] = useState("");
-  const [interviewerPicture, setInterviewerPicture] = useState("");
+  const [cookies, ,] = useCookies(['access_token']);
+  const [interviewTitle, setInterviewTitle] = useState('');
+  const [interviewerName, setInterviewerName] = useState('');
+  const [interviewerPicture, setInterviewerPicture] = useState('');
 
   useEffect(() => {
     // Set a timeout to hide the loader after 2 minutes
@@ -98,8 +98,8 @@ const Conclusion: React.FC = () => {
           <Stack
             direction="row"
             justifyContent="space-between"
-            alignItems={"center"}
-            style={{ width: "100%", padding: "12px" }}
+            alignItems={'center'}
+            style={{ width: '100%', padding: '12px' }}
           >
             <HeaderWrapper>
               <ElWrap w={38}>
@@ -113,24 +113,24 @@ const Conclusion: React.FC = () => {
 
               <Stack direction="column" justifyContent="flex-start" spacing={2}>
                 <Title>
-                  <H1 style={{ lineHeight: "100%" }}>{` ${interviewTitle}`}</H1>
+                  <H1 style={{ lineHeight: '100%' }}>{` ${interviewTitle}`}</H1>
                 </Title>
 
                 <Stack
                   direction="row"
                   spacing={1}
-                  alignItems={"center"}
-                  justifyContent={"flex-start"}
+                  alignItems={'center'}
+                  justifyContent={'flex-start'}
                 >
                   <ProfilePic src={interviewerPicture}></ProfilePic>
 
-                  <BodyMMedium style={{ marginTop: "0px" }}>
+                  <BodyMMedium style={{ marginTop: '0px' }}>
                     {interviewerName}
                   </BodyMMedium>
                   <BodyMMedium> · </BodyMMedium>
-                  <BodyMMedium style={{ marginTop: "0px" }}>Today</BodyMMedium>
+                  <BodyMMedium style={{ marginTop: '0px' }}>Today</BodyMMedium>
                   <BodyMMedium> · </BodyMMedium>
-                  <BodyMMedium style={{ marginTop: "0px" }}>
+                  <BodyMMedium style={{ marginTop: '0px' }}>
                     Not Shared
                   </BodyMMedium>
                   <BottomArrowIcon />
@@ -140,7 +140,7 @@ const Conclusion: React.FC = () => {
             <Stack
               direction="row"
               spacing={2}
-              alignItems={"center"}
+              alignItems={'center'}
               divider={<Divider orientation="vertical" flexItem />}
             >
               <CreatedContainer>

@@ -1,15 +1,15 @@
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import {
   BodyLMedium,
   BodyMMedium,
   BodySMedium,
-} from "../../typeScale/StyledTypeScale";
+} from '../../typeScale/StyledTypeScale';
 import {
   IBtnProps,
   StyledBtnLL,
   StyledBtnXL,
   StyledButton,
-} from "../button/StyledBtn";
+} from '../button/StyledBtn';
 
 export const TextIconBtnL = (props: IBtnProps): JSX.Element => {
   const { label, icon, disable, onClick, className } = props;

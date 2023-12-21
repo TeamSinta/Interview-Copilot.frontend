@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Grid } from "@mui/material";
+import styled from 'styled-components';
+import { Grid } from '@mui/material';
 
 type StyledDecisionButtonProps = {
   activeValue: number;
@@ -44,10 +44,10 @@ export const StyledDecisionButton = styled.div<StyledDecisionButtonProps>`
   flex-shrink: 0;
   background-color: ${(props) =>
     props.activeValue === 1
-      ? "#DBFDDC"
+      ? '#DBFDDC'
       : props.activeValue === 2
-      ? "#FABBCF"
-      : "#FFFFFF"};
+      ? '#FABBCF'
+      : '#FFFFFF'};
 
   &:hover {
     cursor: pointer;
@@ -55,10 +55,10 @@ export const StyledDecisionButton = styled.div<StyledDecisionButtonProps>`
     transition: 0.5s;
     background-color: ${(props) =>
       props.activeValue === 1 || 3
-        ? "#B3E2B2"
+        ? '#B3E2B2'
         : props.activeValue === 2
-        ? "#F49FB4"
-        : "#D3D3D3"};
+        ? '#F49FB4'
+        : '#D3D3D3'};
   }
 
   &:active {
@@ -107,7 +107,7 @@ export const StyledImage = styled.img`
 `;
 
 export const SubmittedPrompt = styled.div`
-  background-color: #DBFDDC; /* Set the background color to yellow */
+  background-color: #dbfddc; /* Set the background color to yellow */
   color: black; /* Set the text color to black */
   border-radius: 8px; /* Optional: Adds rounded corners to the box */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow to the box */

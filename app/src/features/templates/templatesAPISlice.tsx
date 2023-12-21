@@ -1,25 +1,32 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const templatesAPI = createApi({
-  reducerPath: "templatesAPI",
+  reducerPath: 'templatesAPI',
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_BACKEND_URL}`,
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as any)?.user?.token?.access;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
-  tagTypes: ["Templates", "Topics"],
+  tagTypes: ['Templates', 'Topics'],
   endpoints: (builder) => ({
     getTemplates: builder.query<object, void>({
-      query: () => "/templates/templates/",
+      query: () => '/templates/templates/',
       transformResponse: (res) =>
         res.sort((a: string[], b: string[]) => b.id - a.id),
-      providesTags: ["Templates"],
+      providesTags: ['Templates'],
     }),
     addTemplate: builder.mutation({
       query: (template) => ({
         url: `/templates/templates/`,
-        method: "POST",
+        method: 'POST',
         body: template,
       }),
-      invalidatesTags: ["Templates"],
+      invalidatesTags: ['Templates'],
     }),
     getTemplateDetail: builder.query({
       query: (id) => ({
@@ -30,38 +37,38 @@ export const templatesAPI = createApi({
     updateTemplate: builder.mutation({
       query: (template) => ({
         url: `/templates/templates/${template.id}/`,
-        method: "PATCH",
+        method: 'PATCH',
         body: template,
       }),
-      invalidatesTags: ["Templates"],
+      invalidatesTags: ['Templates'],
     }),
 
     deleteTemplate: builder.mutation({
       query: (id) => ({
         url: `/templates/templates/${id}/`,
-        method: "DELETE",
+        method: 'DELETE',
         body: id,
       }),
-      invalidatesTags: ["Templates"],
+      invalidatesTags: ['Templates'],
     }),
     getTopics: builder.query<object, void>({
-      query: () => "/templates/topics/",
-      providesTags: ["Topics"],
+      query: () => '/templates/topics/',
+      providesTags: ['Topics'],
     }),
     addTopic: builder.mutation({
       query: (template) => ({
-        url: "/templates/topics/",
-        method: "POST",
+        url: '/templates/topics/',
+        method: 'POST',
         body: template,
       }),
     }),
     deleteTopic: builder.mutation({
       query: (id) => ({
         url: `/templates/topics/${id}/`,
-        method: "DELETE",
+        method: 'DELETE',
         body: id,
       }),
-      invalidatesTags: ["Topics"],
+      invalidatesTags: ['Topics'],
     }),
   }),
 });

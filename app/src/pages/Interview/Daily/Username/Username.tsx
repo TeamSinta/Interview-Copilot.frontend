@@ -1,7 +1,7 @@
-import React from "react";
-import "./Username.css";
-import { useParticipantProperty } from "@daily-co/daily-react";
-import { BodyLMedium } from "@/components/common/typeScale/StyledTypeScale";
+import React from 'react';
+import './Username.css';
+import { useParticipantProperty } from '@daily-co/daily-react';
+import { BodyLMedium } from '@/components/common/typeScale/StyledTypeScale';
 
 interface UsernameProps {
   id: string;
@@ -9,12 +9,12 @@ interface UsernameProps {
 }
 
 export default function Username({ id, isLocal }: UsernameProps) {
-  const username = useParticipantProperty(id, "user_name");
+  const username = useParticipantProperty(id, 'user_name');
 
   return (
     <div className="username">
       <BodyLMedium>
-        {username || id} {isLocal && "(You)"}
+        {username || id} {isLocal && '(You)'}
       </BodyLMedium>
     </div>
   );

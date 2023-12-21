@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { videoCallState } from "./videoCallInterface";
+import { createSlice } from '@reduxjs/toolkit';
+import { videoCallState } from './videoCallInterface';
 
 // THIS IS AN EXAMPLE FOR VIDEOCALLSLICE AND STATES WE COULD UTILIZE THROUGHOUT THE APP
 const initialState: videoCallState = {
@@ -7,16 +7,16 @@ const initialState: videoCallState = {
   recording: false,
   participans: {
     interviewer: {
-      name: "",
+      name: '',
     },
     participant: {
-      name: "",
+      name: '',
     },
   },
 };
 
 export const videoCallSlice = createSlice({
-  name: "videoCall",
+  name: 'videoCall',
   initialState,
   reducers: {
     startCall: (state, action) => {

@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 // Define the TypeScript interfaces for the component props
 interface WorkspaceItem {

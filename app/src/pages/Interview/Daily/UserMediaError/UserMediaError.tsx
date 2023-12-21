@@ -1,5 +1,5 @@
-import React from "react";
-import "./UserMediaError.css";
+import React from 'react';
+import './UserMediaError.css';
 
 const refreshPage = () => {
   console.log(

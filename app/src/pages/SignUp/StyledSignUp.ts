@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   BodyLMedium,
   BodyMMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { Box, Stack } from "@mui/material";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { Box, Stack } from '@mui/material';
 
 export const Container = styled(Box)`
   max-width: 480px;

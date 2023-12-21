@@ -1,14 +1,14 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   AccessToken,
   GoogleCode,
   RefreshToken,
   UserReadSerializer,
   Token,
-} from "./authenticationInterface";
+} from './authenticationInterface';
 
 export const authAPI = createApi({
-  reducerPath: "api",
+  reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_BACKEND_URL}`,
   }),
@@ -16,21 +16,21 @@ export const authAPI = createApi({
     googleLogin: builder.mutation<Token, GoogleCode>({
       query: (code) => {
         const urlPath = import.meta.env.VITE_USE_MOCK_LOGIN
-          ? "/auth/mocklogin/"
-          : "auth/login/";
+          ? '/auth/mocklogin/'
+          : 'auth/login/';
         return {
           url: urlPath,
-          method: "POST",
+          method: 'POST',
           body: { code: code.code },
-          credentials: "include",
+          credentials: 'include',
         };
       },
     }),
     getUser: builder.mutation<UserReadSerializer, AccessToken>({
       query: (access) => {
         return {
-          url: "/user/userdetails/",
-          method: "GET",
+          url: '/user/userdetails/',
+          method: 'GET',
           headers: {
             Authorization: `Bearer ${access.access}`,
           },
@@ -39,16 +39,16 @@ export const authAPI = createApi({
     }),
     validateToken: builder.mutation<void, AccessToken>({
       query: (access) => ({
-        url: "/auth/token/verify/",
-        method: "POST",
+        url: '/auth/token/verify/',
+        method: 'POST',
         body: { token: access.access },
       }),
     }),
     getAccessToken: builder.mutation<void, RefreshToken>({
       query: (refresh) => {
         return {
-          url: "/auth/token/refresh/",
-          method: "POST",
+          url: '/auth/token/refresh/',
+          method: 'POST',
           body: { refresh: refresh.refresh },
         };
       },
@@ -58,8 +58,8 @@ export const authAPI = createApi({
       RefreshToken
     >({
       query: (refresh) => ({
-        url: "/auth/check-refresh-token-validity/",
-        method: "POST",
+        url: '/auth/check-refresh-token-validity/',
+        method: 'POST',
         body: { refresh: refresh.refresh },
       }),
     }),

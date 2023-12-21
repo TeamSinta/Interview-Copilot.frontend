@@ -1,13 +1,13 @@
-import { AppDispatch } from "@/app/store";
-import SettingsUserCard from "@/components/common/cards/settingsUserCard/SettingsUserCard";
-import { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { setMemberInfo } from "@/features/members/memberSlice";
-import { MembersList } from "@/features/settingsDetail/userSettingsInterface";
-import { UserListContainer } from "@/pages/Settings/StyledSettings";
-import { Stack } from "@mui/material";
+import { AppDispatch } from '@/app/store';
+import SettingsUserCard from '@/components/common/cards/settingsUserCard/SettingsUserCard';
+import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { setMemberInfo } from '@/features/members/memberSlice';
+import { MembersList } from '@/features/settingsDetail/userSettingsInterface';
+import { UserListContainer } from '@/pages/Settings/StyledSettings';
+import { Stack } from '@mui/material';
 
-import React from "react";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
 const MemberList: React.FC<{
   members: MembersList[];

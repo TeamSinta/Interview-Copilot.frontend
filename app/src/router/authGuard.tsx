@@ -1,21 +1,23 @@
-import { ReactNode, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { ReactNode, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 import {
   setIsAuthenticated,
   resetUserState,
   checkUserAuthentication,
-} from "@/features/authentication/authenticationSlice";
-import { RootState, AppDispatch } from "@/app/store";
+  setTokens,
+} from '@/features/authentication/authenticationSlice';
+import { RootState, AppDispatch } from '@/app/store';
 import {
   useGetAccessTokenMutation,
   useGetUserMutation,
   useValidateTokenMutation,
-} from "@/features/authentication/authenticationAPI";
-import { setCurrentWorkspace } from "@/features/workspace/userWorkspaceSlice";
-import Loading from "@/components/common/elements/loading/Loading";
+} from '@/features/authentication/authenticationAPI';
+import { setCurrentWorkspace } from '@/features/workspace/userWorkspaceSlice';
+import Loading from '@/components/common/elements/loading/Loading';
+import { AccessToken } from '@/features/settingsDetail/userSettingTypes';
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -30,53 +32,23 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const dispatch: AppDispatch = useDispatch();
 
   const [cookies, setCookies, removeCookies] = useCookies([
-    "refresh_token",
-    "access_token",
+    'refresh_token',
+    'access_token',
   ]);
-  const accessToken: string | undefined = cookies.access_token;
-  const refreshToken: string | undefined = cookies.refresh_token;
+  const accessToken: AccessToken = cookies.access_token;
+  const refreshToken: AccessToken = cookies.refresh_token;
 
   const [validateToken] = useValidateTokenMutation();
   const [getUser] = useGetUserMutation();
   const [getAccessToken] = useGetAccessTokenMutation();
 
-  const checkAuthentication = async () => {
-    try {
-      // Dispatch the checkUserAuthentication action to check if the user is authenticated
-      await dispatch(checkUserAuthentication());
-
-      // Check the user's authentication status
-      if (!isAuthenticated) {
-        // User is not authenticated, handle it accordingly
-        if (accessToken) {
-          await authenticateUser(accessToken);
-        } else {
-          await handleTokenRefresh();
-        }
-      }
-
-      // Check if user email is missing and fetch it if needed
-      if (!user.email) {
-        await getUser({ access: accessToken });
-      }
-
-      // Set the default workspace if needed
-      setDefaultWorkspace();
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        failedAuthentication();
-      } else {
-        failedAuthentication();
-      }
-    }
-  };
-
-  const authenticateUser = async (accessToken: string) => {
+  const authenticateUser = async (accessToken: AccessToken) => {
     try {
       const result = await validateToken({ access: accessToken });
-      if ("data" in result) {
-        await getUser({ access: accessToken });
+      if ('data' in result) {
         dispatch(setIsAuthenticated(true));
+        dispatch(setTokens({ access: accessToken, refresh: refreshToken }));
+        await getUser({ access: accessToken });
       } else {
         handleTokenRefresh();
       }
@@ -92,10 +64,11 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const handleTokenRefresh = async () => {
     if (refreshToken) {
       const newAccessToken = await getAccessToken({ refresh: refreshToken });
-      if ("data" in newAccessToken && newAccessToken.data?.access) {
+      if ('data' in newAccessToken && newAccessToken.data?.access) {
         const { access } = newAccessToken.data;
-        setCookies("access_token", access);
+        setCookies('access_token', access);
         dispatch(setIsAuthenticated(true));
+        dispatch(setTokens({ access: access, refresh: refreshToken }));
         await getUser({ access: access });
       } else {
         failedAuthentication();
@@ -106,7 +79,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   };
 
   const setDefaultWorkspace = () => {
-    if (user.companies && user.companies.length > 0 && !workspace.id) {
+    if (user?.companies?.length > 0 && !workspace.id) {
       const defaultCompany = user.companies[0];
       dispatch(setCurrentWorkspace(defaultCompany));
     }
@@ -114,16 +87,16 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 
   const failedAuthentication = () => {
     dispatch(resetUserState());
-    removeCookies("access_token");
-    removeCookies("refresh_token");
-    navigate("/login");
+    removeCookies('access_token');
+    removeCookies('refresh_token');
+    navigate('/login');
   };
 
   useEffect(() => {
     const initAuth = async () => {
       switch (status) {
-        case "IDLE":
-          console.log("Checking authentication");
+        case 'IDLE':
+          console.log('Checking authentication');
           if (!isAuthenticated) {
             if (accessToken) {
               await authenticateUser(accessToken);
@@ -131,26 +104,23 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
               await handleTokenRefresh();
             }
           }
+          setDefaultWorkspace();
+          break;
+
+        case 'AUTHENTICATED':
           if (!user.email) {
             await getUser({ access: accessToken });
           }
           setDefaultWorkspace();
+          console.log('Authenticated');
           break;
 
-        case "AUTHENTICATED":
-          if (!user.email) {
-            await getUser({ access: accessToken });
-          }
-          setDefaultWorkspace();
-          console.log("Authenticated");
+        case 'LOADING':
+          console.log('Authentication Loading');
           break;
 
-        case "LOADING":
-          console.log("Authentication Loading");
-          break;
-
-        case "FAILED":
-          console.log("Authentication Failed");
+        case 'FAILED':
+          console.log('Authentication Failed');
           failedAuthentication();
           break;
       }
@@ -159,7 +129,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
     initAuth();
   }, [accessToken, status, isAuthenticated, user.email]);
 
-  if (status === "IDLE" || status === "LOADING") return <Loading />;
+  if (status === 'IDLE' || status === 'LOADING') return <Loading />;
   return <>{children}</>;
 };
 
