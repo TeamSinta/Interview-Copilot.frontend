@@ -216,6 +216,16 @@ video {
   transform: translateX(-50%);
   /*  z-index: 999; */
 }
+.emoticon-hover-effect {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  /* Changes cursor to pointer to indicate it's clickable */
+}
+
+.emoticon-hover-effect:hover {
+  transform: scale(2.5);
+  /* Increase size to 150% on hover */
+}
 
 .current-time-dot {
   position: absolute;

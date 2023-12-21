@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../app/store";
 import { createCall } from "../../../utils/dailyVideoService/videoCallSlice";
+import { H2Medium } from "@/components/common/typeScale/StyledTypeScale";
 
 export interface IButton {
   to: string;
@@ -27,7 +28,7 @@ export interface IButton {
 //   startHairCheck: (url: string) => void;
 // }
 
-const TopNavBar = (): JSX.Element => {
+const TopNavBarDash = (): JSX.Element => {
   const navigate = useNavigate();
 
   const dispatch: AppDispatch = useDispatch();
@@ -45,15 +46,21 @@ const TopNavBar = (): JSX.Element => {
   };
 
   return (
-    <StyledTopNavBar sx={{ width: "100%" }}>
+    <StyledTopNavBar
+      sx={{
+        width: "100%",
+        paddingBottom: "48px",
+        padding: "30px 0px 24px 0px",
+      }}
+    >
       <Stack direction="row" spacing={2}>
         <Box sx={{ width: "100%" }}>
-          <SearchInput disable={false} placeholder={"Search"} error={false} />
+          <H2Medium>Dashboard</H2Medium>
         </Box>
 
-        <ElWrap w={460}>
+        <ElWrap w={260}>
           <DropDownButton
-            label="Create a Meeting"
+            label="New Meeting"
             onClick={() => {}}
             icon={<RightBracketIcon />}
             disable={false}
@@ -78,4 +85,4 @@ const TopNavBar = (): JSX.Element => {
   );
 };
 
-export default TopNavBar;
+export default TopNavBarDash;

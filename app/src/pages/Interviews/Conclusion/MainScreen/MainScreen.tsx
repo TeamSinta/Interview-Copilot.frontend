@@ -98,7 +98,6 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     error,
   ] = ConclusionData(interviewRoundId);
 
-  console.log(emojisData);
 
   const infoTabs = useMemo(
     () => (
@@ -156,7 +155,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
           style={{ display: "flex", flexDirection: "column", gap: "22px" }}
         >
           <Stack direction={"column"} spacing={2}>
-            <H3Bold>Behavioral Interview</H3Bold>
+            <H3Bold>Technical Interview</H3Bold>
             <div className="video-player-wrapper">
               <VideoPlayer
                 questionsTranscript={questionsTranscript?.data}

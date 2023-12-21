@@ -27,7 +27,7 @@ export const TranscriptionTabQNA: React.FC<TranscriptionTabQNAProps> = ({
   data,
   handleClick,
 }) => {
-  console.log(data);
+
   return (
     <div
       style={{

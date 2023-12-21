@@ -1,6 +1,10 @@
 import {
+  BodyLMedium,
   BodyLSemiBold,
+  BodyMBold,
   BodyMMedium,
+  BodyMSemiBold,
+  H3Medium,
 } from "@/components/common/typeScale/StyledTypeScale";
 import React from "react";
 import styled, { css } from "styled-components";

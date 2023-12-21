@@ -11,13 +11,13 @@ export const CustomButton = styled.button`
   outline: none;
   font-size: 12px;
   transition: 0.5s;
-  width: 100%;
   border-radius: 0 0 12px 12px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 6px;
-
+  position: relative;
+  width: 205px;
   svg {
     stroke: ${(props) => props.theme.colors.black};
     width: 20px;
@@ -43,10 +43,13 @@ export const ButtonWrap = styled.div`
   background: ${(props) => props.theme.colors.whisperGrey};
   border-radius: 0 0 12px 12px;
   border: 1px solid black;
-
+  width: 100%;
   padding-top: 18px;
-  margin-top: -10px;
+  margin-top: -14px;
   padding-bottom: 8px;
+  position: absolute;
+  width: inherit;
+  z-index: -1; //
 `;
 
 export const DropdownArrowIconDiv = styled.div<IDropdownOpen>`
@@ -56,8 +59,9 @@ export const DropdownArrowIconDiv = styled.div<IDropdownOpen>`
   align-items: center;
   height: 40px;
 
+
   svg {
-    stroke: ${(props) => props.theme.colors.black};
+    stroke: ${(props) => props.theme.colors.black} ;
   }
 
   ${(props) =>

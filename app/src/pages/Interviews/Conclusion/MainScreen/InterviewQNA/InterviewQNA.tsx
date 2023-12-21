@@ -30,7 +30,7 @@ export const IndexStyle = styled.div`
 `;
 
 const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
-  const [activeIndex, setActiveIndex] = useState<any>(null);
+  const [activeIndex, setActiveIndex] = useState<any>(0);
   const [, setData] = useState<any>("");
   const [view, setView] = useState<any>("");
 
@@ -38,8 +38,6 @@ const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
     setView(screen);
     setData(propData);
   }, [screen, propData]);
-
-  console.log(propData);
 
   const handleClick = (index: number) => {
     if (activeIndex === index) {
@@ -82,7 +80,6 @@ const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
             data={propData}
             handleClick={handleClick}
           />
-          {console.log("here")}
         </>
       );
     return null;

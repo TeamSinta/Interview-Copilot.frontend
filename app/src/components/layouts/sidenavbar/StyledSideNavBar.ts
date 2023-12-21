@@ -1,3 +1,4 @@
+import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
 import Stack from "@mui/material/Stack";
 import styled from "styled-components";
 
@@ -81,7 +82,7 @@ export const StyledLink = styled.link`
   align-items: center;
 `;
 
-export const StyledSideNavBarTitle = styled.p`
+export const StyledSideNavBarTitle = styled(BodySMedium)`
   color: "#7B7B7E";
   padding-left: 16px;
   margin-bottom: 4px;

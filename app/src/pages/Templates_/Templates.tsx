@@ -19,7 +19,7 @@ import TemplateHomeCard, {
   IMember,
 } from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
 import { useState } from "react";
-import { TemplateCardsBox } from "../Dashboard/StyledDashboard";
+import { InterviewsBox, TemplateCardsBox } from "../Dashboard/StyledDashboard";
 import { useNavigate } from "react-router-dom";
 import { CreateInterviewBox, DepartmentHeading } from "./StyledTemplates";
 import {
@@ -68,8 +68,6 @@ const Templates = () => {
   const companyId: CompanyID = (!workspace.id
     ? user?.companies?.[0]?.id ?? workspace.id
     : workspace.id)! as unknown as CompanyID;
-
-  console.log(user);
 
   const getFilteredTemplateQuestionsLength = (
     templateQuestions: Record<string, TemplateQuestions> | null,
@@ -259,60 +257,62 @@ const Templates = () => {
                   spacing={1}
                   style={{ paddingLeft: "38px", paddingRight: "38px" }}
                 >
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    style={{ width: "100%" }}
-                  >
+                  <InterviewsBox>
                     <Stack
                       direction="row"
-                      alignItems="center"
                       justifyContent="space-between"
-                      spacing={1}
+                      alignItems="center"
+                      style={{ width: "100%" }}
                     >
-                      <DepartmentHeading>{department}</DepartmentHeading>
-                      <BodyLMedium> · </BodyLMedium>
-                      <BodyLMedium style={{ color: "grey" }}>
-                        {templates?.length} Roles
-                      </BodyLMedium>
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        spacing={1}
+                      >
+                        <DepartmentHeading>{department}</DepartmentHeading>
+                        <BodyLMedium> · </BodyLMedium>
+                        <BodyLMedium style={{ color: "grey" }}>
+                          {templates?.length} Roles
+                        </BodyLMedium>
+                      </Stack>
+                      <Box style={{ margin: "8px" }}>
+                        <ElWrap w={32} h={32}>
+                          <IconBtnM
+                            icon={<EditIcon />}
+                            disable={false}
+                            className={BackgroundColor.WHITE}
+                            onClick={() => {}}
+                          />
+                        </ElWrap>
+                      </Box>
                     </Stack>
-                    <Box style={{ margin: "8px" }}>
-                      <ElWrap w={32} h={32}>
-                        <IconBtnM
-                          icon={<EditIcon />}
-                          disable={false}
-                          className={BackgroundColor.WHITE}
-                          onClick={() => {}}
-                        />
-                      </ElWrap>
-                    </Box>
-                  </Stack>
-                  <TemplateCardsBox>
-                    {templates.map(
-                      (
-                        template: Template // Specify the Template type
-                      ) => (
-                        <TemplateHomeCard
-                          key={template.id}
-                          title={template.role_title}
-                          disable={template.disable || false}
-                          questions={getFilteredTemplateQuestionsLength(
-                            templateQuestions,
-                            template.id
-                          )}
-                          sections={getFilteredTemplateTopicsLength(
-                            templateQuestions,
-                            template.id
-                          )}
-                          imageUrl={template.image}
-                          members={template.interviewers || []}
-                          // Include other template information as needed
-                          onClick={() => handleCardClick(template.id)}
-                        />
-                      )
-                    )}
-                  </TemplateCardsBox>
+                    <TemplateCardsBox>
+                      {templates.map(
+                        (
+                          template: Template // Specify the Template type
+                        ) => (
+                          <TemplateHomeCard
+                            key={template.id}
+                            title={template.role_title}
+                            disable={template.disable || false}
+                            questions={getFilteredTemplateQuestionsLength(
+                              templateQuestions,
+                              template.id
+                            )}
+                            sections={getFilteredTemplateTopicsLength(
+                              templateQuestions,
+                              template.id
+                            )}
+                            imageUrl={template.image}
+                            members={template.interviewers || []}
+                            // Include other template information as needed
+                            onClick={() => handleCardClick(template.id)}
+                          />
+                        )
+                      )}
+                    </TemplateCardsBox>
+                  </InterviewsBox>
                 </Stack>
               )
             )}

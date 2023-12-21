@@ -25,8 +25,8 @@ export const SelectedItemDiv = styled.div`
 
 export const SelectedItemIcon = styled(BodySBold)`
   background: ${(props) => props.theme.colors.pastelPurple};
-  width: 24px;
-  height: 24px;
+  width: 48px;
+  height: 48px;
   display: flex;
   justify-content: center;
   border-radius: 8px;

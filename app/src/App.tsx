@@ -14,7 +14,9 @@ function App() {
   const { isAuthenticated } = useSelector((state: RootState) => state.user);
 
   const isVideoCallRoute = location.pathname.startsWith("/video-call/");
-  const isConclusionRoute = location.pathname === "/interviews/conclusion/";
+  const isConclusionRoute =
+    location.pathname === "/interviews/conclusion/" ||
+    location.pathname === "/dashboard";
 
   if (isVideoCallRoute) {
     return <Routers />;

@@ -50,7 +50,6 @@ const TopBar = ({ interviewRoundId }) => {
       setTemplateTitle(template.role_title);
       setDepartmentTitle(template.department_name);
       setInterviewRoundDate(interviewRound.created_at);
-      console.log(interviewRound);
       let ratingTotal = 0;
       questions.map((question) => {
         ratingTotal += question.rating;

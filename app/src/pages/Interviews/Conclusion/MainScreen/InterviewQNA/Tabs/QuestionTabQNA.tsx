@@ -9,7 +9,7 @@ import {
 import { PredefinedRatingsAndCompetency } from "../RatingComponent";
 import styled from "styled-components";
 import {
-  BodyLMedium,
+  BodyMMedium,
   BodySBold,
 } from "@/components/common/typeScale/StyledTypeScale";
 
@@ -100,6 +100,15 @@ const AnswerContainer = styled.div`
   padding: 20px;
   width: 100%;
   line-height: 1.5;
+
+  BodyMMedium {
+    white-space: pre-line; /* This will handle line breaks */
+  }
+
+  BodyMMedium:before {
+    content: "• "; /* Bullet point */
+    display: block;
+  }
 `;
 
 export const QuestionMeta: React.FC<QuestionMetaProps> = ({
@@ -162,6 +171,9 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
   handleClick,
   activeIndex,
 }) => {
+
+  const lines = answer.split("- ").filter((line) => line.trim() !== "");
+
   return (
     <>
       <InterviewContainerStyle>
@@ -183,9 +195,15 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
       <AnswerContainer
         className={`question-answer ${activeIndex === index ? "show" : ""}`}
       >
-        <BodyLMedium>{answer}</BodyLMedium>
+        {lines.map((line, index) => (
+          <BodyMMedium
+            key={index}
+            style={{ display: "block", marginBottom: "0.5em" }}
+          >
+            • {line}
+          </BodyMMedium>
+        ))}
       </AnswerContainer>
-
       <hr style={{ opacity: "0.25" }} />
     </>
   );

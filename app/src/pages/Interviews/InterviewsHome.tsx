@@ -5,12 +5,10 @@ import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
 import { H1 } from "@/components/common/typeScale/StyledTypeScale";
 import ConclusionInterviewCard from "@/components/common/cards/conclusionInterivewCard/ConclusionInterviewCard";
 import { GridContainer } from "./StyledConclusions";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import TextIconFilter from "@/components/common/filters/textIconFilter/TextIconFilter";
-import { BinIcon, ResumeIcon } from "@/components/common/svgIcons/Icons";
 import { getInterviews } from "../../features/interviews/interviewsAPI";
 import { useCookies } from "react-cookie";
-import { InterviewRoundCardProps } from "../../components/common/cards/interviewRoundCard/InterviewRoundCard";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -20,6 +18,7 @@ interface TabPanelProps {
 
 interface IInterviewRound {
   title: string;
+  id: string;
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -42,69 +41,6 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-const fakeInterviewRounds = [
-  {
-    name: "Alice Johnson",
-    title: "Frontend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 15, // 15 days ago
-  },
-  {
-    name: "Bob Smith",
-    title: "Backend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 2 * 30, // 2 months ago
-  },
-  {
-    name: "Charlie Williams",
-    title: "UX Designer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 45, // 45 days ago
-  },
-  {
-    name: "Daisy Brown",
-    title: "Data Scientist Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 365, // 1 year ago
-  },
-  {
-    name: "Alice Johnson",
-    title: "Frontend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 15, // 15 days ago
-  },
-  {
-    name: "Bob Smith",
-    title: "Backend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 2 * 30, // 2 months ago
-  },
-  {
-    name: "Charlie Williams",
-    title: "UX Designer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 45, // 45 days ago
-  },
-  {
-    name: "Daisy Brown",
-    title: "Data Scientist Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 365, // 1 year ago
-  },
-  {
-    name: "Alice Johnson",
-    title: "Frontend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 15, // 15 days ago
-  },
-  {
-    name: "Bob Smith",
-    title: "Backend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 2 * 30, // 2 months ago
-  },
-];
-
 const TABS = {
   INTERVIEWS: "interviews",
   ARCHIVED: "archived",
@@ -125,7 +61,7 @@ export default function BasicTabs() {
     };
 
     fetchInterviews();
-  }, []);
+  }, [cookies.access_token]);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -150,15 +86,18 @@ export default function BasicTabs() {
             sx={{
               marginBottom: "24px",
               gap: "12px",
+              display: "flex",
             }}
           >
             <TextIconFilter
               label="Interviews"
+              icon={false}
               select={activeTab === TABS.INTERVIEWS}
               onClick={() => handleTabChange(TABS.INTERVIEWS)}
             />
             <TextIconFilter
               label="Archived"
+              icon={false}
               select={activeTab === TABS.ARCHIVED}
               onClick={() => handleTabChange(TABS.ARCHIVED)}
             />

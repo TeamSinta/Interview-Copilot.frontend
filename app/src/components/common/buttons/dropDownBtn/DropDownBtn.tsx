@@ -66,7 +66,6 @@ export const DropDownButton = (props: IDropDownButtonProps): JSX.Element => {
           <div>{icon}</div>
         </StyledButton>
       </DropdownArrowIconDiv>
-
       {dropdownVisible && (
         <ButtonWrap>
           {buttons.map((buttonConfig, index) => (

@@ -48,6 +48,7 @@ export const NotesTabQNA: React.FC<TranscriptionTabQNAProps> = ({
   data,
   handleClick,
 }) => {
+  console.log(data);
   const categorizedNotes = data.reduce((acc, note) => {
     const category = note.question_text || "General Notes";
     if (!acc[category]) {
@@ -63,6 +64,14 @@ export const NotesTabQNA: React.FC<TranscriptionTabQNAProps> = ({
     if (b === "General Notes") return 1;
     return 0;
   });
+
+  const reactionEmojis = {
+    1: "🔥",
+    2: "👍",
+    3: "👎",
+    4: "❤️",
+    5: "😂",
+  };
 
   return (
     <div>
@@ -109,7 +118,18 @@ export const NotesTabQNA: React.FC<TranscriptionTabQNAProps> = ({
                 >
                   {note.time}
                 </BodySMedium>
-                <BodySMedium>{note.note}</BodySMedium>
+                <BodySMedium>
+                  {note.note ? (
+                    note.note
+                  ) : (
+                    <div style={{ display: "flex", gap: "4px" }}>
+                      <BodySMedium style={{ color: "#938f8f" }}>
+                        Reacted with:
+                      </BodySMedium>
+                      {reactionEmojis[note.reaction]}
+                    </div>
+                  )}
+                </BodySMedium>
               </Stack>
             ))}
           </div>

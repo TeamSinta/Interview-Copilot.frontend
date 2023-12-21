@@ -123,26 +123,7 @@ const SideNavBar = (): ReactElement => {
       alignItems="flex-start"
       spacing={4}
     >
-      <button style={buttonStyle} onClick={redirectToRoot}>
-        <div
-          style={{
-            paddingLeft: "16px",
-            paddingTop: "6px",
-          }}
-        >
-          {/* Your LogoImage component */}
-          <LogoImage
-            className="m-top-3 m-bottom"
-            src={image}
-            alt="Sinta Logo"
-          />
-        </div>
-      </button>
-
       <StyledSideNavLinksWrap>
-        <StyledSideNavBarTitle style={{ opacity: "0.5" }}>
-          Workspace
-        </StyledSideNavBarTitle>
         <DropWrapper>
           <SideNavBarDropdown {...args} />
         </DropWrapper>

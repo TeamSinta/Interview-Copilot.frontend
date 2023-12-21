@@ -105,3 +105,21 @@ export const StyledImage = styled.img`
   width: 100px;
   height: auto;
 `;
+
+export const SubmittedPrompt = styled.div`
+  background-color: #DBFDDC; /* Set the background color to yellow */
+  color: black; /* Set the text color to black */
+  border-radius: 8px; /* Optional: Adds rounded corners to the box */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow to the box */
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+
+  text-align: center;
+  padding: 6px 10px;
+  align-items: center;
+  &.show {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`;

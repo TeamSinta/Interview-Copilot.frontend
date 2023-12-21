@@ -128,9 +128,7 @@ const Conclusion: React.FC = () => {
                     {interviewerName}
                   </BodyMMedium>
                   <BodyMMedium> · </BodyMMedium>
-                  <BodyMMedium style={{ marginTop: "0px" }}>
-                    about 1 month ago
-                  </BodyMMedium>
+                  <BodyMMedium style={{ marginTop: "0px" }}>Today</BodyMMedium>
                   <BodyMMedium> · </BodyMMedium>
                   <BodyMMedium style={{ marginTop: "0px" }}>
                     Not Shared
