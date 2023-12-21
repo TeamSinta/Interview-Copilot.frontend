@@ -11,6 +11,7 @@ import {
   OptionUl,
   SelectedItemDiv,
 } from './StyledDropdownFilter';
+import AdminDepartmentChecklist from '../DepartmentCheckList/AdminDepartmentChecklist';
 import { BodyMMedium } from '../../typeScale/StyledTypeScale';
 
 interface IDropdown {
@@ -35,6 +36,7 @@ const DropdownFilter = memo((props: IDropdown): JSX.Element => {
   const [selectedItem, setSelectedItem] = useState({
     [dropdownName]: props.value || '',
   });
+  const [, setSelectedAssignedOption] = useState<number | null>(null);
 
   const onSelectOpen = useCallback(() => {
     setOpen((prevOpen) => !prevOpen);
@@ -50,6 +52,10 @@ const DropdownFilter = memo((props: IDropdown): JSX.Element => {
     },
     [dropdownName, props]
   );
+
+  const onAssignedOptionSelect = useCallback((id: number) => {
+    setSelectedAssignedOption(id);
+  }, []);
 
   return (
     <>
@@ -81,12 +87,10 @@ const DropdownFilter = memo((props: IDropdown): JSX.Element => {
           </DropdownEl>
           <OptionUl open={open}>
             <OptionLi>
-              <OptionA
-                onClick={() => {
-                  onSelectedItem('', '');
-                }}
-              >
-                ------------
+              <OptionA>
+                <AdminDepartmentChecklist
+                  onOptionSelect={onAssignedOptionSelect}
+                />
               </OptionA>
             </OptionLi>
             {optionsMemo.length > 0 ? (

@@ -16,11 +16,13 @@ import {
   H3Bold,
 } from '../../typeScale/StyledTypeScale';
 import DropdownFilter from '../../filters/dropdownFilter/DropdownFilter';
-import CheckBox from '../../form/checkBox/CheckBox';
 import { TextBtnS } from '../../buttons/textBtn/TextBtn';
 import { selectSetMember } from '@/features/members/memberSlice';
 import { useSelector } from 'react-redux';
-import { useGetUserDepartmentsMutation } from '@/features/settingsDetail/userSettingsAPI';
+import {
+  useGetUserDepartmentsMutation,
+  useUpdateUserMutation,
+} from '@/features/settingsDetail/userSettingsAPI';
 import { RootState } from '@/app/store';
 
 interface UserModalProps {
@@ -34,28 +36,46 @@ interface UserModalProps {
   onClose: () => void;
 }
 
+type Department = {
+  title: string;
+  id: string;
+};
+
 const MemberSettings: React.FC<UserModalProps> = () => {
   const member = useSelector(selectSetMember);
 
   const workspace = useSelector((state: RootState) => state.workspace);
   const [memberDepartments, setMemberDepartments] = useState([]);
   const [getMemberDepartments] = useGetUserDepartmentsMutation();
+  const [, setSelectedDepartment] = useState<string>('');
+  const [updateUserDepartment] = useUpdateUserMutation();
 
   useEffect(() => {
     getMemberDepartments({ user_id: member.id, company_id: workspace.id }).then(
       (response) => {
         if ('data' in response) {
-          const transformedData = response.data.map((department) => ({
-            name: department.title,
-            value: department.id.toString(),
-          }));
+          console.log('response ====> ', response);
+          console.log('response data ====> ', response.data);
+          const transformedData = response.data?.map(
+            (department: Department) => ({
+              name: department.title,
+              value: department.id.toString(),
+            })
+          );
           setMemberDepartments(transformedData);
         }
       }
     );
   }, [getMemberDepartments]);
 
-  useEffect(() => {}, []);
+  const handleSave = async (selectedValue: string) => {
+    setSelectedDepartment(selectedValue);
+    try {
+      await updateUserDepartment;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <ModalContentWrap>
@@ -72,20 +92,21 @@ const MemberSettings: React.FC<UserModalProps> = () => {
         <DropdownFilter
           key={workspace.id}
           label="Departments"
-          value=""
+          value="Select Department"
           onChange={() => {}}
           optionArr={memberDepartments}
           dropdownName="Placeholder"
         />
 
-        {/* Disabled checkbox for now
+        {/* Disabled checkbox for now 
         <CheckBox
           inputName="Check Box"
           label="Make Admin"
           onChange={() => {}}
           checked={false}
           disabled={true}
-        /> */}
+        />
+        */}
         <DeleteBox>
           <BodyMMedium style={{ opacity: 0.5 }}>You can </BodyMMedium>
           <ElWrap w={50} h={10}>
@@ -106,7 +127,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
       <ElWrap>
         <TextIconBtnL
           disable={false}
-          onClick={() => {}}
+          onClick={() => handleSave}
           className={BackgroundColor.ACCENT_PURPLE}
           label="Save"
         />
