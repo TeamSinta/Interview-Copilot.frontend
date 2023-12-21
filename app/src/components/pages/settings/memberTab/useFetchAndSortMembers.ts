@@ -1,5 +1,4 @@
 import {
-  AccessToken,
   CompanyID,
   DepartmentID,
 } from "@/features/settingsDetail/userSettingTypes";
@@ -20,12 +19,10 @@ type TransformedDepartment = {
 };
 
 export const useFetchCompanyMembers = ({
-  access,
   company_id,
   department_id,
   sortCriteria,
 }: {
-  access: AccessToken;
   company_id: CompanyID;
   department_id: DepartmentID;
   sortCriteria: string;
@@ -33,7 +30,6 @@ export const useFetchCompanyMembers = ({
   const [members, setMembers] = useState<MembersList[]>([]);
 
   const { data, isSuccess } = useGetCompanyMembersQuery({
-    access,
     company_id,
     department_id,
     sort_by: sortCriteria,
@@ -48,15 +44,12 @@ export const useFetchCompanyMembers = ({
   return { members };
 };
 
-export const useFetchCompanyDepartments = (
-  accessToken: AccessToken,
-  companyId: CompanyID
-) => {
+export const useFetchCompanyDepartments = (companyId: CompanyID) => {
   const [departments, setDepartments] = useState<TransformedDepartment[]>([]);
   const [getCompanyDepartments] = useGetCompanyDepartmentsMutation();
 
   useEffect(() => {
-    getCompanyDepartments({ access: accessToken, company_id: companyId })
+    getCompanyDepartments({ company_id: companyId })
       .then((response) => {
         if ("data" in response && "data") {
           const transformedData = (response.data as unknown as any[]).map(
@@ -71,7 +64,7 @@ export const useFetchCompanyDepartments = (
         }
       })
       .catch((error) => console.error("Error fetching company users:", error));
-  }, [accessToken, companyId, getCompanyDepartments]);
+  }, [companyId, getCompanyDepartments]);
 
   return departments;
 };

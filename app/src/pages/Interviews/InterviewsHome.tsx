@@ -1,16 +1,12 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import { Stack } from "@mui/material";
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import { H1 } from "@/components/common/typeScale/StyledTypeScale";
 import ConclusionInterviewCard from "@/components/common/cards/conclusionInterivewCard/ConclusionInterviewCard";
-import { GridContainer } from "./StyledConclusions";
-import { Link, useNavigate } from "react-router-dom";
 import TextIconFilter from "@/components/common/filters/textIconFilter/TextIconFilter";
-import { BinIcon, ResumeIcon } from "@/components/common/svgIcons/Icons";
+import { BodySMedium, H1 } from "@/components/common/typeScale/StyledTypeScale";
+import { Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import { getInterviews } from "../../features/interviews/interviewsAPI";
-import { useCookies } from "react-cookie";
-import { InterviewRoundCardProps } from "../../components/common/cards/interviewRoundCard/InterviewRoundCard";
+import { GridContainer } from "./StyledConclusions";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -114,13 +110,11 @@ export default function BasicTabs() {
   const [activeTab, setActiveTab] = React.useState(TABS.INTERVIEWS);
   const [interviews, setInterviews] = React.useState([]);
 
-  const [cookies, ,] = useCookies(["access_token"]);
-
   const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchInterviews = async () => {
-      const response = await getInterviews(cookies.access_token);
+      const response = await getInterviews();
       setInterviews(response);
     };
 

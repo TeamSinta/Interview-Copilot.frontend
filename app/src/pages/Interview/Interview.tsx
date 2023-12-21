@@ -16,7 +16,6 @@ import {
   EmojiOverlayWrapper,
   StyledImage,
   GridContainer,
-  InterviewSideBarWrapper,
   GuidelinesSection,
   InterviewLayout,
 } from "./StyledInterview";
@@ -51,7 +50,6 @@ import {
   sendFeedback,
   updateInterviewQuestionRating,
 } from "../../features/interviews/interviewsAPI";
-import { useCookies } from "react-cookie";
 import { useDaily } from "@daily-co/daily-react";
 import SintaLogo from "src/assets/svg/Sinta_call_logo.svg";
 import {
@@ -92,7 +90,6 @@ const Interview = ({ leaveCall, interviewDetails }) => {
   const [startTime, setStartTime] = useState(null);
   const [isInterviewSideBarCollapsed, setIsInterviewSideBarCollapsed] =
     useState(false);
-  const [cookies, ,] = useCookies(["access_token"]);
   const callObject = useDaily();
 
   // Placeholder for functionality. Moe will have to update this once the videoscreen is done and we have correct reducers/states.
@@ -136,14 +133,13 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     const fetchQuestionsAndTopics = async () => {
       // get the template questions
       const response = await getTemplateQuestionsAndTopics(
-        interviewDetails.template_id,
-        cookies.access_token
+        interviewDetails.template_id
       );
       setTemplateQuestionsAndTopics(response);
     };
 
     fetchQuestionsAndTopics();
-  }, [cookies.access_token, interviewDetails]);
+  }, [interviewDetails]);
 
   const sidebarTabs = useMemo(() => {
     return (
@@ -153,7 +149,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
             onClick={() => {
               setActiveTab(1);
             }}
-            direction="row"
+            direction='row'
             style={{
               fontSize: "12px",
               height: "30px",
@@ -170,7 +166,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
         <span>
           <NavButton
             onClick={() => setActiveTab(2)}
-            direction="row"
+            direction='row'
             style={{
               fontSize: "12px",
               height: "30px",
@@ -187,7 +183,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
         <span>
           <NavButton
             onClick={() => setActiveTab(3)}
-            direction="row"
+            direction='row'
             style={{
               fontSize: "12px",
               height: "30px",
@@ -364,12 +360,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     };
     const handleRating = (rating: number, question: string) => {
       // update interview round question rating to new rating
-      updateInterviewQuestionRating(
-        rating,
-        question,
-        interviewDetails.id,
-        cookies.access_token
-      );
+      updateInterviewQuestionRating(rating, question, interviewDetails.id);
     };
 
     useEffect(() => {
@@ -396,7 +387,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
           }}
         >
           {collapseQuestion ? (
-            <Stack direction="row" justifyContent="space-between">
+            <Stack direction='row' justifyContent='space-between'>
               <InterviewStageSlider
                 data={data}
                 setActiveData={setActiveData}
@@ -470,7 +461,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
               : null}
             {collapseQuestion ? (
               <div
-                className="question-detail"
+                className='question-detail'
                 style={{
                   fontSize: "14px",
                 }}
@@ -484,7 +475,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                     }}
                   >
                     <div>
-                      <Stack direction="row" justifyContent="space-between">
+                      <Stack direction='row' justifyContent='space-between'>
                         <div
                           style={{
                             display: "flex",
@@ -506,8 +497,8 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                           </CompetencyStyle>
                         </div>
                         <Stack
-                          direction="row"
-                          justifyContent="flex-end"
+                          direction='row'
+                          justifyContent='flex-end'
                           spacing={1}
                         >
                           <span
@@ -570,7 +561,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                         </Stack>
                       </Stack>{" "}
                       <Stack
-                        alignItems="flex-start"
+                        alignItems='flex-start'
                         style={{ marginLeft: "8px" }}
                       >
                         <BodyLMedium
@@ -631,10 +622,10 @@ const Interview = ({ leaveCall, interviewDetails }) => {
           {collapseQuestion ? (
             <BottomQuestionButtons>
               <Stack
-                direction="row"
-                justifyContent="flex-end"
+                direction='row'
+                justifyContent='flex-end'
                 spacing={1}
-                alignItems="flex-end"
+                alignItems='flex-end'
               >
                 <InputLabelDiv style={{ width: "100%" }}>
                   {/* <TextArea
@@ -833,7 +824,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       time: getEmojiClickTime(),
     };
 
-    sendFeedback(data, cookies.access_token);
+    sendFeedback(data);
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     setReactClicked({
@@ -854,7 +845,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       note: notes,
     };
 
-    sendFeedback(data, cookies.access_token);
+    sendFeedback(data);
   }
 
   function EmojiOverlay() {
@@ -931,11 +922,11 @@ const Interview = ({ leaveCall, interviewDetails }) => {
             position: "absolute",
           }}
         >
-          <StyledImage src={SintaLogo} alt="Sinta_Logo" />
+          <StyledImage src={SintaLogo} alt='Sinta_Logo' />
         </div>
         <InterviewLayout>
           <Call />
-          <div className="side">
+          <div className='side'>
             <InterviewSideBar
               setReactClicked={setReactClicked}
               reactClicked={reactClicked}

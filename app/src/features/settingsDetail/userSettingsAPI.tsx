@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { MembersList, UserData } from './userSettingsInterface';
 import {
-	AccessToken,
 	CompanyID,
 	DepartmentID,
 	UserID
@@ -23,61 +22,47 @@ export const userAPI = createApi({
 	endpoints: (builder) => ({
 		updateUser: builder.mutation<
 			void,
-			{ access: AccessToken; userData: UserData }
+			{ userData: UserData }
 		>({
-			query: ({ access, userData }) => {
+			query: ({ userData }) => {
 				return {
 					url: '/user/userdetails/',
 					method: 'PUT',
-					headers: {
-						Authorization: `Bearer ${access}`
-					},
 					body: userData
 				};
 			}
 		}),
-		deactivateUser: builder.mutation<void, { access: AccessToken }>({
-			query: ({ access }) => {
+		deactivateUser: builder.mutation({
+			query: () => {
 				return {
 					url: '/user/delete/',
 					method: 'DELETE',
-					headers: {
-						Authorization: `Bearer ${access}`
-					}
 				};
 			}
 		}),
 		getCompanyMembers: builder.query<
 			MembersList[],
 			{
-				access: AccessToken;
 				company_id: CompanyID;
 				department_id: DepartmentID;
 				sort_by: string;
 			}
 		>({
-			query: ({ access, company_id, department_id, sort_by }) => ({
+			query: ({ company_id, department_id, sort_by }) => ({
 				url: `/company/members?company=${company_id}&department=${department_id}&sort_by=${sort_by}`,
 				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${access}`
-				}
 			})
 		}),
 		getCompanyDepartments: builder.mutation<
 			void,
 			{
-				access: AccessToken;
 				company_id: CompanyID;
 			}
 		>({
-			query: ({ access, company_id }) => {
+			query: ({  company_id }) => {
 				return {
 					url: `/company/departments?company=${company_id}`,
 					method: 'GET',
-					headers: {
-						Authorization: `Bearer ${access}`
-					}
 				};
 			},
 			providesTags: ['Departments']
@@ -99,17 +84,13 @@ export const userAPI = createApi({
 		createNewDepartment: builder.mutation<
 			void,
 			{
-				access: AccessToken;
 				company_id: CompanyID;
 				departmentTitle: string; // Assuming the department has a title field
 			}
 		>({
-			query: ({ access, company_id, departmentTitle }) => ({
+			query: ({ company_id, departmentTitle }) => ({
 				url: `/company/departments`, // Updated URL as per your API
 				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${access}`
-				},
 				body: {
 					title: departmentTitle,
 					company_id: company_id // Assuming 'title' is the expected field name for the department title

@@ -6,14 +6,16 @@ import TextInput from "@/components/common/form/textInput/TextInput";
 import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
 import { closeModal } from "@/features/modal/modalSlice";
 import { BackgroundColor } from "@/features/utils/utilEnum";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalContentWrap } from "./StyledModalContents";
-import { useEffect, useState } from "react";
 
 import { CoverPictureContainer } from "@/pages/Interview/StyledInterview";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 
+import ElWrap from "@/components/layouts/elWrap/ElWrap";
+import { CompanyID } from "@/features/settingsDetail/userSettingTypes";
 import {
   useDeleteTemplateMutation,
   useGetTemplateDetailQuery,
@@ -22,17 +24,8 @@ import {
 import { TextIconBtnL } from "../../buttons/textIconBtn/TextIconBtn";
 import {
   BinIcon,
-  DocumentIcon,
-  PencilIcon,
-  RoleIcon,
+  DocumentIcon
 } from "../../svgIcons/Icons";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { PhotoIcon } from "../../cards/card/StyledCard";
-import {
-  AccessToken,
-  CompanyID,
-} from "@/features/settingsDetail/userSettingTypes";
-import { useCookies } from "react-cookie";
 
 const titleInputArg = {
   error: false,
@@ -58,8 +51,6 @@ const EditInterviews = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { templateId } = useParams();
   const navigate = useNavigate();
-  const [cookies, ,] = useCookies(["access_token"]);
-  const accessToken = cookies.access_token as AccessToken;
   const user = useSelector((state: RootState) => state.user);
   const workspace = useSelector((state: RootState) => state.workspace);
 
@@ -74,8 +65,7 @@ const EditInterviews = () => {
   });
 
   // Example hook to fetch template details - replace with your actual implementation
-  const { data: templateData, isLoading } = useGetTemplateDetailQuery({
-    access: accessToken,
+  const { data: templateData } = useGetTemplateDetailQuery({
     company_id: companyId,
     id: templateId,
   });

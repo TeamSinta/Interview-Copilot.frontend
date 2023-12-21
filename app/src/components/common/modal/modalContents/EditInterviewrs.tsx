@@ -8,23 +8,20 @@ import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
 import ElWrap from "@/components/layouts/elWrap/ElWrap";
 import { closeModal } from "@/features/modal/modalSlice";
 // import { selectedMember } from "@/features/roles/rolesSlice";
+import { RootState } from "@/app/store";
 import { BackgroundColor, PhotoType } from "@/features/utils/utilEnum";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalContentWrap } from "./StyledModalContents";
-import { useEffect, useState } from "react";
-import { RootState } from "@/app/store";
 
-import {
-  AccessToken,
-  CompanyID,
-} from "@/features/settingsDetail/userSettingTypes";
-import { useCookies } from "react-cookie";
 import { useFetchCompanyMembers } from "@/components/pages/settings/memberTab/useFetchAndSortMembers";
+import { CompanyID } from "@/features/settingsDetail/userSettingTypes";
 import {
   useGetTemplateDetailQuery,
   useUpdateTemplateMutation,
 } from "@/features/templates/templatesAPISlice";
 import { useParams } from "react-router-dom";
+import { IMember } from "../../cards/teamplateHomeCard/TemplateHomeCard";
 
 const EditInterviewers = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -34,23 +31,19 @@ const EditInterviewers = () => {
   const [departmentId] = useState("");
   const [selectedMembers, setSelectedMembers] = useState<IMember[]>([]);
 
-  const [cookies, ,] = useCookies(["access_token"]);
-  const accessToken = cookies.access_token as AccessToken;
   const { templateId } = useParams();
 
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
 
-  const { data: templateData, isLoading } = useGetTemplateDetailQuery({
-    access: accessToken,
+  const { data: templateData } = useGetTemplateDetailQuery({
     company_id: companyId,
     id: templateId,
   });
 
 
   const { members } = useFetchCompanyMembers({
-    access: accessToken,
     company_id: companyId,
     department_id: departmentId,
     sortCriteria: sortCriteria,
