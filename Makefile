@@ -18,9 +18,9 @@ install-pre-commit:
 prettier:
 		cd app && npm run format
 
-.PHONY: linting
+.PHONY: lint
 lint:
-		cd app && npm run lint
+		cd app && npm run check-lint
 
 .PHONY: check-types
 check-types:

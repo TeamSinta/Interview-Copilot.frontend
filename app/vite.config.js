@@ -19,7 +19,7 @@ export default defineConfig({
         ref: true,
       },
     }),
-    eslint(),
+    // eslint(),
     react(),
     tsconfigPaths(),
   ],
