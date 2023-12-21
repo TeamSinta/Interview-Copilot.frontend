@@ -1,4 +1,4 @@
-import { StyledContainer } from "./StyledContainer";
+import { StyledContainer } from './StyledContainer';
 
 interface IContainer {
   children: JSX.Element[] | JSX.Element;

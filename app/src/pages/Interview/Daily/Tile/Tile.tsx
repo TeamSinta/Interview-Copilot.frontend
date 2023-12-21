@@ -1,11 +1,11 @@
-import React from "react";
-import "./Tile.css";
-import { DailyVideo, useMediaTrack } from "@daily-co/daily-react";
-import Username from "../Username/Username";
+import React from 'react';
+import './Tile.css';
+import { DailyVideo, useMediaTrack } from '@daily-co/daily-react';
+import Username from '../Username/Username';
 import {
   BodyLMedium,
   BodyLSemiBold,
-} from "@/components/common/typeScale/StyledTypeScale";
+} from '@/components/common/typeScale/StyledTypeScale';
 
 interface TileProps {
   id: string;
@@ -20,21 +20,21 @@ export default function Tile({
   isLocal,
   isAlone,
 }: TileProps) {
-  const videoState = useMediaTrack(id, "video");
+  const videoState = useMediaTrack(id, 'video');
 
-  let containerCssClasses = isScreenShare ? "tile-screenshare" : "tile-video";
+  let containerCssClasses = isScreenShare ? 'tile-screenshare' : 'tile-video';
 
   if (isLocal) {
-    containerCssClasses += " self-view";
+    containerCssClasses += ' self-view';
     if (isAlone) {
-      containerCssClasses += " alone";
+      containerCssClasses += ' alone';
     }
   }
 
   /* If a participant's video is muted, hide their video and
   add a different background color to their tile. */
   if (videoState.isOff) {
-    containerCssClasses += " no-video";
+    containerCssClasses += ' no-video';
   }
 
   return (
@@ -42,15 +42,15 @@ export default function Tile({
       <DailyVideo
         automirror
         sessionId={id}
-        type={isScreenShare ? "screenVideo" : "video"}
+        type={isScreenShare ? 'screenVideo' : 'video'}
         style={{
-          height: "100%",
-          minWidth: "100%",
-          flex: "1",
+          height: '100%',
+          minWidth: '100%',
+          flex: '1',
         }}
-        fit={"cover"}
+        fit={'cover'}
       />
-      <BodyLSemiBold style={{ color: "white" }}>
+      <BodyLSemiBold style={{ color: 'white' }}>
         <Username id={id} isLocal={isLocal} />
       </BodyLSemiBold>
     </div>

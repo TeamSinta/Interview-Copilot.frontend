@@ -1,2 +1,2 @@
-import Interview from "./Interview";
+import Interview from './Interview';
 export { Interview };

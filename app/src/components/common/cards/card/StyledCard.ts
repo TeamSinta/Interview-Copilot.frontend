@@ -1,5 +1,5 @@
-import Cover from "@/assets/svg/sinta_default_card.svg";
-import styled from "styled-components";
+import Cover from '@/assets/svg/sinta_default_card.svg';
+import styled from 'styled-components';
 
 export const Card = styled.div`
   width: inherit;
@@ -29,7 +29,9 @@ export const CardCover = styled.div<ICardCover>`
   /* background-image: url(${(props) => props.imgUrl}); */
   background-image: url(${(props) => props.imgUrl});
   background-size: cover, contain;
-  background-position: center, right bottom;
+  background-position:
+    center,
+    right bottom;
   background-repeat: no-repeat, no-repeat;
   position: relative;
   width: 100%;
@@ -63,7 +65,9 @@ interface IPhotoIcon {
 export const PhotoIcon = styled.div<IPhotoIcon>`
   background-image: url(${(props) => props.imgUrl});
   background-size: cover, contain;
-  background-position: center, right bottom;
+  background-position:
+    center,
+    right bottom;
   background-repeat: no-repeat, no-repeat;
   position: relative;
   width: 32px;
@@ -120,7 +124,9 @@ export const InterviewCardCover = styled.div<ICardCover>`
   /* background-image: url(${(props) => props.imgUrl}); */
   background-image: url(${Cover});
   background-size: cover;
-  background-position: center, right bottom;
+  background-position:
+    center,
+    right bottom;
   background-repeat: no-repeat, no-repeat;
   position: relative;
   width: 100%;

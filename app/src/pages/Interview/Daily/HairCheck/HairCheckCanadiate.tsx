@@ -1,34 +1,34 @@
-import React, { useCallback, useState, ChangeEvent, FormEvent } from "react";
+import React, { useCallback, useState, ChangeEvent, FormEvent } from 'react';
 import {
   useLocalParticipant,
   useDevices,
   useDaily,
   useDailyEvent,
   DailyVideo,
-} from "@daily-co/daily-react";
-import UserMediaError from "../UserMediaError/UserMediaError";
-import { MenuItem } from "@mui/material";
+} from '@daily-co/daily-react';
+import UserMediaError from '../UserMediaError/UserMediaError';
+import { MenuItem } from '@mui/material';
 import {
   VideoContainer,
   ButtonWrapper,
   SelectBox,
   HomeContainer,
   LogoImage,
-} from "./StyledHairCheckCandidate";
-import { Stack } from "@mui/material";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import { BackgroundColor } from "@/features/utils/utilEnum";
+} from './StyledHairCheckCandidate';
+import { Stack } from '@mui/material';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
 import {
   RightBracketIcon,
   VideoCam,
   VideoMic,
   VideoSound,
-} from "@/components/common/svgIcons/Icons";
-import TextInput from "@/components/common/form/textInput/TextInput";
-import { H1 } from "@/components/common/typeScale/StyledTypeScale";
-import DropUpBtn from "@/components/common/dropUpBtn/dropUpBtn";
-import Sintaimage from "@/assets/images/SintaLogo.png";
+} from '@/components/common/svgIcons/Icons';
+import TextInput from '@/components/common/form/textInput/TextInput';
+import { H1 } from '@/components/common/typeScale/StyledTypeScale';
+import DropUpBtn from '@/components/common/dropUpBtn/dropUpBtn';
+import Sintaimage from '@/assets/images/SintaLogo.png';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -51,10 +51,10 @@ export default function HairCheckCandidate({
   const callObject = useDaily();
 
   const [getUserMediaError, setGetUserMediaError] = useState(false);
-  const [activeTab, setActiveTab] = useState("devices");
+  const [activeTab, setActiveTab] = useState('devices');
 
   useDailyEvent(
-    "camera-error",
+    'camera-error',
     useCallback(() => {
       setGetUserMediaError(true);
     }, [])
@@ -120,7 +120,7 @@ export default function HairCheckCandidate({
       justifyContent="center"
       spacing={4}
       onSubmit={join}
-      style={{ height: "93vh" }}
+      style={{ height: '93vh' }}
     >
       {/* Video preview */}
       <HomeContainer>
@@ -129,11 +129,11 @@ export default function HairCheckCandidate({
             <DailyVideo
               sessionId={localParticipant.session_id}
               mirror
-              style={{ flex: "1", maxHeight: "410px", margin: "18px" }}
-              fit={"cover"}
+              style={{ flex: '1', maxHeight: '410px', margin: '18px' }}
+              fit={'cover'}
             />
 
-            <Stack direction="row" sx={{ gap: "4px", display: "flex" }}>
+            <Stack direction="row" sx={{ gap: '4px', display: 'flex' }}>
               <DropUpBtn
                 mainButtonContent={<VideoMic />}
                 dropdownItems={microphoneItems}
@@ -167,7 +167,7 @@ export default function HairCheckCandidate({
                 placeholder="Name"
                 error={false}
                 onChange={onChange}
-                value={localParticipant?.user_name || " "}
+                value={localParticipant?.user_name || ' '}
               />
             </Stack>
 

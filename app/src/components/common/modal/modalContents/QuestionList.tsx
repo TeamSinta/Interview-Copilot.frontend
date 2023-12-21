@@ -1,17 +1,17 @@
-import { AppDispatch } from "@/app/store";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { IQuestion } from "@/features/interviews/interviewsInterface";
+import { AppDispatch } from '@/app/store';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { IQuestion } from '@/features/interviews/interviewsInterface';
 import {
   resetQuestionBank,
   selectInterview,
   setSelectedQuestion,
   setAllQuestionsSelected,
-} from "@/features/interviews/interviewsSlice";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { IconBtnL, IconBtnM } from "../../buttons/iconBtn/IconBtn";
-import { TextIconBtnL } from "../../buttons/textIconBtn/TextIconBtn";
+} from '@/features/interviews/interviewsSlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { IconBtnL, IconBtnM } from '../../buttons/iconBtn/IconBtn';
+import { TextIconBtnL } from '../../buttons/textIconBtn/TextIconBtn';
 import {
   BinIcon,
   GraphIcon,
@@ -19,12 +19,12 @@ import {
   RightBracketIcon,
   SelectArrowOpenIcon,
   TimeIcon,
-} from "../../svgIcons/Icons";
+} from '../../svgIcons/Icons';
 import {
   BodyLBold,
   BodySMedium,
   H3Bold,
-} from "../../typeScale/StyledTypeScale";
+} from '../../typeScale/StyledTypeScale';
 import {
   DetailOpenIcon,
   QeustionHeader,
@@ -33,9 +33,9 @@ import {
   QuestionListWrap,
   QuestionNumber,
   QuestionValue,
-} from "./StyledModalContents";
-import ReactMarkdown from "react-markdown";
-import { H3 } from "../../typeScale/TypeScale";
+} from './StyledModalContents';
+import ReactMarkdown from 'react-markdown';
+import { H3 } from '../../typeScale/TypeScale';
 
 const components = {
   h3: H3,
@@ -46,7 +46,7 @@ const QuestionList = () => {
   const { selectedQuestion, questions, selectedQuestionBank } =
     useSelector(selectInterview);
   const [openItems, setOpenItems] = useState(new Set());
-  const [html, setHtml] = useState<string>("");
+  const [html, setHtml] = useState<string>('');
 
   const openDetailHandler = (id: number, isOpen: boolean) => {
     const temp = new Set();
@@ -137,7 +137,7 @@ const QuestionList = () => {
                         openItems.has(question.id)
                       );
                     }}
-                    className={openItems.has(question.id) ? "open" : "close"}
+                    className={openItems.has(question.id) ? 'open' : 'close'}
                   >
                     <SelectArrowOpenIcon />
                   </DetailOpenIcon>
@@ -158,7 +158,7 @@ const QuestionList = () => {
                 </div>
                 <div
                   className={
-                    openItems.has(question.id) ? "detail" : "detail none"
+                    openItems.has(question.id) ? 'detail' : 'detail none'
                   }
                 >
                   <ReactMarkdown components={components}>

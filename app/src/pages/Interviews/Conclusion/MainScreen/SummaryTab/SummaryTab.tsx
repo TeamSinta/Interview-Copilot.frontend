@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 import {
   BodyLBold,
   BodyMMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { useState } from "react";
-import InterviewQNA from "../InterviewQNA/InterviewQNA";
-import { Grid } from "@mui/material";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { useState } from 'react';
+import InterviewQNA from '../InterviewQNA/InterviewQNA';
+import { Grid } from '@mui/material';
 
-import "./SummaryTab.css";
+import './SummaryTab.css';
 import {
   LikeButton,
   UnlikeIcon,
-} from "@/components/common/svgIcons/CustomIcons";
+} from '@/components/common/svgIcons/CustomIcons';
 import {
   StyledSummaryDescription,
   StyledDecisionButton,
@@ -23,7 +23,7 @@ import {
   ButtonContainer,
   ButtonStyling,
   StyledImage,
-} from "./StyledSummaryTab";
+} from './StyledSummaryTab';
 
 const AIGeneratedImage = () => (
   <AIGeneratedImageContainer>
@@ -55,9 +55,9 @@ export const DecisionButton = ({
 }) => {
   const backgroundColors = isActive
     ? activeValue === 1
-      ? "#DBFDDC"
-      : "#FABBCF"
-    : "#FFFFFF"; // default background color
+      ? '#DBFDDC'
+      : '#FABBCF'
+    : '#FFFFFF'; // default background color
 
   return (
     <StyledDecisionButton
@@ -126,7 +126,7 @@ const SummaryTab = ({ summaryInfo }) => {
             <BodyMMedium>{summaryInfo.description}</BodyMMedium>
           </StyledSummaryDescription>
           <StyledRoundBox>
-            <InterviewQNA propData={summaryInfo.faq} screen={"summary"} />
+            <InterviewQNA propData={summaryInfo.faq} screen={'summary'} />
           </StyledRoundBox>
         </Grid>
         <Grid xs={12} md={6}>

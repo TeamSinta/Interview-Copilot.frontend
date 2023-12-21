@@ -1,6 +1,6 @@
-import { RootState } from "@/app/store";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IQuestionsBanks } from "../interviews/interviewsInterface";
+import { RootState } from '@/app/store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IQuestionsBanks } from '../interviews/interviewsInterface';
 
 interface QuestionsBankState {
   questionsBank: IQuestionsBanks[];
@@ -11,7 +11,7 @@ const initialState: QuestionsBankState = {
 };
 
 const questionBankSlice = createSlice({
-  name: "questionsBank",
+  name: 'questionsBank',
   initialState,
   reducers: {
     addNewQuestionBank: (state, action: PayloadAction<IQuestionsBanks>) => {

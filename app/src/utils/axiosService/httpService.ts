@@ -2,10 +2,10 @@ import type {
   AxiosInstance,
   AxiosError,
   InternalAxiosRequestConfig,
-} from "axios";
-import axios from "axios";
+} from 'axios';
+import axios from 'axios';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 const HttpService = (): AxiosInstance => {
   const instance = axios.create({
@@ -16,7 +16,7 @@ const HttpService = (): AxiosInstance => {
   const requestHandler = (
     config: InternalAxiosRequestConfig
   ): InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig> => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token != null) {
       switch (config.url) {
         case import.meta.env.VITE_GOOGLE_CLIENT_ID:

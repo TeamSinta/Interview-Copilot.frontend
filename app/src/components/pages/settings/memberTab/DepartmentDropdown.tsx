@@ -1,4 +1,4 @@
-import DropdownFilter from "@/components/common/filters/dropdownFilter/DropdownFilter";
+import DropdownFilter from '@/components/common/filters/dropdownFilter/DropdownFilter';
 
 const DepartmentDropDown = ({
   departments,

@@ -1,23 +1,23 @@
-import { AppDispatch } from "@/app/store";
+import { AppDispatch } from '@/app/store';
 import {
   postInviteMemberAsync,
   selectInviteMember,
   setInviteAsAdmin,
   setInviteMemberInput,
-} from "@/features/inviteMember/inviteMemberSlice";
-import { addInvitedMember } from "@/features/roles/rolesSlice";
-import { BackgroundColor, DataLoading } from "@/features/utils/utilEnum";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { TextBtnL } from "../../buttons/textBtn/TextBtn";
-import CheckBox from "../checkBox/CheckBox";
-import { Input } from "../input/StyledInput";
-import { InviteContainer, InviteWrap } from "./StyledInvite";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
+} from '@/features/inviteMember/inviteMemberSlice';
+import { addInvitedMember } from '@/features/roles/rolesSlice';
+import { BackgroundColor, DataLoading } from '@/features/utils/utilEnum';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { TextBtnL } from '../../buttons/textBtn/TextBtn';
+import CheckBox from '../checkBox/CheckBox';
+import { Input } from '../input/StyledInput';
+import { InviteContainer, InviteWrap } from './StyledInvite';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
 
 const TextBtnLProps = {
   disable: false,
-  label: "invite",
+  label: 'invite',
   onclick: () => {},
   className: BackgroundColor.WHITE,
 };
@@ -70,7 +70,7 @@ const Invite = () => {
         dispatch(addInvitedMember({ invitedMember: action.payload }));
       })
       .then(() => {
-        setInviteMemberEmail("");
+        setInviteMemberEmail('');
         setInviteMemberAdmin(false);
         setApiStatus(DataLoading.FULFILLED);
       });
@@ -102,7 +102,7 @@ const Invite = () => {
         onChange={(e) => {
           onInviteAsAdinCheck(e);
         }}
-        inputName={"admin"}
+        inputName={'admin'}
         checked={inviteMemberAdmin}
         disabled={apiStatus === DataLoading.PENDING ? true : false}
       />

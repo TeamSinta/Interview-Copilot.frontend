@@ -1,34 +1,34 @@
-import { AppDispatch } from "@/app/store";
-import Photo from "@/components/common/buttons/photo/Photo";
-import Photos from "@/components/common/buttons/photo/Photos";
-import { PhotoContainer } from "@/components/common/buttons/photo/StyledPhoto";
-import { TextBtnL } from "@/components/common/buttons/textBtn/TextBtn";
-import Invite from "@/components/common/form/invite/Invite";
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { closeModal } from "@/features/modal/modalSlice";
+import { AppDispatch } from '@/app/store';
+import Photo from '@/components/common/buttons/photo/Photo';
+import Photos from '@/components/common/buttons/photo/Photos';
+import { PhotoContainer } from '@/components/common/buttons/photo/StyledPhoto';
+import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
+import Invite from '@/components/common/form/invite/Invite';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { closeModal } from '@/features/modal/modalSlice';
 // import { selectedMember } from "@/features/roles/rolesSlice";
-import { RootState } from "@/app/store";
-import { BackgroundColor, PhotoType } from "@/features/utils/utilEnum";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ModalContentWrap } from "./StyledModalContents";
+import { RootState } from '@/app/store';
+import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ModalContentWrap } from './StyledModalContents';
 
-import { useFetchCompanyMembers } from "@/components/pages/settings/memberTab/useFetchAndSortMembers";
-import { CompanyID } from "@/features/settingsDetail/userSettingTypes";
+import { useFetchCompanyMembers } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import {
   useGetTemplateDetailQuery,
   useUpdateTemplateMutation,
-} from "@/features/templates/templatesAPISlice";
-import { useParams } from "react-router-dom";
-import { IMember } from "../../cards/teamplateHomeCard/TemplateHomeCard";
+} from '@/features/templates/templatesAPISlice';
+import { useParams } from 'react-router-dom';
+import { IMember } from '../../cards/teamplateHomeCard/TemplateHomeCard';
 
 const EditInterviewers = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
-  const [sortCriteria] = useState("");
-  const [departmentId] = useState("");
+  const [sortCriteria] = useState('');
+  const [departmentId] = useState('');
   const [selectedMembers, setSelectedMembers] = useState<IMember[]>([]);
 
   const { templateId } = useParams();
@@ -41,7 +41,6 @@ const EditInterviewers = () => {
     company_id: companyId,
     id: templateId,
   });
-
 
   const { members } = useFetchCompanyMembers({
     company_id: companyId,
@@ -92,7 +91,7 @@ const EditInterviewers = () => {
       dispatch(closeModal());
     } catch (error) {
       // Handle the error, e.g., show an error message
-      console.error("Error updating template:", error);
+      console.error('Error updating template:', error);
     }
   };
 
@@ -118,7 +117,7 @@ const EditInterviewers = () => {
       </PhotoContainer>
 
       <Invite />
-      <div style={{ marginTop: "8px" }}>
+      <div style={{ marginTop: '8px' }}>
         <TextBtnL
           label="Save"
           disable={false}

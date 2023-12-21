@@ -1,4 +1,4 @@
-import { DataLoading } from "../utils/utilEnum";
+import { DataLoading } from '../utils/utilEnum';
 
 export interface IMockMembers {
   id: number;

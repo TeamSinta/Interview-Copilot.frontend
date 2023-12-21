@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import { BodyMMedium } from "../../typeScale/StyledTypeScale";
-import { StyledButton } from "../button/StyledBtn";
-import { IBtnProps } from "../button/StyledBtn";
+import { useEffect, useRef, useState } from 'react';
+import { BodyMMedium } from '../../typeScale/StyledTypeScale';
+import { StyledButton } from '../button/StyledBtn';
+import { IBtnProps } from '../button/StyledBtn';
 import {
   CustomButton,
   ButtonWrap,
   DropdownArrowIconDiv,
-} from "./StyledDropDownBtn"; // ensure the import path is correct
+} from './StyledDropDownBtn'; // ensure the import path is correct
 
 interface ICustomButtonConfig {
   label: string;
@@ -46,10 +46,10 @@ export const DropDownButton = (props: IDropDownButtonProps): JSX.Element => {
       }
     };
 
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
 
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, []);
 

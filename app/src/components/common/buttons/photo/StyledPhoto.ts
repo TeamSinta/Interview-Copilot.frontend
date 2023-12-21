@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import checkS from "@/assets/svg/checkS.svg";
-import { PhotoType } from "@/features/utils/utilEnum";
+import styled from 'styled-components';
+import checkS from '@/assets/svg/checkS.svg';
+import { PhotoType } from '@/features/utils/utilEnum';
 
 export const Checked = styled.div`
   width: 100%;
@@ -11,7 +11,9 @@ export const Checked = styled.div`
   &.checked {
     display: none;
     background-image: url(${checkS});
-    background-position: center, right bottom;
+    background-position:
+      center,
+      right bottom;
     background-repeat: no-repeat, no-repeat;
   }
 `;
@@ -22,7 +24,9 @@ export const PhotoCheckBox = styled.div<{ url: string }>`
   height: 100%;
   background-image: url(${(props) => props.url});
   background-size: cover, contain;
-  background-position: center, right bottom;
+  background-position:
+    center,
+    right bottom;
   background-repeat: no-repeat, no-repeat;
   position: relative;
   border-radius: inherit;
@@ -66,7 +70,7 @@ export const PhotoCheckBoxDiv = styled.div<IPhotoCheckBoxDiv>`
   width: 100%;
   height: 100%;
   border-radius: ${(props) =>
-    props.photoType === PhotoType.S ? "8px" : "12px"};
+    props.photoType === PhotoType.S ? '8px' : '12px'};
   &:hover {
     ${PhotoCheckBoxCover} {
       display: block;

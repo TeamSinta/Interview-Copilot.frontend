@@ -3,8 +3,8 @@ import {
   H2Bold,
   BodySMedium,
   H2Medium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { Box } from "@mui/material";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { Box } from '@mui/material';
 
 export const YourNewContainer = styled.div`
   display: flex;
@@ -24,18 +24,12 @@ export const YourMainContentContainer = styled.div`
     /* Adjust styles for screens with a max width of 768px */
     padding-left: 248px;
     @media (min-height: 1150px) {
-    /* Adjust styles for screens with a max width of 768px */
-    padding-top: 100px;
-    padding-bottom: 100px;
+      /* Adjust styles for screens with a max width of 768px */
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
   }
-  }
-
-
-
 `;
-
-
-
 
 export const waveAnimation = keyframes`
  0% { transform: rotate( 0.0deg) }
@@ -50,7 +44,7 @@ export const waveAnimation = keyframes`
 
 // Create a styled component for the waving hand emoji
 export const WavingHand = styled.span`
-  animation: ${waveAnimation} 3s 1;;
+  animation: ${waveAnimation} 3s 1;
   animation-duration: 2.5s;
   transform-origin: 70% 70%;
   display: inline-block;
@@ -176,10 +170,7 @@ export const StyledImage = styled.img`
     flex: 1;
     width: 100%;
     padding: 0 24px 24px 24px;
-
   }
-
-
 
   @media (min-width: 1700px) {
     /* Adjust styles for screens with a max width of 768px */
@@ -201,7 +192,6 @@ export const ButtonContainer = styled.div`
   }
 `;
 
-
 export const EmptySectionContainer = styled.div`
   display: flex;
   align-items: center;
@@ -218,5 +208,4 @@ export const StyledEmptyImage = styled.img`
   flex: 1;
   max-width: 100px;
   max-height: 100px;
-
 `;

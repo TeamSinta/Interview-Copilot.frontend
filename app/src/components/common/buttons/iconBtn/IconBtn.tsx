@@ -3,7 +3,7 @@ import {
   StyledIconBtn,
   StyledIconBtnM,
   StyledIconBtnS,
-} from "../button/StyledBtn";
+} from '../button/StyledBtn';
 
 export const IconBtnL = (props: IBtnProps) => {
   const { disable, onClick, className, icon } = props;

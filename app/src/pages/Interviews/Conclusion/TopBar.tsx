@@ -1,35 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import "./index.css";
-import { TOP_BAR_INFO } from "./Constants";
+import React, { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
+import './index.css';
+import { TOP_BAR_INFO } from './Constants';
 import {
   getInterviewRoundQuestions,
   getInterview,
   getCandidateById,
   getTemplate,
-} from "../../../features/interviews/interviewsAPI";
+} from '../../../features/interviews/interviewsAPI';
 
 const TopBar = ({ interviewRoundId }) => {
   const { BIO_DATA, OVERALL_SCORE, SENTIMENT } = TOP_BAR_INFO;
   const [average, setAverage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [overallScore, setOverallScore] = useState(0);
-  const [candidateName, setCandidateName] = useState("");
-  const [templateTitle, setTemplateTitle] = useState("");
+  const [candidateName, setCandidateName] = useState('');
+  const [templateTitle, setTemplateTitle] = useState('');
 
   useEffect(() => {
     const fetchRatings = async () => {
       setIsLoading(true);
       const questions = await getInterviewRoundQuestions(interviewRoundId);
 
-      const interviewRound = await getInterview(
-        interviewRoundId,
-      );
+      const interviewRound = await getInterview(interviewRoundId);
 
       const candidate = await getCandidateById(interviewRound.candidate_id);
 
       const template = await getTemplate(interviewRound.template_id);
-      setCandidateName(candidate.first_name + " " + candidate.last_name);
+      setCandidateName(candidate.first_name + ' ' + candidate.last_name);
       setTemplateTitle(template.role_title);
       let ratingTotal = 0;
       questions.map((question) => {
@@ -48,19 +46,19 @@ const TopBar = ({ interviewRoundId }) => {
 
   return (
     <React.Fragment>
-      <Grid container spacing={2} className='bar '>
-        <Grid item={true} xs={12} md={12} lg={3} className='column'>
+      <Grid container spacing={2} className="bar ">
+        <Grid item={true} xs={12} md={12} lg={3} className="column">
           <div>
-            <p className='bio-data-name'>{candidateName}</p>
-            <p className='bio-data-designation'>{templateTitle}</p>
-            <p className='bio-data-stage'>
-              <span className='bio-data-stage-label'>
+            <p className="bio-data-name">{candidateName}</p>
+            <p className="bio-data-designation">{templateTitle}</p>
+            <p className="bio-data-stage">
+              <span className="bio-data-stage-label">
                 {/* {BIO_DATA.STAGE_LABEL}:{" "} */}
-              </span>{" "}
+              </span>{' '}
               <span
                 style={{
-                  fontFamily: "ChillaxSemi",
-                  fontWeight: "600",
+                  fontFamily: 'ChillaxSemi',
+                  fontWeight: '600',
                 }}
               >
                 {/* {BIO_DATA.STAGE_NAME} .{" "} */}
@@ -69,51 +67,51 @@ const TopBar = ({ interviewRoundId }) => {
             </p>
           </div>
         </Grid>
-        <Grid item={true} xs={12} md={12} lg={3} className='column'>
+        <Grid item={true} xs={12} md={12} lg={3} className="column">
           <div>
             <p>{OVERALL_SCORE.LABEL}</p>
-            <div id='progressContainer'>
+            <div id="progressContainer">
               <progress
-                id='myProgress'
+                id="myProgress"
                 style={{
-                  height: "20px",
+                  height: '20px',
                 }}
                 value={overallScore.toFixed(0)}
-                max='100'
+                max="100"
               ></progress>
             </div>
-            <p>{!isLoading ? overallScore.toFixed(0) : "Loading..."}%</p>
+            <p>{!isLoading ? overallScore.toFixed(0) : 'Loading...'}%</p>
           </div>
         </Grid>
-        <Grid item={true} xs={12} md={12} lg={3} className='column'>
+        <Grid item={true} xs={12} md={12} lg={3} className="column">
           <div>
-            {" "}
+            {' '}
             <p>{SENTIMENT.LABEL}</p>
             <div>
               <span>
                 <i
                   className={
-                    "fa fa-" +
-                    (average > 2.5 ? "thumbs-up" : "thumbs-down") +
-                    " " +
+                    'fa fa-' +
+                    (average > 2.5 ? 'thumbs-up' : 'thumbs-down') +
+                    ' ' +
                     (average > 2.5
-                      ? "positiveSentimentIcon"
-                      : "negativeSentimentIcon")
+                      ? 'positiveSentimentIcon'
+                      : 'negativeSentimentIcon')
                   }
                 ></i>
               </span>
               <span
                 style={{
-                  fontFamily: "ChillaxSemi",
-                  fontWeight: "600",
+                  fontFamily: 'ChillaxSemi',
+                  fontWeight: '600',
                 }}
               >
-                {average > 2.5 ? "Positive" : "Negative"}
+                {average > 2.5 ? 'Positive' : 'Negative'}
               </span>
             </div>
             <p>
-              {!isLoading ? average.toFixed(0) : "Loading..."}{" "}
-              <span className='sentiment-meta'>/ 5</span>{" "}
+              {!isLoading ? average.toFixed(0) : 'Loading...'}{' '}
+              <span className="sentiment-meta">/ 5</span>{' '}
             </p>
           </div>
         </Grid>

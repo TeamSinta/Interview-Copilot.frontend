@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const VideoContainer = styled.div`
   background-color: var(--darkest-blue);

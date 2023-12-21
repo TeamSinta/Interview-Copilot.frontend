@@ -1,13 +1,13 @@
-import React from "react";
-import Ellipse297Image from "src/assets/images/SintaLogo.png";
-import { styled } from "@mui/material/styles";
-import { Button } from "@mui/material";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { Link } from "react-router-dom";
-import { LogoImage } from "../../topnavbar/StyledTopBarNav";
+import React from 'react';
+import Ellipse297Image from 'src/assets/images/SintaLogo.png';
+import { styled } from '@mui/material/styles';
+import { Button } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
+import { Link } from 'react-router-dom';
+import { LogoImage } from '../../topnavbar/StyledTopBarNav';
 
-const ProfileCardContainer = styled("div")({
+const ProfileCardContainer = styled('div')({
   backgroundColor: `rgba(125, 136, 233, 0.17)`,
   borderRadius: `10px`,
   display: `flex`,
@@ -22,7 +22,7 @@ const ProfileCardContainer = styled("div")({
   boxSizing: `border-box`,
 });
 
-const FrameContainer = styled("div")({
+const FrameContainer = styled('div')({
   display: `flex`,
   position: `absolute`,
   isolation: `isolate`,
@@ -37,7 +37,7 @@ const FrameContainer = styled("div")({
   width: `2px`,
 });
 
-const EmailText = styled("div")({
+const EmailText = styled('div')({
   textAlign: `left`,
   whiteSpace: `nowrap`, // Keep text on one line
   overflow: `hidden`, // Hide overflow
@@ -58,7 +58,7 @@ const EmailText = styled("div")({
   width: `125px`, // Limit the width of the container
 });
 
-const NameText = styled("div")({
+const NameText = styled('div')({
   textAlign: `left`,
   whiteSpace: `nowrap`, // Keep text on one line
   overflow: `hidden`, // Hide overflow

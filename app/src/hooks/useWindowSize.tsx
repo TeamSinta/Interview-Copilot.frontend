@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 interface WindowSize {
   width?: number;
@@ -19,11 +19,11 @@ function useWindowSize() {
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", handleResize);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
       handleResize();
 
-      return () => window.removeEventListener("resize", handleResize);
+      return () => window.removeEventListener('resize', handleResize);
     }
   }, []);
 

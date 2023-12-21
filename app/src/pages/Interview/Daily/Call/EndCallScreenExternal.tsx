@@ -4,14 +4,14 @@ import {
   BodyLSemiBold,
   BodyMSemiBold,
   BodyMMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import GoogleLoginButton from "@/components/pages/login/googleLoginBtn/GoogleLoginButton";
+} from '@/components/common/typeScale/StyledTypeScale';
+import GoogleLoginButton from '@/components/pages/login/googleLoginBtn/GoogleLoginButton';
 
-import { Box, Stack } from "@mui/material";
-import EndCallImage from "src/assets/svg/Sinta End Call 1.svg";
-import LogoImage from "src/assets/images/SintaLogo.png";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Box, Stack } from '@mui/material';
+import EndCallImage from 'src/assets/svg/Sinta End Call 1.svg';
+import LogoImage from 'src/assets/images/SintaLogo.png';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const Container = styled(Box)`
   border-radius: 28px;
@@ -73,7 +73,7 @@ const EndCallScreen = () => {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ height: "100vh" }}
+        style={{ height: '100vh' }}
       >
         <Container>
           <StyledImage src={EndCallImage} alt="EndCall_image" />

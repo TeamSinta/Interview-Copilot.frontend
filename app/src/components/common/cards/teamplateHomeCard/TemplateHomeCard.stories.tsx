@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from "@storybook/react";
-import TemplateHomeCard from "./TemplateHomeCard";
+import { Meta, StoryObj } from '@storybook/react';
+import TemplateHomeCard from './TemplateHomeCard';
 
 // const members = [
 //   {
@@ -27,15 +27,15 @@ import TemplateHomeCard from "./TemplateHomeCard";
 //   },
 // ];
 const meta = {
-  title: "common/cards/TemplateHomeCard",
+  title: 'common/cards/TemplateHomeCard',
   component: TemplateHomeCard,
   argTypes: {
     title: {
-      description: "Card title",
+      description: 'Card title',
     },
     disable: {
       description:
-        "Availability is determined by conditions, making it unclickable when not available.",
+        'Availability is determined by conditions, making it unclickable when not available.',
     },
   },
 } as Meta<typeof TemplateHomeCard>;
@@ -45,7 +45,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    title: "Sample Card",
+    title: 'Sample Card',
     disable: false,
     questions: new Array(8), // Since it's 'undefined[]', an empty array is fine for now.
     sections: new Array(15), // Same here
@@ -54,7 +54,7 @@ export const Primary: Story = {
 
 export const Disable: Story = {
   args: {
-    title: "Graphic Design Screening Round",
+    title: 'Graphic Design Screening Round',
     disable: true,
     questions: new Array(8),
     sections: new Array(15),

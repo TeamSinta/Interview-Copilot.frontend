@@ -1,7 +1,7 @@
-import styled, { css, keyframes } from "styled-components";
-import { StyledIconBtn } from "../../buttons/button/StyledBtn";
-import { StyledCompetencies } from "../../elements/competencies/StyledCompetencies";
-import { BodySMedium } from "../../typeScale/StyledTypeScale";
+import styled, { css, keyframes } from 'styled-components';
+import { StyledIconBtn } from '../../buttons/button/StyledBtn';
+import { StyledCompetencies } from '../../elements/competencies/StyledCompetencies';
+import { BodySMedium } from '../../typeScale/StyledTypeScale';
 
 export const ModalContentWrap = styled.div`
   display: flex;

@@ -1,7 +1,7 @@
-import React from "react";
-import { type Meta, type StoryObj } from "@storybook/react";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { IconBtnL, IconBtnM, IconBtnS } from "./IconBtn";
+import React from 'react';
+import { type Meta, type StoryObj } from '@storybook/react';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { IconBtnL, IconBtnM, IconBtnS } from './IconBtn';
 import {
   ArrowDownIcon,
   AsteriskIcon,
@@ -9,9 +9,9 @@ import {
   GoogleIcon,
   PlusIcon,
   RightBracketIcon,
-} from "@/components/common/svgIcons/Icons";
-import { action } from "@storybook/addon-actions";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
+} from '@/components/common/svgIcons/Icons';
+import { action } from '@storybook/addon-actions';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
 
 const icons = {
   PlusIcon: <PlusIcon />,
@@ -23,11 +23,11 @@ const icons = {
 };
 
 const meta = {
-  title: "common/buttons/IconBtn",
+  title: 'common/buttons/IconBtn',
   component: IconBtnL,
   argTypes: {
     icon: {
-      control: { type: "select", lables: { Google: <GoogleIcon /> } },
+      control: { type: 'select', lables: { Google: <GoogleIcon /> } },
       options: Object.keys(icons),
       mapping: {
         ...icons,
@@ -35,13 +35,13 @@ const meta = {
     },
     disable: {
       control: {
-        type: "boolean",
+        type: 'boolean',
       },
-      description: "Disable or able",
+      description: 'Disable or able',
     },
     className: {
       control: {
-        type: "select",
+        type: 'select',
       },
       options: [BackgroundColor.ACCENT_PURPLE, BackgroundColor.WHITE],
     },
@@ -56,7 +56,7 @@ export const PrimaryIconBtnPL: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -72,7 +72,7 @@ export const DisableIconBtnPL: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -88,7 +88,7 @@ export const PrimaryIconBtnWL: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -104,7 +104,7 @@ export const DisableIconBtnWL: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -120,7 +120,7 @@ export const PrimaryIconBtnW: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -136,7 +136,7 @@ export const DisableIconBtnW: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -152,7 +152,7 @@ export const PrimaryIconBtnP: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -168,7 +168,7 @@ export const DisableIconBtnP: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -184,7 +184,7 @@ export const PrimaryIconBtnPLM: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -200,7 +200,7 @@ export const DisableIconBtnPLM: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -216,7 +216,7 @@ export const PrimaryIconBtnWLM: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -232,7 +232,7 @@ export const DisableIconBtnWLM: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   decorators: [
     (story) => (
@@ -248,7 +248,7 @@ export const PrimaryIconBtnPML: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   render: (args) => {
     return (
@@ -264,7 +264,7 @@ export const DisableIconBtnPML: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   render: (args) => {
     return (
@@ -280,7 +280,7 @@ export const PrimaryIconBtnWML: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   render: (args) => {
     return (
@@ -296,7 +296,7 @@ export const DisableIconBtnWML: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   render: (args) => {
     return (
@@ -312,7 +312,7 @@ export const PrimaryIconBtnPM: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   render: (args) => {
     return (
@@ -328,7 +328,7 @@ export const DisableIconBtnPM: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   render: (args) => {
     return (
@@ -344,7 +344,7 @@ export const PrimaryIconBtnWM: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   render: (args) => {
     return (
@@ -360,7 +360,7 @@ export const DisableIconBtnWM: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   render: (args) => {
     return (
@@ -376,7 +376,7 @@ export const PrimaryIconBtnS: Story = {
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   render: (args) => {
     return (
@@ -392,7 +392,7 @@ export const DisableIconBtnS: Story = {
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.WHITE,
-    onClick: action("Click Handler"),
+    onClick: action('Click Handler'),
   },
   render: (args) => {
     return (

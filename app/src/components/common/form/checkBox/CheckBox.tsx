@@ -1,6 +1,6 @@
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import { CheckBoxWrap, CheckInput } from "./StyledCheckBox";
-import { useEffect, useState } from "react";
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { CheckBoxWrap, CheckInput } from './StyledCheckBox';
+import { useEffect, useState } from 'react';
 
 export interface ICheckBoxProps {
   label: String;

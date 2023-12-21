@@ -1,13 +1,13 @@
-import React from "react";
-import { IndexStyle, InterviewContainerStyle } from "../InterviewQNA";
-import { Grid } from "@mui/material";
-import { QuestionCollapsible } from "../QuestionCollapsible";
+import React from 'react';
+import { IndexStyle, InterviewContainerStyle } from '../InterviewQNA';
+import { Grid } from '@mui/material';
+import { QuestionCollapsible } from '../QuestionCollapsible';
 import {
   ClockIcon,
   SoundLevelIcon,
-} from "@/components/common/svgIcons/CustomIcons";
-import { PredefinedRatingsAndCompetency } from "../RatingComponent";
-import styled from "styled-components";
+} from '@/components/common/svgIcons/CustomIcons';
+import { PredefinedRatingsAndCompetency } from '../RatingComponent';
+import styled from 'styled-components';
 
 interface QuestionSummarizedAnswers {
   question: string;
@@ -26,13 +26,13 @@ interface QuestionItemProps extends QuestionSummarizedAnswers {
 interface QuestionsTabQNAProps {
   activeIndex: number;
   data: QuestionItemProps[];
-  handleClick: QuestionItemProps["handleClick"];
+  handleClick: QuestionItemProps['handleClick'];
 }
 
 interface QuestionTextDisplayProps {
   activeIndex: number;
   question: string;
-  handleClick: QuestionItemProps["handleClick"];
+  handleClick: QuestionItemProps['handleClick'];
   index?: number;
 }
 
@@ -109,7 +109,7 @@ export const QuestionMeta: React.FC<QuestionMetaProps> = ({
         </IconContainer>
         <Text>{duration}</Text>
 
-        <IconContainer style={{ marginLeft: "12px" }}>
+        <IconContainer style={{ marginLeft: '12px' }}>
           <SoundLevelIcon width={12} height={12} active={0} />
         </IconContainer>
         <Text>{difficulty}</Text>
@@ -176,12 +176,12 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
       </TextContainer>
 
       <AnswerContainer
-        className={`question-answer ${activeIndex === index ? "show" : ""}`}
+        className={`question-answer ${activeIndex === index ? 'show' : ''}`}
       >
         {answer}
       </AnswerContainer>
 
-      <hr style={{ opacity: "0.25" }} />
+      <hr style={{ opacity: '0.25' }} />
     </>
   );
 };

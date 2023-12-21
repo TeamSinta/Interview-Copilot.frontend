@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   TextIconFilterLayout,
   TextIconFilterIcon,
-} from "./StyledTextIconFilter";
+} from './StyledTextIconFilter';
 
 interface ITextIconFilterProps {
   label: string;
@@ -25,7 +25,7 @@ const TextIconFilter = (props: ITextIconFilterProps) => {
         setSelected(selected ? false : true);
         onClick(); // Call the onClick prop when the element is clicked
       }}
-      className={selected ? "selected" : ""}
+      className={selected ? 'selected' : ''}
     >
       <div>{label}</div>
       <TextIconFilterIcon>{icon}</TextIconFilterIcon>

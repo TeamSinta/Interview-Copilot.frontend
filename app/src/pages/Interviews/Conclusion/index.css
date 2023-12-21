@@ -42,7 +42,7 @@
   border-radius: 5px;
   height: 40px;
   position: relative;
-  outline: "1px solid black";
+  outline: '1px solid black';
 }
 
 #myProgress::-webkit-progress-bar {

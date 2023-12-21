@@ -1,13 +1,13 @@
-import React, { useMemo, useState, ReactNode } from "react";
-import { Grid } from "@mui/material";
-import { NavButton } from "@/components/layouts/sidenavbar/StyledSideNavBar";
-import "../index.css";
-import VideoPlayer from "./VideoPlayer/VideoPlayer";
-import { H3Bold } from "@/components/common/typeScale/StyledTypeScale";
-import styled from "styled-components";
-import ConclusionData from "@/services/conclusionService";
-import InterviewQNA from "./InterviewQNA/InterviewQNA";
-import SummaryTab from "./SummaryTab/SummaryTab";
+import React, { useMemo, useState, ReactNode } from 'react';
+import { Grid } from '@mui/material';
+import { NavButton } from '@/components/layouts/sidenavbar/StyledSideNavBar';
+import '../index.css';
+import VideoPlayer from './VideoPlayer/VideoPlayer';
+import { H3Bold } from '@/components/common/typeScale/StyledTypeScale';
+import styled from 'styled-components';
+import ConclusionData from '@/services/conclusionService';
+import InterviewQNA from './InterviewQNA/InterviewQNA';
+import SummaryTab from './SummaryTab/SummaryTab';
 
 interface MainScreenProps {
   interviewRoundId: string;
@@ -77,7 +77,7 @@ const TabButton: React.FC<TabButtonProps> = ({
   <StyledNavButton
     onClick={() => setActiveTab(tabNumber)}
     direction="row"
-    className={isActive ? "rightTabs active" : "rightTabs"}
+    className={isActive ? 'rightTabs active' : 'rightTabs'}
   >
     <span>{children}</span>
   </StyledNavButton>
@@ -142,7 +142,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
           sm={12}
           md={12}
           lg={6}
-          style={{ display: "flex", flexDirection: "column", gap: "22px" }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}
         >
           <H3Bold>Behavioral Interview</H3Bold>
           <div className="video-player-wrapper">
@@ -163,14 +163,14 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
             {activeTab === 2 && (
               <InterviewQNA
                 propData={summarizedAnswers?.data}
-                screen={"question"}
+                screen={'question'}
               />
             )}
 
             {activeTab === 3 && (
               <InterviewQNA
                 propData={questionsTranscript?.data}
-                screen={"transcription"}
+                screen={'transcription'}
               />
             )}
           </ContentContainer>

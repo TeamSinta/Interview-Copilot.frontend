@@ -1,13 +1,13 @@
 import {
   CompanyID,
   DepartmentID,
-} from "@/features/settingsDetail/userSettingTypes";
+} from '@/features/settingsDetail/userSettingTypes';
 import {
   useGetCompanyDepartmentsMutation,
   useGetCompanyMembersQuery,
-} from "@/features/settingsDetail/userSettingsAPI";
-import { MembersList } from "@/features/settingsDetail/userSettingsInterface";
-import { useEffect, useState } from "react";
+} from '@/features/settingsDetail/userSettingsAPI';
+import { MembersList } from '@/features/settingsDetail/userSettingsInterface';
+import { useEffect, useState } from 'react';
 
 export type Department = {
   title: string;
@@ -51,7 +51,7 @@ export const useFetchCompanyDepartments = (companyId: CompanyID) => {
   useEffect(() => {
     getCompanyDepartments({ company_id: companyId })
       .then((response) => {
-        if ("data" in response && "data") {
+        if ('data' in response && 'data') {
           const transformedData = (response.data as unknown as any[]).map(
             (department) => ({
               name: department.title,
@@ -59,11 +59,11 @@ export const useFetchCompanyDepartments = (companyId: CompanyID) => {
             })
           );
           setDepartments(transformedData);
-        } else if ("error" in response) {
-          console.log("Error fetching company departments:", response.error);
+        } else if ('error' in response) {
+          console.log('Error fetching company departments:', response.error);
         }
       })
-      .catch((error) => console.error("Error fetching company users:", error));
+      .catch((error) => console.error('Error fetching company users:', error));
   }, [companyId, getCompanyDepartments]);
 
   return departments;

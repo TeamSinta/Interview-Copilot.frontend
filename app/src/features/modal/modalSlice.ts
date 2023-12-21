@@ -1,6 +1,6 @@
-import { RootState } from "@/app/store";
-import { createSlice } from "@reduxjs/toolkit";
-import { redirect } from "react-router-dom";
+import { RootState } from '@/app/store';
+import { createSlice } from '@reduxjs/toolkit';
+import { redirect } from 'react-router-dom';
 
 export interface ModalState {
   modalType: string;
@@ -11,15 +11,15 @@ export interface ModalState {
 }
 
 const initialState: ModalState = {
-  modalType: "",
+  modalType: '',
   isOpen: false,
-  history: "",
-  templateID: "",
-  questionBankID: "",
+  history: '',
+  templateID: '',
+  questionBankID: '',
 };
 
 export const modalSlice = createSlice({
-  name: "modal",
+  name: 'modal',
   initialState,
   reducers: {
     openModal: (state, actions) => {

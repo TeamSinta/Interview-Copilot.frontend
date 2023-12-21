@@ -1,6 +1,6 @@
-import axios from "axios";
-import config from "@/config.json";
-import { useState, useEffect } from "react";
+import axios from 'axios';
+import config from '@/config.json';
+import { useState, useEffect } from 'react';
 import { instance } from '@/utils/axiosService/customAxios';
 
 const ConclusionData = (interviewRoundId: string) => {
@@ -15,10 +15,18 @@ const ConclusionData = (interviewRoundId: string) => {
   // TODO: Swap out '1' with the interview ID.
 
   // const questionsTranscriptAPI = `${config.apiURL}/transcription/get_transcripts_for_questions/${interviewRoundId}/`;
-  const summarizedAnswersAPI = `${import.meta.env.VITE_BACKEND_URL}/question_response/question_summarized_answers/${interviewRoundId}/`;
-  const summaryInfoAPI = `${import.meta.env.VITE_BACKEND_URL}/summary/generate/${interviewRoundId}/`;
-  const videoUrlAPI = `${import.meta.env.VITE_BACKEND_URL}/interview-rounds/interviewRoundVideo/${interviewRoundId}/`;
-  const emojiFeedbackApi = `${import.meta.env.VITE_BACKEND_URL}/question_response/interviewer-feedback/${interviewRoundId}/`;
+  const summarizedAnswersAPI = `${
+    import.meta.env.VITE_BACKEND_URL
+  }/question_response/question_summarized_answers/${interviewRoundId}/`;
+  const summaryInfoAPI = `${
+    import.meta.env.VITE_BACKEND_URL
+  }/summary/generate/${interviewRoundId}/`;
+  const videoUrlAPI = `${
+    import.meta.env.VITE_BACKEND_URL
+  }/interview-rounds/interviewRoundVideo/${interviewRoundId}/`;
+  const emojiFeedbackApi = `${
+    import.meta.env.VITE_BACKEND_URL
+  }/question_response/interviewer-feedback/${interviewRoundId}/`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +43,7 @@ const ConclusionData = (interviewRoundId: string) => {
         setVideoUrl(response4.data);
         setEmojisData(response5.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
         setError(error);
       } finally {
         setLoading(false);

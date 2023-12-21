@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   BodyLMedium,
   BodyMMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { Box, Stack } from "@mui/material";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { Box, Stack } from '@mui/material';
 
 export const Container = styled(Box)`
   max-width: 480px;
@@ -16,17 +16,15 @@ export const Container = styled(Box)`
   gap: 32px;
 `;
 
-
-
 export const SuperContainer = styled.div`
-display: flex;
-flex-direction: row;
-height: 90vh;
-margin-right: 66px;
-justify-content:flex-end;
-gap: 98px;
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
+  margin-right: 66px;
+  justify-content: flex-end;
+  gap: 98px;
 
-@media (max-width: 900px) {
+  @media (max-width: 900px) {
     /* Adjust styles for screens with a max width of 768px */
     margin-top: 30px;
     margin-right: 0px;
@@ -36,7 +34,6 @@ gap: 98px;
     flex-direction: column-reverse;
   }
 `;
-
 
 export const TextBox = styled(Box)`
   max-width: 500px;
@@ -50,14 +47,13 @@ export const StyledImage = styled.img`
 
   margin-bottom: 4px;
   width: 40%;
-  height: 100% ;
+  height: 100%;
   max-height: 900px;
-
 
   @media (max-width: 900px) {
     /* Adjust styles for screens with a max width of 768px */
     max-height: 390px;
-    width: 90%
+    width: 90%;
   }
 `;
 
@@ -67,8 +63,6 @@ export const StyledLogo = styled.img`
   margin-top: 30px;
   margin-left: 30px;
   align-self: flex-start;
-
-
 `;
 
 export const TextRow = styled.div`
@@ -95,7 +89,6 @@ export const MainContainer = styled(Box)`
   @media (max-width: 900px) {
     /* Adjust styles for screens with a max width of 768px */
 
-    width: 90%
+    width: 90%;
   }
-
 `;

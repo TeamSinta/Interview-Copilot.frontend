@@ -1,14 +1,14 @@
 export enum DataLoading {
-  UNSEND = "UNSEND",
-  PENDING = "PENDING",
-  FULFILLED = "FULFILLED",
-  REJECTED = "REJECTED",
+  UNSEND = 'UNSEND',
+  PENDING = 'PENDING',
+  FULFILLED = 'FULFILLED',
+  REJECTED = 'REJECTED',
 }
 
 export enum BackgroundColor {
-  ACCENT_PURPLE = "accentPurple",
-  WHITE = "white",
-  LIGHT_PURPLE = "lightPurple",
+  ACCENT_PURPLE = 'accentPurple',
+  WHITE = 'white',
+  LIGHT_PURPLE = 'lightPurple',
 }
 
 export enum PhotoType {
@@ -18,18 +18,18 @@ export enum PhotoType {
 }
 
 export enum StatusDropdownFilter {
-  LOW = "Low",
-  MEDIUM = "Medium",
-  HIGH = "High",
+  LOW = 'Low',
+  MEDIUM = 'Medium',
+  HIGH = 'High',
 }
 
 export enum TABS {
-  PROFILE = "profile",
-  MEMBERS = "members",
+  PROFILE = 'profile',
+  MEMBERS = 'members',
 }
 
 export enum SORT_CRITERIA {
-  NAME_ASC = "1",
-  NAME_DESC = "2",
-  ROLE = "3",
+  NAME_ASC = '1',
+  NAME_DESC = '2',
+  ROLE = '3',
 }

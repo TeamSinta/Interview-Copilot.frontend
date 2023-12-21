@@ -1,28 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 const WebSocketComponent = ({ interviewRoundId, endLoader }) => {
   useEffect(() => {
     const socket = new WebSocket(
-      `ws://${import.meta.env.VITE_BACKEND_URL}/ws/transcription_consumer/${interviewRoundId}/`
+      `ws://${
+        import.meta.env.VITE_BACKEND_URL
+      }/ws/transcription_consumer/${interviewRoundId}/`
     );
 
     // Event listener for WebSocket open
     socket.onopen = () => {
-      console.log("Connected to WebSocket");
+      console.log('Connected to WebSocket');
       // You can perform actions upon successful connection here
     };
 
     // Event listener for WebSocket messages
     socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      console.log("Received message:", message);
+      console.log('Received message:', message);
       // Handle incoming messages from the server
       endLoader();
     };
 
     // Event listener for WebSocket close
     socket.onclose = (event) => {
-      console.log("Disconnected from WebSocket:", event);
+      console.log('Disconnected from WebSocket:', event);
       // Handle WebSocket closure
     };
 

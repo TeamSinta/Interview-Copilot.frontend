@@ -1,23 +1,23 @@
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { type Meta, type StoryObj } from "@storybook/react";
-import { TextBtnL, TextBtnM, TextBtnS } from "./TextBtn";
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { type Meta, type StoryObj } from '@storybook/react';
+import { TextBtnL, TextBtnM, TextBtnS } from './TextBtn';
 
 const meta = {
-  title: "common/buttons/TextBtn",
+  title: 'common/buttons/TextBtn',
   component: TextBtnL,
   argTypes: {
     label: {
       control: {
-        type: "text",
+        type: 'text',
       },
-      description: "Text for button",
+      description: 'Text for button',
     },
     disable: {
       control: {
-        type: "boolean",
+        type: 'boolean',
       },
-      description: "Disable or able",
+      description: 'Disable or able',
     },
   },
 } as Meta<typeof TextBtnL>;
@@ -27,7 +27,7 @@ type Story = StoryObj<typeof meta>;
 
 export const PrimaryTextBtnPLL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
   },
@@ -36,7 +36,7 @@ export const PrimaryTextBtnPLL: Story = {
 
 export const DisableTextBtnPLL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
   },
@@ -45,7 +45,7 @@ export const DisableTextBtnPLL: Story = {
 
 export const PrimaryTextBtnWLL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: false,
     className: BackgroundColor.WHITE,
   },
@@ -54,7 +54,7 @@ export const PrimaryTextBtnWLL: Story = {
 
 export const DisableTextBtnWLL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: true,
     className: BackgroundColor.WHITE,
   },
@@ -63,7 +63,7 @@ export const DisableTextBtnWLL: Story = {
 
 export const PrimaryTextBtnPL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
   },
@@ -72,7 +72,7 @@ export const PrimaryTextBtnPL: Story = {
 
 export const DisableTextBtnPL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
   },
@@ -81,7 +81,7 @@ export const DisableTextBtnPL: Story = {
 
 export const PrimaryTextBtnWL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: false,
     className: BackgroundColor.WHITE,
   },
@@ -90,7 +90,7 @@ export const PrimaryTextBtnWL: Story = {
 
 export const DisableTextBtnWL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: true,
     className: BackgroundColor.WHITE,
   },
@@ -99,7 +99,7 @@ export const DisableTextBtnWL: Story = {
 
 export const PrimaryTextBtnPM: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
   },
@@ -114,7 +114,7 @@ export const PrimaryTextBtnPM: Story = {
 
 export const DisableTextBtnPM: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
   },
@@ -129,7 +129,7 @@ export const DisableTextBtnPM: Story = {
 
 export const PrimaryTextBtnWM: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: false,
     className: BackgroundColor.WHITE,
   },
@@ -144,7 +144,7 @@ export const PrimaryTextBtnWM: Story = {
 
 export const DisableTextBtnWM: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     disable: true,
     className: BackgroundColor.WHITE,
   },
@@ -159,7 +159,7 @@ export const DisableTextBtnWM: Story = {
 
 export const PrimaryTextBtnS: Story = {
   args: {
-    label: "No, leave them",
+    label: 'No, leave them',
     disable: false,
   },
   render: (args) => {
@@ -173,7 +173,7 @@ export const PrimaryTextBtnS: Story = {
 
 export const DisableTextBtnS: Story = {
   args: {
-    label: "No, leave them",
+    label: 'No, leave them',
     disable: true,
   },
   render: (args) => {

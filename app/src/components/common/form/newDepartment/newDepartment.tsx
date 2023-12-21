@@ -1,17 +1,17 @@
-import { BackgroundColor, DataLoading } from "@/features/utils/utilEnum";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { TextBtnL } from "../../buttons/textBtn/TextBtn";
-import { Input } from "../input/StyledInput";
-import { InviteContainer, InviteWrap } from "./StyledDepartment";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { useCreateNewDepartmentMutation } from "@/features/settingsDetail/userSettingsAPI";
-import { CompanyID } from "@/features/settingsDetail/userSettingTypes";
-import { RootState } from "@/app/store";
+import { BackgroundColor, DataLoading } from '@/features/utils/utilEnum';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { TextBtnL } from '../../buttons/textBtn/TextBtn';
+import { Input } from '../input/StyledInput';
+import { InviteContainer, InviteWrap } from './StyledDepartment';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { useCreateNewDepartmentMutation } from '@/features/settingsDetail/userSettingsAPI';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { RootState } from '@/app/store';
 
 const TextBtnLProps = {
   disable: false,
-  label: "Create",
+  label: 'Create',
   onclick: () => {},
   className: BackgroundColor.WHITE,
 };
@@ -31,7 +31,7 @@ export interface IInviteProps {
 const NewDepartment = () => {
   //redux
 
-  const [newDepartmentName, setNewDepartmentName] = useState("");
+  const [newDepartmentName, setNewDepartmentName] = useState('');
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
 

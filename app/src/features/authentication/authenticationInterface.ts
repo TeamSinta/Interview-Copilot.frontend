@@ -17,7 +17,7 @@ export interface UserReadSerializer {
   pk: string | null;
 }
 export interface AuthState {
-  status: "IDLE" | "LOADING" | "AUTHENTICATED" | "FAILED";
+  status: 'IDLE' | 'LOADING' | 'AUTHENTICATED' | 'FAILED';
   isAuthenticated: boolean;
   user: {
     username: string | null;
@@ -43,7 +43,6 @@ export interface AccessToken {
 export interface RefreshToken {
   refresh: string | undefined;
 }
-
 
 export interface GoogleCode {
   code: string;

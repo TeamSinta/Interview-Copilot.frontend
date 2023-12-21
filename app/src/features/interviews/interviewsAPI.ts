@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-import { instance } from "@/utils/axiosService/customAxios";
+import { instance } from '@/utils/axiosService/customAxios';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -124,11 +124,10 @@ export const getTemplateQuestionsAndTopics = async (template_id: number) => {
 
 export const getInterviewRoundQuestion = async (
   interview_round_id: number,
-  question_id: string,
+  question_id: string
 ) => {
   const result = await instance.get(
-    `${BACKEND_URL}/interview-rounds/${interview_round_id}/${question_id}/`,
-    
+    `${BACKEND_URL}/interview-rounds/${interview_round_id}/${question_id}/`
   );
   return result.data;
 };

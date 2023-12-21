@@ -1,13 +1,13 @@
 import {
   BodySBold,
   BodySMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { StatusDropdownFilter } from "@/features/utils/utilEnum";
-import styled, { css } from "styled-components";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { StatusDropdownFilter } from '@/features/utils/utilEnum';
+import styled, { css } from 'styled-components';
 
 export enum DropdownLayoutType {
-  FLEX = "FLEX",
-  BLOCK = "BLOCK",
+  FLEX = 'FLEX',
+  BLOCK = 'BLOCK',
 }
 
 export interface IDropdownLayout {
@@ -143,12 +143,12 @@ interface IStatusDropdownEl {
 export const StatusDropdownEl = styled(DropdownEl)<IStatusDropdownEl>`
   background: ${(props) =>
     props.bg === StatusDropdownFilter.WAITING
-      ? "#FFFABF"
+      ? '#FFFABF'
       : props.bg === StatusDropdownFilter.CLOSED
-      ? "#FABBCF"
-      : props.bg === StatusDropdownFilter.ACTIVE
-      ? "#DBFDDC"
-      : "#F6F6FB"};
+        ? '#FABBCF'
+        : props.bg === StatusDropdownFilter.ACTIVE
+          ? '#DBFDDC'
+          : '#F6F6FB'};
 `;
 
 export const OptionLi = styled.li`
@@ -214,7 +214,9 @@ export const OptionUl = styled.ul<IDropdownOpen>`
           overflow-x: hidden;
           overflow-y: auto;
           transform-origin: 0 0;
-          transition: opacity 0.2s ease, visibility 0.2s ease,
+          transition:
+            opacity 0.2s ease,
+            visibility 0.2s ease,
             transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32);
           /* transform: scale(0.8) translate(0, 4px); */
           ${OptionLi} {

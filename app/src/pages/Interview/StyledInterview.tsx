@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 interface StyledVideoActionsProps {
   isEnabled: boolean;
 }
@@ -48,7 +48,7 @@ export const StyledInterviewContent = styled.div<StyledInterviewContent>`
   padding: 15px;
   padding-bottom: 0px;
   position: relative;
-  height: ${(props) => (props.isCollapsed ? "50px" : "80vh")};
+  height: ${(props) => (props.isCollapsed ? '50px' : '80vh')};
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -341,8 +341,8 @@ export const StyledVideoWindow = styled.div<StyledVideoActionsProps>`
   border: 1px solid #ccc;
   min-width: 200px;
   aspect-ratio: 16/9;
-  background: ${(props) => (props.isEnabled ? "transparent" : "#303030")};
-  border: ${(props) => (props.isEnabled ? "1px solid white" : "none")};
+  background: ${(props) => (props.isEnabled ? 'transparent' : '#303030')};
+  border: ${(props) => (props.isEnabled ? '1px solid white' : 'none')};
   border-radius: 10px;
   img {
     border-radius: 50%;
@@ -377,7 +377,7 @@ export const CoverPictureContainer = styled.div`
   width: 150px;
 
   &:hover::before {
-    content: "Change Picture";
+    content: 'Change Picture';
     position: absolute;
     top: 0;
     left: 0;
@@ -394,13 +394,13 @@ export const CoverPictureContainer = styled.div`
     transition: opacity 0.3s ease;
   }
 
-  &:hover input[type="file"] {
+  &:hover input[type='file'] {
     opacity: 0.01;
     cursor: pointer;
   }
 
   &:hover::before,
-  &:hover input[type="file"]:hover + .profile-picture {
+  &:hover input[type='file']:hover + .profile-picture {
     opacity: 1;
   }
 `;

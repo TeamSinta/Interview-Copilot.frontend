@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 interface IElWrap {
   w?: string;
@@ -12,10 +12,10 @@ interface IElWrapProps {
 }
 
 const StyledElWrap = styled.div<IElWrap>`
-  width: ${(props) => (props.w ? props.w?.concat("px") : "100%")};
-  height: ${(props) => (props.h ? props.h?.concat("px") : "inherit")};
+  width: ${(props) => (props.w ? props.w?.concat('px') : '100%')};
+  height: ${(props) => (props.h ? props.h?.concat('px') : 'inherit')};
   font-size: ${(props) =>
-    props.h ? (parseInt(props.h) < 40 ? "12px" : "inherit") : ""};
+    props.h ? (parseInt(props.h) < 40 ? '12px' : 'inherit') : ''};
 `;
 const ElWrap = ({ children, w, h }: IElWrapProps) => {
   return (

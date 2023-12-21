@@ -2,28 +2,28 @@ import {
   BodyLSemiBold,
   BodyMMedium,
   H1,
-} from "@/components/common/typeScale/StyledTypeScale.js";
+} from '@/components/common/typeScale/StyledTypeScale.js';
 
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import {
   InterviewOverviewContainer,
   InterviewOverviewLayout,
   InterviewStageContainer,
   InterviewStageTopContainer,
   Subtitle,
-} from "@/components/pages/interview/StyledInterview";
-import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom"; // <-- Import useNavigate
-import { StyledIconBtnM } from "@/components/common/buttons/button/StyledBtn";
-import { RightArrowIcon } from "@/components/common/svgIcons/Icons";
-import { useEffect, useState } from "react";
+} from '@/components/pages/interview/StyledInterview';
+import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom'; // <-- Import useNavigate
+import { StyledIconBtnM } from '@/components/common/buttons/button/StyledBtn';
+import { RightArrowIcon } from '@/components/common/svgIcons/Icons';
+import { useEffect, useState } from 'react';
 
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { TextBtnM } from "@/components/common/buttons/textBtn/TextBtn";
-import QuestionBanksQuestionsList from "./QuestionsBankList";
-import Loading from "@/components/common/elements/loading/Loading";
-import { useGetQuestionBankDetailQuery } from "@/features/questions/questionsAPISlice";
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { TextBtnM } from '@/components/common/buttons/textBtn/TextBtn';
+import QuestionBanksQuestionsList from './QuestionsBankList';
+import Loading from '@/components/common/elements/loading/Loading';
+import { useGetQuestionBankDetailQuery } from '@/features/questions/questionsAPISlice';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -77,7 +77,7 @@ const QuestionBankStage = () => {
           <HeaderWrapper>
             <IconWrapper>
               <StyledIconBtnM onClick={() => navigate(-1)}>
-                {" "}
+                {' '}
                 {/* <-- Use the navigate function here */}
                 <RightArrowIcon />
               </StyledIconBtnM>
@@ -92,10 +92,10 @@ const QuestionBankStage = () => {
           </Subtitle>
           <div
             style={{
-              width: "720px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px",
+              width: '720px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px',
             }}
           >
             <BodyMMedium>
@@ -106,7 +106,7 @@ const QuestionBankStage = () => {
             </BodyMMedium>
             <ElWrap w={100}>
               <TextBtnM
-                label={"Edit"}
+                label={'Edit'}
                 disable={false}
                 className={BackgroundColor.WHITE}
                 onClick={() => {
