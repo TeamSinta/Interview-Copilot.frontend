@@ -28,6 +28,7 @@
 .env.dev
 # Ignore environment-specific files
 */.env
+*/.env.staging
 
 npm-debug.log*
 yarn-debug.log*
