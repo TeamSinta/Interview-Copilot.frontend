@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // ignored linting here until we actually use the  components.
 
-import { IconButtonProps } from "@mui/material";
-import { IconBtnM } from "../buttons/iconBtn/IconBtn";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { StyledIconBtnM } from "../buttons/button/StyledBtn";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { ReactComponent as Wrong } from "@/assets/svg/wrongIcon.svg";
-import { ReactComponent as Dislike } from "@/assets/svg/dislike.svg";
-import { ReactComponent as Like } from "@/assets/svg/like.svg";
-import { ReactComponent as Neutral } from "@/assets/svg/neutral.svg";
-import { ReactComponent as Star } from "@/assets/svg/starIcon.svg";
+import { IconButtonProps } from '@mui/material';
+import { IconBtnM } from '../buttons/iconBtn/IconBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { StyledIconBtnM } from '../buttons/button/StyledBtn';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { ReactComponent as Wrong } from '@/assets/svg/wrongIcon.svg';
+import { ReactComponent as Dislike } from '@/assets/svg/dislike.svg';
+import { ReactComponent as Like } from '@/assets/svg/like.svg';
+import { ReactComponent as Neutral } from '@/assets/svg/neutral.svg';
+import { ReactComponent as Star } from '@/assets/svg/starIcon.svg';
 
 export interface ICustomIconProps {
   width: number;
@@ -594,7 +594,7 @@ export const FullScreenIcon = (props: ICustomIconProps): JSX.Element => {
 
 export const LikeButton = (props: ICustomIconProps): JSX.Element => {
   const { width, height, active } = props;
-  const viewBox = "0 0 " + width + " " + height;
+  const viewBox = '0 0 ' + width + ' ' + height;
   return (
     <svg
       width="24"
@@ -679,7 +679,7 @@ export const LikeButton = (props: ICustomIconProps): JSX.Element => {
 
 export const UnlikeIcon = (props: ICustomIconProps): JSX.Element => {
   const { width, height, active } = props;
-  const viewBox = "0 0 " + width + " " + height;
+  const viewBox = '0 0 ' + width + ' ' + height;
   return (
     <svg
       width="24"
@@ -745,7 +745,7 @@ export const UnlikeIcon = (props: ICustomIconProps): JSX.Element => {
 
 export const FlagIcon = (props: ICustomIconProps): JSX.Element => {
   const { width, height, active } = props;
-  const viewBox = "0 0 " + width + " " + height;
+  const viewBox = '0 0 ' + width + ' ' + height;
   return (
     <svg
       width={width}
@@ -782,7 +782,7 @@ export const FlagIcon = (props: ICustomIconProps): JSX.Element => {
 
 export const SaveIcon = (props: ICustomIconProps): JSX.Element => {
   const { width, height, active } = props;
-  const viewBox = "0 0 " + width + " " + height;
+  const viewBox = '0 0 ' + width + ' ' + height;
   return (
     <svg
       width={width}
@@ -814,7 +814,7 @@ export const SaveIcon = (props: ICustomIconProps): JSX.Element => {
 
 export const MicIcon = (props: ICustomIconProps): JSX.Element => {
   const { width, height, active } = props;
-  const viewBox = "0 0 " + width + " " + height;
+  const viewBox = '0 0 ' + width + ' ' + height;
 
   if (active === 0) {
     return (
@@ -915,7 +915,7 @@ export const MicIcon = (props: ICustomIconProps): JSX.Element => {
 
 export const CamIcon = (props: ICustomIconProps): JSX.Element => {
   const { width, height, active } = props;
-  const viewBox = "0 0 " + width + " " + height;
+  const viewBox = '0 0 ' + width + ' ' + height;
   if (active === 1) {
     return (
       <svg

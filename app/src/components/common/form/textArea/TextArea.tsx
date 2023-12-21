@@ -5,10 +5,10 @@ import {
   listsPlugin,
   markdownShortcutPlugin,
   thematicBreakPlugin,
-} from "@mdxeditor/editor";
-import React, { useState } from "react";
-import { StyledTextareaDiv } from "../input/StyledInput";
-import { BodySMedium } from "../../typeScale/StyledTypeScale";
+} from '@mdxeditor/editor';
+import React, { useState } from 'react';
+import { StyledTextareaDiv } from '../input/StyledInput';
+import { BodySMedium } from '../../typeScale/StyledTypeScale';
 
 interface ITextAreaProps {
   disable: boolean;
@@ -27,7 +27,7 @@ const TextArea = (props: ITextAreaProps): JSX.Element => {
   const ref = React.useRef<MDXEditorMethods>(null);
 
   const placeholderText = (
-    <BodySMedium style={{ opacity: ".5" }}> {placeholder}</BodySMedium>
+    <BodySMedium style={{ opacity: '.5' }}> {placeholder}</BodySMedium>
   );
 
   return (

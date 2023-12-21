@@ -1,9 +1,9 @@
-import { SearchIcon } from "@/components/common/svgIcons/Icons";
+import { SearchIcon } from '@/components/common/svgIcons/Icons';
 import {
   SerchInputLayout,
   InputIcon,
   SerchInputEl,
-} from "../input/StyledInput";
+} from '../input/StyledInput';
 
 interface ISearchInput {
   disable: boolean;
@@ -19,7 +19,7 @@ const SearchInput = (props: ISearchInput): JSX.Element => {
         <SearchIcon />
       </InputIcon>
       <SerchInputEl
-        className={error ? "error" : ""}
+        className={error ? 'error' : ''}
         disabled={disable}
         placeholder={placeholder}
       />

@@ -1,9 +1,9 @@
-import React from "react";
-import { InterviewContainerStyle } from "../InterviewQNA";
+import React from 'react';
+import { InterviewContainerStyle } from '../InterviewQNA';
 
-import { TranscriptionCollapsible } from "../TranscriptionCollapsible";
-import { QuestionMeta, QuestionTextDisplay } from "./QuestionTabQNA";
-import styled from "styled-components";
+import { TranscriptionCollapsible } from '../TranscriptionCollapsible';
+import { QuestionMeta, QuestionTextDisplay } from './QuestionTabQNA';
+import styled from 'styled-components';
 
 interface QuestionData {
   question: string;

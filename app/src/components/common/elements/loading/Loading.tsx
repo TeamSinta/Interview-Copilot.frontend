@@ -1,4 +1,4 @@
-import { Spinner, SpinnerContainer } from "./StyledLoading";
+import { Spinner, SpinnerContainer } from './StyledLoading';
 
 const Loading = () => {
   return (

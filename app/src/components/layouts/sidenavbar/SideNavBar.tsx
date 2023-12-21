@@ -1,4 +1,4 @@
-import image from "@/assets/images/SintaLogo.png";
+import image from '@/assets/images/SintaLogo.png';
 import {
   CandidateIcon,
   DashboardIcon,
@@ -7,12 +7,12 @@ import {
   SettingIcon,
   InfoIcon,
   ChatIcon,
-} from "@/components/common/svgIcons/Icons";
-import { BodyMMedium } from "@/components/common/typeScale/StyledTypeScale";
-import { type ReactElement } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import SideNavBarDropdown from "./SideNavBarDropdown";
+} from '@/components/common/svgIcons/Icons';
+import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { type ReactElement } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import SideNavBarDropdown from './SideNavBarDropdown';
 import {
   DropWrapper,
   LogoImage,
@@ -21,13 +21,13 @@ import {
   StyledSideNavBarTitle,
   StyledSideNavLinksWrap,
   StyledStack,
-} from "./StyledSideNavBar";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/app/store";
-import { resetUserState } from "@/features/authentication/authenticationSlice";
-import { resetCurrentWorkspace } from "@/features/workspace/userWorkspaceSlice";
-import ProfileCard from "./profieCard/ProfileCard";
-import { Stack } from "@mui/material";
+} from './StyledSideNavBar';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/app/store';
+import { resetUserState } from '@/features/authentication/authenticationSlice';
+import { resetCurrentWorkspace } from '@/features/workspace/userWorkspaceSlice';
+import ProfileCard from './profieCard/ProfileCard';
+import { Stack } from '@mui/material';
 
 export interface INavButtonLink {
   to: string;
@@ -38,41 +38,41 @@ export interface INavButtonLink {
 
 const navButtonLinks: INavButtonLink[] = [
   {
-    text: "Dashboard",
-    to: "/dashboard",
+    text: 'Dashboard',
+    to: '/dashboard',
     icon: <DashboardIcon />,
   },
   {
-    text: "Templates",
-    to: "/templates",
+    text: 'Templates',
+    to: '/templates',
     icon: <RoleIcon />,
   },
   {
-    text: "Interviews",
-    to: "/interviews",
+    text: 'Interviews',
+    to: '/interviews',
     icon: <CandidateIcon />,
   },
   {
-    text: "Questions",
-    to: "/questionbank",
+    text: 'Questions',
+    to: '/questionbank',
     icon: <ChatIcon />,
   },
   {
-    text: "Notifications",
-    to: "/Notifications",
+    text: 'Notifications',
+    to: '/Notifications',
     icon: <InfoIcon />,
   },
 ];
 
 const navConfigLinks: INavButtonLink[] = [
   {
-    text: "Settings",
-    to: "/settings",
+    text: 'Settings',
+    to: '/settings',
     icon: <SettingIcon />,
   },
   {
-    text: "Logout",
-    to: "#",
+    text: 'Logout',
+    to: '#',
     icon: <DoorIcon />,
   },
 ];
@@ -81,7 +81,7 @@ const SideNavBar = (): ReactElement => {
   const { user } = useSelector((state: RootState) => state.user);
   let location = useLocation();
   const dispatch: AppDispatch = useDispatch();
-  const [, , removeCookie] = useCookies(["refresh_token", "access_token"]);
+  const [, , removeCookie] = useCookies(['refresh_token', 'access_token']);
   const navigate = useNavigate();
   const args = {
     optionArr: user.companies.map((company) => ({
@@ -89,30 +89,30 @@ const SideNavBar = (): ReactElement => {
       name: company.name,
       value: company.name,
     })),
-    dropdownName: "Workspace",
+    dropdownName: 'Workspace',
     dropdownIconVisible: true,
   };
 
   const handleNavConfigClick = (text: string) => {
-    if (text === "Logout") {
-      localStorage.removeItem("AuthStatus");
-      removeCookie("access_token");
-      removeCookie("refresh_token");
+    if (text === 'Logout') {
+      localStorage.removeItem('AuthStatus');
+      removeCookie('access_token');
+      removeCookie('refresh_token');
       dispatch(resetUserState());
       dispatch(resetCurrentWorkspace());
-      navigate("/login");
+      navigate('/login');
     }
   };
 
   const redirectToRoot = () => {
-    window.location.href = "/";
+    window.location.href = '/';
   };
 
   const buttonStyle = {
-    background: "none",
-    border: "none",
+    background: 'none',
+    border: 'none',
     padding: 0,
-    cursor: "pointer",
+    cursor: 'pointer',
     // Add any additional styling as needed
   };
 
@@ -126,8 +126,8 @@ const SideNavBar = (): ReactElement => {
       <button style={buttonStyle} onClick={redirectToRoot}>
         <div
           style={{
-            paddingLeft: "16px",
-            paddingTop: "6px",
+            paddingLeft: '16px',
+            paddingTop: '6px',
           }}
         >
           {/* Your LogoImage component */}
@@ -140,7 +140,7 @@ const SideNavBar = (): ReactElement => {
       </button>
 
       <StyledSideNavLinksWrap>
-        <StyledSideNavBarTitle style={{ opacity: "0.5" }}>
+        <StyledSideNavBarTitle style={{ opacity: '0.5' }}>
           Workspace
         </StyledSideNavBarTitle>
         <DropWrapper>
@@ -149,7 +149,7 @@ const SideNavBar = (): ReactElement => {
       </StyledSideNavLinksWrap>
 
       <StyledSideNavLinksWrap>
-        <StyledSideNavBarTitle style={{ opacity: "0.5" }}>
+        <StyledSideNavBarTitle style={{ opacity: '0.5' }}>
           Pages
         </StyledSideNavBarTitle>
         {navButtonLinks.map((navButtonLink: INavButtonLink, index: number) => (
@@ -157,11 +157,11 @@ const SideNavBar = (): ReactElement => {
             direction="row"
             key={index}
             className={
-              (location.pathname === "/" &&
-                navButtonLink.to === "/dashboard") ||
+              (location.pathname === '/' &&
+                navButtonLink.to === '/dashboard') ||
               location.pathname.startsWith(navButtonLink.to)
-                ? "active"
-                : ""
+                ? 'active'
+                : ''
             }
           >
             <Link to={navButtonLink.to} className="link">
@@ -173,14 +173,14 @@ const SideNavBar = (): ReactElement => {
       </StyledSideNavLinksWrap>
 
       <StyledSideNavLinksWrap>
-        <StyledSideNavBarTitle style={{ opacity: "0.5" }}>
+        <StyledSideNavBarTitle style={{ opacity: '0.5' }}>
           Config
         </StyledSideNavBarTitle>
         {navConfigLinks.map((navConfigLink: INavButtonLink, index: number) => (
           <NavButton
             direction="row"
             key={index}
-            className={location.pathname === navConfigLink.to ? "active" : ""}
+            className={location.pathname === navConfigLink.to ? 'active' : ''}
           >
             <Link
               to={navConfigLink.to}

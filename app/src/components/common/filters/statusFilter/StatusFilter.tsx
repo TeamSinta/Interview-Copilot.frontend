@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { SelectArrowOpenIcon } from "@/components/common/svgIcons/Icons";
+import React, { useState } from 'react';
+import { SelectArrowOpenIcon } from '@/components/common/svgIcons/Icons';
 
 import {
   DropdownArrowIconDiv,
@@ -10,9 +10,9 @@ import {
   StatusDropdownEl,
   StatusDropdownLayout,
   StatusDropdownWrap,
-} from "../dropdownFilter/StyledDropdownFilter";
-import { StatusDropdownFilter } from "@/features/utils/utilEnum";
-import { BodyMMedium } from "../../typeScale/StyledTypeScale";
+} from '../dropdownFilter/StyledDropdownFilter';
+import { StatusDropdownFilter } from '@/features/utils/utilEnum';
+import { BodyMMedium } from '../../typeScale/StyledTypeScale';
 
 const optionArr: StatusDropdownFilter[] = [
   StatusDropdownFilter.LOW,
@@ -64,7 +64,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
           onMouseLeave={() => {
             setShadow(false);
           }}
-          className={shadow ? "hover" : ""}
+          className={shadow ? 'hover' : ''}
           onClick={() => {
             setShadow(false);
           }}

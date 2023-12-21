@@ -2,10 +2,10 @@ import {
   OptionUl,
   DropdownEl,
   DropdownWrap,
-} from "@/components/common/filters/dropdownFilter/StyledDropdownFilter";
-import { Input } from "@/components/common/form/input/StyledInput";
-import styled from "styled-components";
-import { BoderBox } from "../StyledInterview";
+} from '@/components/common/filters/dropdownFilter/StyledDropdownFilter';
+import { Input } from '@/components/common/form/input/StyledInput';
+import styled from 'styled-components';
+import { BoderBox } from '../StyledInterview';
 
 export const OverviewDetailTitle = styled.div`
   display: flex;

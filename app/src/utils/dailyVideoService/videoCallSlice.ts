@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import videoApi from "./videoApi";
-import DailyIframe from "@daily-co/daily-js";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import videoApi from './videoApi';
+import DailyIframe from '@daily-co/daily-js';
 
 interface VideoCallState {
   roomUrl: string | null;
@@ -12,23 +12,22 @@ interface VideoCallState {
 const initialState: VideoCallState = {
   roomUrl: null,
   callObject: null,
-  appState: "STATE_IDLE",
+  appState: 'STATE_IDLE',
   apiError: false,
 };
 
-export const createCall = createAsyncThunk("videoCall/createCall", async () => {
+export const createCall = createAsyncThunk('videoCall/createCall', async () => {
   try {
     const room = await videoApi.createRoom();
     return room.url;
   } catch (error) {
-    console.error("Error creating room", error);
-    throw new Error("Could not create room");
+    console.error('Error creating room', error);
+    throw new Error('Could not create room');
   }
 });
 
-
 export const startHairCheck = createAsyncThunk(
-  "videoCall/startHairCheck",
+  'videoCall/startHairCheck',
   async (url: string) => {
     const newCallObject = DailyIframe.createCallObject();
     await newCallObject.preAuth({ url });
@@ -38,7 +37,7 @@ export const startHairCheck = createAsyncThunk(
 );
 
 const videoCallSlice = createSlice({
-  name: "videoCall",
+  name: 'videoCall',
   initialState,
   reducers: {
     setAppState: (state, action: PayloadAction<string>) => {

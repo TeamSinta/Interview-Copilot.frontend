@@ -1,5 +1,5 @@
-import { IQuestion } from "../interviews/interviewsInterface";
-import { IMockMembers } from "../roles/rolesInterface";
+import { IQuestion } from '../interviews/interviewsInterface';
+import { IMockMembers } from '../roles/rolesInterface';
 
 export interface IInterviewDetailStaging {
   interviewer: IMockMembers[];

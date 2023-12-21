@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { OverviewSections } from "@/components/pages/interview/overview_section/StyledOverviewSection";
+import React, { useEffect, useState } from 'react';
+import { OverviewSections } from '@/components/pages/interview/overview_section/StyledOverviewSection';
 import {
   CompetencesOverviewSections,
   CompetencesWrap,
-} from "../StyledQuestions";
-import { InputLayout } from "@/components/common/form/input/StyledInput";
-import Competencies from "@/components/common/elements/competencies/Competencies";
+} from '../StyledQuestions';
+import { InputLayout } from '@/components/common/form/input/StyledInput';
+import Competencies from '@/components/common/elements/competencies/Competencies';
 
-import SearchInput from "@/components/common/form/serchInput/SearchInput";
-import { useGetQuestionsQuery } from "@/features/questions/questionsAPISlice";
-import Loading from "@/components/common/elements/loading/Loading";
+import SearchInput from '@/components/common/form/serchInput/SearchInput';
+import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import Loading from '@/components/common/elements/loading/Loading';
 
 let competencies: any[] = [];
 
@@ -63,7 +63,7 @@ const CompetenciesFilter: React.FC = () => {
       <InputLayout>
         <SearchInput
           disable={false}
-          placeholder={"Search for Competencies"}
+          placeholder={'Search for Competencies'}
           error={false}
         />
         <CompetencesWrap>

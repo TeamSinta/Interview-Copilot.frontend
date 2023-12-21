@@ -1,4 +1,4 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { getCookieValue } from '../cookieUtils';
 
 export const instance = axios.create({
@@ -7,18 +7,19 @@ export const instance = axios.create({
 });
 
 enum Env {
-  STORY = "story",
-  MOCK = "mock",
-  DEVELOPE = "develope",
+  STORY = 'story',
+  MOCK = 'mock',
+  DEVELOPE = 'develope',
 }
-
 
 //Temporary suspension of service due to the incomplete implementation of the login function.
 const requestHandler = async (
   config: InternalAxiosRequestConfig
-): Promise<InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>> => {
-  const access_token = await getCookieValue("access_token")
-    config.headers.Authorization = `Bearer ${access_token}`;
+): Promise<
+  InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>
+> => {
+  const access_token = await getCookieValue('access_token');
+  config.headers.Authorization = `Bearer ${access_token}`;
   //  Todo: Need to confirm with @mohamed shegow
   // if (import.meta.env.VITE_ENV === Env.DEVELOPE) {
   //   const token = localStorage.getItem("token");

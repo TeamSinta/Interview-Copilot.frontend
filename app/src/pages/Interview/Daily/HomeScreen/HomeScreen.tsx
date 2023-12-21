@@ -1,5 +1,5 @@
-import React from "react";
-import "./HomeScreen.css";
+import React from 'react';
+import './HomeScreen.css';
 
 interface HomeScreenProps {
   createCall: () => Promise<string>;

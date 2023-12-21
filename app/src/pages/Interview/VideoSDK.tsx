@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from 'react';
 // import {
 //   MeetingProvider,
 //   useMeeting,
@@ -12,16 +12,16 @@ import {
   StyledVideoActions,
   StyledVideoContainer,
   StyledVideoWindow,
-} from "./StyledInterview";
+} from './StyledInterview';
 // import {
 //   CamHideIcon,
 //   MicMuteIcon,
 //   NavCamIcon,
 //   NavMicIcon,
 // } from "@/components/common/svgIcons/Icons";
-import { CamIcon, MicIcon } from "@/components/common/svgIcons/CustomIcons";
-import InterviewWork from "./InterviewWork";
-import { Grid } from "@mui/material";
+import { CamIcon, MicIcon } from '@/components/common/svgIcons/CustomIcons';
+import InterviewWork from './InterviewWork';
+import { Grid } from '@mui/material';
 
 // type ParticipantViewProps = {
 //   participantId: string;
@@ -118,10 +118,10 @@ import { Grid } from "@mui/material";
 const VideoSDK = () => {
   const NUMBER_OF_PARTICIPANTS: any = useMemo(() => {
     return [
-      { index: 1, content: "" },
-      { index: 2, content: "" },
-      { index: 3, content: "" },
-      { index: 4, content: "" },
+      { index: 1, content: '' },
+      { index: 2, content: '' },
+      { index: 3, content: '' },
+      { index: 4, content: '' },
     ];
   }, []);
   // const [micEnabled, setMicEnabled] = useState(false);
@@ -172,21 +172,21 @@ const VideoSDK = () => {
     return (
       <Grid
         style={{
-          height: "100%", // Adjust the height as needed
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
+          height: '100%', // Adjust the height as needed
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
         }}
       >
         <span
           style={{
-            fontWeight: "600",
-            fontFamily: "ChillaxSemi",
-            fontSize: "1.5em",
-            width: "100%",
+            fontWeight: '600',
+            fontFamily: 'ChillaxSemi',
+            fontSize: '1.5em',
+            width: '100%',
             opacity: opacity, // Apply dynamic opacity value
-            transition: "opacity 1.5s ease-in-out", // Smooth transition for opacity change
+            transition: 'opacity 1.5s ease-in-out', // Smooth transition for opacity change
           }}
         >
           Waiting for candidate...
@@ -198,7 +198,7 @@ const VideoSDK = () => {
   function InterviewSideBar(props: any) {
     const { reactClicked, setReactClicked } = props;
     return (
-      <div style={{ justifyContent: "flex-end", display: "flex" }}>
+      <div style={{ justifyContent: 'flex-end', display: 'flex' }}>
         {/* {header} */}
         <StyledInterviewContent isCollapsed={false}>
           <InterviewSideBarWaiting />
@@ -240,7 +240,7 @@ const VideoSDK = () => {
                     }
                   }}
                 >
-                  {" "}
+                  {' '}
                   <CamIcon
                     active={findActiveCamIndex(index) ? 1 : 0}
                     width={40}
@@ -250,7 +250,7 @@ const VideoSDK = () => {
               </StyledVideoActionContainer>
               {findActiveCamIndex(index) ? null : (
                 <div
-                  style={{ position: "absolute", top: "20px", right: "30px" }}
+                  style={{ position: 'absolute', top: '20px', right: '30px' }}
                 >
                   <svg
                     width="4"

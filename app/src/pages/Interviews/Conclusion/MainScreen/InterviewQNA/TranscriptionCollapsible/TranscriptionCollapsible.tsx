@@ -1,5 +1,5 @@
-import React from "react";
-import { Grid } from "@mui/material";
+import React from 'react';
+import { Grid } from '@mui/material';
 
 export const TranscriptionCollapsible: React.FC<any> = (data: any) => {
   const { question, index, activeIndex } = data;
@@ -7,18 +7,18 @@ export const TranscriptionCollapsible: React.FC<any> = (data: any) => {
   return (
     <div
       style={{
-        fontWeight: "500",
-        borderRadius: "10px",
-        backgroundColor: "white",
-        fontSize: "14px",
-        marginTop: "10px",
+        fontWeight: '500',
+        borderRadius: '10px',
+        backgroundColor: 'white',
+        fontSize: '14px',
+        marginTop: '10px',
       }}
-      className={`question-answer ${activeIndex === index ? "show" : ""}`}
+      className={`question-answer ${activeIndex === index ? 'show' : ''}`}
     >
       {question?.transcription?.map((dialogue: any, index: number) => (
         <Grid
           style={{
-            margin: "0px",
+            margin: '0px',
           }}
           container
           spacing={1}
@@ -27,13 +27,13 @@ export const TranscriptionCollapsible: React.FC<any> = (data: any) => {
           <Grid xs={1} md={1}>
             <div
               style={{
-                padding: "15px 15px",
-                borderRadius: "10px",
+                padding: '15px 15px',
+                borderRadius: '10px',
               }}
             >
               <img
                 style={{
-                  borderRadius: "10px",
+                  borderRadius: '10px',
                 }}
                 src={dialogue.userImageUrl}
                 width="30"
@@ -42,16 +42,16 @@ export const TranscriptionCollapsible: React.FC<any> = (data: any) => {
               />
             </div>
           </Grid>
-          <Grid xs={9} md={10} style={{ padding: "15px 15px" }}>
+          <Grid xs={9} md={10} style={{ padding: '15px 15px' }}>
             <div>
               <p>{dialogue?.speech}</p>
             </div>
             <div>
               <p
                 style={{
-                  color: "#121212",
+                  color: '#121212',
                   opacity: 0.5,
-                  marginTop: "5px",
+                  marginTop: '5px',
                 }}
               >
                 {dialogue?.timestamp}

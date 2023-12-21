@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const InputLayout = styled.div`
   width: 100%;
@@ -94,7 +94,7 @@ export const StyledTextareaDiv = styled.div`
     position: absolute;
 
     ::after {
-      content: "         ";
+      content: '         ';
     }
 
     &:focus {

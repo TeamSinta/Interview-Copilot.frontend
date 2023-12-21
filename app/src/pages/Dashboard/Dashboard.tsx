@@ -1,10 +1,10 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Stack, Box } from "@mui/material";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { RightBracketIcon } from "@/components/common/svgIcons/Icons";
-import TemplateHomeCard from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
-import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
+import React, { useRef, useEffect, useState } from 'react';
+import { Stack, Box } from '@mui/material';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { RightBracketIcon } from '@/components/common/svgIcons/Icons';
+import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
+import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import {
   MainContainer,
   WelcomeHeading,
@@ -19,22 +19,22 @@ import {
   EmptySectionContainer,
   TemplateEmptyBox,
   WavingHand,
-} from "./StyledDashboard";
-import dashboardImage from "src/assets/svg/SintaHomeFullScreen.svg";
-import { StyledImage, StyledEmptyImage } from "./StyledDashboard";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/app/store";
-import { useNavigate } from "react-router-dom";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import Loading from "@/components/common/elements/loading/Loading";
+} from './StyledDashboard';
+import dashboardImage from 'src/assets/svg/SintaHomeFullScreen.svg';
+import { StyledImage, StyledEmptyImage } from './StyledDashboard';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/app/store';
+import { useNavigate } from 'react-router-dom';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import Loading from '@/components/common/elements/loading/Loading';
 import {
   TemplateQuestions,
   TemplateResponse,
-} from "@/features/templates/templatesInterface";
-import { createCall } from "@/utils/dailyVideoService/videoCallSlice";
-import { BodyLMedium } from "@/components/common/typeScale/StyledTypeScale";
+} from '@/features/templates/templatesInterface';
+import { createCall } from '@/utils/dailyVideoService/videoCallSlice';
+import { BodyLMedium } from '@/components/common/typeScale/StyledTypeScale';
 import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
-import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
+import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 
 const DashBoard = () => {
   const navigate = useNavigate();
@@ -51,18 +51,18 @@ const DashBoard = () => {
   } = useGetTemplatesQuery();
 
   const handleButtonClick = () => {
-    navigate("/templates");
+    navigate('/templates');
   };
 
   const arg = {
-    label: "Show All",
+    label: 'Show All',
     icon: <RightBracketIcon />,
     className: BackgroundColor.ACCENT_PURPLE,
     onClick: handleButtonClick,
     disable: false,
   };
   const arg_empty = {
-    label: "Go to Templates",
+    label: 'Go to Templates',
     icon: <RightBracketIcon />,
     className: BackgroundColor.WHITE,
     onClick: handleButtonClick,
@@ -185,7 +185,7 @@ const DashBoard = () => {
             alignItems="center"
             spacing={1}
             style={{
-              width: "100%",
+              width: '100%',
             }}
           >
             <MainContainer>
@@ -195,10 +195,10 @@ const DashBoard = () => {
                     Welcome back, {user.first_name} <WavingHand>👋</WavingHand>
                   </WelcomeHeading>
                   <DescriptionText>
-                    Helping teams hire faster and better. Get{" "}
+                    Helping teams hire faster and better. Get{' '}
                     <DescriptionText>
-                      {" "}
-                      started by creating a template or launch a meeting .{" "}
+                      {' '}
+                      started by creating a template or launch a meeting .{' '}
                     </DescriptionText>
                   </DescriptionText>
                 </TextBox>
@@ -223,7 +223,7 @@ const DashBoard = () => {
         {newTemplates.length === 0 ? (
           <TemplateEmptyBox>
             <EmptySectionContainer>
-              {" "}
+              {' '}
               <StyledEmptyImage
                 src={EmptySectionsImage}
                 alt="dashboard_picture"
@@ -234,7 +234,7 @@ const DashBoard = () => {
               </BodyLMedium>
               <Box
                 style={{
-                  width: "248px",
+                  width: '248px',
                 }}
               >
                 <TextIconBtnL {...arg_empty} />
@@ -251,7 +251,7 @@ const DashBoard = () => {
               <PendingReviewsHeading>Recent Templates</PendingReviewsHeading>
               <Box
                 style={{
-                  width: "148px",
+                  width: '148px',
                 }}
               >
                 <TextIconBtnL {...arg} />

@@ -1,5 +1,5 @@
-import { DefaultTheme } from "@/styles/StyleType";
-import styled, { keyframes } from "styled-components";
+import { DefaultTheme } from '@/styles/StyleType';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -27,7 +27,6 @@ export const LoadingWrapper = styled.div`
   position: relative;
   width: fit-content;
 `;
-
 
 export const LoadingCircle = styled.div`
   position: absolute;

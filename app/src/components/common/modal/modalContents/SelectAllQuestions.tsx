@@ -1,25 +1,25 @@
-import { AppDispatch, RootState } from "@/app/store";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { IQuestion } from "@/features/interviews/interviewsInterface";
+import { AppDispatch, RootState } from '@/app/store';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { IQuestion } from '@/features/interviews/interviewsInterface';
 import {
   resetQuestionBank,
   selectInterview,
   setSelectedQuestion,
-} from "@/features/interviews/interviewsSlice";
-import { closeModal } from "@/features/modal/modalSlice";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
-import { IconBtnM } from "../../buttons/iconBtn/IconBtn";
-import { TextIconBtnL } from "../../buttons/textIconBtn/TextIconBtn";
+} from '@/features/interviews/interviewsSlice';
+import { closeModal } from '@/features/modal/modalSlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { IconBtnM } from '../../buttons/iconBtn/IconBtn';
+import { TextIconBtnL } from '../../buttons/textIconBtn/TextIconBtn';
 
-import { CloseIcon, PlusIcon } from "../../svgIcons/Icons";
+import { CloseIcon, PlusIcon } from '../../svgIcons/Icons';
 import {
   BodyLBold,
   BodyLMedium,
   H2Bold,
-} from "../../typeScale/StyledTypeScale";
+} from '../../typeScale/StyledTypeScale';
 import {
   QuestionBody,
   QuestionLayout,
@@ -30,9 +30,9 @@ import {
   SelectedQuestionListWrap,
   TemplateBody,
   TemplateLayout,
-} from "./StyledModalContents";
-import AllQuestionsList from "./AllQuestionsList";
-import { useUpdateQuestionBankMutation } from "@/features/questions/questionsAPISlice";
+} from './StyledModalContents';
+import AllQuestionsList from './AllQuestionsList';
+import { useUpdateQuestionBankMutation } from '@/features/questions/questionsAPISlice';
 
 const SelectAllQuestions = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -58,11 +58,11 @@ const SelectAllQuestions = () => {
         navigate(0);
       } else {
         // Handle unsuccessful response here
-        console.error("Failed to add questions to the Question Bank.");
+        console.error('Failed to add questions to the Question Bank.');
       }
     } catch (error) {
       // Handle the error here
-      console.error("Error making API request:", error);
+      console.error('Error making API request:', error);
     }
   };
 

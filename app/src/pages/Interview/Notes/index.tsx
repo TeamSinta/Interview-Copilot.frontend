@@ -1,2 +1,2 @@
-import Notes from "./Notes";
+import Notes from './Notes';
 export { Notes };

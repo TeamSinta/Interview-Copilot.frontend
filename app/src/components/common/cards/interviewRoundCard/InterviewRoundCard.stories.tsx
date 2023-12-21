@@ -1,10 +1,10 @@
-import { Meta, Story } from "@storybook/react";
+import { Meta, Story } from '@storybook/react';
 import InterviewRoundCard, {
   InterviewRoundCardProps,
-} from "./InterviewRoundCard";
+} from './InterviewRoundCard';
 
 export default {
-  title: "common/cards/InterviewRoundCard",
+  title: 'common/cards/InterviewRoundCard',
   component: InterviewRoundCard,
 } as Meta;
 
@@ -13,10 +13,10 @@ const Template: Story<InterviewRoundCardProps> = (args) => (
 );
 
 const baseArgs = {
-  image: "https://ca.slack-edge.com/T04C82XCPRU-U04KS4AQG0N-5dc6b4356f80-512",
-  title: "Coding Round",
-  numberOfQuestions: "26 questions",
-  roundId: "round1",
+  image: 'https://ca.slack-edge.com/T04C82XCPRU-U04KS4AQG0N-5dc6b4356f80-512',
+  title: 'Coding Round',
+  numberOfQuestions: '26 questions',
+  roundId: 'round1',
 };
 
 export const Default = Template.bind({});

@@ -1,5 +1,5 @@
-import styled, { keyframes } from "styled-components";
-import { DefaultTheme } from "@/styles/StyleType";
+import styled, { keyframes } from 'styled-components';
+import { DefaultTheme } from '@/styles/StyleType';
 
 const spin = keyframes`
   0% {transform: rotate(0deg); }

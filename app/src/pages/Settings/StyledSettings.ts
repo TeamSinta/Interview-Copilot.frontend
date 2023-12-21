@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SettingsContainer = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ export const ProfilePictureContainer = styled.div`
   width: 150px;
 
   &:hover::before {
-    content: "Change Picture";
+    content: 'Change Picture';
     position: absolute;
     top: 0;
     left: 0;
@@ -44,13 +44,13 @@ export const ProfilePictureContainer = styled.div`
     transition: opacity 0.3s ease;
   }
 
-  &:hover input[type="file"] {
+  &:hover input[type='file'] {
     opacity: 0.01;
     cursor: pointer;
   }
 
   &:hover::before,
-  &:hover input[type="file"]:hover + .profile-picture {
+  &:hover input[type='file']:hover + .profile-picture {
     opacity: 1;
   }
 `;

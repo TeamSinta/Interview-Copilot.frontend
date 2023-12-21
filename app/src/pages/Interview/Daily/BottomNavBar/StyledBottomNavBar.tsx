@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const StyledBottomBar = styled.div`
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
@@ -65,7 +65,7 @@ export const StyledBottomNavButtons = styled.button`
   padding: 10px;
   color: white;
   width: fit-content;
-  font-family: "Chillax";
+  font-family: 'Chillax';
   margin: 5px;
   border: none;
   height: 35px;

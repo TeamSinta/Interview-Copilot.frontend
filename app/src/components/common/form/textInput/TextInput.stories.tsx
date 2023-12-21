@@ -1,33 +1,33 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import TextInput from "./TextInput";
+import type { Meta, StoryObj } from '@storybook/react';
+import TextInput from './TextInput';
 
 const meta = {
-  title: "common/form/TextInput",
+  title: 'common/form/TextInput',
   component: TextInput,
   argTypes: {
     label: {
       control: {
-        type: "text",
+        type: 'text',
       },
-      description: "Input label",
+      description: 'Input label',
     },
     disable: {
       control: {
-        type: "boolean",
+        type: 'boolean',
       },
-      description: "Disable or able",
+      description: 'Disable or able',
     },
     error: {
       control: {
-        type: "boolean",
+        type: 'boolean',
       },
-      description: "Error occur",
+      description: 'Error occur',
     },
     placeholder: {
       control: {
-        type: "text",
+        type: 'text',
       },
-      description: "Input placeholder",
+      description: 'Input placeholder',
     },
   },
 } as Meta<typeof TextInput>;
@@ -39,7 +39,7 @@ export const Primary: Story = {
   args: {
     // label: "label",
     disable: false,
-    placeholder: "placeholder",
+    placeholder: 'placeholder',
     error: false,
   },
 };
@@ -48,7 +48,7 @@ export const Disable: Story = {
   args: {
     // label: "label",
     disable: true,
-    placeholder: "placeholder",
+    placeholder: 'placeholder',
     error: false,
   },
 };
@@ -57,7 +57,7 @@ export const Error: Story = {
   args: {
     // label: "label",
     disable: false,
-    placeholder: "placeholder",
+    placeholder: 'placeholder',
     error: true,
   },
 };

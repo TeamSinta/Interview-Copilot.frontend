@@ -1,19 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import {
   StyledCommentBox,
   StyledCommentInput,
   StyledCommentList,
-} from "../../Interviews/StyledNotes";
-import { PencilIcon, Send } from "@/components/common/svgIcons/Icons";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { Stack } from "@mui/material";
-import { InputLabelDiv } from "@/components/pages/interview/overview_detail/StyledOverviewDetail";
-import Chat from "@/components/common/form/chatBox/ChatBox";
-import { IconBtnL } from "@/components/common/buttons/iconBtn/IconBtn";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { addNote } from "@/features/interviews/notesSlice";
+} from '../../Interviews/StyledNotes';
+import { PencilIcon, Send } from '@/components/common/svgIcons/Icons';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { Stack } from '@mui/material';
+import { InputLabelDiv } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
+import Chat from '@/components/common/form/chatBox/ChatBox';
+import { IconBtnL } from '@/components/common/buttons/iconBtn/IconBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
+import { addNote } from '@/features/interviews/notesSlice';
 
 type Comment = {
   timestamp: string;
@@ -26,7 +26,7 @@ function Notes(props: any) {
   const commentInputRef = useRef<HTMLInputElement>(null);
   const comments = useSelector((state: RootState) => state.notes.notes);
   const dispatch = useDispatch(); // Get the dispatch function from Redux
-  const [inputText, setInputText] = useState<string>("");
+  const [inputText, setInputText] = useState<string>('');
 
   const handleCommentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ function Notes(props: any) {
         const timeDelta = calculateTimeDelta(timestamp);
         // Dispatch the action to add a note to Redux with timestamp and timeDelta
         dispatch(addNote({ comment, timestamp, timeDelta }));
-        commentInput.value = "";
+        commentInput.value = '';
         // Put this in API: timestamp, timeDelta, newComment
         notesEntered(comment);
       }
@@ -47,9 +47,9 @@ function Notes(props: any) {
 
   const handleSend = () => {
     const trimmedText = inputText.trim();
-    if (trimmedText !== "") {
+    if (trimmedText !== '') {
       if (trimmedText) {
-        setInputText("");
+        setInputText('');
         const timestamp = getCurrentTime();
         const timeDelta = calculateTimeDelta(timestamp);
         dispatch(addNote({ comment: trimmedText, timestamp, timeDelta }));
@@ -59,8 +59,8 @@ function Notes(props: any) {
     }
   };
 
-  const handleReacts = (reactClicked: any = "") => {
-    const comment = reactClicked?.message ?? "";
+  const handleReacts = (reactClicked: any = '') => {
+    const comment = reactClicked?.message ?? '';
     if (comment) {
       const timestamp = getCurrentTime();
       const timeDelta = calculateTimeDelta(timestamp);
@@ -72,9 +72,9 @@ function Notes(props: any) {
   };
   const getCurrentTime = (): string => {
     const now = new Date();
-    const hours = now.getHours().toString().padStart(2, "0");
-    const minutes = now.getMinutes().toString().padStart(2, "0");
-    const seconds = now.getSeconds().toString().padStart(2, "0");
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
     return `${hours}:${minutes}:${seconds}`;
   };
 
@@ -86,20 +86,20 @@ function Notes(props: any) {
   };
 
   const convertToSeconds = (timeString: string): number => {
-    const [hours, minutes, seconds] = timeString.split(":");
+    const [hours, minutes, seconds] = timeString.split(':');
     return +hours * 3600 + +minutes * 60 + +seconds;
   };
   function formatTime(time: any) {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
 
   return (
     <Stack
       direction="column"
       justifyContent="space-between"
-      style={{ height: "100%" }}
+      style={{ height: '100%' }}
     >
       <StyledCommentList>
         {comments.map((c, index) => (
@@ -107,19 +107,19 @@ function Notes(props: any) {
             className="comment"
             key={index}
             style={{
-              marginBottom: "10px",
-              paddingBottom: "10px",
-              border: "none",
-              display: "flex",
-              gap: "8px",
+              marginBottom: '10px',
+              paddingBottom: '10px',
+              border: 'none',
+              display: 'flex',
+              gap: '8px',
             }}
           >
             <span
               className="timestamp"
               style={{
-                color: "#848487",
-                fontWeight: "normal",
-                marginBottom: "10px",
+                color: '#848487',
+                fontWeight: 'normal',
+                marginBottom: '10px',
               }}
             >
               {c.timeDelta}
@@ -128,15 +128,15 @@ function Notes(props: any) {
             <p
               className="commentText"
               style={{
-                color: "black",
-                fontWeight: "normal",
+                color: 'black',
+                fontWeight: 'normal',
               }}
             >
               {c.comment}
             </p>
           </div>
         ))}
-      </StyledCommentList>{" "}
+      </StyledCommentList>{' '}
       <StyledCommentBox style={{}} className="inputContainer">
         {/* <Chat /> */}
 
@@ -147,7 +147,7 @@ function Notes(props: any) {
           placeholder="Write notes here..."
           className="commentInput"
           onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
+            if (e.key === 'Enter' && !e.shiftKey) {
               handleCommentSubmit(e);
             }
           }}

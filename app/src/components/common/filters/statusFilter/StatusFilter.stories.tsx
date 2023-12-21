@@ -1,10 +1,10 @@
-import { type Meta, type StoryObj } from "@storybook/react";
+import { type Meta, type StoryObj } from '@storybook/react';
 
-import StatusFilter from "./StatusFilter";
-import { StatusDropdownFilter } from "@/features/utils/utilEnum";
+import StatusFilter from './StatusFilter';
+import { StatusDropdownFilter } from '@/features/utils/utilEnum';
 
 const meta = {
-  title: "common/filters/StatusFilter",
+  title: 'common/filters/StatusFilter',
   component: StatusFilter,
   argTypes: {},
 } as Meta<typeof StatusFilter>;

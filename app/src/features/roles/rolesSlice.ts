@@ -1,23 +1,20 @@
-import { RootState } from "@/app/store";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { DataLoading } from "../utils/utilEnum";
-import { fetchMembers } from "./rolesAPI";
-import { IMember, IMockMembers, RolesCreateSlice } from "./rolesInterface";
-import { useGetCompanyMembersQuery } from "../settingsDetail/userSettingsAPI";
-import {
-  CompanyID,
-  DepartmentID,
-} from "../settingsDetail/userSettingTypes";
-import { useEffect, useState } from "react";
+import { RootState } from '@/app/store';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { DataLoading } from '../utils/utilEnum';
+import { fetchMembers } from './rolesAPI';
+import { IMember, IMockMembers, RolesCreateSlice } from './rolesInterface';
+import { useGetCompanyMembersQuery } from '../settingsDetail/userSettingsAPI';
+import { CompanyID, DepartmentID } from '../settingsDetail/userSettingTypes';
+import { useEffect, useState } from 'react';
 
 export const initialState: RolesCreateSlice = {
-  title: "",
+  title: '',
   all_members: [
     {
       member_idx: 0,
-      member_name: "",
-      member_url: "",
-      member_type: "",
+      member_name: '',
+      member_url: '',
+      member_type: '',
       selected: false,
     },
   ],
@@ -55,7 +52,7 @@ export const useFetchSelectMembers = ({
 };
 
 export const getMemberAsync = createAsyncThunk(
-  "roles/fetchMember",
+  'roles/fetchMember',
   async () => {
     const response = await fetchMembers();
     const all_members = response.data.map((memberItem) => ({
@@ -68,7 +65,7 @@ export const getMemberAsync = createAsyncThunk(
 
 //[Where]: How
 export const rolesSlice = createSlice({
-  name: "roles",
+  name: 'roles',
   initialState,
   extraReducers: (builder) => {
     builder.addCase(getMemberAsync.fulfilled, (state, action) => {

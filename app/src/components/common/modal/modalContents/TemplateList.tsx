@@ -1,23 +1,23 @@
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import DropdownFilter from "../../filters/dropdownFilter/DropdownFilter";
-import SearchInput from "../../form/serchInput/SearchInput";
-import { BodySMedium } from "../../typeScale/StyledTypeScale";
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import DropdownFilter from '../../filters/dropdownFilter/DropdownFilter';
+import SearchInput from '../../form/serchInput/SearchInput';
+import { BodySMedium } from '../../typeScale/StyledTypeScale';
 import {
   TemplateListContentWrap,
   TemplateListInputWrap,
   TemplateListWrap,
-} from "./StyledModalContents";
-import TemplateInterviewCard from "../../cards/templateInterviewCard/TemplateInterviewCard";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "@/app/store";
-import { useEffect } from "react";
+} from './StyledModalContents';
+import TemplateInterviewCard from '../../cards/templateInterviewCard/TemplateInterviewCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '@/app/store';
+import { useEffect } from 'react';
 import {
   getQuestionsBanksAsync,
   selectInterview,
   selectQuestionBank,
-} from "@/features/interviews/interviewsSlice";
-import { IQuestionsBanks } from "@/features/interviews/interviewsInterface";
-import { DataLoading } from "@/features/utils/utilEnum";
+} from '@/features/interviews/interviewsSlice';
+import { IQuestionsBanks } from '@/features/interviews/interviewsInterface';
+import { DataLoading } from '@/features/utils/utilEnum';
 
 const TemplateList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -37,15 +37,15 @@ const TemplateList = () => {
         <ElWrap w={462} h={40}>
           <SearchInput
             disable={false}
-            placeholder={"Search for a questions"}
+            placeholder={'Search for a questions'}
             error={false}
           />
         </ElWrap>
         <div className="filterWrap">
           <BodySMedium>Role:</BodySMedium>
           <DropdownFilter
-            optionArr={[{ name: "Designer", value: "Designer" }]}
-            dropdownName={"Role"}
+            optionArr={[{ name: 'Designer', value: 'Designer' }]}
+            dropdownName={'Role'}
           />
         </div>
       </TemplateListInputWrap>

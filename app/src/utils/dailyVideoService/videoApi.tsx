@@ -5,11 +5,11 @@ const RoomService = {
     const options = {
       properties: {
         exp,
-        enable_recording: "cloud",
+        enable_recording: 'cloud',
         recordings_bucket: {
-          bucket_name: "team-sinta",
-          bucket_region: "eu-west-1",
-          assume_role_arn: "arn:aws:iam::314160095310:role/BucketRole",
+          bucket_name: 'team-sinta',
+          bucket_region: 'eu-west-1',
+          assume_role_arn: 'arn:aws:iam::314160095310:role/BucketRole',
           allow_api_access: true,
         },
       },
@@ -17,16 +17,15 @@ const RoomService = {
 
     const VITE_DAILY_API_KEY = import.meta.env.VITE_DAILY_API_KEY;
 
-    const response = await fetch("https://api.daily.co/v1/rooms/", {
-      method: "POST",
+    const response = await fetch('https://api.daily.co/v1/rooms/', {
+      method: 'POST',
       body: JSON.stringify(options),
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
 
         Authorization: `Bearer ${VITE_DAILY_API_KEY}`,
       },
     });
-
 
     return await response.json();
   },

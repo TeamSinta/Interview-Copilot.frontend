@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import "./InterviewQNA.css";
-import styled from "styled-components";
-import { QuestionsTabQNA, SummaryTabQNA, TranscriptionTabQNA } from "./Tabs";
+import React, { useEffect, useState } from 'react';
+import './InterviewQNA.css';
+import styled from 'styled-components';
+import { QuestionsTabQNA, SummaryTabQNA, TranscriptionTabQNA } from './Tabs';
 
 export const ChatStyled = styled.div`
   svg {
@@ -34,8 +34,8 @@ export const IndexStyle = styled.div`
 
 const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
   const [activeIndex, setActiveIndex] = useState<any>(null);
-  const [, setData] = useState<any>("");
-  const [view, setView] = useState<any>("");
+  const [, setData] = useState<any>('');
+  const [view, setView] = useState<any>('');
 
   useEffect(() => {
     setView(screen);
@@ -51,7 +51,7 @@ const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
   };
 
   const ViewQNA: React.FC<any> = () => {
-    if (view === "summary")
+    if (view === 'summary')
       return (
         <SummaryTabQNA
           activeIndex={activeIndex}
@@ -59,7 +59,7 @@ const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
           handleClick={handleClick}
         />
       );
-    if (view === "question")
+    if (view === 'question')
       return (
         <QuestionsTabQNA
           activeIndex={activeIndex}
@@ -67,7 +67,7 @@ const InterviewQNA: React.FC<any> = ({ propData, screen }) => {
           handleClick={handleClick}
         />
       );
-    if (view === "transcription")
+    if (view === 'transcription')
       return (
         <TranscriptionTabQNA
           activeIndex={activeIndex}

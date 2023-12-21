@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   display: grid;
   grid-template-areas:
-    "side header"
-    "side main";
+    'side header'
+    'side main';
   grid-template-columns: 240px 1fr;
   grid-template-rows: 100px 1fr;
   max-width: 100%;

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Input, InputError, InputLayout } from "../input/StyledInput";
+import React, { useEffect, useState } from 'react';
+import { Input, InputError, InputLayout } from '../input/StyledInput';
 
 export interface ITextInput {
   disable: boolean;
@@ -28,7 +28,7 @@ const TextInput = (props: ITextInput): JSX.Element => {
         disabled={disable}
         placeholder={placeholder}
         onChange={onChange}
-        className={error ? "error" : ""}
+        className={error ? 'error' : ''}
         value={inputValue[name]}
       />
       {error ? <InputError /> : <></>}

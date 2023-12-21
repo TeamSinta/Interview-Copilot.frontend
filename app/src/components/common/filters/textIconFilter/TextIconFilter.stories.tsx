@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from "@storybook/react";
-import TextIconFilter from "./TextIconFilter";
-import { CardIcon, HambergerIcon } from "../../svgIcons/Icons";
+import { Meta, StoryObj } from '@storybook/react';
+import TextIconFilter from './TextIconFilter';
+import { CardIcon, HambergerIcon } from '../../svgIcons/Icons';
 
 const icons = {
   Card: <CardIcon />,
@@ -8,11 +8,11 @@ const icons = {
 };
 
 const meta = {
-  title: "common/filters/TextIconFilter",
+  title: 'common/filters/TextIconFilter',
   component: TextIconFilter,
   argTypes: {
     icon: {
-      control: { type: "select" },
+      control: { type: 'select' },
       options: Object.keys(icons),
       mapping: {
         ...icons,
@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 
 export const TextIconFilterCard: Story = {
   args: {
-    label: "Cards",
+    label: 'Cards',
     icon: <CardIcon />,
     select: false,
   },
@@ -34,7 +34,7 @@ export const TextIconFilterCard: Story = {
 
 export const SelectedTextIconFilterCard: Story = {
   args: {
-    label: "Cards",
+    label: 'Cards',
     icon: <CardIcon />,
     select: true,
   },
@@ -42,7 +42,7 @@ export const SelectedTextIconFilterCard: Story = {
 
 export const TextIconFilterList: Story = {
   args: {
-    label: "List",
+    label: 'List',
     icon: <HambergerIcon />,
     select: false,
   },
@@ -50,7 +50,7 @@ export const TextIconFilterList: Story = {
 
 export const SelectedTextIconFilterList: Story = {
   args: {
-    label: "List",
+    label: 'List',
     icon: <HambergerIcon />,
     select: true,
   },

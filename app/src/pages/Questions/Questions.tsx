@@ -1,17 +1,17 @@
-import { RootState } from "@/app/store";
-import TextIconFilter from "@/components/common/filters/textIconFilter/TextIconFilter";
-import SearchInput from "@/components/common/form/serchInput/SearchInput";
-import { BodySMedium, H1 } from "@/components/common/typeScale/StyledTypeScale";
-import { Box, Stack } from "@mui/material";
-import * as React from "react";
-import { useSelector } from "react-redux";
-import QuestionBankTab from "./QuestionBanksTab/QuestionBankTab";
-import QuestionsStage from "./QuestionsTab/QuestionsStage";
+import { RootState } from '@/app/store';
+import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconFilter';
+import SearchInput from '@/components/common/form/serchInput/SearchInput';
+import { BodySMedium, H1 } from '@/components/common/typeScale/StyledTypeScale';
+import { Box, Stack } from '@mui/material';
+import * as React from 'react';
+import { useSelector } from 'react-redux';
+import QuestionBankTab from './QuestionBanksTab/QuestionBankTab';
+import QuestionsStage from './QuestionsTab/QuestionsStage';
 
 const Questions = () => {
   const TABS = {
-    BANK: "QuestionBanks",
-    QUESTIONS: "Questions",
+    BANK: 'QuestionBanks',
+    QUESTIONS: 'Questions',
   };
   const [activeTab, setActiveTab] = React.useState(TABS.BANK);
 
@@ -52,7 +52,7 @@ const Questions = () => {
         <Box>
           <BodySMedium
             style={{
-              color: "grey",
+              color: 'grey',
             }}
           >
             {workspace.name}'s Team Library
@@ -60,13 +60,13 @@ const Questions = () => {
           <H1>Questions</H1>
         </Box>
 
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: '100%' }}>
           <Box
             sx={{
-              padding: "2px",
-              gap: "12px",
-              display: "flex",
-              marginBottom: "22px",
+              padding: '2px',
+              gap: '12px',
+              display: 'flex',
+              marginBottom: '22px',
             }}
           >
             <TextIconFilter
@@ -83,11 +83,11 @@ const Questions = () => {
           <Box
             sx={{
               borderBottom: 1,
-              borderColor: "divider",
-              padding: "2px",
-              gap: "12px",
-              display: "flex",
-              marginBottom: "24px",
+              borderColor: 'divider',
+              padding: '2px',
+              gap: '12px',
+              display: 'flex',
+              marginBottom: '24px',
             }}
           ></Box>
           {activeTab === TABS.BANK && (
@@ -97,10 +97,10 @@ const Questions = () => {
           )}
           {activeTab === TABS.QUESTIONS && (
             <CustomTabPanel value={activeTab} index={TABS.QUESTIONS}>
-              <Box sx={{ width: "100%" }}>
+              <Box sx={{ width: '100%' }}>
                 <SearchInput
                   disable={false}
-                  placeholder={"Search for a question"}
+                  placeholder={'Search for a question'}
                   error={false}
                 />
                 <QuestionsStage />

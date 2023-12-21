@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   H1,
@@ -12,7 +12,7 @@ import {
   BodyMMedium,
   BodySBold,
   BodySMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
+} from '@/components/common/typeScale/StyledTypeScale';
 
 interface ITypeScaleProps {
   label?: string;
@@ -22,14 +22,14 @@ const TypeScale = ({ label }: ITypeScaleProps): JSX.Element => {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        height: "500px",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '500px',
       }}
     >
       <H1>TYPE SCALE</H1>
-      <hr style={{ width: "100%" }} />
+      <hr style={{ width: '100%' }} />
       <H1>H1: {label}</H1>
       <H2Bold>H2 SemiBold: {label}</H2Bold>
       <H2Medium>H2 Medium : {label}</H2Medium>

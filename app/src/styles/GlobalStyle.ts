@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import "./margin.sass";
+import { createGlobalStyle } from 'styled-components';
+import './margin.sass';
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,

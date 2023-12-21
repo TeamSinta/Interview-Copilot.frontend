@@ -1,5 +1,5 @@
-import { BoderBox, Title } from "@/components/pages/interview/StyledInterview";
-import styled, { css, keyframes } from "styled-components";
+import { BoderBox, Title } from '@/components/pages/interview/StyledInterview';
+import styled, { css, keyframes } from 'styled-components';
 
 export const GridContainer = styled.div`
   display: grid;

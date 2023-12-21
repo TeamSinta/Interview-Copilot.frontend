@@ -1,16 +1,15 @@
-import { H1 } from "@/components/common/typeScale/StyledTypeScale.js";
-import React, { useMemo, useState, useEffect } from "react";
-import TopBar from "./TopBar.js";
-import MainScreen from "./MainScreen/MainScreen.js";
-import { RightArrowIcon } from "@/components/common/svgIcons/Icons.js";
-import { StyledIconBtnM } from "@/components/common/buttons/button/StyledBtn.js";
-import styled from "styled-components";
+import { H1 } from '@/components/common/typeScale/StyledTypeScale.js';
+import React, { useMemo, useState, useEffect } from 'react';
+import TopBar from './TopBar.js';
+import MainScreen from './MainScreen/MainScreen.js';
+import { RightArrowIcon } from '@/components/common/svgIcons/Icons.js';
+import { StyledIconBtnM } from '@/components/common/buttons/button/StyledBtn.js';
+import styled from 'styled-components';
 
-import { useNavigate, useLocation } from "react-router-dom"; // <-- Import useNavigate
-import SummarizerLoader from "@/components/common/elements/longLoading/LongLoading.js";
-import { Grid } from "@mui/material";
-import WebSockComp from "../../../components/common/socket/websock";
-
+import { useNavigate, useLocation } from 'react-router-dom'; // <-- Import useNavigate
+import SummarizerLoader from '@/components/common/elements/longLoading/LongLoading.js';
+import { Grid } from '@mui/material';
+import WebSockComp from '../../../components/common/socket/websock';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -37,9 +36,9 @@ const Conclusion: React.FC = () => {
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(true);
 
-const endLoader = () =>{
-  setShowLoader(false);
-}
+  const endLoader = () => {
+    setShowLoader(false);
+  };
 
   const header = useMemo(() => {
     return (

@@ -1,44 +1,41 @@
-import { AppDispatch, RootState } from "@/app/store";
-import { TextBtnL } from "@/components/common/buttons/textBtn/TextBtn";
-import { InputLayout } from "@/components/common/form/input/StyledInput";
-import TextArea from "@/components/common/form/textArea/TextArea";
-import TextInput from "@/components/common/form/textInput/TextInput";
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import { closeModal } from "@/features/modal/modalSlice";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ModalContentWrap } from "./StyledModalContents";
+import { AppDispatch, RootState } from '@/app/store';
+import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
+import { InputLayout } from '@/components/common/form/input/StyledInput';
+import TextArea from '@/components/common/form/textArea/TextArea';
+import TextInput from '@/components/common/form/textInput/TextInput';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { closeModal } from '@/features/modal/modalSlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ModalContentWrap } from './StyledModalContents';
 
-import { CoverPictureContainer } from "@/pages/Interview/StyledInterview";
-import { Stack } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { CoverPictureContainer } from '@/pages/Interview/StyledInterview';
+import { Stack } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { CompanyID } from "@/features/settingsDetail/userSettingTypes";
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import {
   useDeleteTemplateMutation,
   useGetTemplateDetailQuery,
   useUpdateTemplateMutation,
-} from "@/features/templates/templatesAPISlice";
-import { TextIconBtnL } from "../../buttons/textIconBtn/TextIconBtn";
-import {
-  BinIcon,
-  DocumentIcon
-} from "../../svgIcons/Icons";
+} from '@/features/templates/templatesAPISlice';
+import { TextIconBtnL } from '../../buttons/textIconBtn/TextIconBtn';
+import { BinIcon, DocumentIcon } from '../../svgIcons/Icons';
 
 const titleInputArg = {
   error: false,
   disable: false,
-  placeholder: "Title",
-  name: "role_title",
+  placeholder: 'Title',
+  name: 'role_title',
 };
 
 const descriptionInputArg = {
   error: false,
   disable: false,
-  placeholder: "Description",
-  name: "description",
+  placeholder: 'Description',
+  name: 'description',
 };
 
 interface IState {
@@ -60,8 +57,8 @@ const EditInterviews = () => {
     : workspace.id)! as unknown as CompanyID;
 
   const [inputValue, setInputValue] = useState<IState>({
-    role_title: "",
-    description: "",
+    role_title: '',
+    description: '',
   });
 
   // Example hook to fetch template details - replace with your actual implementation
@@ -95,7 +92,7 @@ const EditInterviews = () => {
       // Handle success, e.g., show a success message
     } catch (error) {
       // Handle the error, e.g., show an error message
-      console.error("Error updating template:", error);
+      console.error('Error updating template:', error);
     }
   };
 
@@ -108,7 +105,7 @@ const EditInterviews = () => {
       // Handle success, e.g., show a success message
     } catch (error) {
       // Handle the error, e.g., show an error message
-      console.error("Error updating template:", error);
+      console.error('Error updating template:', error);
     }
   };
 
@@ -121,7 +118,7 @@ const EditInterviews = () => {
   };
 
   const textAreaOnChange = (value: string) => {
-    inputValue["detail"] = value;
+    inputValue['detail'] = value;
   };
 
   return (
@@ -131,7 +128,7 @@ const EditInterviews = () => {
         <TextInput
           {...titleInputArg}
           onChange={inputOnChange}
-          value={inputValue["role_title"]}
+          value={inputValue['role_title']}
         />
       </InputLayout>
       <InputLayout>
@@ -141,13 +138,13 @@ const EditInterviews = () => {
         <TextArea
           {...descriptionInputArg}
           onChange={textAreaOnChange}
-          value={inputValue["description"]}
+          value={inputValue['description']}
         />
       </InputLayout>
       <Stack
         direction="row"
         justifyContent="space-between"
-        sx={{ alignItems: "center" }}
+        sx={{ alignItems: 'center' }}
       >
         <BodySMedium>Template Cover Photo</BodySMedium>
         <CoverPictureContainer>
@@ -165,7 +162,7 @@ const EditInterviews = () => {
       <Stack
         direction="row"
         justifyContent="space-between"
-        sx={{ alignItems: "center" }}
+        sx={{ alignItems: 'center' }}
       >
         <BodySMedium>Delete Template? </BodySMedium>
         <ElWrap w={150}>
@@ -178,7 +175,7 @@ const EditInterviews = () => {
           />
         </ElWrap>
       </Stack>
-      <div style={{ marginTop: "8px" }}>
+      <div style={{ marginTop: '8px' }}>
         <TextBtnL
           label="Save"
           disable={false}

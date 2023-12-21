@@ -1,7 +1,7 @@
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import { GoogleIcon } from "@/components/common/svgIcons/Icons";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import useGoogleLogin from "@/hooks/useGoogleLogin";
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { GoogleIcon } from '@/components/common/svgIcons/Icons';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import useGoogleLogin from '@/hooks/useGoogleLogin';
 
 const GoogleLoginButton = (): JSX.Element => {
   const { signIn } = useGoogleLogin();

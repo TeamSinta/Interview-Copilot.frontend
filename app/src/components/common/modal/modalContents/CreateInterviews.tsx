@@ -1,40 +1,40 @@
-import { AppDispatch } from "@/app/store";
-import Photo from "@/components/common/buttons/photo/Photo";
-import Photos from "@/components/common/buttons/photo/Photos";
-import { PhotoContainer } from "@/components/common/buttons/photo/StyledPhoto";
-import { TextBtnL } from "@/components/common/buttons/textBtn/TextBtn";
-import { InputLayout } from "@/components/common/form/input/StyledInput";
-import TextArea from "@/components/common/form/textArea/TextArea";
-import TextInput from "@/components/common/form/textInput/TextInput";
-import { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { openModal } from "@/features/modal/modalSlice";
-import { IMember } from "@/features/roles/rolesInterface";
-import { useFetchSelectMembers } from "@/features/roles/rolesSlice";
-import { BackgroundColor, PhotoType } from "@/features/utils/utilEnum";
-import { useDispatch, useSelector } from "react-redux";
-import { ModalContentWrap } from "./StyledModalContents";
-import { useEffect, useState } from "react";
-import { RootState } from "@/app/store";
-import { CompanyID } from "@/features/settingsDetail/userSettingTypes";
-import { useAddTemplateMutation } from "@/features/templates/templatesAPISlice";
-import DepartmentDropDown from "@/components/pages/settings/memberTab/DepartmentDropdown";
-import { useFetchCompanyDepartments } from "@/components/pages/settings/memberTab/useFetchAndSortMembers";
-import NewDepartment from "../../form/newDepartment/newDepartment";
+import { AppDispatch } from '@/app/store';
+import Photo from '@/components/common/buttons/photo/Photo';
+import Photos from '@/components/common/buttons/photo/Photos';
+import { PhotoContainer } from '@/components/common/buttons/photo/StyledPhoto';
+import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
+import { InputLayout } from '@/components/common/form/input/StyledInput';
+import TextArea from '@/components/common/form/textArea/TextArea';
+import TextInput from '@/components/common/form/textInput/TextInput';
+import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { openModal } from '@/features/modal/modalSlice';
+import { IMember } from '@/features/roles/rolesInterface';
+import { useFetchSelectMembers } from '@/features/roles/rolesSlice';
+import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
+import { useDispatch, useSelector } from 'react-redux';
+import { ModalContentWrap } from './StyledModalContents';
+import { useEffect, useState } from 'react';
+import { RootState } from '@/app/store';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { useAddTemplateMutation } from '@/features/templates/templatesAPISlice';
+import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
+import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
+import NewDepartment from '../../form/newDepartment/newDepartment';
 
 const titleInputArg = {
   error: false,
   disable: false,
-  placeholder: "Title",
-  name: "title",
+  placeholder: 'Title',
+  name: 'title',
 };
 
 const descriptionInputArg = {
   error: false,
   disable: false,
-  placeholder: "Description",
-  name: "description",
+  placeholder: 'Description',
+  name: 'description',
 };
 
 interface IState {
@@ -47,8 +47,8 @@ const CreateInterviews = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
-  const [sortCriteria] = useState("");
-  const [departmentId, setDepartmentId] = useState("");
+  const [sortCriteria] = useState('');
+  const [departmentId, setDepartmentId] = useState('');
   const [selectedMembers, setSelectedMembers] = useState<IMember[]>([]);
 
   // definitely should look over this, idk what TS is doing here om on the companyId type.
@@ -86,8 +86,8 @@ const CreateInterviews = () => {
   };
 
   const [inputValue, setInputValue] = useState<IState>({
-    title: "",
-    description: "",
+    title: '',
+    description: '',
   });
 
   const [addTemplate] = useAddTemplateMutation();
@@ -113,7 +113,7 @@ const CreateInterviews = () => {
       onClickModalOpen(MODAL_TYPE.SELECT_VAL, { templateID });
     } catch (error) {
       // Handle error, e.g., display a notification
-      console.error("Failed to add template:", error);
+      console.error('Failed to add template:', error);
     }
   };
 
@@ -125,7 +125,7 @@ const CreateInterviews = () => {
   };
 
   const textAreaOnChange = (value: string) => {
-    inputValue["description"] = value;
+    inputValue['description'] = value;
   };
 
   const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
@@ -150,7 +150,7 @@ const CreateInterviews = () => {
         <TextInput
           {...titleInputArg}
           onChange={inputOnChange}
-          value={inputValue["title"]}
+          value={inputValue['title']}
         />
       </InputLayout>
       <InputLayout>
@@ -158,7 +158,7 @@ const CreateInterviews = () => {
         <TextArea
           {...descriptionInputArg}
           onChange={textAreaOnChange}
-          value={inputValue["description"]}
+          value={inputValue['description']}
         />
       </InputLayout>
       <InputLayout>
@@ -188,7 +188,7 @@ const CreateInterviews = () => {
         </PhotoContainer>
       </InputLayout>
 
-      <div style={{ marginTop: "8px" }}>
+      <div style={{ marginTop: '8px' }}>
         <TextBtnL
           label="Next"
           disable={false}

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface WorkSpace {
   id: number | null;
@@ -7,11 +7,11 @@ export interface WorkSpace {
 
 const initialState = {
   id: null,
-  name: "",
+  name: '',
 };
 
 const userWorkspaceSlice = createSlice({
-  name: "workspace",
+  name: 'workspace',
   initialState,
   reducers: {
     setCurrentWorkspace: (state, action) => {

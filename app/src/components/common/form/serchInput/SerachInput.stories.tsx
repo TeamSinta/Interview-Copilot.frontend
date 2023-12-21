@@ -1,21 +1,21 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import SearchInput from "./SearchInput";
+import type { Meta, StoryObj } from '@storybook/react';
+import SearchInput from './SearchInput';
 
 const meta = {
-  title: "common/form/SearchInput",
+  title: 'common/form/SearchInput',
   component: SearchInput,
   argTypes: {
     disable: {
       control: {
-        type: "boolean",
+        type: 'boolean',
       },
-      description: "Disable or able",
+      description: 'Disable or able',
     },
     placeholder: {
       control: {
-        type: "text",
+        type: 'text',
       },
-      description: "Input placeholder",
+      description: 'Input placeholder',
     },
   },
 } as Meta<typeof SearchInput>;
@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     disable: false,
-    placeholder: "Search for a role or candidate",
+    placeholder: 'Search for a role or candidate',
     error: false,
   },
 };
@@ -34,7 +34,7 @@ export const Primary: Story = {
 export const Disable: Story = {
   args: {
     disable: true,
-    placeholder: "Search for a role or candidate",
+    placeholder: 'Search for a role or candidate',
     error: false,
   },
 };
@@ -42,7 +42,7 @@ export const Disable: Story = {
 export const Error: Story = {
   args: {
     disable: false,
-    placeholder: "Search for a role or candidate",
+    placeholder: 'Search for a role or candidate',
     error: true,
   },
 };

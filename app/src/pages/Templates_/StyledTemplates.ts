@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { BodySBold } from "@/components/common/typeScale/StyledTypeScale";
-import { Box } from "@mui/material";
+import styled from 'styled-components';
+import { BodySBold } from '@/components/common/typeScale/StyledTypeScale';
+import { Box } from '@mui/material';
 
 export const DepartmentHeading = styled(BodySBold)`
   font-size: 18px;

@@ -3,8 +3,8 @@ import {
   BodyLMedium,
   BodyLSemiBold,
   BodyMSemiBold,
-} from "@/components/common/typeScale/StyledTypeScale";
-import GoogleLoginButton from "@/components/pages/login/googleLoginBtn/GoogleLoginButton";
+} from '@/components/common/typeScale/StyledTypeScale';
+import GoogleLoginButton from '@/components/pages/login/googleLoginBtn/GoogleLoginButton';
 import {
   Container,
   GrayBodyLMedium,
@@ -15,11 +15,11 @@ import {
   SuperContainer,
   TextBox,
   TextRow,
-} from "./StyledSignUp";
-import { Stack } from "@mui/material";
+} from './StyledSignUp';
+import { Stack } from '@mui/material';
 import LoginPageImage from "src/assets/svg/'Sign Up' Page Illustration.svg";
-import LogoImage from "src/assets/images/SintaLogo.png";
-import { Link } from "react-router-dom";
+import LogoImage from 'src/assets/images/SintaLogo.png';
+import { Link } from 'react-router-dom';
 
 const SignUpScreen = () => {
   return (
@@ -39,8 +39,8 @@ const SignUpScreen = () => {
             </Stack>
             <TextRow>
               <GrayBodyLMedium>Already have an account?</GrayBodyLMedium>
-              <Link to={"/login"}>
-                {" "}
+              <Link to={'/login'}>
+                {' '}
                 <BodyLSemiBold> Sign in.</BodyLSemiBold>
               </Link>
             </TextRow>

@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Button, Box, Stack } from "@mui/material";
-import { H3Bold } from "@/components/common/typeScale/StyledTypeScale";
+import styled from 'styled-components';
+import { Button, Box, Stack } from '@mui/material';
+import { H3Bold } from '@/components/common/typeScale/StyledTypeScale';
 
 export const SelectBox = styled(Stack)`
   background: white;

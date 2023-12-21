@@ -1,7 +1,7 @@
-import React from "react";
-import { MoreVertIcon } from "../../svgIcons/Icons";
-import { Stack, Tooltip } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
+import React from 'react';
+import { MoreVertIcon } from '../../svgIcons/Icons';
+import { Stack, Tooltip } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 import {
   UserCardContainer,
@@ -9,12 +9,12 @@ import {
   ProfilePicture,
   UserDetails,
   PermissionLevel,
-} from "./StyledUserCard"; // Adjust the import path to match your file structure
+} from './StyledUserCard'; // Adjust the import path to match your file structure
 import {
   BodyMMedium,
   BodyLMedium,
   BodySMedium,
-} from "../../typeScale/StyledTypeScale";
+} from '../../typeScale/StyledTypeScale';
 
 interface UserCardProps {
   user: {
@@ -32,10 +32,10 @@ interface UserCardProps {
 const SettingsUserCard: React.FC<UserCardProps> = ({ user, onClick }) => {
   return (
     <UserCardContainer onClick={() => onClick(user)}>
-      <Stack direction="row" gap="16px" sx={{ width: "316px" }}>
+      <Stack direction="row" gap="16px" sx={{ width: '316px' }}>
         <ProfilePicture
           alt={`${user.username}'s Photo`}
-          src={user.profile_picture || ""}
+          src={user.profile_picture || ''}
         />
 
         <UserDetails>
@@ -48,10 +48,10 @@ const SettingsUserCard: React.FC<UserCardProps> = ({ user, onClick }) => {
       <PermissionLevel>
         <div
           style={{
-            background: "white",
-            borderRadius: "11px",
-            border: "1.5px #121212 solid",
-            padding: "7px 21px",
+            background: 'white',
+            borderRadius: '11px',
+            border: '1.5px #121212 solid',
+            padding: '7px 21px',
           }}
         >
           <BodySMedium>{user.role}</BodySMedium>
@@ -63,10 +63,10 @@ const SettingsUserCard: React.FC<UserCardProps> = ({ user, onClick }) => {
           <IconButton
             component="div"
             style={{
-              width: "32px",
-              height: "32px",
-              borderRadius: "8px",
-              padding: "8.5px 0px",
+              width: '32px',
+              height: '32px',
+              borderRadius: '8px',
+              padding: '8.5px 0px',
             }}
           >
             <MoreVertIcon />
