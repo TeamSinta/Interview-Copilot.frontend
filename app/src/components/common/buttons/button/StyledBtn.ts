@@ -22,7 +22,7 @@ export const StyledButton = styled.button`
   position: relative;
   outline: 1px solid ${(props) => props.theme.colors.black};
   outline-offset: -1px;
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0px 2px 0px #121212;
   height: 40px;
   width: 100%;

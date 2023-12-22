@@ -1,3 +1,4 @@
+import { BodyLSemiBold } from '@/components/common/typeScale/StyledTypeScale';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
@@ -38,12 +39,12 @@ export const QuestionCollapsible: React.FC<QuestionCollapsibleProps> = ({
 
   return (
     <div className={isActive ? 'active' : ''}>
-      <p>
+      <BodyLSemiBold>
         {question}{' '}
         <span>
           <StyledAngleIcon className="fa" active={isActive} />
         </span>
-      </p>
+      </BodyLSemiBold>
     </div>
   );
 };

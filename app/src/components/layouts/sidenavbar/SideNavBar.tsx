@@ -1,4 +1,3 @@
-import image from '@/assets/images/SintaLogo.png';
 import {
   CandidateIcon,
   DashboardIcon,
@@ -15,7 +14,6 @@ import { useCookies } from 'react-cookie';
 import SideNavBarDropdown from './SideNavBarDropdown';
 import {
   DropWrapper,
-  LogoImage,
   NavButton,
   Spacer,
   StyledSideNavBarTitle,
@@ -27,7 +25,6 @@ import { AppDispatch, RootState } from '@/app/store';
 import { resetUserState } from '@/features/authentication/authenticationSlice';
 import { resetCurrentWorkspace } from '@/features/workspace/userWorkspaceSlice';
 import ProfileCard from './profieCard/ProfileCard';
-import { Stack } from '@mui/material';
 
 export interface INavButtonLink {
   to: string;
@@ -123,26 +120,7 @@ const SideNavBar = (): ReactElement => {
       alignItems="flex-start"
       spacing={4}
     >
-      <button style={buttonStyle} onClick={redirectToRoot}>
-        <div
-          style={{
-            paddingLeft: '16px',
-            paddingTop: '6px',
-          }}
-        >
-          {/* Your LogoImage component */}
-          <LogoImage
-            className="m-top-3 m-bottom"
-            src={image}
-            alt="Sinta Logo"
-          />
-        </div>
-      </button>
-
       <StyledSideNavLinksWrap>
-        <StyledSideNavBarTitle style={{ opacity: '0.5' }}>
-          Workspace
-        </StyledSideNavBarTitle>
         <DropWrapper>
           <SideNavBarDropdown {...args} />
         </DropWrapper>

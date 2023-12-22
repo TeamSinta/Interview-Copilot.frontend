@@ -1,7 +1,5 @@
-import axios from 'axios';
-import config from '@/config.json';
-import { useState, useEffect } from 'react';
 import { instance } from '@/utils/axiosService/customAxios';
+import { useState, useEffect } from 'react';
 
 const ConclusionData = (interviewRoundId: string) => {
   const [summaryInfo, setSummaryInfo] = useState([]);
@@ -14,7 +12,9 @@ const ConclusionData = (interviewRoundId: string) => {
 
   // TODO: Swap out '1' with the interview ID.
 
-  // const questionsTranscriptAPI = `${config.apiURL}/transcription/get_transcripts_for_questions/${interviewRoundId}/`;
+  const TranscriptAPI = `${
+    import.meta.env.VITE_BACKEND_URL
+  }/transcription/get_transcripts_for_questions/${interviewRoundId}/`;
   const summarizedAnswersAPI = `${
     import.meta.env.VITE_BACKEND_URL
   }/question_response/question_summarized_answers/${interviewRoundId}/`;
@@ -31,13 +31,13 @@ const ConclusionData = (interviewRoundId: string) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response1 = await axios.get(questionsTranscriptAPI);
+        const response1 = await instance.get(TranscriptAPI);
         const response2 = await instance.get(summarizedAnswersAPI);
         const response3 = await instance.get(summaryInfoAPI);
         const response4 = await instance.get(videoUrlAPI);
         const response5 = await instance.get(emojiFeedbackApi);
 
-        setQuestionsTranscript([]);
+        setQuestionsTranscript(response1.data);
         setSummarizedAnswers(response2.data);
         setSummaryInfo(response3.data);
         setVideoUrl(response4.data);
@@ -51,12 +51,7 @@ const ConclusionData = (interviewRoundId: string) => {
     };
 
     fetchData();
-  }, [
-    ,
-    // questionsTranscriptAPI
-    summarizedAnswersAPI,
-    summaryInfoAPI,
-  ]);
+  }, [TranscriptAPI, emojiFeedbackApi, summarizedAnswersAPI, summaryInfoAPI, videoUrlAPI]);
 
   return [
     summarizedAnswers,

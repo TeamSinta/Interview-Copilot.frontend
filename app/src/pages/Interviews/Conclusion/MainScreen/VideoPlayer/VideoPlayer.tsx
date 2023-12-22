@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import './VideoPlayer.css'; // Import the CSS file
-import { transcriptionInfo } from '../TranscriptionTab/TranscriptionTabConstants';
 import { VideoControlBtnM } from '@/components/common/buttons/button/StyledBtn';
 import {
   MuteIcon,
@@ -11,10 +10,7 @@ import {
 } from '@/components/common/svgIcons/Icons';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { ICustomIconProps } from '@/components/common/svgIcons/CustomIcons';
-import {
-  StyledInterviewerImage,
-  StyledCandidateImage,
-} from './StyledVideoPlayer';
+import { StyledInterviewerImage } from './StyledVideoPlayer';
 
 export const MuteButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
@@ -144,27 +140,29 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
       },
       {
         id: 2,
-        question: 'What are your strengths?',
+        question:
+          'Can you describe a recent project you worked on using React? ',
         startTime: '0:14',
-        endTime: '0:30',
+        endTime: '1:30',
       },
       {
         id: 3,
-        question: 'Describe a challenging situation you faced',
+        question:
+          'Can you describe how you ensure code quality and adherence to best practices in your React projects?',
         startTime: '0:31',
-        endTime: '0:42',
+        endTime: '3:42',
       },
       {
         id: 4,
-        question: 'What is HTML',
+        question: 'Can you give an example of a time when you...',
         startTime: '0:43',
-        endTime: '0:49',
+        endTime: '4:49',
       },
       {
         id: 5,
-        question: 'What is Javascript?',
+        question: 'Closing Remarks',
         startTime: '0:50',
-        endTime: '0:55',
+        endTime: '8:55',
       },
     ],
     interviewerData: [
@@ -401,11 +399,11 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
         ref={questionBarRef}
         className="ques-bar"
       >
-        {questionData?.map((question: any) => (
+        {questionData?.map((question: any, index: any) => (
           <div
-            key={question.id}
+            key={index}
             style={{
-              width: getQuestionWidth(question),
+              width: '100%',
               margin: '1px',
               backgroundColor: 'white',
               border: '1px solid white',
@@ -416,7 +414,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
         ))}
       </div>
     );
-  }, [questionData, getQuestionWidth]);
+  }, [questionData]);
   const interviewerCandidateBar = useMemo(() => {
     return (
       <>
@@ -479,13 +477,13 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
           })}
         </div> */}
         <div style={{ display: 'flex', margin: '0px' }}>
-          {interviewerData?.map((data: any) => {
+          {interviewerData?.map((data: any, index: any) => {
             return (
               <>
                 <div
-                  key={data.id}
+                  key={index}
                   style={{
-                    width: getQuestionWidth(data),
+                    width: '100%',
                     marginRight: '0px',
                     marginLeft: '0px',
                     marginTop: '45px',
@@ -556,7 +554,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
       const videoDuration = convertTimeToSeconds(totalDuration);
       // const timelineWidth = timeline.offsetWidth;
       const barWidth = questionBarRef?.current?.offsetWidth;
-      return emoticonData.map((emoticon: any) => {
+      return emoticonData.map((emoticon: any, index: any) => {
         const timeInSeconds = convertTimeToSeconds(emoticon.time);
         const positionPercentage =
           timeInSeconds && videoDuration
@@ -565,11 +563,13 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
         const positionPixels = (positionPercentage / 100) * barWidth;
         return (
           <div
+            key={emoticon.id}
+            className="emoticon-hover-effect"
             style={{
               position: 'absolute',
               left: `${(positionPixels / barWidth) * 100}%`,
-              fontSize: '10px',
-              marginTop: '35px',
+              fontSize: '12px',
+              marginTop: '38px',
               zIndex: '99',
             }}
           >
@@ -592,7 +592,10 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
 
   return (
     <>
-      <div className="video-player-container" style={{ position: 'relative' }}>
+      <div
+        className="video-player-container"
+        style={{ position: 'relative', width: '95%' }}
+      >
         {' '}
         <div
           style={{
@@ -601,6 +604,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
             display: 'flex',
             flexDirection: 'column',
             borderRadius: '10px',
+            height: '98%',
           }}
         >
           <div
@@ -635,7 +639,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                   alignItems: 'center',
                 }}
               >
-                <button
+                <div
                   style={{
                     background: 'transparent',
                     border: 'none',
@@ -648,12 +652,12 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                   ) : (
                     <SoundButton width={30} height={30} active={0} />
                   )}
-                </button>
+                </div>
                 <span className="timer">
                   <Timer />
                 </span>{' '}
               </div>
-              <button
+              <div
                 style={{
                   position: 'absolute',
                   left: '50%',
@@ -671,8 +675,8 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                 ) : (
                   <PlayButton width={30} height={30} active={0} />
                 )}
-              </button>
-              <button
+              </div>
+              <div
                 style={{
                   position: 'absolute',
                   right: '0',
@@ -685,7 +689,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                 onClick={handleFullScreen}
               >
                 <FullscreenButton width={30} height={30} active={0} />
-              </button>
+              </div>
             </div>
           </div>{' '}
           <div
@@ -695,7 +699,6 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
               display: 'flex',
               flexDirection: 'column',
               borderRadius: '10px',
-              paddingBottom: '20px',
             }}
           >
             <div className="currentQuestionLabel">
@@ -725,11 +728,11 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                   <p>{tooltipData.question}</p>
                 </div>
               )}
+              {renderEmoticonsOnTimeline} {interviewerCandidateBar}
               <div
                 className="progress-indicator"
                 style={{ left: `${progress}%` }}
               ></div>
-              {renderEmoticonsOnTimeline} {interviewerCandidateBar}
             </div>
           </div>
         </div>

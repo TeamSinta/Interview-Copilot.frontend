@@ -86,8 +86,8 @@ export const StyledDecisionButton = styled.div`
       props.activeValue === 1
         ? '#DBFDDC'
         : props.activeValue === 2
-          ? '#FABBCF'
-          : '#FFFFFF'};
+        ? '#FABBCF'
+        : '#FFFFFF'};
 
     :hover {
       cursor: pointer;
@@ -97,8 +97,8 @@ export const StyledDecisionButton = styled.div`
         props.activeValue === 1
           ? '#B3E2B2'
           : props.activeValue === 2
-            ? '#F49FB4'
-            : '#D3D3D3'};  // Lighter colors on hover
+          ? '#F49FB4'
+          : '#D3D3D3'};  // Lighter colors on hover
     }
 
     :active {

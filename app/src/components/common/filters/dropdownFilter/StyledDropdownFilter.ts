@@ -25,8 +25,8 @@ export const SelectedItemDiv = styled.div`
 
 export const SelectedItemIcon = styled(BodySBold)`
   background: ${(props) => props.theme.colors.pastelPurple};
-  width: 24px;
-  height: 24px;
+  width: 48px;
+  height: 48px;
   display: flex;
   justify-content: center;
   border-radius: 8px;
@@ -145,10 +145,10 @@ export const StatusDropdownEl = styled(DropdownEl)<IStatusDropdownEl>`
     props.bg === StatusDropdownFilter.WAITING
       ? '#FFFABF'
       : props.bg === StatusDropdownFilter.CLOSED
-        ? '#FABBCF'
-        : props.bg === StatusDropdownFilter.ACTIVE
-          ? '#DBFDDC'
-          : '#F6F6FB'};
+      ? '#FABBCF'
+      : props.bg === StatusDropdownFilter.ACTIVE
+      ? '#DBFDDC'
+      : '#F6F6FB'};
 `;
 
 export const OptionLi = styled.li`
@@ -214,9 +214,7 @@ export const OptionUl = styled.ul<IDropdownOpen>`
           overflow-x: hidden;
           overflow-y: auto;
           transform-origin: 0 0;
-          transition:
-            opacity 0.2s ease,
-            visibility 0.2s ease,
+          transition: opacity 0.2s ease, visibility 0.2s ease,
             transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32);
           /* transform: scale(0.8) translate(0, 4px); */
           ${OptionLi} {

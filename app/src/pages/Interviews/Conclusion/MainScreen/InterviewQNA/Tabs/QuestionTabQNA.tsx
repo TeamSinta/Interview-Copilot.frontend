@@ -8,6 +8,10 @@ import {
 } from '@/components/common/svgIcons/CustomIcons';
 import { PredefinedRatingsAndCompetency } from '../RatingComponent';
 import styled from 'styled-components';
+import {
+  BodyMMedium,
+  BodySBold,
+} from '@/components/common/typeScale/StyledTypeScale';
 
 interface QuestionSummarizedAnswers {
   question: string;
@@ -53,6 +57,7 @@ const FlexContainer = styled.div`
 
 const IndexContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const IconContainer = styled.div`
@@ -95,6 +100,15 @@ const AnswerContainer = styled.div`
   padding: 20px;
   width: 100%;
   line-height: 1.5;
+
+  BodyMMedium {
+    white-space: pre-line; /* This will handle line breaks */
+  }
+
+  BodyMMedium:before {
+    content: '• '; /* Bullet point */
+    display: block;
+  }
 `;
 
 export const QuestionMeta: React.FC<QuestionMetaProps> = ({
@@ -134,7 +148,7 @@ export const QuestionTextDisplay: React.FC<QuestionTextDisplayProps> = ({
       <Grid item xs={12} md={12}>
         <IndexContainer>
           <IndexStyle>
-            <span>{index + 1}</span>
+            <BodySBold>{index + 1}</BodySBold>
           </IndexStyle>
           <QuestionCollapsible
             index={index}
@@ -157,6 +171,8 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
   handleClick,
   activeIndex,
 }) => {
+  const lines = answer.split('- ').filter((line) => line.trim() !== '');
+
   return (
     <>
       <InterviewContainerStyle>
@@ -178,9 +194,15 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
       <AnswerContainer
         className={`question-answer ${activeIndex === index ? 'show' : ''}`}
       >
-        {answer}
+        {lines.map((line, index) => (
+          <BodyMMedium
+            key={index}
+            style={{ display: 'block', marginBottom: '0.5em' }}
+          >
+            • {line}
+          </BodyMMedium>
+        ))}
       </AnswerContainer>
-
       <hr style={{ opacity: '0.25' }} />
     </>
   );

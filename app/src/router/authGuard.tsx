@@ -42,37 +42,6 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const [getUser] = useGetUserMutation();
   const [getAccessToken] = useGetAccessTokenMutation();
 
-  const checkAuthentication = async () => {
-    try {
-      // Dispatch the checkUserAuthentication action to check if the user is authenticated
-      await dispatch(checkUserAuthentication());
-
-      // Check the user's authentication status
-      if (!isAuthenticated) {
-        // User is not authenticated, handle it accordingly
-        if (accessToken) {
-          await authenticateUser(accessToken);
-        } else {
-          await handleTokenRefresh();
-        }
-      }
-
-      // Check if user email is missing and fetch it if needed
-      if (!user.email) {
-        await getUser({ access: accessToken });
-      }
-
-      // Set the default workspace if needed
-      setDefaultWorkspace();
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        failedAuthentication();
-      } else {
-        failedAuthentication();
-      }
-    }
-  };
-
   const authenticateUser = async (accessToken: AccessToken) => {
     try {
       const result = await validateToken({ access: accessToken });
