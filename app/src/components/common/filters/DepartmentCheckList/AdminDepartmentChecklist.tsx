@@ -41,7 +41,7 @@ const AdminDepartmentChecklist: React.FC<AdminDepartmentChecklistProps> = ({
         <DepartmentCheckList
           key={department.id}
           label={department.label}
-          select={selectedAssigned.includes(department.id)}
+          isSelected={selectedAssigned.includes(department.id)}
           onClick={() => handleAssignedClick(department.id)}
           onChange={() => {}}
           checked={department.checked}

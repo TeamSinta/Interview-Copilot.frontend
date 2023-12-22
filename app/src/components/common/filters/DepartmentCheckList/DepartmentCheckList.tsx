@@ -9,25 +9,25 @@ import {
 
 interface IDepartmentListProps {
   label: string;
-  select: boolean;
+  isSelected: boolean;
   onClick: () => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked: boolean;
 }
 
 const DepartmentCheckList = (props: IDepartmentListProps) => {
-  const { select, label, onClick, checked } = props;
-  const [selected, setSelected] = useState<boolean>(select);
+  const { isSelected, label, onClick, checked } = props;
+  const [selected, setSelected] = useState<boolean>(isSelected);
   const [check, setCheck] = useState(checked);
 
   useEffect(() => {
-    setSelected(select);
-  }, [select]);
+    setSelected(isSelected);
+  }, [isSelected]);
 
   return (
     <DepartmentListLayout
       onClick={() => {
-        setSelected(selected ? false : true);
+        setSelected(!selected);
         onClick();
       }}
       className={selected ? 'selected' : ''}
@@ -36,7 +36,7 @@ const DepartmentCheckList = (props: IDepartmentListProps) => {
         name="Check Box"
         type="checkbox"
         onChange={(e) => {
-          setCheck(check ? false : true);
+          setCheck(!check);
         }}
         checked={check}
       />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { instance } from '@/utils/axiosService/customAxios';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { TextIconBtnL } from '../../buttons/textIconBtn/TextIconBtn';
 import { BackgroundColor } from '@/features/utils/utilEnum';
@@ -18,12 +19,18 @@ import {
 import DropdownFilter from '../../filters/dropdownFilter/DropdownFilter';
 import { TextBtnS } from '../../buttons/textBtn/TextBtn';
 import { selectSetMember } from '@/features/members/memberSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
+  useGetDepartmentMembersQuery,
   useGetUserDepartmentsMutation,
+  useUpdateDepartmentMutation,
   useUpdateUserMutation,
 } from '@/features/settingsDetail/userSettingsAPI';
-import { RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/app/store';
+import { closeModal } from '@/features/modal/modalSlice';
+import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
+import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 
 interface UserModalProps {
   user: {
@@ -45,38 +52,58 @@ const MemberSettings: React.FC<UserModalProps> = () => {
   const member = useSelector(selectSetMember);
 
   const workspace = useSelector((state: RootState) => state.workspace);
+  const user = useSelector((state: RootState) => state.user.user);
   const [memberDepartments, setMemberDepartments] = useState([]);
   const [getMemberDepartments] = useGetUserDepartmentsMutation();
-  const [, setSelectedDepartment] = useState<string>('');
-  const [updateUserDepartment] = useUpdateUserMutation();
+  const [selectedDepartment, setSelectedDepartment] = useState<string>();
+  // const [updateUserDepartment] = useGetDepartmentMembersQuery();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    getMemberDepartments({ user_id: member.id, company_id: workspace.id }).then(
-      (response) => {
-        if ('data' in response) {
-          console.log('response ====> ', response);
-          console.log('response data ====> ', response.data);
-          const transformedData = response.data?.map(
-            (department: Department) => ({
-              name: department.title,
-              value: department.id.toString(),
-            })
-          );
-          setMemberDepartments(transformedData);
-        }
+    getMemberDepartments({
+      user_id: member.id,
+      company_id: member.id,
+    }).then((response) => {
+      if ('data' in response) {
+        const transformedData = response.data?.map(
+          (department: Department) => ({
+            name: department.title,
+            value: department.id.toString(),
+          })
+        );
+        setMemberDepartments(transformedData);
       }
-    );
+    });
   }, [getMemberDepartments]);
 
-  const handleSave = async (selectedValue: string) => {
-    setSelectedDepartment(selectedValue);
-    try {
-      await updateUserDepartment;
-    } catch (error) {
-      console.log(error);
-    }
+  const companyId: CompanyID = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyID;
+
+  const departments = useFetchCompanyDepartments(companyId as CompanyID);
+
+  const handleSetDepartment = (value: string) => {
+    setSelectedDepartment(value);
+    console.log({ value });
   };
 
+  const handleSave = async () => {
+    const userData = {
+      user_id: member.id,
+      company_id: companyId,
+      department_id: selectedDepartment,
+    };
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+    try {
+      instance.post(
+        `${BACKEND_URL}/company/department/members?department=${selectedDepartment}&inviteeId=${member.id}`,
+        {}
+      );
+      dispatch(closeModal());
+    } catch (error) {
+      console.error('Error updating user department:', error);
+    }
+  };
   return (
     <ModalContentWrap>
       <MemberInformationContainer>
@@ -89,13 +116,10 @@ const MemberSettings: React.FC<UserModalProps> = () => {
         </MemberDetailsContainer>
       </MemberInformationContainer>
       <MemberActionContainer>
-        <DropdownFilter
-          key={workspace.id}
-          label="Departments"
-          value="Select Department"
-          onChange={() => {}}
-          optionArr={memberDepartments}
-          dropdownName="Placeholder"
+        <DepartmentDropDown
+          departments={departments}
+          handleSetDepartment={handleSetDepartment}
+          workspaceId={workspace.id}
         />
 
         {/* Disabled checkbox for now 
@@ -127,7 +151,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
       <ElWrap>
         <TextIconBtnL
           disable={false}
-          onClick={() => handleSave}
+          onClick={() => handleSave()}
           className={BackgroundColor.ACCENT_PURPLE}
           label="Save"
         />

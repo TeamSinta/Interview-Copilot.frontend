@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { MembersList, UserData } from './userSettingsInterface';
-import { CompanyID, DepartmentID, UserID } from './userSettingTypes';
+import { CompanyID, DepartmentID, MemberID, UserID } from './userSettingTypes';
 
 export const userAPI = createApi({
   reducerPath: 'userApi',
@@ -49,7 +49,7 @@ export const userAPI = createApi({
     getCompanyDepartments: builder.mutation<
       void,
       {
-        company_id: CompanyID;
+        company_id?: CompanyID;
       }
     >({
       query: ({ company_id }) => {
@@ -91,6 +91,19 @@ export const userAPI = createApi({
       }),
       invalidatesTags: ['Departments'],
     }),
+    getDepartmentMembers: builder.query<
+      MembersList[],
+      {
+        company_id: CompanyID;
+        department_id: DepartmentID;
+        sort_by: string;
+      }
+    >({
+      query: ({ company_id, department_id }) => ({
+        url: `/company/department/members?department=${department_id}company=${company_id}&department=${department_id}`,
+        method: 'PUT',
+      }),
+    }),
   }),
 });
 
@@ -101,4 +114,5 @@ export const {
   useGetCompanyDepartmentsMutation,
   useGetUserDepartmentsMutation,
   useCreateNewDepartmentMutation,
+  useGetDepartmentMembersQuery,
 } = userAPI;

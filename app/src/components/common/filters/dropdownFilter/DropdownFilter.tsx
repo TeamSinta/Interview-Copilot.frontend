@@ -13,6 +13,7 @@ import {
 } from './StyledDropdownFilter';
 import AdminDepartmentChecklist from '../DepartmentCheckList/AdminDepartmentChecklist';
 import { BodyMMedium } from '../../typeScale/StyledTypeScale';
+import DepartmentCheckList from '../DepartmentCheckList/DepartmentCheckList';
 
 interface IDropdown {
   label?: string;
@@ -88,9 +89,7 @@ const DropdownFilter = memo((props: IDropdown): JSX.Element => {
           <OptionUl open={open}>
             <OptionLi>
               <OptionA>
-                <AdminDepartmentChecklist
-                  onOptionSelect={onAssignedOptionSelect}
-                />
+                <BodyMMedium>-------</BodyMMedium>
               </OptionA>
             </OptionLi>
             {optionsMemo.length > 0 ? (
@@ -101,7 +100,14 @@ const DropdownFilter = memo((props: IDropdown): JSX.Element => {
                       onSelectedItem(item.value, item.name);
                     }}
                   >
-                    <BodyMMedium>{item.name}</BodyMMedium>
+                    <DepartmentCheckList
+                      label={item.name}
+                      isSelected={selectedItemName === item.name}
+                      onClick={() => {}}
+                      onChange={() => {}}
+                      checked={false}
+                    />
+                    {/* <BodyMMedium>{item.name}</BodyMMedium> */}
                   </OptionA>
                 </OptionLi>
               ))
