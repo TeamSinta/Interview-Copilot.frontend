@@ -194,7 +194,6 @@ const DashBoard = () => {
     <>
       <Container
         maxWidth={'lg'}
-        minWidth={'sm'}
         style={{ marginTop: '20px', marginBottom: '20px' }}
       >
         <TopNavBarDash />

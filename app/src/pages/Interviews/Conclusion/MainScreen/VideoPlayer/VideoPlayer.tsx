@@ -399,9 +399,9 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
         ref={questionBarRef}
         className="ques-bar"
       >
-        {questionData?.map((question: any) => (
+        {questionData?.map((question: any, index: any) => (
           <div
-            key={question.id}
+            key={index}
             style={{
               width: '100%',
               margin: '1px',
@@ -414,7 +414,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
         ))}
       </div>
     );
-  }, [questionData, getQuestionWidth]);
+  }, [questionData]);
   const interviewerCandidateBar = useMemo(() => {
     return (
       <>
@@ -477,11 +477,11 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
           })}
         </div> */}
         <div style={{ display: 'flex', margin: '0px' }}>
-          {interviewerData?.map((data: any) => {
+          {interviewerData?.map((data: any, index: any) => {
             return (
               <>
                 <div
-                  key={data.id}
+                  key={index}
                   style={{
                     width: '100%',
                     marginRight: '0px',
@@ -554,7 +554,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
       const videoDuration = convertTimeToSeconds(totalDuration);
       // const timelineWidth = timeline.offsetWidth;
       const barWidth = questionBarRef?.current?.offsetWidth;
-      return emoticonData.map((emoticon: any) => {
+      return emoticonData.map((emoticon: any, index: any) => {
         const timeInSeconds = convertTimeToSeconds(emoticon.time);
         const positionPercentage =
           timeInSeconds && videoDuration
@@ -563,6 +563,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
         const positionPixels = (positionPercentage / 100) * barWidth;
         return (
           <div
+            key={emoticon.id}
             className="emoticon-hover-effect"
             style={{
               position: 'absolute',
@@ -638,7 +639,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                   alignItems: 'center',
                 }}
               >
-                <button
+                <div
                   style={{
                     background: 'transparent',
                     border: 'none',
@@ -651,12 +652,12 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                   ) : (
                     <SoundButton width={30} height={30} active={0} />
                   )}
-                </button>
+                </div>
                 <span className="timer">
                   <Timer />
                 </span>{' '}
               </div>
-              <button
+              <div
                 style={{
                   position: 'absolute',
                   left: '50%',
@@ -674,8 +675,8 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                 ) : (
                   <PlayButton width={30} height={30} active={0} />
                 )}
-              </button>
-              <button
+              </div>
+              <div
                 style={{
                   position: 'absolute',
                   right: '0',
@@ -688,7 +689,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                 onClick={handleFullScreen}
               >
                 <FullscreenButton width={30} height={30} active={0} />
-              </button>
+              </div>
             </div>
           </div>{' '}
           <div

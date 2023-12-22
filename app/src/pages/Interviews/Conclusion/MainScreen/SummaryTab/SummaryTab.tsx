@@ -41,7 +41,7 @@ const SummaryTab = ({ summaryInfo }) => {
   return (
     <StyledSummaryTab>
       <Grid container spacing={1}>
-        <Grid xs={12} md={12}>
+        <Grid item xs={12} md={12}>
           <Stack direction={'row'} spacing={2}>
             <BodyLBold>{summaryInfo.title}</BodyLBold>
             <AIGeneratedImage />
