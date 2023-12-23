@@ -14,7 +14,7 @@ export const SummaryTabQNA: React.FC<any> = ({
   return (
     <div className="interview-qna">
       {data?.map((question: any, index: number) => (
-        <InterviewContainerStyle>
+        <InterviewContainerStyle key={index}>
           <Grid
             container
             spacing={1}
@@ -22,7 +22,7 @@ export const SummaryTabQNA: React.FC<any> = ({
             onClick={() => handleClick(index)}
             style={{ marginLeft: '5px', marginRight: '5px' }}
           >
-            <Grid xs={11} md={11}>
+            <Grid item xs={11} md={11}>
               <div>
                 <div
                   className={`question-heading ${
@@ -42,7 +42,7 @@ export const SummaryTabQNA: React.FC<any> = ({
                 </div>
               </div>
             </Grid>
-            <Grid xs={1} md={1}>
+            <Grid item xs={1} md={1}>
               <div>
                 <i
                   style={{

@@ -1,14 +1,6 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  createContext,
-  useContext,
-  useRef,
-} from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import DailyIframe from '@daily-co/daily-js';
-import { DailyProvider, useDaily } from '@daily-co/daily-react';
-import videoApi from './videoApi';
+import { DailyProvider } from '@daily-co/daily-react';
 import { roomUrlFromPageUrl, pageUrlFromRoomUrl } from './utils';
 import Header from '@/pages/Interview/Daily/Header/Header';
 import HairCheck from '@/pages/Interview/Daily/HairCheck/HairCheck';
@@ -19,10 +11,8 @@ import {
   ApiErrorParagraph,
   ApiErrorLink,
 } from './StyledVideoCall'; // Update the import path
-import TopNavBar from '@/components/layouts/topnavbar/TopNavBar';
 import { Interview } from '@/pages/Interview';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { interviewDetail } from '../../mocks/mockDatas';
+import { useNavigate } from 'react-router-dom';
 
 const STATE = {
   IDLE: 'STATE_IDLE',
@@ -35,13 +25,12 @@ const STATE = {
 };
 
 export default function VideoCall() {
-  const location = useLocation();
   const navigate = useNavigate();
   const [appState, setAppState] = useState(STATE.IDLE);
   const [roomUrl, setRoomUrl] = useState(null);
   const [callObject, setCallObject] = useState(null);
   const [interviewRoundDetails, setInterviewRoundDetails] = useState(null);
-  const [apiError, setApiError] = useState(false);
+  const [apiError] = useState(false);
 
   const startHairCheck = useCallback(async (url) => {
     const existingInstance = DailyIframe.getCallInstance();
@@ -133,7 +122,7 @@ export default function VideoCall() {
             setRoomUrl(null);
             setCallObject(null);
             setAppState(STATE.IDLE);
-            navigate('/interviews/Conclusion', {
+            navigate('/interviews/conclusion', {
               state: { id: interviewRoundId, useTimer: true },
             });
           });

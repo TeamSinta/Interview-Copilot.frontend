@@ -4,7 +4,7 @@
   border-radius: 10px !important;
   overflow: hidden;
   padding: 0px;
-  padding-left: 20px;
+
   justify-content: center !important;
   align-items: center !important;
 }
@@ -215,6 +215,16 @@ video {
   border-radius: 50%;
   transform: translateX(-50%);
   /*  z-index: 999; */
+}
+.emoticon-hover-effect {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  /* Changes cursor to pointer to indicate it's clickable */
+}
+
+.emoticon-hover-effect:hover {
+  transform: scale(2.5);
+  /* Increase size to 150% on hover */
 }
 
 .current-time-dot {

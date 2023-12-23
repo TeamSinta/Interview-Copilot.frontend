@@ -1,37 +1,41 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from "@/app/store";
+import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
+import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
+import { EditIcon, PlusIcon } from "@/components/common/svgIcons/Icons";
+import {
+  H1,
+  BodyLMedium,
+  H2Medium,
+  H2Bold,
+  BodyMMedium,
+} from "@/components/common/typeScale/StyledTypeScale";
+import ElWrap from "@/components/layouts/elWrap/ElWrap";
+import { openModal } from "@/features/modal/modalSlice";
+import { BackgroundColor } from "@/features/utils/utilEnum";
+import { Key, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Stack, Box } from "@mui/material";
+import TemplateHomeCard, {
+  IMember,
+} from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
+import { useState } from "react";
+import { InterviewsBox, TemplateCardsBox } from "../Dashboard/StyledDashboard";
+import { useNavigate } from "react-router-dom";
+import { CreateInterviewBox, DepartmentHeading } from "./StyledTemplates";
+
 import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
 import {
   IconBtnL,
   IconBtnM,
 } from '@/components/common/buttons/iconBtn/IconBtn';
-import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
-import TemplateHomeCard, {
-  IMember,
-} from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
+
 import Loading from '@/components/common/elements/loading/Loading';
 import DropdownFilter from '@/components/common/filters/dropdownFilter/DropdownFilter';
-import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
-import { EditIcon, PlusIcon } from '@/components/common/svgIcons/Icons';
-import {
-  BodyLMedium,
-  BodyMMedium,
-  H1,
-  H2Bold,
-  H2Medium,
-} from '@/components/common/typeScale/StyledTypeScale';
-import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import { openModal } from '@/features/modal/modalSlice';
+
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import { TemplateQuestions } from '@/features/templates/templatesInterface';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
-import { BackgroundColor } from '@/features/utils/utilEnum';
-import { Box, Stack } from '@mui/material';
-import { Key, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { TemplateCardsBox } from '../Dashboard/StyledDashboard';
-import { CreateInterviewBox, DepartmentHeading } from './StyledTemplates';
 
 export interface Template {
   roundId: Key | null | undefined;
@@ -61,8 +65,6 @@ const Templates = () => {
   const companyId: CompanyID = (!workspace.id
     ? user?.companies?.[0]?.id ?? workspace.id
     : workspace.id)! as unknown as CompanyID;
-
-  console.log(user);
 
   const getFilteredTemplateQuestionsLength = (
     templateQuestions: Record<string, TemplateQuestions> | null,
@@ -153,19 +155,16 @@ const Templates = () => {
   };
 
   const templatesByDepartment: { [key: string]: Template[] } =
-    templateData.reduce(
-      (groups, template: Template) => {
-        const department = template.department || 'General';
+    templateData.reduce((groups, template: Template) => {
+      const department = template.department || 'General';
 
-        if (!groups[department]) {
-          groups[department] = [];
-        }
+      if (!groups[department]) {
+        groups[department] = [];
+      }
 
-        groups[department].push(template);
-        return groups;
-      },
-      {} as { [key: string]: Template[] }
-    );
+      groups[department].push(template);
+      return groups;
+    }, {} as { [key: string]: Template[] });
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -255,60 +254,62 @@ const Templates = () => {
                   spacing={1}
                   style={{ paddingLeft: '38px', paddingRight: '38px' }}
                 >
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    style={{ width: '100%' }}
-                  >
+                  <InterviewsBox>
                     <Stack
                       direction="row"
-                      alignItems="center"
                       justifyContent="space-between"
-                      spacing={1}
+                      alignItems="center"
+                      style={{ width: '100%' }}
                     >
-                      <DepartmentHeading>{department}</DepartmentHeading>
-                      <BodyLMedium> · </BodyLMedium>
-                      <BodyLMedium style={{ color: 'grey' }}>
-                        {templates?.length} Roles
-                      </BodyLMedium>
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        spacing={1}
+                      >
+                        <DepartmentHeading>{department}</DepartmentHeading>
+                        <BodyLMedium> · </BodyLMedium>
+                        <BodyLMedium style={{ color: 'grey' }}>
+                          {templates?.length} Roles
+                        </BodyLMedium>
+                      </Stack>
+                      <Box style={{ margin: '8px' }}>
+                        <ElWrap w={32} h={32}>
+                          <IconBtnM
+                            icon={<EditIcon />}
+                            disable={false}
+                            className={BackgroundColor.WHITE}
+                            onClick={() => {}}
+                          />
+                        </ElWrap>
+                      </Box>
                     </Stack>
-                    <Box style={{ margin: '8px' }}>
-                      <ElWrap w={32} h={32}>
-                        <IconBtnM
-                          icon={<EditIcon />}
-                          disable={false}
-                          className={BackgroundColor.WHITE}
-                          onClick={() => {}}
-                        />
-                      </ElWrap>
-                    </Box>
-                  </Stack>
-                  <TemplateCardsBox>
-                    {templates.map(
-                      (
-                        template: Template // Specify the Template type
-                      ) => (
-                        <TemplateHomeCard
-                          key={template.id}
-                          title={template.role_title}
-                          disable={template.disable || false}
-                          questions={getFilteredTemplateQuestionsLength(
-                            templateQuestions,
-                            template.id
-                          )}
-                          sections={getFilteredTemplateTopicsLength(
-                            templateQuestions,
-                            template.id
-                          )}
-                          imageUrl={template.image}
-                          members={template.interviewers || []}
-                          // Include other template information as needed
-                          onClick={() => handleCardClick(template.id)}
-                        />
-                      )
-                    )}
-                  </TemplateCardsBox>
+                    <TemplateCardsBox>
+                      {templates.map(
+                        (
+                          template: Template // Specify the Template type
+                        ) => (
+                          <TemplateHomeCard
+                            key={template.id}
+                            title={template.role_title}
+                            disable={template.disable || false}
+                            questions={getFilteredTemplateQuestionsLength(
+                              templateQuestions,
+                              template.id
+                            )}
+                            sections={getFilteredTemplateTopicsLength(
+                              templateQuestions,
+                              template.id
+                            )}
+                            imageUrl={template.image}
+                            members={template.interviewers || []}
+                            // Include other template information as needed
+                            onClick={() => handleCardClick(template.id)}
+                          />
+                        )
+                      )}
+                    </TemplateCardsBox>
+                  </InterviewsBox>
                 </Stack>
               )
             )}

@@ -68,10 +68,8 @@ const components = {
 };
 
 const Interview = ({ leaveCall, interviewDetails }) => {
-  const title = 'FrontEnd Developer';
   const stage = 'Round 3';
   const stageName = 'Pair-Programming';
-  const commentInputRef = useRef<HTMLInputElement>(null);
   const { user } = useSelector((state: RootState) => state.user);
 
   const [activeTab, setActiveTab] = useState(1);
@@ -87,7 +85,13 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       top: 0,
     },
   });
-  const [startTime, setStartTime] = useState(null);
+
+  const [startTime, setStartTime] = useState<Date | null>(null);
+
+  useEffect(() => {
+    const now = new Date();
+    setStartTime(now);
+  }, []);
   const [isInterviewSideBarCollapsed, setIsInterviewSideBarCollapsed] =
     useState(false);
   const callObject = useDaily();
@@ -113,6 +117,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     setInitTime(getCurrentTime());
     // placeholder dispatch for functionality, sets call as active to allow correct fullscreen rendering in App
     dispatch(startCall(true));
+
     // placeholder dispatch end //
   }, [active_call, dispatch]);
 
@@ -843,6 +848,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       interview_round: interviewDetails.id,
       user: user.id,
       note: notes,
+      time: getEmojiClickTime(),
     };
 
     sendFeedback(data);

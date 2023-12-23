@@ -6,7 +6,7 @@ import {
 
 interface ITextIconFilterProps {
   label: string;
-  icon: JSX.Element;
+  icon: JSX.Element | boolean;
   select: boolean;
   onClick: () => void;
 }

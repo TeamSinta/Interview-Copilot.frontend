@@ -120,11 +120,14 @@ export default function HairCheck({
 
     try {
       const title = newTitle;
+      const candidate_id = 1;
       const meeting_room_id = getRoomNameFromUrl(callObject?.properties.url);
       const response = await createInterviewRound(
         title,
         selectedTemplateId,
-        meeting_room_id
+        cookies.access_token,
+        meeting_room_id,
+        candidate_id
       );
 
       const interviewDetails = {
@@ -133,7 +136,7 @@ export default function HairCheck({
         template_id: response.template_id,
         email: 'support@sintahr.com',
         name: 'Template Details',
-        // candidate_id: candidateId,
+        candidate_id: candidate_id,
       };
 
       setInterviewRoundDetails(interviewDetails).then(() => {

@@ -23,8 +23,8 @@ const TemplateList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { questionBanks, status } = useSelector(selectInterview);
 
-  const onSelectQuestionBank = (template: IQuestionsBanks) => {
-    dispatch(selectQuestionBank(template));
+  const onSelectQuestionBank = (bank: IQuestionsBanks) => {
+    dispatch(selectQuestionBank({ questionBank: bank }));
   };
 
   useEffect(() => {
@@ -46,18 +46,19 @@ const TemplateList = () => {
           <DropdownFilter
             optionArr={[{ name: 'Designer', value: 'Designer' }]}
             dropdownName={'Role'}
+            value={''}
           />
         </div>
       </TemplateListInputWrap>
       <TemplateListContentWrap>
         {status === DataLoading.FULFILLED ? (
-          questionBanks.map((template: IQuestionsBanks) => (
+          questionBanks.map((bank: IQuestionsBanks) => (
             <TemplateInterviewCard
-              {...template}
+              {...bank}
               disable={false}
-              key={template.id}
+              key={bank.id}
               onClick={() => {
-                onSelectQuestionBank(template);
+                onSelectQuestionBank(bank);
               }}
             />
           ))

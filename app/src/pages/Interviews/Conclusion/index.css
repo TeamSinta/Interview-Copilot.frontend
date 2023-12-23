@@ -5,18 +5,61 @@
   border-radius: 10px;
   padding: 10px;
   margin-top: 10px !important;
+  margin-left: 0;
 }
 .bar p,
-.bar div {
+.bar {
   margin-top: 10px !important;
 }
 
+.button-container {
+  background-color: #f6f6fb;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px;
+  width: 95%;
+}
+.content-box {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  margin-top: 10px !important;
+}
+
+.text {
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.bar-container {
+  background-color: #f6f6fb;
+  display: flex;
+  border-radius: 10px;
+  padding: 10px;
+  flex: 1;
+}
+
+.bar-decision {
+  background-color: #f6f6fb;
+  display: flex;
+  border-radius: 10px;
+}
 .column {
   flex: 1;
   background-color: white;
   border-radius: 10px;
-  padding: 16px;
+  padding: 26px;
   margin: 14px 14px !important;
+  display: flex;
+  align-items: center;
+
+  min-width: 200px;
+  max-height: 136px;
 }
 
 .first-column {
@@ -54,7 +97,7 @@
 
 #myProgress::-webkit-progress-value {
   background-color: #6462f1;
-  border-radius: 5px;
+  border-radius: 0px 4px 4px 0px;
 }
 
 #myProgress::-moz-progress-bar {

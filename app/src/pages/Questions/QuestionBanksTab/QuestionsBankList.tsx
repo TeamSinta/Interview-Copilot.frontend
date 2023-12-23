@@ -1,17 +1,8 @@
+import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn';
+
 import {
-  IconBtnL,
-  IconBtnM,
-} from '@/components/common/buttons/iconBtn/IconBtn';
-import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter';
-import TextArea from '@/components/common/form/textArea/TextArea';
-import TextInput from '@/components/common/form/textInput/TextInput';
-import {
-  BinIcon,
-  CheckIcon,
   CloseIcon,
   DocumentIcon,
-  EditIcon,
-  MoveIcon,
   PlusIcon,
   SelectArrowOpenIcon,
   Star1Icon,
@@ -25,28 +16,21 @@ import {
 import { H3 } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
-import {
-  BackgroundColor,
-  StatusDropdownFilter,
-} from '@/features/utils/utilEnum';
-import React, { useEffect, useState } from 'react';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { Stack } from '@mui/material';
 import {
-  InputDiv,
-  InputLabelDiv,
   OnverviewDetailTitle,
   OverviewDetailBody,
-  OverviewDetailEdit,
   OverviewDetailList,
   OverviewDetailTitle,
   OverviewDetails,
 } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
 import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
 import Loading from '@/components/common/elements/loading/Loading';
-import { DropdownFilter } from '@/components/common/filters/dropdownFilter/DropdownFilter.stories';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { openModal } from '@/features/modal/modalSlice';
 import { useDispatch } from 'react-redux';
