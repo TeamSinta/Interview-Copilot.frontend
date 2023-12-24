@@ -92,10 +92,10 @@ export const userAPI = createApi({
       invalidatesTags: ['Departments'],
     }),
     createDepartmentMember: builder.mutation({
-      query: ({ company_id, department_id, user_id }) => ({
+      query: ({ company_id, department_id, user_id, body = {} }) => ({
         url: `/company/department/members?department=${department_id}&company=${company_id}&invitee=${user_id}`,
         method: 'POST',
-        body: {},
+        body: body,
       }),
     }),
   }),

@@ -8,14 +8,16 @@ export const DepartmentListLayout = styled.div`
   align-items: center;
   font-size: 14px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   cursor: pointer;
   transition: 0.3s;
   margin-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 export const LabelDiv = styled(BodyLMedium)`
   font-size: 14px;
-  width: 100%;
+  flex: 1;
   height: 48px;
   padding: 9px 21px;
   display: flex;

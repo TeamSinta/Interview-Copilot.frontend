@@ -1,4 +1,6 @@
 import { SelectArrowOpenIcon } from '@/components/common/svgIcons/Icons';
+import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { IOption } from '@/types/common';
 import { memo, useCallback, useMemo, useState } from 'react';
 import {
   DropdownArrowIconDiv,
@@ -11,18 +13,12 @@ import {
   OptionUl,
   SelectedItemDiv,
 } from './StyledDropdownFilter';
-import { BodyMMedium } from '../../typeScale/StyledTypeScale';
 
 interface IDropdown {
   label?: string;
   optionArr: IOption[];
   dropdownName: string;
   onChange?: (value: string) => void;
-  value: string;
-}
-
-interface IOption {
-  name: string;
   value: string;
 }
 

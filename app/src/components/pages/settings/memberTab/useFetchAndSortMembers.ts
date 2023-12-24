@@ -7,16 +7,8 @@ import {
   useGetCompanyMembersQuery,
 } from '@/features/settingsDetail/userSettingsAPI';
 import { MembersList } from '@/features/settingsDetail/userSettingsInterface';
+import { IOption } from '@/types/common';
 import { useEffect, useState } from 'react';
-
-export type Department = {
-  title: string;
-  id: string;
-};
-type TransformedDepartment = {
-  name: string;
-  value: string;
-};
 
 export const useFetchCompanyMembers = ({
   company_id,
@@ -45,7 +37,7 @@ export const useFetchCompanyMembers = ({
 };
 
 export const useFetchCompanyDepartments = (companyId: CompanyID) => {
-  const [departments, setDepartments] = useState<TransformedDepartment[]>([]);
+  const [departments, setDepartments] = useState<IOption[]>([]);
   const [getCompanyDepartments] = useGetCompanyDepartmentsMutation();
 
   useEffect(() => {
@@ -56,6 +48,7 @@ export const useFetchCompanyDepartments = (companyId: CompanyID) => {
             (department) => ({
               name: department.title,
               value: department.id.toString(),
+              selected: false
             })
           );
           setDepartments(transformedData);
