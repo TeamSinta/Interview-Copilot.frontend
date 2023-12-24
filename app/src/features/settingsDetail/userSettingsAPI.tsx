@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { MembersList, UserData } from './userSettingsInterface';
-import { CompanyID, DepartmentID, MemberID, UserID } from './userSettingTypes';
+import { IDepartment, MembersList, UserData } from './userSettingsInterface';
+import { CompanyID, DepartmentID, UserID } from './userSettingTypes';
 
 export const userAPI = createApi({
   reducerPath: 'userApi',
@@ -47,7 +47,7 @@ export const userAPI = createApi({
       }),
     }),
     getCompanyDepartments: builder.mutation<
-      void,
+      IDepartment[],
       {
         company_id?: CompanyID;
       }
@@ -91,14 +91,7 @@ export const userAPI = createApi({
       }),
       invalidatesTags: ['Departments'],
     }),
-    createDepartmentMember: builder.mutation<
-      void,
-      {
-        company_id: CompanyID;
-        department_id: DepartmentID;
-        user_id: MemberID;
-      }
-    >({
+    createDepartmentMember: builder.mutation({
       query: ({ company_id, department_id, user_id }) => ({
         url: `/company/department/members?department=${department_id}&company=${company_id}&invitee=${user_id}`,
         method: 'POST',

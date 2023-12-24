@@ -1,12 +1,15 @@
+import { AppDispatch, RootState } from '@/app/store';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import { selectSetMember } from '@/features/members/memberSlice';
+import { closeModal } from '@/features/modal/modalSlice';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import {
   useCreateDepartmentMemberMutation,
   useGetUserDepartmentsMutation,
 } from '@/features/settingsDetail/userSettingsAPI';
+import { IDepartment } from '@/features/settingsDetail/userSettingsInterface';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,8 +28,6 @@ import {
   MemberInformationContainer,
   ProfilePicture,
 } from './StyledMemberSettings';
-import { AppDispatch, RootState } from '@/app/store';
-import { closeModal } from '@/features/modal/modalSlice';
 
 interface UserModalProps {
   user: {
@@ -39,20 +40,16 @@ interface UserModalProps {
   onClose: () => void;
 }
 
-type Department = {
-  title: string;
-  id: string;
-};
 
 const MemberSettings: React.FC<UserModalProps> = () => {
   const member = useSelector(selectSetMember);
 
   const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user.user);
-  const [memberDepartments, setMemberDepartments] = useState([]);
+  const [, setMemberDepartments] = useState<IDepartment[]>([]);
   const [getMemberDepartments] = useGetUserDepartmentsMutation();
   const [selectedDepartment, setSelectedDepartment] = useState<string>();
-  const [createDepartmentMember] = useCreateDepartmentMemberMutation();
+  const [createDepartmentMember, { isSuccess, data}] = useCreateDepartmentMemberMutation();
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -61,16 +58,16 @@ const MemberSettings: React.FC<UserModalProps> = () => {
       company_id: member.id,
     }).then((response) => {
       if ('data' in response) {
-        const transformedData = response.data?.map(
-          (department: Department) => ({
-            name: department.title,
-            value: department.id.toString(),
-          })
-        );
-        setMemberDepartments(transformedData);
+        // const transformedData = (response.data)?.map(
+        //   (department) => ({
+        //     name: department.title,
+        //     value: department.id.toString(),
+        //   })
+        // );
+        setMemberDepartments(response.data as unknown as IDepartment[]);
       }
     });
-  }, [getMemberDepartments]);
+  }, [getMemberDepartments, member]);
 
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
@@ -80,7 +77,6 @@ const MemberSettings: React.FC<UserModalProps> = () => {
 
   const handleSetDepartment = (value: string) => {
     setSelectedDepartment(value);
-    console.log({ value });
   };
 
   const handleSave = async () => {
@@ -89,16 +85,15 @@ const MemberSettings: React.FC<UserModalProps> = () => {
       company_id: companyId,
       department_id: selectedDepartment,
     };
-    try {
-      const reponse = await createDepartmentMember(userData);
-      console.log('reponse', reponse);
-      if (reponse?.data) {
-        dispatch(closeModal());
-      }
-    } catch (error) {
-      console.log(error);
-    }
+      createDepartmentMember(userData);
   };
+
+  useEffect(()=>{
+    if(isSuccess && data){
+      dispatch(closeModal());
+    }
+
+  },[isSuccess, data, dispatch])
   return (
     <ModalContentWrap>
       <MemberInformationContainer>
@@ -146,7 +141,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
       <ElWrap>
         <TextIconBtnL
           disable={false}
-          onClick={() => handleSave()}
+          onClick={handleSave}
           className={BackgroundColor.ACCENT_PURPLE}
           label="Save"
         />
