@@ -11,9 +11,11 @@ import {
   OptionUl,
   SelectedItemDiv,
 } from './StyledDropdownFilter';
-import AdminDepartmentChecklist from '../DepartmentCheckList/AdminDepartmentChecklist';
 import { BodyMMedium } from '../../typeScale/StyledTypeScale';
-import DepartmentCheckList from '../DepartmentCheckList/DepartmentCheckList';
+import {
+  DepartmentListLayout,
+  LabelDiv,
+} from '../DepartmentCheckList/StyledDepartmentCheckList';
 
 interface IDropdown {
   label?: string;
@@ -59,65 +61,58 @@ const DropdownFilter = memo((props: IDropdown): JSX.Element => {
   }, []);
 
   return (
-    <>
-      <DropdownLayout>
-        {label ? <DropdownLabel>{label}</DropdownLabel> : <></>}
-        <DropdownWrap
-          onMouseEnter={() => {
-            open ? setShadow(false) : setShadow(true);
-          }}
-          onMouseLeave={() => {
-            setShadow(false);
-          }}
-          className={shadow ? 'hover' : ''}
-          onClick={() => {
-            setShadow(false);
-          }}
-        >
-          <DropdownEl onClick={onSelectOpen} open={open}>
-            <SelectedItemDiv>
-              <BodyMMedium>
-                {selectedItem[dropdownName] === ''
-                  ? dropdownName
-                  : selectedItemName}
-              </BodyMMedium>
-              <DropdownArrowIconDiv onClick={onSelectOpen} open={open}>
-                <SelectArrowOpenIcon />
-              </DropdownArrowIconDiv>
-            </SelectedItemDiv>
-          </DropdownEl>
-          <OptionUl open={open}>
-            <OptionLi>
-              <OptionA>
-                <BodyMMedium>-------</BodyMMedium>
-              </OptionA>
-            </OptionLi>
-            {optionsMemo.length > 0 ? (
-              optionsMemo.map((item, index) => (
-                <OptionLi key={index}>
-                  <OptionA
-                    onClick={() => {
-                      onSelectedItem(item.value, item.name);
-                    }}
-                  >
-                    <DepartmentCheckList
-                      label={item.name}
-                      isSelected={selectedItemName === item.name}
-                      onClick={() => {}}
-                      onChange={() => {}}
-                      checked={false}
-                    />
-                    {/* <BodyMMedium>{item.name}</BodyMMedium> */}
-                  </OptionA>
-                </OptionLi>
-              ))
-            ) : (
-              <></>
-            )}
-          </OptionUl>
-        </DropdownWrap>
-      </DropdownLayout>
-    </>
+    <DropdownLayout>
+      {label ? <DropdownLabel>{label}</DropdownLabel> : <></>}
+      <DropdownWrap
+        onMouseEnter={() => {
+          setShadow(!open);
+        }}
+        onMouseLeave={() => {
+          setShadow(false);
+        }}
+        className={shadow ? 'hover' : ''}
+        onClick={() => {
+          setShadow(false);
+        }}
+      >
+        <DropdownEl onClick={onSelectOpen} open={open}>
+          <SelectedItemDiv>
+            <BodyMMedium>
+              {selectedItem[dropdownName] === ''
+                ? dropdownName
+                : selectedItemName}
+            </BodyMMedium>
+            <DropdownArrowIconDiv onClick={onSelectOpen} open={open}>
+              <SelectArrowOpenIcon />
+            </DropdownArrowIconDiv>
+          </SelectedItemDiv>
+        </DropdownEl>
+        <OptionUl open={open}>
+          <OptionLi>
+            <OptionA>
+              <LabelDiv>-------</LabelDiv>
+            </OptionA>
+          </OptionLi>
+          {optionsMemo.length > 0 ? (
+            optionsMemo.map((item, index) => (
+              <OptionLi key={index}>
+                <OptionA
+                  onClick={() => {
+                    onSelectedItem(item.value, item.name);
+                  }}
+                >
+                  <DepartmentListLayout>
+                    <LabelDiv>{item.name}</LabelDiv>
+                  </DepartmentListLayout>
+                </OptionA>
+              </OptionLi>
+            ))
+          ) : (
+            <></>
+          )}
+        </OptionUl>
+      </DropdownWrap>
+    </DropdownLayout>
   );
 });
 

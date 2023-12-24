@@ -15,7 +15,7 @@ export const DepartmentListLayout = styled.div`
 `;
 export const LabelDiv = styled(BodyLMedium)`
   font-size: 14px;
-  width: 80%;
+  width: 100%;
   height: 48px;
   padding: 9px 21px;
   display: flex;

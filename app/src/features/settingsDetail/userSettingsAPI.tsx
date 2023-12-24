@@ -91,17 +91,18 @@ export const userAPI = createApi({
       }),
       invalidatesTags: ['Departments'],
     }),
-    getDepartmentMembers: builder.query<
-      MembersList[],
+    createDepartmentMember: builder.mutation<
+      void,
       {
         company_id: CompanyID;
         department_id: DepartmentID;
-        sort_by: string;
+        user_id: MemberID;
       }
     >({
-      query: ({ company_id, department_id }) => ({
-        url: `/company/department/members?department=${department_id}company=${company_id}&department=${department_id}`,
-        method: 'PUT',
+      query: ({ company_id, department_id, user_id }) => ({
+        url: `/company/department/members?department=${department_id}&company=${company_id}&invitee=${user_id}`,
+        method: 'POST',
+        body: {},
       }),
     }),
   }),
@@ -114,5 +115,5 @@ export const {
   useGetCompanyDepartmentsMutation,
   useGetUserDepartmentsMutation,
   useCreateNewDepartmentMutation,
-  useGetDepartmentMembersQuery,
+  useCreateDepartmentMemberMutation,
 } = userAPI;

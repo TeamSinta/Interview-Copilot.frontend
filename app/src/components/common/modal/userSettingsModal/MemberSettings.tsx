@@ -1,36 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { instance } from '@/utils/axiosService/customAxios';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import { TextIconBtnL } from '../../buttons/textIconBtn/TextIconBtn';
-import { BackgroundColor } from '@/features/utils/utilEnum';
+import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
+import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
+import { selectSetMember } from '@/features/members/memberSlice';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import {
-  DeleteBox,
-  MemberDetailsContainer,
-  MemberActionContainer,
-  MemberInformationContainer,
-  ProfilePicture,
-} from './StyledMemberSettings';
-import { ModalContentWrap } from '../modalContents/StyledModalContents';
+  useCreateDepartmentMemberMutation,
+  useGetUserDepartmentsMutation,
+} from '@/features/settingsDetail/userSettingsAPI';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { TextBtnS } from '../../buttons/textBtn/TextBtn';
+import { TextIconBtnL } from '../../buttons/textIconBtn/TextIconBtn';
 import {
   BodyLMedium,
   BodyMMedium,
   H3Bold,
 } from '../../typeScale/StyledTypeScale';
-import DropdownFilter from '../../filters/dropdownFilter/DropdownFilter';
-import { TextBtnS } from '../../buttons/textBtn/TextBtn';
-import { selectSetMember } from '@/features/members/memberSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { ModalContentWrap } from '../modalContents/StyledModalContents';
 import {
-  useGetDepartmentMembersQuery,
-  useGetUserDepartmentsMutation,
-  useUpdateDepartmentMutation,
-  useUpdateUserMutation,
-} from '@/features/settingsDetail/userSettingsAPI';
+  DeleteBox,
+  MemberActionContainer,
+  MemberDetailsContainer,
+  MemberInformationContainer,
+  ProfilePicture,
+} from './StyledMemberSettings';
 import { AppDispatch, RootState } from '@/app/store';
 import { closeModal } from '@/features/modal/modalSlice';
-import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
-import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 
 interface UserModalProps {
   user: {
@@ -56,7 +52,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
   const [memberDepartments, setMemberDepartments] = useState([]);
   const [getMemberDepartments] = useGetUserDepartmentsMutation();
   const [selectedDepartment, setSelectedDepartment] = useState<string>();
-  // const [updateUserDepartment] = useGetDepartmentMembersQuery();
+  const [createDepartmentMember] = useCreateDepartmentMemberMutation();
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -93,15 +89,14 @@ const MemberSettings: React.FC<UserModalProps> = () => {
       company_id: companyId,
       department_id: selectedDepartment,
     };
-    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
     try {
-      instance.post(
-        `${BACKEND_URL}/company/department/members?department=${selectedDepartment}&inviteeId=${member.id}`,
-        {}
-      );
-      dispatch(closeModal());
+      const reponse = await createDepartmentMember(userData);
+      console.log('reponse', reponse);
+      if (reponse?.data) {
+        dispatch(closeModal());
+      }
     } catch (error) {
-      console.error('Error updating user department:', error);
+      console.log(error);
     }
   };
   return (
