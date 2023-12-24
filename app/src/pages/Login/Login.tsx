@@ -21,6 +21,10 @@ import LogoImage from 'src/assets/images/SintaLogo.png';
 import { Link } from 'react-router-dom';
 
 const LoginScreen = () => {
+
+  useEffect(() => {
+    console.log("Hello");
+  },[])
   return (
     <>
       <Stack
