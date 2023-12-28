@@ -5,7 +5,7 @@ import Container from './components/layouts/container/Container';
 import Routers from './router/Routers';
 import { useSelector } from 'react-redux';
 import { RootState } from './app/store';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import ConclusionContainer from './components/layouts/container/conclusionContainer/ConclusionContainer';
 import { ConclusionStyledMain } from './components/layouts/container/conclusionContainer/StyledConclusionContianer';
 
@@ -17,6 +17,10 @@ function App() {
   const isConclusionRoute =
     location.pathname === '/interviews/conclusion/' ||
     location.pathname === '/dashboard';
+
+  if (isAuthenticated && location.pathname === '/login') {
+    return <Navigate to="/dashboard" />;
+  }
 
   if (isVideoCallRoute) {
     return <Routers />;
