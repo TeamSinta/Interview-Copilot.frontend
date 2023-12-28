@@ -19,6 +19,7 @@ import { Stack } from '@mui/material';
 import LoginPageImage from 'src/assets/svg/LogInPageIllustration.svg';
 import LogoImage from 'src/assets/images/SintaLogo.png';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const LoginScreen = () => {
 
