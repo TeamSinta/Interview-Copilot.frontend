@@ -65,6 +65,7 @@ export const DropdownLayout = styled.div`
   position: relative;
   gap: 8px;
   width: 100%;
+  cursor: pointer;
   :hover {
     border-radius: 12px;
   }
