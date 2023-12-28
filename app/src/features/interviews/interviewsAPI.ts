@@ -10,6 +10,7 @@ type FeedbackData = {
   reaction?: number;
   note?: string;
   time: string;
+  template_question: string;
 };
 
 export const getQuestionsBank = async () => {
