@@ -10,8 +10,6 @@ const ConclusionData = (interviewRoundId: string) => {
   const [emojisData, setEmojisData] = useState([]);
   const [error, setError] = useState(null);
 
-  // TODO: Swap out '1' with the interview ID.
-
   const TranscriptAPI = `${
     import.meta.env.VITE_BACKEND_URL
   }/transcription/get_transcripts_for_questions/${interviewRoundId}/`;

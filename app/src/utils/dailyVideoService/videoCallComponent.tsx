@@ -122,7 +122,7 @@ export default function VideoCall() {
             setRoomUrl(null);
             setCallObject(null);
             setAppState(STATE.IDLE);
-            navigate('/interviews/conclusion', {
+            navigate('/interviews/conclusion/', {
               state: { id: interviewRoundId, useTimer: true },
             });
           });

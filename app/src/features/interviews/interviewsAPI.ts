@@ -215,3 +215,18 @@ export const getInterviewRoundQuestion = async (
   );
   return result.data;
 };
+
+export const getInterviewRoundFeedback = async (
+  interview_round_id: string,
+  token: string
+) => {
+  const result = await instance.get(
+    `${BACKEND_URL}/question_response/interviewer-feedback/${interview_round_id}/`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return result.data;
+};
