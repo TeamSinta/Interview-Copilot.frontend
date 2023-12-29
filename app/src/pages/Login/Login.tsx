@@ -22,9 +22,6 @@ import { Link } from 'react-router-dom';
 
 const LoginScreen = () => {
 
-  useEffect(() => {
-    console.log("Hello");
-  },[])
   return (
     <>
       <Stack
