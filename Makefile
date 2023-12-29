@@ -3,7 +3,7 @@
 
 .PHONY: build
 build:
-		docker compose build
+		sudo docker compose build
 
 .PHONY: install
 install:
@@ -38,7 +38,7 @@ run:
 
 .PHONY: run-dev
 run-dev:
-	docker compose -f docker-compose-dev.yaml up
+	sudo docker compose -f docker-compose-dev.yaml up
 
 .PHONY: run-staging
 run-staging:

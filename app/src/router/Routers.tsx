@@ -6,6 +6,7 @@ import NotFound from '@/pages/NotFound';
 import { Route, Routes } from 'react-router-dom';
 import LoginScreen from '@/pages/Login/Login';
 
+<<<<<<< Updated upstream
 import Conclusions from '@/pages/Interviews/InterviewsHome';
 import VideoCallComponent from '@/utils/dailyVideoService/videoCallComponent';
 import Settings from '@/pages/Settings/Settings';
@@ -16,12 +17,27 @@ import SignUpScreen from '@/pages/SignUp/SignUp';
 import CheckType from './CheckType';
 import { AuthGuard } from './authGuard';
 import EndCallScreen from '@/pages/Interview/Daily/Call/EndCallScreenExternal';
+=======
+import Conclusions from "@/pages/Interviews/InterviewsHome";
+import VideoCallComponent from "@/utils/dailyVideoService/videoCallComponent";
+import Settings from "@/pages/Settings/Settings";
+import { ProtectedRoutes } from "./authenticated/privateRoutes";
+import Questions from "@/pages/Questions/Questions";
+import QuestionBankStage from "@/pages/Questions/QuestionBanksTab/QuestionBankStage";
+import SignUpScreen from "@/pages/SignUp/SignUp";
+import CheckType from "./CheckType";
+import EndCallScreen from "@/pages/Interview/Daily/Call/EndCallScreenExternal";
+import { PublicRoutes } from "./publiclayout/publicRoutes";
+>>>>>>> Stashed changes
 
 const Routers = () => {
   return (
     <Routes>
-      <Route path="/login" element={<LoginScreen />} />
-      <Route path="/sign-up" element={<SignUpScreen />} />
+      <Route path="" element={<PublicRoutes />}>
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/sign-up" element={<SignUpScreen />} />
+      </Route>
+
       <Route path="/video-call" element={<CheckType />} />
       <Route path="end-call-screen" element={<EndCallScreen />} />
 
