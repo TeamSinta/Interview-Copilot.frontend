@@ -137,7 +137,8 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     const fetchQuestionsAndTopics = async () => {
       // get the template questions
       const response = await getTemplateQuestionsAndTopics(
-        interviewDetails.template_id
+        interviewDetails.template_id,
+        cookies.access_token
       );
       setTemplateQuestionsAndTopics(response);
     };
@@ -345,6 +346,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     const [activeQuestionInfo, setActiveQuestionInfo] = useState<any>('');
     const [activeNumber, setActiveNumber] = useState<any>('');
     const [collapseQuestion, setCollapseQuestion] = useState(false);
+    const [questionRatings, setQuestionRatings] = useState({});
     const [prevNum, setPrevNum] = useState(0);
     const [nextNum, setNextNum] = useState(2);
     const [inputValue] = useState<IState>({
@@ -364,7 +366,12 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     };
     const handleRating = (rating: number, question: string) => {
       // update interview round question rating to new rating
-      updateInterviewQuestionRating(rating, question, interviewDetails.id);
+      setQuestionRatings((prevRatings) => ({
+        ...prevRatings,
+        [question.id]: rating,
+      }));
+
+      updateInterviewQuestionRating(rating, question.id, interviewDetails.id);
     };
 
     useEffect(() => {
@@ -373,6 +380,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
 
     useEffect(() => {}, [activeQuestionInfo]);
 
+    console.log(activeQuestionInfo);
     function resetList() {
       setCollapseQuestion(false);
     }
@@ -596,9 +604,14 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                           <RatingComponentL
                             interviewRoundId={interviewDetails.id}
                             question={activeQuestionInfo?.question}
+                            initialActiveTab={activeQuestionInfo?.rating}
                             id={activeQuestionInfo?.id}
-                            setRating={handleRating}
-                            rating={activeQuestionInfo?.rating}
+                            onUpdateRating={(rating: number) =>
+                              handleRating(rating, activeQuestionInfo)
+                            }
+                            rating={
+                              questionRatings[activeQuestionInfo.id] || null
+                            }
                             width={40}
                             height={40}
                           />{' '}

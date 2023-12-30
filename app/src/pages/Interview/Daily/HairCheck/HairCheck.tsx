@@ -233,6 +233,27 @@ export default function HairCheck({
     </MenuItem>
   ));
 
+
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{
+              paddingTop: '40px',
+              color: 'gray',
+              textAlign: 'center',
+            }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return getUserMediaError ? (
     <UserMediaError />
   ) : (
@@ -295,11 +316,11 @@ export default function HairCheck({
                   name="title"
                   disable={false}
                   placeholder={`Enter your Interview title here!`}
-                  error={false}
                   value={newTitle}
                   onChange={(e) => {
                     setTitle(e.target.value);
                   }}
+                  validate={validateTitle}
                 />
               </ElWrap>
             </div>
