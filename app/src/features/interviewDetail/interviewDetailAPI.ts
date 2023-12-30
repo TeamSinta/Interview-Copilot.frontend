@@ -6,47 +6,32 @@
 //   );
 // };
 
-import { instance } from '@/utils/axiosService/customAxios';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 /*  TODO: Update APIS with interface stastify TS */
 
-export const getInterviewTemplate = async (templateId: string) => {
-  const response = await instance.get(
-    `${BACKEND_URL}/templates/templates/${templateId}/`
-  );
-  return response.data;
-};
+export const InterviewDetailAPI = createApi({
+  baseQuery: fetchBaseQuery({ baseUrl: BACKEND_URL }),
+  endpoints: (builder) => ({
+    getInterviewTemplate: builder.query({
+      query: (templateId) => `templates/templates/${templateId}/`,
+    }),
+    getInterviewSections: builder.query({
+      query: (templateId) => `templates/topics/?templateId=${templateId}`,
+    }),
+    getInterviewDetail: builder.query({
+      query: (templateId) =>
+        `templates/template_questions/?templateId=${templateId}`,
+    }),
+  }),
+});
 
-export const getInterviewSections = async (templateId: string) => {
-  try {
-    const response = await instance.get(`${BACKEND_URL}/templates/topics/`);
-    const topics = response.data;
-    const filteredTopics = topics.filter(
-      (topic) => topic.template_id.toString() === templateId
-    );
+export const {
+  useGetInterviewTemplateQuery,
+  useGetInterviewSectionsQuery,
+  useGetInterviewDetailQuery,
+} = InterviewDetailAPI;
 
-    return filteredTopics;
-  } catch (error) {
-    // Handle errors as needed
-    throw error;
-  }
-};
-
-export const getInterviewDetail = async (templateId: string) => {
-  try {
-    const response = await instance.get(
-      `${BACKEND_URL}/templates/template_questions/`
-    );
-    const questions = response.data;
-    const filteredQuestions = questions.filter(
-      (question) => question.template_id.toString() === templateId
-    );
-
-    return filteredQuestions;
-  } catch (error) {
-    // Handle errors as needed
-    throw error;
-  }
-};
+export default InterviewDetailAPI;

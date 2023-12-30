@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { DataLoading } from '../utils/utilEnum';
 import { RootState } from '@/app/store';
-import { getQuestionsBank } from './interviewsAPI';
+import { interviewsApi } from './interviewsAPI';
 import { IQuestion } from './interviewsInterface';
+import { string } from 'prop-types';
 
 export const initialState = {
   round: {
@@ -31,10 +32,13 @@ export const initialState = {
 };
 
 export const getQuestionsBanksAsync = createAsyncThunk(
-  'interviews/templates',
+  'interviews/getQuestionsBanks',
   async () => {
-    const response = await getQuestionsBank();
-    return response; // Adjust the response data
+    const response = await interviewsApi.useGetQuestionsBankQuery({
+      template_id: string,
+      token: string,
+    });
+    return response.data; // Adjust the response data
   }
 );
 
@@ -55,7 +59,7 @@ export const interviewsSlice = createSlice({
     selectQuestionBank: (state, actions) => {
       const { questionBank } = actions.payload;
       state.selectedQuestionBank = questionBank;
-      console.log(questionBank)
+      console.log(questionBank);
       state.questions = questionBank.questions;
     },
     setSelectedQuestion: (state, actions) => {

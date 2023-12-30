@@ -3,11 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // import { InterviewDetailResponse } from "./inverviewDetailInterface";
 import { RootState } from '@/app/store';
 import { DataLoading } from '../utils/utilEnum';
-import {
-  getInterviewTemplate,
-  getInterviewSections,
-  getInterviewDetail,
-} from './interviewDetailAPI';
+import { InterviewDetailAPI } from '../interviewDetail/interviewDetailAPI';
 
 export const initialState = {
   template: {
@@ -26,9 +22,12 @@ export const initialState = {
 export const getInterviewDetailAsync = createAsyncThunk(
   'interviews/interviewDetail',
   async (templateId: string) => {
-    const template = await getInterviewTemplate(templateId);
-    const sections = await getInterviewSections(templateId);
-    const questions = await getInterviewDetail(templateId);
+    const { data: template } =
+      await InterviewDetailAPI.useGetInterviewTemplateQuery(templateId);
+    const { data: sections } =
+      await InterviewDetailAPI.useGetInterviewSectionsQuery(templateId);
+    const { data: questions } =
+      await InterviewDetailAPI.useGetInterviewDetailQuery(templateId);
 
     return { template, sections, questions };
   }
