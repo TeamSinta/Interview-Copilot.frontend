@@ -5,7 +5,8 @@ import {
   IInviteMember,
   IInviteMemberCreateSlice,
 } from './inviteMemberInterface';
-import { postInviteMember } from './inviteMemberAPI';
+// import { postInviteMember } from './inviteMemberAPI';
+import {usePostInviteMemberMutation} from "@/features/inviteMember/inviteMemberAPI"
 
 export const initialState: IInviteMemberCreateSlice = {
   invited_member: {
@@ -22,13 +23,16 @@ export const initialState: IInviteMemberCreateSlice = {
   status: DataLoading.UNSEND,
 };
 
-export const postInviteMemberAsync = createAsyncThunk(
-  'inviteMember/postInviteMember',
-  async (inviteMember: IInviteMember) => {
-    const response = await postInviteMember(inviteMember);
-    return response;
+export const postInviteMemberAsync = (inviteMember) => async (dispatch) => {
+  try {
+    const postInviteMemberMutation = usePostInviteMemberMutation();
+    const { data } = await postInviteMemberMutation(inviteMember).unwrap();
+    return data;
+  } catch (error) {
+    console.error('Error occurred while inviting member:', error);
+    throw error;
   }
-);
+};
 //[Where]: How
 export const inviteMemberSlice = createSlice({
   name: 'inviteMember',
