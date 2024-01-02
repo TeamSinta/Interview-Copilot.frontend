@@ -41,7 +41,7 @@ import {
 } from '@/components/common/typeScale/StyledTypeScale';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../app/store';
-import { createInterviewRound } from '../../../../features/interviews/interviewsAPI';
+import { useCreateInterviewRoundMutation } from '../../../../features/interviews/interviewsAPI';
 import { IMember } from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 import DropUpBtn from '@/components/common/dropUpBtn/dropUpBtn';
@@ -122,13 +122,13 @@ export default function HairCheck({
       const title = newTitle;
       const candidate_id = 1;
       const meeting_room_id = getRoomNameFromUrl(callObject?.properties.url);
-      const response = await createInterviewRound(
+      const data= {
         title,
         selectedTemplateId,
-        cookies.access_token,
         meeting_room_id,
         candidate_id
-      );
+      }
+      const response = await useCreateInterviewRoundMutation(data);
 
       const interviewDetails = {
         id: response.id,

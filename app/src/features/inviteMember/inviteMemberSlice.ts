@@ -6,7 +6,6 @@ import {
   IInviteMemberCreateSlice,
 } from './inviteMemberInterface';
 // import { postInviteMember } from './inviteMemberAPI';
-import {usePostInviteMemberMutation} from "@/features/inviteMember/inviteMemberAPI"
 
 export const initialState: IInviteMemberCreateSlice = {
   invited_member: {
@@ -23,30 +22,33 @@ export const initialState: IInviteMemberCreateSlice = {
   status: DataLoading.UNSEND,
 };
 
-export const postInviteMemberAsync = (inviteMember) => async (dispatch) => {
-  try {
-    const postInviteMemberMutation = usePostInviteMemberMutation();
-    const { data } = await postInviteMemberMutation(inviteMember).unwrap();
-    return data;
-  } catch (error) {
-    console.error('Error occurred while inviting member:', error);
-    throw error;
-  }
-};
+// export const postInviteMemberAsync = createAsyncThunk(
+//   'inviteMember/postInviteMember',
+//   async (inviteMember) => {
+//     try {
+//       const postInviteMemberMutation = usePostInviteMemberMutation();
+//       const { data } = await postInviteMemberMutation(inviteMember).unwrap();
+//       return data;
+//     } catch (error) {
+//       console.error('Error occurred while inviting member:', error);
+//       throw error;
+//     }
+//   }
+// );
 //[Where]: How
 export const inviteMemberSlice = createSlice({
   name: 'inviteMember',
   initialState,
-  extraReducers: (builder) => {
-    builder.addCase(postInviteMemberAsync.pending, (state) => {
-      state.status = DataLoading.PENDING;
-    });
-    builder.addCase(postInviteMemberAsync.fulfilled, (state, action) => {
-      // Object.assign(state.invite_member, initialState.invite_member);
-      state.invited_member = { ...action.payload, selected: false };
-      state.status = DataLoading.FULFILLED;
-    });
-  },
+  // extraReducers: (builder) => {
+  //   builder.addCase(postInviteMemberAsync.pending, (state) => {
+  //     state.status = DataLoading.PENDING;
+  //   });
+  //   builder.addCase(postInviteMemberAsync.fulfilled, (state, action) => {
+  //     // Object.assign(state.invite_member, initialState.invite_member);
+  //     state.invited_member = { ...action.payload, selected: false };
+  //     state.status = DataLoading.FULFILLED;
+  //   });
+  // },
   reducers: {
     // [Invite] : checked invite member as admin
     setInviteAsAdmin: (state, actions) => {

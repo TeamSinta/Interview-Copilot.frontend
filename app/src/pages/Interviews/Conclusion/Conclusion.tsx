@@ -15,7 +15,7 @@ import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom'; // <-- Import useNavigate
 import SummarizerLoader from '@/components/common/elements/longLoading/LongLoading.js';
 import { Divider, Grid, Stack } from '@mui/material';
-import { getInterview } from '@/features/interviews/interviewsAPI.js';
+import { useGetInterviewQuery } from '@/features/interviews/interviewsAPI.js';
 import { useCookies } from 'react-cookie';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn.js';
 import { BackgroundColor } from '@/features/utils/utilEnum.js';
@@ -68,7 +68,8 @@ const Conclusion: React.FC = () => {
     // Set a timeout to hide the loader after 2 minutes
 
     const fetchRatings = async () => {
-      const interviewRound = await getInterview(
+      const interviewRound = await 
+      useGetInterviewQuery(
         location.state.id,
         cookies.access_token
       );

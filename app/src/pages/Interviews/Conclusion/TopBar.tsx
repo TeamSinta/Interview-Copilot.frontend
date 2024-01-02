@@ -3,9 +3,9 @@ import { Grid, Stack } from "@mui/material";
 import "./index.css";
 import { TOP_BAR_INFO } from "./Constants";
 import {
-  getInterviewRoundQuestions,
-  getInterview,
-  getTemplate,
+  useGetInterviewRoundQuestionsQuery,
+  useGetInterviewQuery,
+  useGetTemplateQuery,
 } from '../../../features/interviews/interviewsAPI';
 import { useCookies } from "react-cookie";
 
@@ -30,13 +30,13 @@ const TopBar = ({ interviewRoundId }) => {
   useEffect(() => {
     const fetchRatings = async () => {
       setIsLoading(true);
-      const questions = await getInterviewRoundQuestions(interviewRoundId);
+      const questions = await useGetInterviewRoundQuestionsQuery(interviewRoundId);
 
-      const interviewRound = await getInterview(
+      const interviewRound = await useGetInterviewQuery(
         interviewRoundId,
         cookies.access_token
       );
-      const template = await getTemplate(
+      const template = await useGetTemplateQuery(
         interviewRound.template_id,
         cookies.access_token
       );

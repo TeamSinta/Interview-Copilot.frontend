@@ -1,6 +1,5 @@
 import { AppDispatch } from '@/app/store';
 import {
-  postInviteMemberAsync,
   selectInviteMember,
   setInviteAsAdmin,
   setInviteMemberInput,
@@ -14,6 +13,7 @@ import CheckBox from '../checkBox/CheckBox';
 import { Input } from '../input/StyledInput';
 import { InviteContainer, InviteWrap } from './StyledInvite';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { usePostInviteMemberMutation } from '@/features/inviteMember/inviteMemberAPI';
 
 const TextBtnLProps = {
   disable: false,
@@ -46,6 +46,7 @@ const Invite = () => {
     invite_member.admin
   );
   const [apiStatus, setApiStatus] = useState(status);
+  const [postInviteMember] = usePostInviteMemberMutation()
 
   if (apiStatus === DataLoading.PENDING) {
     TextBtnLProps.disable = true;
@@ -63,16 +64,19 @@ const Invite = () => {
     dispatch(setInviteAsAdmin({ admin: e.target.checked }));
   };
 
-  const onIviteMemberClick = () => {
+  const onIviteMemberClick = async () => {
     setApiStatus(DataLoading.PENDING);
-    dispatch(postInviteMemberAsync(invite_member))
+    await postInviteMember(invite_member)
+      .unwrap()
       .then((action) => {
-        dispatch(addInvitedMember({ invitedMember: action.payload }));
-      })
-      .then(() => {
-        setInviteMemberEmail('');
-        setInviteMemberAdmin(false);
-        setApiStatus(DataLoading.FULFILLED);
+      dispatch(addInvitedMember({ invitedMember: action.payload }));     
+     }).then(() => {
+      setInviteMemberEmail('');
+      setInviteMemberAdmin(false);
+      setApiStatus(DataLoading.FULFILLED);
+    })
+      .catch((error) => {
+        // Handle error
       });
   };
 
@@ -92,7 +96,7 @@ const Invite = () => {
           <TextBtnL
             {...TextBtnLProps}
             onClick={
-              apiStatus === DataLoading.PENDING ? () => {} : onIviteMemberClick
+              apiStatus === DataLoading.PENDING ? () => {} : ()=>onIviteMemberClick()
             }
           />
         </ElWrap>

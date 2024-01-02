@@ -46,9 +46,9 @@ import { AppDispatch, RootState } from '@/app/store';
 import { startCall } from '@/features/videoCall/videoCallSlice';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import {
-  getTemplateQuestionsAndTopics,
-  sendFeedback,
-  updateInterviewQuestionRating,
+  useGetTemplateQuestionsAndTopicsQuery,
+  useSendFeedbackMutation,
+  useUpdateInterviewQuestionRatingMutation,
 } from '../../features/interviews/interviewsAPI';
 import { useDaily } from '@daily-co/daily-react';
 import SintaLogo from 'src/assets/svg/Sinta_call_logo.svg';
@@ -137,7 +137,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
   useEffect(() => {
     const fetchQuestionsAndTopics = async () => {
       // get the template questions
-      const response = await getTemplateQuestionsAndTopics(
+      const response = await useGetTemplateQuestionsAndTopicsQuery(
         interviewDetails.template_id
       );
       setTemplateQuestionsAndTopics(response);
@@ -365,7 +365,12 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     };
     const handleRating = (rating: number, question: string) => {
       // update interview round question rating to new rating
-      updateInterviewQuestionRating(rating, question, interviewDetails.id);
+      const data={
+        rating, 
+        question, 
+        interview_round_id: interviewDetails.id
+      }
+      useUpdateInterviewQuestionRatingMutation(data);
     };
 
     useEffect(() => {
@@ -829,7 +834,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       time: getEmojiClickTime(),
     };
 
-    sendFeedback(data);
+    useSendFeedbackMutation(data);
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     setReactClicked({
@@ -851,7 +856,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       time: getEmojiClickTime(),
     };
 
-    sendFeedback(data);
+    useSendFeedbackMutation(data);
   }
 
   function EmojiOverlay() {

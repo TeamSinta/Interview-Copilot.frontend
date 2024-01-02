@@ -7,7 +7,7 @@ import ConclusionInterviewCard from "@/components/common/cards/conclusionInteriv
 import { GridContainer } from "./StyledConclusions";
 import { useNavigate } from "react-router-dom";
 import TextIconFilter from "@/components/common/filters/textIconFilter/TextIconFilter";
-import { getInterviews } from "../../features/interviews/interviewsAPI";
+import { useGetInterviewsQuery } from "../../features/interviews/interviewsAPI";
 import { useCookies } from "react-cookie";
 
 interface TabPanelProps {
@@ -55,7 +55,7 @@ export default function BasicTabs() {
 
   React.useEffect(() => {
     const fetchInterviews = async () => {
-      const response = await getInterviews();
+      const response = await useGetInterviewsQuery(cookies.access_token);
       setInterviews(response);
     };
 
