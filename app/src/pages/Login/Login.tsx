@@ -23,9 +23,6 @@ import { useEffect } from 'react';
 
 const LoginScreen = () => {
 
-  useEffect(() => {
-    console.log("Hello");
-  },[])
   return (
     <>
       <Stack

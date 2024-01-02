@@ -25,7 +25,6 @@ export const getQuestionsBank = async () => {
 export const createInterviewRound = async (
   title: string,
   template_id: string | null,
-  token: string,
   meeting_room_id: string,
   candidate_id: number
 ) => {
@@ -36,16 +35,9 @@ export const createInterviewRound = async (
     candidate_id: candidate_id,
   };
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  };
   const result = await instance.post(
     `${BACKEND_URL}/interview-rounds/create/`,
-    data,
-    config
+    data
   );
 
   return result.data;
@@ -94,19 +86,11 @@ export const updateInterviewQuestionRating = async (
   // return result.data;
 };
 
-export const sendFeedback = async (data: FeedbackData, token: string) => {
+export const sendFeedback = async (data: FeedbackData) => {
   try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    };
-
     const response = await instance.post(
       `${BACKEND_URL}/question_response/interviewer-feedback/`,
-      data,
-      config
+      data
     );
     return response.data;
   } catch (error) {
