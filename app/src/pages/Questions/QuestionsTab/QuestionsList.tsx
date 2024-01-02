@@ -63,7 +63,7 @@ const QuestionList = () => {
   const [openItems, setOpenItems] = useState(new Set());
   const [edit, setEdit] = useState(new Set());
   const [inputValue, setInputValue] = useState<IState>({
-    title: '',
+    question_text: '',
     time: 0,
     guidelines: '',
     difficulty: null,
@@ -145,7 +145,7 @@ const QuestionList = () => {
           <BodySMedium
             style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
           >
-            Title is required{' '}
+            Question is required{' '}
           </BodySMedium>
         </>
       );
@@ -267,11 +267,11 @@ const QuestionList = () => {
                     <InputDiv>
                       <TextInput
                         disable={false}
-                        placeholder={'Title'}
+                        placeholder={'Question'}
                         validate={validateTitle}
                         onChange={inputOnChange}
-                        name={'title'}
-                        value={inputValue['title']}
+                        name={'question_text'}
+                        value={inputValue['question_text']}
                       />
                       <ElWrap w={40} h={40}>
                         <IconBtnL
