@@ -31,10 +31,10 @@ export const DecisionButton = ({
   const buttonRef = useRef(null); // Create a ref for the button
 
   const backgroundColors = isActive
-    ? activeValue === 1 || 3
-      ? '#DBFDDC'
-      : '#FABBCF'
-    : '#FFFFFF'; // default background color
+    ? activeValue === 1 || activeValue === 3 // Check if activeValue is 1 or 3
+      ? '#DBFDDC' // Green color
+      : '#FABBCF' // Red color
+    : '#FFFFFF'; // Default background color
 
   const handleConfetti = () => {
     if (buttonRef.current) {

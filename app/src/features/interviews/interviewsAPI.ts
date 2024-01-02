@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-import { instance } from "@/utils/axiosService/customAxios";
+import { instance } from '@/utils/axiosService/customAxios';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -10,6 +10,7 @@ type FeedbackData = {
   reaction?: number;
   note?: string;
   time: string;
+  template_question: string;
 };
 
 export const getQuestionsBank = async () => {
@@ -67,7 +68,7 @@ export const updateInterviewQuestionRating = async (
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
@@ -105,7 +106,7 @@ export const getInterviewRoundQuestions = async (
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 
@@ -190,6 +191,21 @@ export const getInterviewRoundQuestion = async (
 ) => {
   const result = await instance.get(
     `${BACKEND_URL}/interview-rounds/${interview_round_id}/${question_id}/`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return result.data;
+};
+
+export const getInterviewRoundFeedback = async (
+  interview_round_id: string,
+  token: string
+) => {
+  const result = await instance.get(
+    `${BACKEND_URL}/question_response/interviewer-feedback/${interview_round_id}/`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -6,7 +6,7 @@ import { H2Bold } from '../typeScale/StyledTypeScale';
 import Modal from './Modal';
 import { CloseDiv, ModalHeaderWrap } from './StyledModal';
 
-import CreateInterviews from '@/components/common/modal/modalContents/CreateInterviews';
+import CreateTemplate from '@/components/common/modal/modalContents/CreateTemplate';
 import CreateDepartment from './modalContents/CreateDepartment';
 import SelectValue from './modalContents/SelectValues';
 import ModalL from './ModalL';
@@ -81,8 +81,8 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.CREATE_INT:
         return (
-          <Modal title="Create New Interview">
-            <CreateInterviews />
+          <Modal title="New Template">
+            <CreateTemplate />
           </Modal>
         );
       case MODAL_TYPE.CREATE_QUEST_BANK:

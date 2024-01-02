@@ -55,7 +55,7 @@ export const interviewsSlice = createSlice({
     selectQuestionBank: (state, actions) => {
       const { questionBank } = actions.payload;
       state.selectedQuestionBank = questionBank;
-      console.log(questionBank)
+      console.log(questionBank);
       state.questions = questionBank.questions;
     },
     setSelectedQuestion: (state, actions) => {

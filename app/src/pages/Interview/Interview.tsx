@@ -62,6 +62,7 @@ import { InputLabelDiv } from '@/components/pages/interview/overview_detail/Styl
 import ReactMarkdown from 'react-markdown';
 import { H3 } from '@/components/common/typeScale/TypeScale';
 import Chat from '@/components/common/form/chatBox/ChatBox';
+import { useCookies } from 'react-cookie';
 
 const components = {
   h3: H3,
@@ -71,7 +72,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
   const stage = 'Round 3';
   const stageName = 'Pair-Programming';
   const { user } = useSelector((state: RootState) => state.user);
-
+  const [cookies, ,] = useCookies(['access_token']);
   const [activeTab, setActiveTab] = useState(1);
   const [initTime, setInitTime] = useState('');
   const [templateQuestionsAndTopics, setTemplateQuestionsAndTopics] =
@@ -95,8 +96,6 @@ const Interview = ({ leaveCall, interviewDetails }) => {
   const [isInterviewSideBarCollapsed, setIsInterviewSideBarCollapsed] =
     useState(false);
   const callObject = useDaily();
-
-  // Placeholder for functionality. Moe will have to update this once the videoscreen is done and we have correct reducers/states.
 
   const { active_call } = useSelector((state: RootState) => state.videoCall);
   const dispatch: AppDispatch = useDispatch();
@@ -138,7 +137,8 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     const fetchQuestionsAndTopics = async () => {
       // get the template questions
       const response = await getTemplateQuestionsAndTopics(
-        interviewDetails.template_id
+        interviewDetails.template_id,
+        cookies.access_token
       );
       setTemplateQuestionsAndTopics(response);
     };
@@ -346,9 +346,10 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     const [activeQuestionInfo, setActiveQuestionInfo] = useState<any>('');
     const [activeNumber, setActiveNumber] = useState<any>('');
     const [collapseQuestion, setCollapseQuestion] = useState(false);
+    const [questionRatings, setQuestionRatings] = useState({});
     const [prevNum, setPrevNum] = useState(0);
     const [nextNum, setNextNum] = useState(2);
-    const [inputValue, setInputValue] = useState<IState>({
+    const [inputValue] = useState<IState>({
       notes: '',
     });
 
@@ -365,7 +366,12 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     };
     const handleRating = (rating: number, question: string) => {
       // update interview round question rating to new rating
-      updateInterviewQuestionRating(rating, question, interviewDetails.id);
+      setQuestionRatings((prevRatings) => ({
+        ...prevRatings,
+        [question.id]: rating,
+      }));
+
+      updateInterviewQuestionRating(rating, question.id, interviewDetails.id);
     };
 
     useEffect(() => {
@@ -374,13 +380,11 @@ const Interview = ({ leaveCall, interviewDetails }) => {
 
     useEffect(() => {}, [activeQuestionInfo]);
 
+    console.log(activeQuestionInfo);
     function resetList() {
       setCollapseQuestion(false);
     }
 
-    const textAreaOnChange = (value: string) => {
-      inputValue['notes'] = value;
-    };
     return (
       <>
         <div
@@ -573,7 +577,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                           style={{
                             display: 'flex',
                             justifyContent: 'flex-start',
-                            textAlign: 'flex-start',
+                            textAlign: 'start',
                             paddingTop: '16px',
                           }}
                         >
@@ -590,6 +594,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                           <QuestionMeta
                             question={'low'}
                             duration={activeQuestionInfo?.duration}
+                            difficulty={activeQuestionInfo?.difficulty}
                           />
                         </div>
 
@@ -599,9 +604,14 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                           <RatingComponentL
                             interviewRoundId={interviewDetails.id}
                             question={activeQuestionInfo?.question}
+                            initialActiveTab={activeQuestionInfo?.rating}
                             id={activeQuestionInfo?.id}
-                            setRating={handleRating}
-                            rating={activeQuestionInfo?.rating}
+                            onUpdateRating={(rating: number) =>
+                              handleRating(rating, activeQuestionInfo)
+                            }
+                            rating={
+                              questionRatings[activeQuestionInfo.id] || null
+                            }
                             width={40}
                             height={40}
                           />{' '}
@@ -633,14 +643,6 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                 alignItems="flex-end"
               >
                 <InputLabelDiv style={{ width: '100%' }}>
-                  {/* <TextArea
-                    disable={false}
-                    placeholder={"Notes"}
-                    error={false}
-                    onChange={textAreaOnChange}
-                    name={"notes"}
-                    value={inputValue["notes"]}
-                  /> */}
                   <Chat
                     notesEntered={notesEntered}
                     elapsedTime={initTime}
@@ -842,16 +844,17 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     });
   };
 
-  function notesEntered(notes: string) {
+  function notesEntered(notes: string, activeQuestionID: string) {
     // send feedback
     const data = {
       interview_round: interviewDetails.id,
       user: user.id,
       note: notes,
       time: getEmojiClickTime(),
+      template_question: activeQuestionID,
     };
 
-    sendFeedback(data);
+    sendFeedback(data, cookies.access_token);
   }
 
   function EmojiOverlay() {
@@ -902,16 +905,6 @@ const Interview = ({ leaveCall, interviewDetails }) => {
         );
       },
       [handleRemoveFlyingEmoji]
-    );
-
-    const handleReceiveFlyingEmoji = useCallback(
-      (e) => {
-        if (!overlayRef.current) {
-          return;
-        }
-        handleDisplayFlyingEmoji(e.data.message, e.data.position);
-      },
-      [handleDisplayFlyingEmoji]
     );
 
     return <EmojiOverlayWrapper ref={overlayRef} />;

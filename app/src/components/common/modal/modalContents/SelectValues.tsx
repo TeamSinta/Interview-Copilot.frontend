@@ -173,12 +173,12 @@ const SelectValue = () => {
               <TextInput
                 disable={false}
                 placeholder={'New Section'}
-                error={false}
                 onChange={(e) => {
                   setNewComp(e.target.value);
                 }}
                 name={'Section'}
                 value={newComp}
+                validate={() => null}
               />
               <ElWrap w={119} h={40}>
                 <TextBtnL
