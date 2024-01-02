@@ -14,7 +14,6 @@ import Questions from '@/pages/Questions/Questions';
 import QuestionBankStage from '@/pages/Questions/QuestionBanksTab/QuestionBankStage';
 import SignUpScreen from '@/pages/SignUp/SignUp';
 import CheckType from './CheckType';
-import { AuthGuard } from './authGuard';
 import EndCallScreen from '@/pages/Interview/Daily/Call/EndCallScreenExternal';
 
 const Routers = () => {
