@@ -6,7 +6,7 @@ import {
   CustomButton,
   ButtonWrap,
   DropdownArrowIconDiv,
-} from './StyledDropDownBtn'; // ensure the import path is correct
+} from './StyledDropDownBtn';
 
 interface ICustomButtonConfig {
   label: string;

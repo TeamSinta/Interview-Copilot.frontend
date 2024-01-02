@@ -50,7 +50,7 @@ export const ButtonWrap = styled.div`
   margin-top: 145px;
   padding-bottom: 8px;
   position: absolute;
-  z-index: -1; //
+  z-index: -1;
   display: flex;
   flex-direction: column;
   align-items: center;
