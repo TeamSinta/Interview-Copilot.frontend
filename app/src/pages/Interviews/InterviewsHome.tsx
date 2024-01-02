@@ -1,14 +1,14 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import { Stack } from "@mui/material";
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import { H1 } from "@/components/common/typeScale/StyledTypeScale";
-import ConclusionInterviewCard from "@/components/common/cards/conclusionInterivewCard/ConclusionInterviewCard";
-import { GridContainer } from "./StyledConclusions";
-import { useNavigate } from "react-router-dom";
-import TextIconFilter from "@/components/common/filters/textIconFilter/TextIconFilter";
-import { getInterviews } from "../../features/interviews/interviewsAPI";
-import { useCookies } from "react-cookie";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import { Stack } from '@mui/material';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { H1 } from '@/components/common/typeScale/StyledTypeScale';
+import ConclusionInterviewCard from '@/components/common/cards/conclusionInterivewCard/ConclusionInterviewCard';
+import { GridContainer } from './StyledConclusions';
+import { useNavigate } from 'react-router-dom';
+import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconFilter';
+import { getInterviews } from '../../features/interviews/interviewsAPI';
+import { useCookies } from 'react-cookie';
 
 interface TabPanelProps {
   children?: React.ReactNode;

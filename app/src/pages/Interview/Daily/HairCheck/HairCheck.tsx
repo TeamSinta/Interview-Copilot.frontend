@@ -51,6 +51,7 @@ import IconButton from '@mui/material/IconButton';
 import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import { Template } from '@/pages/Templates_/Templates';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { useCookies } from 'react-cookie';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -83,6 +84,7 @@ export default function HairCheck({
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
     null
   );
+  const [cookies, ,] = useCookies(['access_token']);
 
   const workspace = useSelector((state: RootState) => state.workspace);
 
@@ -122,10 +124,10 @@ export default function HairCheck({
       const title = newTitle;
       const candidate_id = 1;
       const meeting_room_id = getRoomNameFromUrl(callObject?.properties.url);
+
       const response = await createInterviewRound(
         title,
         selectedTemplateId,
-        cookies.access_token,
         meeting_room_id,
         candidate_id
       );
@@ -154,13 +156,7 @@ export default function HairCheck({
     }, [])
   );
 
-  const {
-    data: templatesData,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetTemplatesQuery();
+  const { data: templatesData, isSuccess } = useGetTemplatesQuery();
 
   useEffect(() => {
     if (isSuccess) {
@@ -188,7 +184,7 @@ export default function HairCheck({
   // };
   useEffect(() => {
     callObject?.setUserName(user.first_name || '');
-  }, [localParticipant]);
+  }, [callObject, localParticipant, user.first_name]);
 
   const join = (e: FormEvent) => {
     e.preventDefault();
@@ -236,6 +232,26 @@ export default function HairCheck({
       {camera.device.label}
     </MenuItem>
   ));
+
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{
+              paddingTop: '40px',
+              color: 'gray',
+              textAlign: 'center',
+            }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
 
   return getUserMediaError ? (
     <UserMediaError />
@@ -299,11 +315,11 @@ export default function HairCheck({
                   name="title"
                   disable={false}
                   placeholder={`Enter your Interview title here!`}
-                  error={false}
                   value={newTitle}
                   onChange={(e) => {
                     setTitle(e.target.value);
                   }}
+                  validate={validateTitle}
                 />
               </ElWrap>
             </div>

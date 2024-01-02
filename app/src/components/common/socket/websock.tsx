@@ -25,6 +25,7 @@ const WebSocketComponent = ({ interviewRoundId, endLoader }) => {
     // Event listener for WebSocket close
     socket.onclose = (event) => {
       console.log('Disconnected from WebSocket:', event);
+      endLoader();
       // Handle WebSocket closure
     };
 

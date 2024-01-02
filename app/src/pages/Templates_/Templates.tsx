@@ -1,27 +1,27 @@
-import { AppDispatch, RootState } from "@/app/store";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { EditIcon, PlusIcon } from "@/components/common/svgIcons/Icons";
+import { AppDispatch, RootState } from '@/app/store';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { EditIcon, PlusIcon } from '@/components/common/svgIcons/Icons';
 import {
   H1,
   BodyLMedium,
   H2Medium,
   H2Bold,
   BodyMMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { openModal } from "@/features/modal/modalSlice";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { Key, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Stack, Box } from "@mui/material";
+} from '@/components/common/typeScale/StyledTypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { openModal } from '@/features/modal/modalSlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { Key, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Stack, Box } from '@mui/material';
 import TemplateHomeCard, {
   IMember,
-} from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
-import { useState } from "react";
-import { InterviewsBox, TemplateCardsBox } from "../Dashboard/StyledDashboard";
-import { useNavigate } from "react-router-dom";
-import { CreateInterviewBox, DepartmentHeading } from "./StyledTemplates";
+} from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
+import { useState } from 'react';
+import { InterviewsBox, TemplateCardsBox } from '../Dashboard/StyledDashboard';
+import { useNavigate } from 'react-router-dom';
+import { CreateInterviewBox, DepartmentHeading } from './StyledTemplates';
 
 import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
 import {

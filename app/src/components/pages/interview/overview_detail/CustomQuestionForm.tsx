@@ -12,12 +12,7 @@ import {
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IconBtnL } from '@/components/common/buttons/iconBtn/IconBtn';
-import {
-  BackgroundColor,
-  StatusDropdownFilter,
-} from '@/features/utils/utilEnum';
-import ReactMarkdown from 'react-markdown';
-import { H3 } from '@/components/common/typeScale/TypeScale';
+import { BackgroundColor } from '@/features/utils/utilEnum';
 import TextInput from '@/components/common/form/textInput/TextInput';
 import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter';
 import TextArea from '@/components/common/form/textArea/TextArea';
@@ -31,10 +26,6 @@ interface IState {
 
 interface CustomQuestionFormProps {
   onQuestionCreated: (questionId: number) => void; // Define a function signature that accepts questionId and returns void.
-}
-
-interface CustomQuestionFormRef {
-  focus: () => void;
 }
 
 function CustomQuestionForm(
@@ -99,6 +90,37 @@ function CustomQuestionForm(
     }));
   };
 
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
+  const validateTime = (value: string): string | null => {
+    // First, check if the field is empty
+    if (!value.trim()) {
+      return 'Time is required'; // Error message for empty input
+    }
+
+    // Check if the value is a number and within the range 1-60
+    const numberValue = parseInt(value, 10);
+    if (isNaN(numberValue) || numberValue < 1 || numberValue > 60) {
+      return 'Please enter a number between 1 and 60'; // Error message for invalid input
+    }
+
+    return null; // No validation errors
+  };
+
   return (
     <>
       <div ref={ref}>
@@ -112,6 +134,7 @@ function CustomQuestionForm(
                 disable={false}
                 placeholder={'Title'}
                 error={false}
+                validate={validateTitle}
                 onChange={inputOnChange}
                 name={'title'}
                 value={inputValue['title']}
@@ -150,7 +173,7 @@ function CustomQuestionForm(
               <TextInput
                 disable={false}
                 placeholder={'Competency'}
-                error={false}
+                validate={validateTitle}
                 onChange={inputOnChange}
                 name={'competency'}
                 value={inputValue['competency']}
@@ -163,7 +186,7 @@ function CustomQuestionForm(
               <TextInput
                 disable={false}
                 placeholder={'time'}
-                error={false}
+                validate={validateTime}
                 onChange={inputOnChange}
                 name={'time'}
                 value={inputValue['time'].toString()}
@@ -189,6 +212,7 @@ function CustomQuestionForm(
               error={false}
               onChange={textAreaOnChange}
               name={'guidelines'}
+              validate={() => null}
               value={inputValue['guidelines']}
             />
           </InputLabelDiv>

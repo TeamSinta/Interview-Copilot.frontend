@@ -48,7 +48,7 @@ export const useFetchCompanyDepartments = (companyId: CompanyID) => {
             (department) => ({
               name: department.title,
               value: department.id.toString(),
-              selected: false
+              selected: false,
             })
           );
           setDepartments(transformedData);
