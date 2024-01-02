@@ -122,10 +122,10 @@ export default function HairCheck({
       const title = newTitle;
       const candidate_id = 1;
       const meeting_room_id = getRoomNameFromUrl(callObject?.properties.url);
+
       const response = await createInterviewRound(
         title,
         selectedTemplateId,
-        cookies.access_token,
         meeting_room_id,
         candidate_id
       );

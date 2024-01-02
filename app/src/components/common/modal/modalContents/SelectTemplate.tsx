@@ -34,7 +34,6 @@ import {
 } from './StyledModalContents';
 import TemplateList from './TemplateList';
 import QuestionList from './QuestionList';
-import axios from 'axios';
 import { instance } from '@/utils/axiosService/customAxios';
 
 const SelectTemplate = () => {
