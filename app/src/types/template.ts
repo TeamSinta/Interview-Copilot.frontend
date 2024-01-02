@@ -1,4 +1,4 @@
-import { IQuestion } from "./question";
+import { IQuestion } from './question';
 
 export interface ITemplates {
   question_bank: {

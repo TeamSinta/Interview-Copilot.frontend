@@ -95,7 +95,6 @@ export const StyledTextareaDiv = styled.div`
     top: 20px;
     position: absolute;
 
-
     ::after {
       content: '         ';
     }
@@ -127,8 +126,8 @@ export const StyledTextareaDiv = styled.div`
     font-size: 14px;
     position: relative;
     &.error {
-    box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
-  }
+      box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
+    }
   }
   ul {
     list-style: disc;
@@ -154,5 +153,4 @@ export const StyledTextareaDiv = styled.div`
     font-weight: 500;
     line-height: 125%;
   }
-
 `;

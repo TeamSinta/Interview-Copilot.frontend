@@ -1,6 +1,6 @@
-import { AppDispatch, RootState } from "@/app/store";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { IQuestion } from "@/features/interviews/interviewsInterface";
+import { AppDispatch, RootState } from '@/app/store';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { IQuestion } from '@/features/interviews/interviewsInterface';
 import {
   resetQuestionBank,
   selectInterview,

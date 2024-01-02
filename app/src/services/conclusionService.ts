@@ -49,7 +49,13 @@ const ConclusionData = (interviewRoundId: string) => {
     };
 
     fetchData();
-  }, [TranscriptAPI, emojiFeedbackApi, summarizedAnswersAPI, summaryInfoAPI, videoUrlAPI]);
+  }, [
+    TranscriptAPI,
+    emojiFeedbackApi,
+    summarizedAnswersAPI,
+    summaryInfoAPI,
+    videoUrlAPI,
+  ]);
 
   return [
     summarizedAnswers,

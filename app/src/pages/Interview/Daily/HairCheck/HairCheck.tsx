@@ -233,7 +233,6 @@ export default function HairCheck({
     </MenuItem>
   ));
 
-
   const validateTitle = (value: string): string | null => {
     if (!value.trim()) {
       return (
