@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-import { instance } from "@/utils/axiosService/customAxios";
+import { instance } from '@/utils/axiosService/customAxios';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -10,6 +10,7 @@ type FeedbackData = {
   reaction?: number;
   note?: string;
   time: string;
+  template_question: string;
 };
 
 export const getQuestionsBank = async () => {
@@ -25,18 +26,22 @@ export const createInterviewRound = async (
   title: string,
   template_id: string | null,
   meeting_room_id: string,
-  candidate_id: number
+  candidate_id: number,
+  user_id: number,
+  company_id: string
 ) => {
   const data = {
     title: title,
     template_id: template_id,
     room_id: meeting_room_id,
     candidate_id: candidate_id,
+    user_id: user_id,
+    company_id: company_id,
   };
 
   const result = await instance.post(
     `${BACKEND_URL}/interview-rounds/create/`,
-    data,
+    data
   );
 
   return result.data;
@@ -67,7 +72,7 @@ export const updateInterviewQuestionRating = async (
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
@@ -85,19 +90,11 @@ export const updateInterviewQuestionRating = async (
   // return result.data;
 };
 
-export const sendFeedback = async (data: FeedbackData, token: string) => {
+export const sendFeedback = async (data: FeedbackData) => {
   try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    };
-
     const response = await instance.post(
       `${BACKEND_URL}/question_response/interviewer-feedback/`,
-      data,
-      config
+      data
     );
     return response.data;
   } catch (error) {
@@ -113,7 +110,7 @@ export const getInterviewRoundQuestions = async (
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 
@@ -163,6 +160,18 @@ export const getInterviews = async (token: string) => {
   return result.data;
 };
 
+export const createCandidate = async (candidateData: {
+  name: string;
+  username: string;
+  user_id: number;
+}) => {
+  const result = await instance.post(
+    `${BACKEND_URL}/interview-rounds/candidate/`,
+    candidateData
+  );
+  return result.data;
+};
+
 export const getInterview = async (interviewRoundId: string, token: string) => {
   const result = await instance.get(
     `${BACKEND_URL}/interview-rounds/${interviewRoundId}`,
@@ -198,6 +207,21 @@ export const getInterviewRoundQuestion = async (
 ) => {
   const result = await instance.get(
     `${BACKEND_URL}/interview-rounds/${interview_round_id}/${question_id}/`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return result.data;
+};
+
+export const getInterviewRoundFeedback = async (
+  interview_round_id: string,
+  token: string
+) => {
+  const result = await instance.get(
+    `${BACKEND_URL}/question_response/interviewer-feedback/${interview_round_id}/`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

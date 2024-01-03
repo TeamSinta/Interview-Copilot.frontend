@@ -1,6 +1,6 @@
-import { AppDispatch, RootState } from "@/app/store";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { IQuestion } from "@/features/interviews/interviewsInterface";
+import { AppDispatch, RootState } from '@/app/store';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { IQuestion } from '@/features/interviews/interviewsInterface';
 import {
   resetQuestionBank,
   selectInterview,
@@ -34,7 +34,6 @@ import {
 } from './StyledModalContents';
 import TemplateList from './TemplateList';
 import QuestionList from './QuestionList';
-import axios from 'axios';
 import { instance } from '@/utils/axiosService/customAxios';
 
 const SelectTemplate = () => {

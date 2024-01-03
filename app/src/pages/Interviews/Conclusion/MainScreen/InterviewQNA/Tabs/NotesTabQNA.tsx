@@ -48,7 +48,6 @@ export const NotesTabQNA: React.FC<TranscriptionTabQNAProps> = ({
   data,
   handleClick,
 }) => {
-  console.log(data);
   const categorizedNotes = data.reduce((acc, note) => {
     const category = note.question_text || 'General Notes';
     if (!acc[category]) {

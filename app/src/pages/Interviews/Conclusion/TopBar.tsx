@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Grid, Stack } from "@mui/material";
-import "./index.css";
-import { TOP_BAR_INFO } from "./Constants";
+import React, { useEffect, useState } from 'react';
+import { Grid, Stack } from '@mui/material';
+import './index.css';
+import { TOP_BAR_INFO } from './Constants';
 import {
   getInterviewRoundQuestions,
   getInterview,
   getTemplate,
 } from '../../../features/interviews/interviewsAPI';
-import { useCookies } from "react-cookie";
+import { useCookies } from 'react-cookie';
 
-import { SubmitDecision } from "./MainScreen/SubmitDecisonButton/DecisionButton";
+import { SubmitDecision } from './MainScreen/SubmitDecisonButton/DecisionButton';
 import {
   BodyLBold,
   BodyLMedium,
@@ -60,7 +60,7 @@ const TopBar = ({ interviewRoundId }) => {
   }, [cookies.access_token, interviewRoundId]);
 
   const departmentName = departmentTitle || 'General';
-  const candidateTitle = candidateName || 'Unknown Contact';
+  const candidateTitle = candidateName || 'Unknown Candidate';
   return (
     <React.Fragment>
       <Grid container spacing={1} style={{ gap: '8px' }}>

@@ -43,7 +43,11 @@ const QuestionBankStage = () => {
   const navigate = useNavigate();
   const { questionBankId } = useParams(); // Replace 'questionBankId' with your actual parameter name
 
-  const [QuestionBank, setQuestionBanks] = useState<string[]>([]);
+  const [QuestionBank, setQuestionBanks] = useState<{
+    title?: string;
+    questions?: any[];
+    description?: string;
+  }>({});
   const {
     data: questionBankDetails,
     isLoading,
@@ -52,6 +56,7 @@ const QuestionBankStage = () => {
     error,
   } = useGetQuestionBankDetailQuery(questionBankId);
 
+  console.log(QuestionBank);
   useEffect(() => {
     if (isSuccess) {
       setQuestionBanks(questionBankDetails);
@@ -88,7 +93,9 @@ const QuestionBankStage = () => {
           </HeaderWrapper>
           <Subtitle>
             <BodyLSemiBold>3 Competencies ·</BodyLSemiBold>
-            <BodyLSemiBold>{QuestionBank.length} Questions</BodyLSemiBold>
+            <BodyLSemiBold>
+              {QuestionBank.questions?.length} Questions
+            </BodyLSemiBold>
           </Subtitle>
           <div
             style={{
@@ -98,12 +105,7 @@ const QuestionBankStage = () => {
               gap: '16px',
             }}
           >
-            <BodyMMedium>
-              The five main principles of UX design. There are many important
-              principles within UX design but to simplify things a bit, we've
-              broken them down into five main concepts: Empathy, strategy,
-              usability, inclusivity, and validation.
-            </BodyMMedium>
+            <BodyMMedium>{QuestionBank.description}</BodyMMedium>
             <ElWrap w={100}>
               <TextBtnM
                 label={'Edit'}
