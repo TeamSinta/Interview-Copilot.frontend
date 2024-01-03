@@ -41,7 +41,10 @@ import {
 } from '@/components/common/typeScale/StyledTypeScale';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../app/store';
-import { createInterviewRound } from '../../../../features/interviews/interviewsAPI';
+import {
+  createCandidate,
+  createInterviewRound,
+} from '../../../../features/interviews/interviewsAPI';
 import { IMember } from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 import DropUpBtn from '@/components/common/dropUpBtn/dropUpBtn';
@@ -114,16 +117,38 @@ export default function HairCheck({
     return lastSegment;
   };
 
+  const generateRandomUsername = (length = 8) => {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
+  };
+
   const startMeeting = async () => {
     if (newTitle === '') throw new Error('Empty candidate username');
     if (!selectedTemplate) throw new Error('Empty selected template');
 
     try {
       const title = newTitle;
-      const candidate_id = 1;
       const meeting_room_id = getRoomNameFromUrl(callObject?.properties.url);
       const company_id = companyId;
       const user_id = user.id;
+
+      const candidateData = {
+        name: 'Sinta Candidate',
+        username: generateRandomUsername(),
+        user_id: user_id, // Assuming you have the user's ID here
+      };
+
+      console.log(candidateData);
+
+      const candidateResponse = await createCandidate(candidateData);
+      const candidate_id = candidateResponse.id; // Replace with actual response property
 
       const response = await createInterviewRound(
         title,

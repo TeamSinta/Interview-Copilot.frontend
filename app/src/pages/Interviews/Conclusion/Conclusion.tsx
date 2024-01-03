@@ -70,7 +70,6 @@ const Conclusion: React.FC = () => {
 
   const [isVideoEmpty, setIsVideoEmpty] = useState<boolean | null>(null);
 
-
   useEffect(() => {
     const fetchRatings = async () => {
       const interviewData = await getInterview(

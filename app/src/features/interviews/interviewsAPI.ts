@@ -13,7 +13,6 @@ type FeedbackData = {
   template_question: string;
 };
 
-
 export const getQuestionsBank = async () => {
   return await instance
     .get(`${BACKEND_URL}/question/question-banks/`)
@@ -29,7 +28,7 @@ export const createInterviewRound = async (
   meeting_room_id: string,
   candidate_id: number,
   user_id: number,
-  company_id:string,
+  company_id: string
 ) => {
   const data = {
     title: title,
@@ -37,7 +36,7 @@ export const createInterviewRound = async (
     room_id: meeting_room_id,
     candidate_id: candidate_id,
     user_id: user_id,
-    company_id: company_id
+    company_id: company_id,
   };
 
   const result = await instance.post(
@@ -158,6 +157,18 @@ export const getInterviews = async (token: string) => {
     },
   });
 
+  return result.data;
+};
+
+export const createCandidate = async (candidateData: {
+  name: string;
+  username: string;
+  user_id: number;
+}) => {
+  const result = await instance.post(
+    `${BACKEND_URL}/interview-rounds/candidate/`,
+    candidateData
+  );
   return result.data;
 };
 

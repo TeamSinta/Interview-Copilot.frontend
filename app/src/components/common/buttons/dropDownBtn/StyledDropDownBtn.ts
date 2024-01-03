@@ -54,7 +54,6 @@ export const ButtonWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `;
 
 export const DropdownArrowIconDiv = styled.div<IDropdownOpen>`
