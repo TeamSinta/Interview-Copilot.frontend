@@ -161,6 +161,11 @@ export const getInterviews = async (token: string) => {
   return result.data;
 };
 
+export const createCandidate = async (candidateData: { name: string; username: string; user_id: number }) => {
+  const result = await instance.post(`${BACKEND_URL}/interview-rounds/candidate/`, candidateData);
+  return result.data;
+};
+
 export const getInterview = async (interviewRoundId: string, token: string) => {
   const result = await instance.get(
     `${BACKEND_URL}/interview-rounds/${interviewRoundId}`,
