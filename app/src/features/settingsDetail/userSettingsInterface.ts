@@ -12,3 +12,8 @@ export type MembersList = {
   role: string;
   profile_picture: string | null;
 };
+
+export interface IDepartment {
+  title: string;
+  id: string;
+}

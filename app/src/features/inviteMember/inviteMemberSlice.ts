@@ -1,29 +1,29 @@
-import { RootState } from "@/app/store";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { DataLoading } from "../utils/utilEnum";
+import { RootState } from '@/app/store';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { DataLoading } from '../utils/utilEnum';
 import {
   IInviteMember,
   IInviteMemberCreateSlice,
-} from "./inviteMemberInterface";
-import { postInviteMember } from "./inviteMemberAPI";
+} from './inviteMemberInterface';
+import { postInviteMember } from './inviteMemberAPI';
 
 export const initialState: IInviteMemberCreateSlice = {
   invited_member: {
     member_idx: 0,
-    member_name: "",
-    member_url: "",
-    member_type: "",
+    member_name: '',
+    member_url: '',
+    member_type: '',
     selected: false,
   },
   invite_member: {
-    member_email: "",
+    member_email: '',
     admin: false,
   },
   status: DataLoading.UNSEND,
 };
 
 export const postInviteMemberAsync = createAsyncThunk(
-  "inviteMember/postInviteMember",
+  'inviteMember/postInviteMember',
   async (inviteMember: IInviteMember) => {
     const response = await postInviteMember(inviteMember);
     return response;
@@ -31,7 +31,7 @@ export const postInviteMemberAsync = createAsyncThunk(
 );
 //[Where]: How
 export const inviteMemberSlice = createSlice({
-  name: "inviteMember",
+  name: 'inviteMember',
   initialState,
   extraReducers: (builder) => {
     builder.addCase(postInviteMemberAsync.pending, (state) => {

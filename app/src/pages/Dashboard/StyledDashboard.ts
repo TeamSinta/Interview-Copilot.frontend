@@ -2,9 +2,10 @@ import styled, { keyframes } from 'styled-components';
 import {
   H2Bold,
   BodySMedium,
-  H2Medium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { Box } from "@mui/material";
+  BodyLBold,
+  BodyMMedium,
+} from '@/components/common/typeScale/StyledTypeScale';
+import { Box } from '@mui/material';
 
 export const YourNewContainer = styled.div`
   display: flex;
@@ -24,18 +25,12 @@ export const YourMainContentContainer = styled.div`
     /* Adjust styles for screens with a max width of 768px */
     padding-left: 248px;
     @media (min-height: 1150px) {
-    /* Adjust styles for screens with a max width of 768px */
-    padding-top: 100px;
-    padding-bottom: 100px;
+      /* Adjust styles for screens with a max width of 768px */
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
   }
-  }
-
-
-
 `;
-
-
-
 
 export const waveAnimation = keyframes`
  0% { transform: rotate( 0.0deg) }
@@ -50,52 +45,48 @@ export const waveAnimation = keyframes`
 
 // Create a styled component for the waving hand emoji
 export const WavingHand = styled.span`
-  animation: ${waveAnimation} 3s 1;;
+  animation: ${waveAnimation} 3s 1;
   animation-duration: 2.5s;
   transform-origin: 70% 70%;
   display: inline-block;
 `;
 
-export const WelcomeHeading = styled(H2Medium)`
-  font-size: 52px;
-  width: 400px;
-  font-weight: 700;
+export const WelcomeHeading = styled(H2Bold)`
+  flex: 1;
+  font-weight: 900;
   padding-bottom: 8px;
-
+  width: 100%;
+  font-size: 24px;
+  text-align: center;
   @media (max-width: 1500px) {
     /* Adjust styles for screens with a max width of 768px */
-    text-align: center;
-    font-size: 38px;
+
+    font-size: 24px;
     padding-bottom: 8px;
-    width: 600px;
   }
 `;
 
 export const DescriptionText = styled(BodySMedium)`
   /* Your styling for description text here */
-  font-size: 16px;
-  width: 400px;
+  font-size: 14px;
+
   align-items: center;
   text-align: center;
-
-  @media (max-width: 1500px) {
-    /* Adjust styles for screens with a max width of 768px */
-
-    width: 600px;
-  }
 `;
 
-export const PendingReviewsHeading = styled(H2Bold)`
-  font-size: 22px;
+export const PendingReviewsHeading = styled(BodyLBold)`
+  font-size: 16px;
 `;
 
-export const Container = styled(Box)`
+export const TextContainer = styled(Box)`
   display: flex;
   align-items: center;
   text-align: center;
+
   flex-direction: column;
   justify-content: center;
   gap: 24px;
+
   align-content: flex-end;
   @media (max-width: 1500px) {
     /* Adjust styles for screens with a max width of 768px */
@@ -106,9 +97,16 @@ export const Container = styled(Box)`
   }
 `;
 
-export const TemplateCardsBox = styled(Box)`
-  border-radius: 28px;
+export const InterviewsBox = styled(Box)`
+  border-radius: 8px;
   border: 1px solid #e0e0e0;
+  width: 100%;
+  padding: 24px 0px 24px 24px;
+`;
+
+export const TemplateCardsBox = styled(Box)`
+  border-radius: 8px;
+
   display: flex; // Set to flex to enable horizontal scrolling
   gap: 20px;
   align-items: center;
@@ -117,11 +115,10 @@ export const TemplateCardsBox = styled(Box)`
   width: 100%;
   overflow-x: auto; // Enable horizontal scrolling
   cursor: grab; // Set cursor style for dragging
-  padding: 24px 0px 24px 24px;
 `;
 
 export const TemplateEmptyBox = styled(Box)`
-  border-radius: 28px;
+  border-radius: 8px;
   border: 1px solid #e0e0e0;
   display: flex; // Set to flex to enable horizontal scrolling
   gap: 20px;
@@ -136,6 +133,12 @@ export const TextBox = styled(Box)`
   display: flex;
   gap: 16px;
   flex-direction: column;
+`;
+export const WorkspaceTextBox = styled(Box)`
+  display: flex;
+  gap: 16px;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const IconStyle = styled.div`
@@ -167,25 +170,10 @@ export const MainContainer = styled(Box)`
 `;
 
 export const StyledImage = styled.img`
-  flex: 1;
-  width: 1000px;
-  opacity: 75%;
-
-  @media (max-width: 1500px) {
-    /* Adjust styles for screens with a max width of 768px */
-    flex: 1;
-    width: 100%;
-    padding: 0 24px 24px 24px;
-
-  }
-
-
-
-  @media (min-width: 1700px) {
-    /* Adjust styles for screens with a max width of 768px */
-    flex: 1;
-    min-width: 1000px;
-  }
+  border-radius: 8px;
+  width: 100%;
+  opacity: 100%;
+  height: 100%;
 `;
 
 export const ButtonContainer = styled.div`
@@ -200,7 +188,6 @@ export const ButtonContainer = styled.div`
     gap: 8px;
   }
 `;
-
 
 export const EmptySectionContainer = styled.div`
   display: flex;
@@ -218,5 +205,14 @@ export const StyledEmptyImage = styled.img`
   flex: 1;
   max-width: 100px;
   max-height: 100px;
+`;
 
+export const UpgradeButton = styled(BodyMMedium)`
+  background-color: white;
+  color: #625df3;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: white;
+  }
 `;

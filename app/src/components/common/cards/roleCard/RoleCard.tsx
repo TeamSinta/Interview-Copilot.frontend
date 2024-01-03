@@ -1,13 +1,13 @@
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { InitialsGenerator } from "@/utils/Utils";
-import { useState } from "react";
-import Photos from "../../buttons/photo/Photos";
-import { LocationIcon } from "../../svgIcons/Icons";
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { InitialsGenerator } from '@/utils/Utils';
+import { useState } from 'react';
+import Photos from '../../buttons/photo/Photos';
+import { LocationIcon } from '../../svgIcons/Icons';
 import {
   BodyMBold,
   BodySBold,
   BodySMedium,
-} from "../../typeScale/StyledTypeScale";
+} from '../../typeScale/StyledTypeScale';
 import {
   Card,
   CardContent,
@@ -15,7 +15,7 @@ import {
   CardIcon,
   NumberIcon,
   PhotoIcon,
-} from "../card/StyledCard";
+} from '../card/StyledCard';
 
 interface IMembers {
   member_idx: number;
@@ -38,10 +38,10 @@ const RoleCard = (props: IRoleCardProps) => {
   return (
     <ElWrap w={312} h={260}>
       <Card
-        className={(hover ? "hover" : "").concat(disable ? " disable" : " ")}
+        className={(hover ? 'hover' : '').concat(disable ? ' disable' : ' ')}
         id="cardId"
       >
-        <CardCover imgUrl={""}></CardCover>
+        <CardCover imgUrl={''}></CardCover>
         <CardContent
           onMouseEnter={() => {
             setHover(disable ? false : true);
@@ -66,7 +66,7 @@ const RoleCard = (props: IRoleCardProps) => {
                             member.member_first_name,
                             member.member_last_name
                           )
-                        : ""}
+                        : ''}
                     </BodySBold>
                   </PhotoIcon>
                 </ElWrap>

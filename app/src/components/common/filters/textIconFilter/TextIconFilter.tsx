@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   TextIconFilterLayout,
   TextIconFilterIcon,
-} from "./StyledTextIconFilter";
+} from './StyledTextIconFilter';
 
 interface ITextIconFilterProps {
   label: string;
-  icon: JSX.Element;
+  icon: JSX.Element | boolean;
   select: boolean;
-  onClick: () => void; // Add onClick prop
+  onClick: () => void;
 }
 
 const TextIconFilter = (props: ITextIconFilterProps) => {
@@ -23,9 +23,9 @@ const TextIconFilter = (props: ITextIconFilterProps) => {
     <TextIconFilterLayout
       onClick={() => {
         setSelected(selected ? false : true);
-        onClick(); // Call the onClick prop when the element is clicked
+        onClick();
       }}
-      className={selected ? "selected" : ""}
+      className={selected ? 'selected' : ''}
     >
       <div>{label}</div>
       <TextIconFilterIcon>{icon}</TextIconFilterIcon>

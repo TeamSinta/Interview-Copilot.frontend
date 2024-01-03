@@ -1,5 +1,5 @@
-import Cover from "@/assets/svg/sinta_default_card.svg";
-import styled from "styled-components";
+import Cover from '@/assets/svg/sinta_default_card.svg';
+import styled from 'styled-components';
 
 export const Card = styled.div`
   width: inherit;

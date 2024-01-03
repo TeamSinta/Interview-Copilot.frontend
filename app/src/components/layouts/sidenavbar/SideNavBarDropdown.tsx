@@ -1,5 +1,5 @@
-import { TwoArrowIcon } from "@/components/common/svgIcons/Icons";
-import { useState } from "react";
+import { TwoArrowIcon } from '@/components/common/svgIcons/Icons';
+import { useState } from 'react';
 
 import {
   DropdownArrowIconDiv,
@@ -11,11 +11,11 @@ import {
   OptionUl,
   SelectedItemDiv,
   SelectedItemIcon,
-} from "@/components/common/filters/dropdownFilter/StyledDropdownFilter";
-import { BodyMMedium } from "@/components/common/typeScale/StyledTypeScale";
-import { useDispatch, useSelector } from "react-redux";
-import { setCurrentWorkspace } from "@/features/workspace/userWorkspaceSlice";
-import { RootState } from "@/app/store";
+} from '@/components/common/filters/dropdownFilter/StyledDropdownFilter';
+import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentWorkspace } from '@/features/workspace/userWorkspaceSlice';
+import { RootState } from '@/app/store';
 
 interface ISideNavBarDropdown {
   optionArr: IOption[];
@@ -36,7 +36,7 @@ const SideNavBarDropdown = (props: ISideNavBarDropdown): JSX.Element => {
   const [shadow, setShadow] = useState(false);
   const [selectedItemName, setSelectedItemName] = useState();
   const [selectedItem, setSelectedItem] = useState({
-    [dropdownName]: "",
+    [dropdownName]: '',
   });
 
   const onSelectOpen = (): void => {
@@ -63,14 +63,14 @@ const SideNavBarDropdown = (props: ISideNavBarDropdown): JSX.Element => {
           onMouseLeave={() => {
             setShadow(false);
           }}
-          className={shadow ? "hover" : ""}
+          className={shadow ? 'hover' : ''}
           onClick={() => {
             setShadow(false);
           }}
         >
           <DropdownEl open={open} onClick={onSelectOpen}>
             <SelectedItemDiv>
-              {selectedItem[dropdownName] !== "" ? (
+              {selectedItem[dropdownName] !== '' ? (
                 <SelectedItemIcon>
                   {selectedItemName.substring(0, 1).toUpperCase()}
                 </SelectedItemIcon>
@@ -78,7 +78,7 @@ const SideNavBarDropdown = (props: ISideNavBarDropdown): JSX.Element => {
                 <></>
               )}
               <BodyMMedium>
-                {selectedItem[dropdownName] === ""
+                {selectedItem[dropdownName] === ''
                   ? dropdownName
                   : selectedItemName}
               </BodyMMedium>
@@ -91,7 +91,7 @@ const SideNavBarDropdown = (props: ISideNavBarDropdown): JSX.Element => {
             <OptionLi>
               <OptionA
                 onClick={() => {
-                  onSelectedItem("", "", 0);
+                  onSelectedItem('', '', 0);
                 }}
               >
                 ------------

@@ -1,27 +1,25 @@
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useState } from "react";
-import { IconBtnM } from "../../buttons/iconBtn/IconBtn";
-import { PlusIcon, RightBracketIcon } from "../../svgIcons/Icons";
-import { BodyMBold, BodySMedium } from "../../typeScale/StyledTypeScale";
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useState } from 'react';
+import { IconBtnM } from '../../buttons/iconBtn/IconBtn';
+import { PlusIcon, RightBracketIcon } from '../../svgIcons/Icons';
+import { BodyMBold, BodySMedium } from '../../typeScale/StyledTypeScale';
 
-import { IQuestion } from "@/features/interviews/interviewsInterface";
+import { IQuestionsBanks } from '@/features/interviews/interviewsInterface';
 import {
   Card,
   CardButtons,
   CardContent,
   CardCover,
   CardSubTitle,
-} from "../card/StyledCard";
-import TempCover from "@/assets/svg/questions_cover.svg";
+} from '../card/StyledCard';
+import TempCover from '@/assets/svg/questions_cover.svg';
 
-interface ITemplateInterviewCardProps {
-  title: string;
+interface ITemplateInterviewCardProps extends IQuestionsBanks {
   //temporary
-  questions: IQuestion[];
   disable: boolean;
   onClick: () => void;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 const TemplateInterviewCard = (props: ITemplateInterviewCardProps) => {
@@ -33,7 +31,7 @@ const TemplateInterviewCard = (props: ITemplateInterviewCardProps) => {
   return (
     <ElWrap w={312} h={216}>
       <Card
-        className={(hover ? "hover" : "").concat(disable ? " disable" : "")}
+        className={(hover ? 'hover' : '').concat(disable ? ' disable' : '')}
         onClick={onClick}
       >
         <CardButtons>
@@ -65,16 +63,16 @@ const TemplateInterviewCard = (props: ITemplateInterviewCardProps) => {
         >
           <BodyMBold
             style={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              maxWidth: "300px",
-              whiteSpace: "nowrap",
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: '300px',
+              whiteSpace: 'nowrap',
             }}
           >
             {title}
           </BodyMBold>
           <CardSubTitle>
-            <BodySMedium>{questions.length} Questions</BodySMedium>
+            <BodySMedium>{questions?.length} Questions</BodySMedium>
           </CardSubTitle>
         </CardContent>
       </Card>

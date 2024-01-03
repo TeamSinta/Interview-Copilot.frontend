@@ -1,31 +1,20 @@
 import {
-  AccessToken,
   CompanyID,
   DepartmentID,
-} from "@/features/settingsDetail/userSettingTypes";
+} from '@/features/settingsDetail/userSettingTypes';
 import {
   useGetCompanyDepartmentsMutation,
   useGetCompanyMembersQuery,
-} from "@/features/settingsDetail/userSettingsAPI";
-import { MembersList } from "@/features/settingsDetail/userSettingsInterface";
-import { useEffect, useState } from "react";
-
-export type Department = {
-  title: string;
-  id: string;
-};
-type TransformedDepartment = {
-  name: string;
-  value: string;
-};
+} from '@/features/settingsDetail/userSettingsAPI';
+import { MembersList } from '@/features/settingsDetail/userSettingsInterface';
+import { IOption } from '@/types/common';
+import { useEffect, useState } from 'react';
 
 export const useFetchCompanyMembers = ({
-  access,
   company_id,
   department_id,
   sortCriteria,
 }: {
-  access: AccessToken;
   company_id: CompanyID;
   department_id: DepartmentID;
   sortCriteria: string;
@@ -33,7 +22,6 @@ export const useFetchCompanyMembers = ({
   const [members, setMembers] = useState<MembersList[]>([]);
 
   const { data, isSuccess } = useGetCompanyMembersQuery({
-    access,
     company_id,
     department_id,
     sort_by: sortCriteria,
@@ -48,30 +36,28 @@ export const useFetchCompanyMembers = ({
   return { members };
 };
 
-export const useFetchCompanyDepartments = (
-  accessToken: AccessToken,
-  companyId: CompanyID
-) => {
-  const [departments, setDepartments] = useState<TransformedDepartment[]>([]);
+export const useFetchCompanyDepartments = (companyId: CompanyID) => {
+  const [departments, setDepartments] = useState<IOption[]>([]);
   const [getCompanyDepartments] = useGetCompanyDepartmentsMutation();
 
   useEffect(() => {
-    getCompanyDepartments({ access: accessToken, company_id: companyId })
+    getCompanyDepartments({ company_id: companyId })
       .then((response) => {
-        if ("data" in response && "data") {
+        if ('data' in response && 'data') {
           const transformedData = (response.data as unknown as any[]).map(
             (department) => ({
               name: department.title,
               value: department.id.toString(),
+              selected: false,
             })
           );
           setDepartments(transformedData);
-        } else if ("error" in response) {
-          console.log("Error fetching company departments:", response.error);
+        } else if ('error' in response) {
+          console.log('Error fetching company departments:', response.error);
         }
       })
-      .catch((error) => console.error("Error fetching company users:", error));
-  }, [accessToken, companyId, getCompanyDepartments]);
+      .catch((error) => console.error('Error fetching company users:', error));
+  }, [companyId, getCompanyDepartments]);
 
   return departments;
 };

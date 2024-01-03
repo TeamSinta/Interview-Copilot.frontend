@@ -1,10 +1,10 @@
-import { BodyMMedium, BodySMedium } from "../../typeScale/StyledTypeScale";
+import { BodyMMedium, BodySMedium } from '../../typeScale/StyledTypeScale';
 import {
   IBtnProps,
   StyledButton,
   StyledButtonM,
   StyledButtonS,
-} from "../button/StyledBtn";
+} from '../button/StyledBtn';
 
 export const TextBtnL = (props: IBtnProps) => {
   const { label, disable, onClick, className } = props;

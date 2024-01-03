@@ -1,23 +1,21 @@
-import React from "react";
+import React from 'react';
 import {
   BodySMedium,
   BodyMBold,
   BodySBold,
-} from "../../typeScale/StyledTypeScale";
-import { Stack, Box } from "@mui/material";
+} from '../../typeScale/StyledTypeScale';
+import { Stack, Box } from '@mui/material';
 
 import {
   StyledCard,
   StyledCardContent,
   StyledCardMedia,
-  StyledBox,
-  CenteredTypography,
-} from "./StyledInterviewRoundCard";
-import Photos from "../../buttons/photo/Photos";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { NumberIcon, PhotoIcon } from "../card/StyledCard";
-import { InitialsGenerator } from "@/utils/Utils";
-import TempCover from "@/assets/images/cover_1.jpg";
+} from './StyledInterviewRoundCard';
+import Photos from '../../buttons/photo/Photos';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { NumberIcon, PhotoIcon } from '../card/StyledCard';
+import { InitialsGenerator } from '@/utils/Utils';
+import TempCover from '@/assets/images/cover_1.jpg';
 
 export interface InterviewRoundCardProps {
   templateId: string;
@@ -56,42 +54,42 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
       sx={{ boxShadow: 0 }}
       onClick={handleClick}
       style={{
-        background: selected ? "#CECDEE" : "",
-        border: selected ? "1px #121212 solid" : "",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-start",
+        background: selected ? '#CECDEE' : '',
+        border: selected ? '1px #121212 solid' : '',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
       }}
     >
       <StyledCardContent
         style={{
-          display: "flex",
-          gap: "20px",
+          display: 'flex',
+          gap: '20px',
         }}
       >
         <Stack spacing={3.5}>
           <Stack
             spacing={0}
             style={{
-              marginTop: "-16px",
+              marginTop: '-16px',
             }}
           >
-            <BodySMedium style={{ opacity: "0.5" }}>
+            <BodySMedium style={{ opacity: '0.5' }}>
               {numberOfQuestions}
             </BodySMedium>
             <BodyMBold
               style={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                maxWidth: "140px",
-                whiteSpace: "nowrap",
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: '140px',
+                whiteSpace: 'nowrap',
               }}
             >
               {title}
             </BodyMBold>
           </Stack>
         </Stack>
-        <Box sx={{ display: "flex", gap: "4px" }}>
+        <Box sx={{ display: 'flex', gap: '4px' }}>
           <Photos>
             <>
               {members
@@ -105,7 +103,7 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
                               member.first_name,
                               member.last_name
                             )
-                          : ""}
+                          : ''}
                       </BodySBold>
                     </PhotoIcon>
                   </ElWrap>

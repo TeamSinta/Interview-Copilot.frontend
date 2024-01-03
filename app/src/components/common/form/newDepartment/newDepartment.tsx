@@ -1,21 +1,17 @@
-import { BackgroundColor, DataLoading } from "@/features/utils/utilEnum";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { TextBtnL } from "../../buttons/textBtn/TextBtn";
-import { Input } from "../input/StyledInput";
-import { InviteContainer, InviteWrap } from "./StyledDepartment";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { useCreateNewDepartmentMutation } from "@/features/settingsDetail/userSettingsAPI";
-import {
-  AccessToken,
-  CompanyID,
-} from "@/features/settingsDetail/userSettingTypes";
-import { RootState } from "@/app/store";
-import { useCookies } from "react-cookie";
+import { BackgroundColor, DataLoading } from '@/features/utils/utilEnum';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { TextBtnL } from '../../buttons/textBtn/TextBtn';
+import { Input } from '../input/StyledInput';
+import { InviteContainer, InviteWrap } from './StyledDepartment';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { useCreateNewDepartmentMutation } from '@/features/settingsDetail/userSettingsAPI';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { RootState } from '@/app/store';
 
 const TextBtnLProps = {
   disable: false,
-  label: "Create",
+  label: 'Create',
   onclick: () => {},
   className: BackgroundColor.WHITE,
 };
@@ -35,9 +31,7 @@ export interface IInviteProps {
 const NewDepartment = () => {
   //redux
 
-  const [newDepartmentName, setNewDepartmentName] = useState("");
-  const [cookies, ,] = useCookies(["access_token"]);
-  const accessToken = cookies.access_token as AccessToken;
+  const [newDepartmentName, setNewDepartmentName] = useState('');
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
 
@@ -54,7 +48,6 @@ const NewDepartment = () => {
 
   const CreateNewDepartment = async () => {
     await createNewDepartment({
-      access: accessToken, // Your access token
       company_id: companyId, // The selected company ID
       departmentTitle: newDepartmentName, // The name of the new department
     })

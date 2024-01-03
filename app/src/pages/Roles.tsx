@@ -1,16 +1,16 @@
-import { AppDispatch } from "@/app/store";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { PlusIcon } from "@/components/common/svgIcons/Icons";
-import { H1 } from "@/components/common/typeScale/StyledTypeScale";
-import { openModal } from "@/features/modal/modalSlice";
-import { getMemberAsync } from "@/features/roles/rolesSlice";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { AppDispatch } from '@/app/store';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { PlusIcon } from '@/components/common/svgIcons/Icons';
+import { H1 } from '@/components/common/typeScale/StyledTypeScale';
+import { openModal } from '@/features/modal/modalSlice';
+import { getMemberAsync } from '@/features/roles/rolesSlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 const textIconBtnArg = {
-  label: "CreateDepartment",
+  label: 'CreateDepartment',
   icon: <PlusIcon />,
   disable: false,
   className: BackgroundColor.ACCENT_PURPLE,

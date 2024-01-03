@@ -1,11 +1,11 @@
-import { AppDispatch } from "@/app/store";
+import { AppDispatch } from '@/app/store';
 import {
   IconBtnL,
   IconBtnM,
-} from "@/components/common/buttons/iconBtn/IconBtn";
-import StatusFilter from "@/components/common/filters/statusFilter/StatusFilter";
-import TextArea from "@/components/common/form/textArea/TextArea";
-import TextInput from "@/components/common/form/textInput/TextInput";
+} from '@/components/common/buttons/iconBtn/IconBtn';
+import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter';
+import TextArea from '@/components/common/form/textArea/TextArea';
+import TextInput from '@/components/common/form/textInput/TextInput';
 import {
   BinIcon,
   CheckIcon,
@@ -18,25 +18,25 @@ import {
   SelectArrowOpenIcon,
   Star1Icon,
   TimeIcon,
-} from "@/components/common/svgIcons/Icons";
+} from '@/components/common/svgIcons/Icons';
 import {
   BodyLMedium,
   BodyMBold,
   BodySMedium,
   H3Bold,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { H3 } from "@/components/common/typeScale/TypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { selectInterviewDetail } from "@/features/interviewDetail/interviewDetailSlice";
-import { IQuestion } from "@/features/interviews/interviewsInterface";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { H3 } from '@/components/common/typeScale/TypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { selectInterviewDetail } from '@/features/interviewDetail/interviewDetailSlice';
+import { IQuestion } from '@/features/interviews/interviewsInterface';
 import {
   BackgroundColor,
   DataLoading,
   StatusDropdownFilter,
-} from "@/features/utils/utilEnum";
-import React, { useEffect, useRef, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import { useDispatch, useSelector } from "react-redux";
+} from '@/features/utils/utilEnum';
+import React, { useEffect, useRef, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   InputDiv,
   InputLabelDiv,
@@ -49,27 +49,27 @@ import {
   StyledImage,
   TimeQuestionDiv,
   EmptySectionContainer,
-} from "./StyledOverviewDetail";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import { Stack } from "@mui/material";
-import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { openModal } from "@/features/modal/modalSlice";
-import { useParams } from "react-router-dom";
-import EmptyQuestionsImage from "src/assets/svg/Empty Questions Illustration.svg";
+} from './StyledOverviewDetail';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { Stack } from '@mui/material';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { openModal } from '@/features/modal/modalSlice';
+import { useParams } from 'react-router-dom';
+import EmptyQuestionsImage from 'src/assets/svg/Empty Questions Illustration.svg';
 import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
-import CustomQuestionForm from "./CustomQuestionForm";
+import CustomQuestionForm from './CustomQuestionForm';
 import {
   useAddTemplateQuestionMutation,
   useDeleteTemplateQuestionMutation,
   useGetTemplateQuestionsQuery,
   useUpdateTemplateQuestionMutation,
-} from "@/features/templates/templatesQuestionsAPISlice";
-import Loading from "@/components/common/elements/loading/Loading";
+} from '@/features/templates/templatesQuestionsAPISlice';
+import Loading from '@/components/common/elements/loading/Loading';
 import {
   useGetQuestionDetailQuery,
   useUpdateQuestionMutation,
-} from "@/features/questions/questionsAPISlice";
-import { constSelector } from "recoil";
+} from '@/features/questions/questionsAPISlice';
+import { constSelector } from 'recoil';
 
 interface IState {
   [key: string]: any;
@@ -93,11 +93,11 @@ const InterviewOverviewDetails = () => {
   const [edit, setEdit] = useState(new Set());
   const [newQuestions, setQuestions] = useState<IQuestion[]>([]);
   const [inputValue, setInputValue] = useState<IState>({
-    question_text: "",
+    question_text: '',
     reply_time: 0,
-    guidelines: "",
-    difficulty: "",
-    competency: "",
+    guidelines: '',
+    difficulty: '',
+    competency: '',
   });
 
   const { templateId } = useParams();
@@ -191,7 +191,7 @@ const InterviewOverviewDetails = () => {
   };
 
   const textAreaOnChange = (value: string) => {
-    inputValue["detail"] = value;
+    inputValue['detail'] = value;
   };
 
   const handleQuestionCreated = async (question: {}) => {
@@ -205,7 +205,7 @@ const InterviewOverviewDetails = () => {
       setShowCustomQuestionForm(false);
     } catch (error) {
       // Handle error, e.g., display a notification
-      console.error("Failed to add question:", error);
+      console.error('Failed to add question:', error);
     }
   };
 
@@ -221,7 +221,7 @@ const InterviewOverviewDetails = () => {
       setShowCustomQuestionForm(false);
     } catch (error) {
       // Handle error, e.g., display a notification
-      console.error("Failed to add question:", error);
+      console.error('Failed to add question:', error);
     }
   };
 
@@ -231,7 +231,7 @@ const InterviewOverviewDetails = () => {
       // Handle success, e.g., show a success message
     } catch (error) {
       // Handle the error, e.g., show an error message
-      console.error("Error deleting question:", error);
+      console.error('Error deleting question:', error);
     }
   };
 
@@ -241,14 +241,46 @@ const InterviewOverviewDetails = () => {
     0
   );
 
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
+  const validateTime = (value: string): string | null => {
+    // First, check if the field is empty
+    if (!value.trim()) {
+      return 'Time is required'; // Error message for empty input
+    }
+
+    // Check if the value is a number and within the range 1-60
+    const numberValue = parseInt(value, 10);
+    if (isNaN(numberValue) || numberValue < 1 || numberValue > 60) {
+      return 'Please enter a number between 1 and 60'; // Error message for invalid input
+    }
+
+    return null; // No validation errors
+  };
+
+
   return (
     <OverviewDetails>
       {!selectedSection ? (
         <>
           <EmptySectionContainer>
-            {" "}
+            {' '}
             <StyledImage
-              style={{ marginTop: "86px" }}
+              style={{ marginTop: '86px' }}
               src={EmptySectionsImage}
               alt="dashboard_picture"
             />
@@ -260,7 +292,7 @@ const InterviewOverviewDetails = () => {
             <>
               {/* ====== OVERVIEW TITLE START ====== */}
               <OverviewDetailTitle>
-                <H3Bold> {selectedSection?.topics_text ?? "Questions"}</H3Bold>
+                <H3Bold> {selectedSection?.topics_text ?? 'Questions'}</H3Bold>
                 <TimeQuestionDiv>
                   <div className="icon-div">
                     <TimeIcon />
@@ -279,7 +311,7 @@ const InterviewOverviewDetails = () => {
               {filteredQuestions.length === 0 ? (
                 showCustomQuestionForm ? (
                   <>
-                    <div style={{ paddingTop: "16px", paddingBottom: "166px" }}>
+                    <div style={{ paddingTop: '16px', paddingBottom: '166px' }}>
                       <CustomQuestionForm
                         ref={customQuestionFormRef}
                         onQuestionCreated={handleQuestionCreated}
@@ -293,8 +325,8 @@ const InterviewOverviewDetails = () => {
                         src={EmptyQuestionsImage}
                         alt="dashboard_picture"
                       />
-                      <BodyLMedium style={{ maxWidth: "450px" }}>
-                        {" "}
+                      <BodyLMedium style={{ maxWidth: '450px' }}>
+                        {' '}
                         Add Questions from the library or create your own custom
                         question
                       </BodyLMedium>
@@ -324,8 +356,8 @@ const InterviewOverviewDetails = () => {
                                   }}
                                   className={
                                     openItems.has(question.id)
-                                      ? "open"
-                                      : "close"
+                                      ? 'open'
+                                      : 'close'
                                   }
                                 >
                                   <BodyMBold>
@@ -386,7 +418,7 @@ const InterviewOverviewDetails = () => {
                             </div>
                             <div
                               className={`detail ${
-                                openItems.has(question.id) ? "" : "none"
+                                openItems.has(question.id) ? '' : 'none'
                               }`}
                             >
                               <ReactMarkdown components={components}>
@@ -406,11 +438,12 @@ const InterviewOverviewDetails = () => {
                               <InputDiv>
                                 <TextInput
                                   disable={false}
-                                  placeholder={"Question"}
+                                  placeholder={'Question'}
                                   error={false}
                                   onChange={inputOnChange}
-                                  name={"question_text"}
-                                  value={inputValue["question_text"]}
+                                  name={'question_text'}
+                                  validate={validateTitle}
+                                  value={inputValue['question_text']}
                                 />
                                 <ElWrap w={40} h={40}>
                                   <IconBtnL
@@ -454,24 +487,28 @@ const InterviewOverviewDetails = () => {
                                 </label>
                                 <TextInput
                                   disable={false}
-                                  placeholder={"Competency"}
+                                  placeholder={'Competency'}
                                   error={false}
+                                  validate={validateTitle}
                                   onChange={inputOnChange}
-                                  name={"competency"}
-                                  value={inputValue["competency"]}
+                                  name={'competency'}
+                                  value={inputValue['competency']}
                                 />
                               </InputLabelDiv>
                               <InputLabelDiv className="time">
                                 <label>
-                                  <BodySMedium>Time for reply</BodySMedium>
+                                  <BodySMedium>
+                                    Time for reply (mins)
+                                  </BodySMedium>
                                 </label>
                                 <TextInput
                                   disable={false}
-                                  placeholder={"time"}
+                                  placeholder={'time'}
                                   error={false}
+                                  validate={validateTime}
                                   onChange={inputOnChange}
-                                  name={"reply_time"}
-                                  value={inputValue["reply_time"].toString()}
+                                  name={'reply_time'}
+                                  value={inputValue['reply_time'].toString()}
                                 />
                               </InputLabelDiv>
                               <InputLabelDiv className="senioriy">
@@ -489,11 +526,12 @@ const InterviewOverviewDetails = () => {
                               </label>
                               <TextArea
                                 disable={false}
-                                placeholder={"guidelines"}
+                                placeholder={'guidelines'}
                                 error={false}
+                                validate={() => null}
                                 onChange={textAreaOnChange}
-                                name={"guidelines"}
-                                value={inputValue["guidelines"]}
+                                name={'guidelines'}
+                                value={inputValue['guidelines']}
                               />
                             </InputLabelDiv>
                           </OverviewDetailEdit>
@@ -517,7 +555,7 @@ const InterviewOverviewDetails = () => {
                 <Stack
                   direction="row"
                   spacing={1.5}
-                  style={{ borderTop: "16px solid white" }}
+                  style={{ borderTop: '16px solid white' }}
                 >
                   <TextIconBtnL
                     disable={false}
@@ -538,9 +576,9 @@ const InterviewOverviewDetails = () => {
                         customQuestionFormRef.current
                       ) {
                         customQuestionFormRef.current.scrollIntoView({
-                          behavior: "smooth",
-                          block: "start",
-                          inline: "start",
+                          behavior: 'smooth',
+                          block: 'start',
+                          inline: 'start',
                         });
                       }
                     }}

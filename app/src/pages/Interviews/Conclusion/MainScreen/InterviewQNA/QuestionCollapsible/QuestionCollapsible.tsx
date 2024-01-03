@@ -1,5 +1,6 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import { BodyLSemiBold } from '@/components/common/typeScale/StyledTypeScale';
+import React from 'react';
+import styled, { css } from 'styled-components';
 
 interface QuestionCollapsibleProps {
   question: string;
@@ -18,12 +19,12 @@ const StyledAngleIcon = styled.i<StyledAngleIconProps>`
       props.active
         ? css`
             &::before {
-              content: "\f106";
+              content: '\f106';
             }
           ` // unicode for fa-angle-up
         : css`
             &::before {
-              content: "\f107";
+              content: '\f107';
             }
           ` // unicode for fa-angle-down
   };
@@ -37,13 +38,13 @@ export const QuestionCollapsible: React.FC<QuestionCollapsibleProps> = ({
   const isActive = activeIndex === index;
 
   return (
-    <div className={isActive ? "active" : ""}>
-      <p>
-        {question}{" "}
+    <div className={isActive ? 'active' : ''}>
+      <BodyLSemiBold>
+        {question}{' '}
         <span>
           <StyledAngleIcon className="fa" active={isActive} />
         </span>
-      </p>
+      </BodyLSemiBold>
     </div>
   );
 };

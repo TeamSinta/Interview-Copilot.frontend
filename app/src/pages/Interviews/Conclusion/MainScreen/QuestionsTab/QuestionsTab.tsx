@@ -1,9 +1,9 @@
-import InterviewQNA from "../InterviewQNA/InterviewQNA";
-import { questionTabInfo } from "./QuestionsTabConstants";
+import InterviewQNA from '../InterviewQNA/InterviewQNA';
+import { questionTabInfo } from './QuestionsTabConstants';
 
 const QuestionsTab = () => {
   return (
-    <InterviewQNA questionData={questionTabInfo?.data} screen={"question"} />
+    <InterviewQNA questionData={questionTabInfo?.data} screen={'question'} />
   );
 };
 

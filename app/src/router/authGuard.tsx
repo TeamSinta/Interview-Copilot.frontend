@@ -4,163 +4,133 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 import {
-	setIsAuthenticated,
-	resetUserState,
-	checkUserAuthentication
+  setIsAuthenticated,
+  resetUserState,
+  checkUserAuthentication,
+  setTokens,
 } from '@/features/authentication/authenticationSlice';
 import { RootState, AppDispatch } from '@/app/store';
 import {
-	useGetAccessTokenMutation,
-	useGetUserMutation,
-	useValidateTokenMutation
+  useGetAccessTokenMutation,
+  useGetUserMutation,
+  useValidateTokenMutation,
 } from '@/features/authentication/authenticationAPI';
 import { setCurrentWorkspace } from '@/features/workspace/userWorkspaceSlice';
 import Loading from '@/components/common/elements/loading/Loading';
+import { AccessToken } from '@/features/settingsDetail/userSettingTypes';
 
 interface AuthGuardProps {
-	children: ReactNode;
+  children: ReactNode;
 }
 
 export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-	const navigate = useNavigate();
-	const { user, status, isAuthenticated } = useSelector(
-		(state: RootState) => state.user
-	);
-	const workspace = useSelector((state: RootState) => state.workspace);
-	const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, status, isAuthenticated } = useSelector(
+    (state: RootState) => state.user
+  );
+  const workspace = useSelector((state: RootState) => state.workspace);
+  const dispatch: AppDispatch = useDispatch();
 
-	const [cookies, setCookies, removeCookies] = useCookies([
-		'refresh_token',
-		'access_token'
-	]);
-	const accessToken: string | undefined = cookies.access_token;
-	const refreshToken: string | undefined = cookies.refresh_token;
+  const [cookies, setCookies, removeCookies] = useCookies([
+    'refresh_token',
+    'access_token',
+  ]);
+  const accessToken: AccessToken = cookies.access_token;
+  const refreshToken: AccessToken = cookies.refresh_token;
 
-	const [validateToken] = useValidateTokenMutation();
-	const [getUser] = useGetUserMutation();
-	const [getAccessToken] = useGetAccessTokenMutation();
+  const [validateToken] = useValidateTokenMutation();
+  const [getUser] = useGetUserMutation();
+  const [getAccessToken] = useGetAccessTokenMutation();
 
-	const checkAuthentication = async () => {
-		try {
-			// Dispatch the checkUserAuthentication action to check if the user is authenticated
-			await dispatch(checkUserAuthentication());
+  const authenticateUser = async (accessToken: AccessToken) => {
+    try {
+      const result = await validateToken({ access: accessToken });
+      if ('data' in result) {
+        dispatch(setIsAuthenticated(true));
+        dispatch(setTokens({ access: accessToken, refresh: refreshToken }));
+        await getUser({ access: accessToken });
+      } else {
+        handleTokenRefresh();
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        failedAuthentication();
+      } else {
+        failedAuthentication();
+      }
+    }
+  };
 
-			// Check the user's authentication status
-			if (!isAuthenticated) {
-				// User is not authenticated, handle it accordingly
-				if (accessToken) {
-					await authenticateUser(accessToken);
-				} else {
-					await handleTokenRefresh();
-				}
-			}
+  const handleTokenRefresh = async () => {
+    if (refreshToken) {
+      const newAccessToken = await getAccessToken({ refresh: refreshToken });
+      if ('data' in newAccessToken && newAccessToken.data?.access) {
+        const { access } = newAccessToken.data;
+        setCookies('access_token', access);
+        dispatch(setIsAuthenticated(true));
+        dispatch(setTokens({ access: access, refresh: refreshToken }));
+        await getUser({ access: access });
+      } else {
+        failedAuthentication();
+      }
+    } else {
+      failedAuthentication();
+    }
+  };
 
-			// Check if user email is missing and fetch it if needed
-			if (!user.email) {
-				await getUser({ access: accessToken });
-			}
+  const setDefaultWorkspace = () => {
+    if (user?.companies?.length > 0 && !workspace.id) {
+      const defaultCompany = user.companies[0];
+      dispatch(setCurrentWorkspace(defaultCompany));
+    }
+  };
 
-			// Set the default workspace if needed
-			setDefaultWorkspace();
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				failedAuthentication();
-			} else {
-				failedAuthentication();
-			}
-		}
-	};
+  const failedAuthentication = () => {
+    dispatch(resetUserState());
+    removeCookies('access_token');
+    removeCookies('refresh_token');
+    navigate('/login');
+  };
 
-	const authenticateUser = async (accessToken: string) => {
-		try {
-			const result = await validateToken({ access: accessToken });
-			if ('data' in result) {
-				await getUser({ access: accessToken });
-				dispatch(setIsAuthenticated(true));
-			} else {
-				handleTokenRefresh();
-			}
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				failedAuthentication();
-			} else {
-				failedAuthentication();
-			}
-		}
-	};
+  useEffect(() => {
+    const initAuth = async () => {
+      switch (status) {
+        case 'IDLE':
+          console.log('Checking authentication');
+          if (!isAuthenticated) {
+            if (accessToken) {
+              await authenticateUser(accessToken);
+            } else {
+              await handleTokenRefresh();
+            }
+          }
+          setDefaultWorkspace();
+          break;
 
-	const handleTokenRefresh = async () => {
-		if (refreshToken) {
-			const newAccessToken = await getAccessToken({ refresh: refreshToken });
-			if ('data' in newAccessToken && newAccessToken.data?.access) {
-				const { access } = newAccessToken.data;
-				setCookies('access_token', access);
-				dispatch(setIsAuthenticated(true));
-				await getUser({ access: access });
-			} else {
-				failedAuthentication();
-			}
-		} else {
-			failedAuthentication();
-		}
-	};
+        case 'AUTHENTICATED':
+          if (!user.email) {
+            await getUser({ access: accessToken });
+          }
+          setDefaultWorkspace();
+          console.log('Authenticated');
+          break;
 
-	const setDefaultWorkspace = () => {
-		if (user.companies && user.companies.length > 0 && !workspace.id) {
-			const defaultCompany = user.companies[0];
-			dispatch(setCurrentWorkspace(defaultCompany));
-		}
-	};
+        case 'LOADING':
+          console.log('Authentication Loading');
+          break;
 
-	const failedAuthentication = () => {
-		dispatch(resetUserState());
-		removeCookies('access_token');
-		removeCookies('refresh_token');
-		navigate('/login');
-	};
+        case 'FAILED':
+          console.log('Authentication Failed');
+          failedAuthentication();
+          break;
+      }
+    };
 
-	useEffect(() => {
-		const initAuth = async () => {
-			switch (status) {
-				case 'IDLE':
-					console.log('Checking authentication');
-					if (!isAuthenticated) {
-						if (accessToken) {
-							await authenticateUser(accessToken);
-						} else {
-							await handleTokenRefresh();
-						}
-					}
-					if (!user.email) {
-						await getUser({ access: accessToken });
-					}
-					setDefaultWorkspace();
-					break;
+    initAuth();
+  }, [accessToken, status, isAuthenticated, user.email]);
 
-				case 'AUTHENTICATED':
-					if (!user.email) {
-						await getUser({ access: accessToken });
-					}
-					setDefaultWorkspace();
-					console.log('Authenticated');
-					break;
-
-				case 'LOADING':
-					console.log('Authentication Loading');
-					break;
-
-				case 'FAILED':
-					console.log('Authentication Failed');
-					failedAuthentication();
-					break;
-			}
-		};
-
-		initAuth();
-	}, [accessToken, status, isAuthenticated, user.email]);
-
-	if (status === 'IDLE' || status === 'LOADING') return <Loading />;
-	return <>{children}</>;
+  if (status === 'IDLE' || status === 'LOADING') return <Loading />;
+  return <>{children}</>;
 };
 
 // I think the logic works. Check the logs to make sure it doesn't like overly init the useEffect. I dont want it to reload unecessarily.

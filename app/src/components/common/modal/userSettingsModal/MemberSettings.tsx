@@ -1,27 +1,34 @@
-import React, { useEffect, useState } from "react";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { TextIconBtnL } from "../../buttons/textIconBtn/TextIconBtn";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import {
-  DeleteBox,
-  MemberDetailsContainer,
-  MemberActionContainer,
-  MemberInformationContainer,
-  ProfilePicture,
-} from "./StyledMemberSettings";
-import { ModalContentWrap } from "../modalContents/StyledModalContents";
+import { AppDispatch, RootState } from '@/app/store';
+import { TextBtnS } from '@/components/common/buttons/textBtn/TextBtn';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import {
   BodyLMedium,
   BodyMMedium,
   H3Bold,
-} from "../../typeScale/StyledTypeScale";
-import DropdownFilter from "../../filters/dropdownFilter/DropdownFilter";
-import CheckBox from "../../form/checkBox/CheckBox";
-import { TextBtnS } from "../../buttons/textBtn/TextBtn";
-import { selectSetMember } from "@/features/members/memberSlice";
-import { useSelector } from "react-redux";
-import { useGetUserDepartmentsMutation } from "@/features/settingsDetail/userSettingsAPI";
-import { RootState } from "@/app/store";
+} from '@/components/common/typeScale/StyledTypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
+import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
+import { selectSetMember } from '@/features/members/memberSlice';
+import { closeModal } from '@/features/modal/modalSlice';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import {
+  useCreateDepartmentMemberMutation,
+  useGetUserDepartmentsMutation,
+} from '@/features/settingsDetail/userSettingsAPI';
+import { IDepartment } from '@/features/settingsDetail/userSettingsInterface';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { IOption } from '@/types/common';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ModalContentWrap } from '../modalContents/StyledModalContents';
+import {
+  DeleteBox,
+  MemberActionContainer,
+  MemberDetailsContainer,
+  MemberInformationContainer,
+  ProfilePicture,
+} from './StyledMemberSettings';
 
 interface UserModalProps {
   user: {
@@ -35,27 +42,68 @@ interface UserModalProps {
 }
 
 const MemberSettings: React.FC<UserModalProps> = () => {
+  const [memberDepartments, setMemberDepartments] = useState<IOption[]>([]);
+  const workspace = useSelector((state: RootState) => state.workspace);
+  const user = useSelector((state: RootState) => state.user.user);
   const member = useSelector(selectSetMember);
 
-  const workspace = useSelector((state: RootState) => state.workspace);
-  const [memberDepartments, setMemberDepartments] = useState([]);
   const [getMemberDepartments] = useGetUserDepartmentsMutation();
+  const [createDepartmentMember, { isSuccess, data }] =
+    useCreateDepartmentMemberMutation();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const companyId: CompanyID = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyID;
+
+  const departments = useFetchCompanyDepartments(companyId);
 
   useEffect(() => {
-    getMemberDepartments({ user_id: member.id, company_id: workspace.id }).then(
-      (response) => {
-        if ("data" in response) {
-          const transformedData = response.data.map((department) => ({
-            name: department.title,
-            value: department.id.toString(),
-          }));
-          setMemberDepartments(transformedData);
-        }
+    getMemberDepartments({
+      user_id: member.id,
+      company_id: member.id,
+    }).then((response) => {
+      if ('data' in response) {
+        const data = response.data as unknown as IDepartment[];
+        const transformedData = departments.map((department: IOption) => ({
+          ...department,
+          selected: data.some(
+            (userDepartment) =>
+              Number(userDepartment.id) === Number(department.value)
+          ),
+        }));
+        setMemberDepartments(transformedData);
       }
-    );
-  }, [getMemberDepartments]);
+    });
+  }, [getMemberDepartments, member, departments]);
 
-  useEffect(() => {}, []);
+  const handleSetDepartment = (data: IOption) => {
+    const updatedDepartments = memberDepartments.map((department) => {
+      if (department.value === data.value) {
+        return data;
+      }
+      return department;
+    });
+    setMemberDepartments(updatedDepartments);
+  };
+
+  const handleSave = async () => {
+    const userData = {
+      user_id: member.id,
+      company_id: companyId,
+      // department_id: selectedDepartment,// Department id will for single select
+      body: memberDepartments
+        .filter((department) => department.selected === true)
+        .map((department) => Number(department.value)),
+    };
+    createDepartmentMember(userData);
+  };
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      dispatch(closeModal());
+    }
+  }, [isSuccess, data, dispatch]);
 
   return (
     <ModalContentWrap>
@@ -69,23 +117,22 @@ const MemberSettings: React.FC<UserModalProps> = () => {
         </MemberDetailsContainer>
       </MemberInformationContainer>
       <MemberActionContainer>
-        <DropdownFilter
-          key={workspace.id}
-          label="Departments"
-          value=""
-          onChange={() => {}}
-          optionArr={memberDepartments}
-          dropdownName="Placeholder"
+        <DepartmentDropDown
+          departments={memberDepartments}
+          handleSetDepartment={(data) => handleSetDepartment(data as IOption)}
+          workspaceId={workspace.id}
+          multi
         />
 
-        {/* Disabled checkbox for now
+        {/* Disabled checkbox for now 
         <CheckBox
           inputName="Check Box"
           label="Make Admin"
           onChange={() => {}}
           checked={false}
           disabled={true}
-        /> */}
+        />
+        */}
         <DeleteBox>
           <BodyMMedium style={{ opacity: 0.5 }}>You can </BodyMMedium>
           <ElWrap w={50} h={10}>
@@ -97,7 +144,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
             />
           </ElWrap>
           <BodyMMedium style={{ opacity: 0.5 }}>
-            {" "}
+            {' '}
             your team members from all workspaces.
           </BodyMMedium>
         </DeleteBox>
@@ -106,7 +153,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
       <ElWrap>
         <TextIconBtnL
           disable={false}
-          onClick={() => {}}
+          onClick={handleSave}
           className={BackgroundColor.ACCENT_PURPLE}
           label="Save"
         />

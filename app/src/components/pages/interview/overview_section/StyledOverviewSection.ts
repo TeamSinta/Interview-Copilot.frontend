@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { BoderBox, Title } from "../StyledInterview";
-import { postInviteMember } from "../../../../features/inviteMember/inviteMemberAPI";
+import styled from 'styled-components';
+import { BoderBox, Title } from '../StyledInterview';
+import { postInviteMember } from '../../../../features/inviteMember/inviteMemberAPI';
 
 export const OverviewSections = styled(BoderBox)`
   padding: 24px;

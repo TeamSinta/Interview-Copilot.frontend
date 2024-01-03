@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export interface IBtnProps {
   label?: string;
@@ -22,7 +22,7 @@ export const StyledButton = styled.button`
   position: relative;
   outline: 1px solid ${(props) => props.theme.colors.black};
   outline-offset: -1px;
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0px 2px 0px #121212;
   height: 40px;
   width: 100%;
@@ -184,7 +184,7 @@ export const SmallButtonLayout = styled.div<IButtonLayout>`
           width: 100%;
           height: inherit;
           background: ${props.theme.colors.white};
-          content: " ";
+          content: ' ';
           opacity: 0.3;
           position: absolute;
         }

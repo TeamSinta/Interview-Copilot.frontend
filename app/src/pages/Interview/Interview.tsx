@@ -1,5 +1,5 @@
-import { Grid, Stack } from "@mui/material";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Grid, Stack } from '@mui/material';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   StyledIcon,
   StyledInfoDescription,
@@ -16,12 +16,11 @@ import {
   EmojiOverlayWrapper,
   StyledImage,
   GridContainer,
-  InterviewSideBarWrapper,
   GuidelinesSection,
   InterviewLayout,
-} from "./StyledInterview";
-import { NavButton } from "@/components/layouts/sidenavbar/StyledSideNavBar";
-import { CANDIDATE_DETAILS } from "./InterviewConstant";
+} from './StyledInterview';
+import { NavButton } from '@/components/layouts/sidenavbar/StyledSideNavBar';
+import { CANDIDATE_DETAILS } from './InterviewConstant';
 import {
   BottomArrowIcon,
   EmailIcon,
@@ -32,70 +31,71 @@ import {
   ResumeIcon,
   RightArrowIcon,
   TwoArrowIcon,
-} from "@/components/common/svgIcons/Icons";
-import InterviewStageSlider from "./InterviewStageSlider";
-import { QuestionMeta } from "../Interviews/Conclusion/MainScreen/InterviewQNA/Tabs/QuestionTabQNA";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { StyledIconBtnM } from "@/components/common/buttons/button/StyledBtn";
-import { Notes } from "./Notes";
-import "./index.css";
-import { BottomNavBar } from "./Daily/BottomNavBar";
-import { RatingComponentL } from "../Interviews/Conclusion/MainScreen/InterviewQNA/RatingComponent";
-import Call from "./Daily/Call/Call";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/app/store";
-import { startCall } from "@/features/videoCall/videoCallSlice";
-import { useWindowSize } from "@/hooks/useWindowSize";
+} from '@/components/common/svgIcons/Icons';
+import InterviewStageSlider from './InterviewStageSlider';
+import { QuestionMeta } from '../Interviews/Conclusion/MainScreen/InterviewQNA/Tabs/QuestionTabQNA';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { StyledIconBtnM } from '@/components/common/buttons/button/StyledBtn';
+import { Notes } from './Notes';
+import './index.css';
+import { BottomNavBar } from './Daily/BottomNavBar';
+import { RatingComponentL } from '../Interviews/Conclusion/MainScreen/InterviewQNA/RatingComponent';
+import Call from './Daily/Call/Call';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/app/store';
+import { startCall } from '@/features/videoCall/videoCallSlice';
+import { useWindowSize } from '@/hooks/useWindowSize';
 import {
   getTemplateQuestionsAndTopics,
   sendFeedback,
   updateInterviewQuestionRating,
-} from "../../features/interviews/interviewsAPI";
-import { useCookies } from "react-cookie";
-import { useDaily } from "@daily-co/daily-react";
-import SintaLogo from "src/assets/svg/Sinta_call_logo.svg";
+} from '../../features/interviews/interviewsAPI';
+import { useDaily } from '@daily-co/daily-react';
+import SintaLogo from 'src/assets/svg/Sinta_call_logo.svg';
 import {
   BodyLMedium,
   BodySBold,
   BodySMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { InputLabelDiv } from "@/components/pages/interview/overview_detail/StyledOverviewDetail";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { InputLabelDiv } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
 
-import ReactMarkdown from "react-markdown";
-import { H3 } from "@/components/common/typeScale/TypeScale";
-import Chat from "@/components/common/form/chatBox/ChatBox";
+import ReactMarkdown from 'react-markdown';
+import { H3 } from '@/components/common/typeScale/TypeScale';
+import Chat from '@/components/common/form/chatBox/ChatBox';
+import { useCookies } from 'react-cookie';
 
 const components = {
   h3: H3,
 };
 
 const Interview = ({ leaveCall, interviewDetails }) => {
-  const title = "FrontEnd Developer";
-  const stage = "Round 3";
-  const stageName = "Pair-Programming";
-  const commentInputRef = useRef<HTMLInputElement>(null);
+  const stage = 'Round 3';
+  const stageName = 'Pair-Programming';
   const { user } = useSelector((state: RootState) => state.user);
-
+  const [cookies, ,] = useCookies(['access_token']);
   const [activeTab, setActiveTab] = useState(1);
-  const [initTime, setInitTime] = useState("");
+  const [initTime, setInitTime] = useState('');
   const [templateQuestionsAndTopics, setTemplateQuestionsAndTopics] =
     useState(null);
   const { width } = useWindowSize();
   const [reactClicked, setReactClicked] = useState({
     clicked: 0,
-    message: "",
+    message: '',
     position: {
       left: 0,
       top: 0,
     },
   });
-  const [startTime, setStartTime] = useState(null);
+
+  const [startTime, setStartTime] = useState<Date | null>(null);
+
+  useEffect(() => {
+    const now = new Date();
+    setStartTime(now);
+  }, []);
   const [isInterviewSideBarCollapsed, setIsInterviewSideBarCollapsed] =
     useState(false);
-  const [cookies, ,] = useCookies(["access_token"]);
   const callObject = useDaily();
-
-  // Placeholder for functionality. Moe will have to update this once the videoscreen is done and we have correct reducers/states.
 
   const { active_call } = useSelector((state: RootState) => state.videoCall);
   const dispatch: AppDispatch = useDispatch();
@@ -106,9 +106,9 @@ const Interview = ({ leaveCall, interviewDetails }) => {
 
   const getCurrentTime = (): string => {
     const now = new Date();
-    const hours = now.getHours().toString().padStart(2, "0");
-    const minutes = now.getMinutes().toString().padStart(2, "0");
-    const seconds = now.getSeconds().toString().padStart(2, "0");
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
     return `${hours}:${minutes}:${seconds}`;
   };
 
@@ -116,13 +116,14 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     setInitTime(getCurrentTime());
     // placeholder dispatch for functionality, sets call as active to allow correct fullscreen rendering in App
     dispatch(startCall(true));
+
     // placeholder dispatch end //
   }, [active_call, dispatch]);
 
   useEffect(() => {
     const { message, position } = reactClicked;
     window.dispatchEvent(
-      new CustomEvent("reaction_added", { detail: { message, position } })
+      new CustomEvent('reaction_added', { detail: { message, position } })
     );
   }, [reactClicked]);
 
@@ -143,11 +144,11 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     };
 
     fetchQuestionsAndTopics();
-  }, [cookies.access_token, interviewDetails]);
+  }, [interviewDetails]);
 
   const sidebarTabs = useMemo(() => {
     return (
-      <div style={{ display: "flex" }}>
+      <div style={{ display: 'flex' }}>
         <span>
           <NavButton
             onClick={() => {
@@ -155,48 +156,48 @@ const Interview = ({ leaveCall, interviewDetails }) => {
             }}
             direction="row"
             style={{
-              fontSize: "12px",
-              height: "30px",
-              borderRadius: "10px",
-              width: "fit-content",
-              padding: "17px 19px",
-              lineHeight: "125%",
+              fontSize: '12px',
+              height: '30px',
+              borderRadius: '10px',
+              width: 'fit-content',
+              padding: '17px 19px',
+              lineHeight: '125%',
             }}
-            className={activeTab === 1 ? "rightTabs active" : "rightTabs"}
+            className={activeTab === 1 ? 'rightTabs active' : 'rightTabs'}
           >
             <span>Info</span>
-          </NavButton>{" "}
+          </NavButton>{' '}
         </span>
         <span>
           <NavButton
             onClick={() => setActiveTab(2)}
             direction="row"
             style={{
-              fontSize: "12px",
-              height: "30px",
-              borderRadius: "10px",
-              width: "fit-content",
-              marginLeft: "5px",
-              padding: "17px 19px",
+              fontSize: '12px',
+              height: '30px',
+              borderRadius: '10px',
+              width: 'fit-content',
+              marginLeft: '5px',
+              padding: '17px 19px',
             }}
-            className={activeTab === 2 ? "rightTabs active" : "rightTabs"}
+            className={activeTab === 2 ? 'rightTabs active' : 'rightTabs'}
           >
             <span>Questions</span>
-          </NavButton>{" "}
+          </NavButton>{' '}
         </span>
         <span>
           <NavButton
             onClick={() => setActiveTab(3)}
             direction="row"
             style={{
-              fontSize: "12px",
-              height: "30px",
-              borderRadius: "10px",
-              width: "fit-content",
-              marginLeft: "5px",
-              padding: "17px 19px",
+              fontSize: '12px',
+              height: '30px',
+              borderRadius: '10px',
+              width: 'fit-content',
+              marginLeft: '5px',
+              padding: '17px 19px',
             }}
-            className={activeTab === 3 ? "rightTabs active" : "rightTabs"}
+            className={activeTab === 3 ? 'rightTabs active' : 'rightTabs'}
           >
             <span>Notes</span>
           </NavButton>
@@ -211,15 +212,15 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       return (
         <div
           style={{
-            display: "flex",
-            fontSize: "10px",
-            alignContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            fontSize: '10px',
+            alignContent: 'center',
+            alignItems: 'center',
           }}
         >
           <span
             style={{
-              marginRight: "5px",
+              marginRight: '5px',
             }}
           >
             <StyledIcon>{icon}</StyledIcon>
@@ -234,15 +235,15 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       return (
         <div
           style={{
-            display: "flex",
-            fontSize: "10px",
-            alignContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            fontSize: '10px',
+            alignContent: 'center',
+            alignItems: 'center',
           }}
         >
           <span
             style={{
-              marginRight: "5px",
+              marginRight: '5px',
             }}
           >
             <StyledIcon>{icon}</StyledIcon>
@@ -259,37 +260,37 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       return (
         <>
           <Grid container>
-            {" "}
+            {' '}
             <ImageText icon={<EmailIcon />} text={interviewDetails.email} />
           </Grid>
           <br></br>
           <Grid container>
             <Grid md={6}>
-              {" "}
+              {' '}
               <ImageText
                 icon={<MapIcon />}
                 text={CANDIDATE_DETAILS.LOCATION}
-              />{" "}
+              />{' '}
               <br></br>
               <ImageLinkText
                 icon={<ResumeIcon />}
-                text={"Resume.pdf"}
+                text={'Resume.pdf'}
                 link={CANDIDATE_DETAILS.LINKEDIN}
-                textDecoration={"normal"}
+                textDecoration={'normal'}
               />
             </Grid>
             <Grid md={6}>
-              {" "}
+              {' '}
               <ImageText
                 icon={<PhoneIcon />}
                 text={CANDIDATE_DETAILS.PHONE}
-              />{" "}
+              />{' '}
               <br></br>
               <ImageLinkText
                 icon={<LinkedinIcon />}
-                text={"LinkedIn "}
+                text={'LinkedIn '}
                 link={CANDIDATE_DETAILS.LINKEDIN}
-                textDecoration={"underline"}
+                textDecoration={'underline'}
               />
             </Grid>
           </Grid>
@@ -306,21 +307,21 @@ const Interview = ({ leaveCall, interviewDetails }) => {
 
     const competencies = useMemo(() => {
       return (
-        <div style={{ fontSize: "12px" }}>
+        <div style={{ fontSize: '12px' }}>
           <p
             style={{
-              fontWeight: "600",
-              fontSize: "12px",
-              fontFamily: "ChillaxSemi",
+              fontWeight: '600',
+              fontSize: '12px',
+              fontFamily: 'ChillaxSemi',
             }}
           >
-            {"Competencies"}
+            {'Competencies'}
           </p>
           <br></br>
-          <div style={{ display: "flex" }}>
+          <div style={{ display: 'flex' }}>
             {CANDIDATE_DETAILS.COMPETENCIES.map((a) => {
               return <CompetencyStyle>{a}</CompetencyStyle>;
-            })}{" "}
+            })}{' '}
           </div>
         </div>
       );
@@ -342,13 +343,14 @@ const Interview = ({ leaveCall, interviewDetails }) => {
   const InterviewQuestionTab = (info: any) => {
     const { data } = info;
     const [activeData, setActiveData] = useState(data[0]);
-    const [activeQuestionInfo, setActiveQuestionInfo] = useState<any>("");
-    const [activeNumber, setActiveNumber] = useState<any>("");
+    const [activeQuestionInfo, setActiveQuestionInfo] = useState<any>('');
+    const [activeNumber, setActiveNumber] = useState<any>('');
     const [collapseQuestion, setCollapseQuestion] = useState(false);
+    const [questionRatings, setQuestionRatings] = useState({});
     const [prevNum, setPrevNum] = useState(0);
     const [nextNum, setNextNum] = useState(2);
-    const [inputValue, setInputValue] = useState<IState>({
-      notes: "",
+    const [inputValue] = useState<IState>({
+      notes: '',
     });
 
     const showQuestionDetail = (questionInfo: any, index: any) => {
@@ -364,12 +366,12 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     };
     const handleRating = (rating: number, question: string) => {
       // update interview round question rating to new rating
-      updateInterviewQuestionRating(
-        rating,
-        question,
-        interviewDetails.id,
-        cookies.access_token
-      );
+      setQuestionRatings((prevRatings) => ({
+        ...prevRatings,
+        [question.id]: rating,
+      }));
+
+      updateInterviewQuestionRating(rating, question.id, interviewDetails.id);
     };
 
     useEffect(() => {
@@ -382,17 +384,14 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       setCollapseQuestion(false);
     }
 
-    const textAreaOnChange = (value: string) => {
-      inputValue["notes"] = value;
-    };
     return (
       <>
         <div
           style={{
-            padding: "2px",
-            flex: "1",
-            flexDirection: "column",
-            display: "flex",
+            padding: '2px',
+            flex: '1',
+            flexDirection: 'column',
+            display: 'flex',
           }}
         >
           {collapseQuestion ? (
@@ -404,9 +403,9 @@ const Interview = ({ leaveCall, interviewDetails }) => {
               />
               <span
                 style={{
-                  marginLeft: "18px",
+                  marginLeft: '18px',
 
-                  backgroundColor: "transparent",
+                  backgroundColor: 'transparent',
                 }}
                 onClick={() => {
                   setCollapseQuestion(false);
@@ -414,12 +413,12 @@ const Interview = ({ leaveCall, interviewDetails }) => {
               >
                 <ElWrap w={50}>
                   <StyledIconBtnM
-                    style={{ backgroundColor: "white", stroke: "white" }}
+                    style={{ backgroundColor: 'white', stroke: 'white' }}
                   >
                     <div
                       style={{
-                        transform: "rotate(45deg)",
-                        stroke: "${(props) => props.theme.colors.white",
+                        transform: 'rotate(45deg)',
+                        stroke: '${(props) => props.theme.colors.white',
                       }}
                     >
                       <TwoArrowIcon />
@@ -436,23 +435,23 @@ const Interview = ({ leaveCall, interviewDetails }) => {
             />
           )}
           <StyledInnerWrapper>
-            {" "}
+            {' '}
             {!collapseQuestion
               ? activeData?.questions?.map((a: any, index: any) => {
                   return (
                     <div
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontSize: "12px",
-                        lineHeight: "15px",
-                        borderRadius: "10px",
-                        padding: "15px 10px",
-                        backgroundColor: "white",
-                        margin: "5px",
-                        marginBottom: "10px",
-                        cursor: "pointer",
-                        opacity: index === 0 ? "0.5" : "1",
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '12px',
+                        lineHeight: '15px',
+                        borderRadius: '10px',
+                        padding: '15px 10px',
+                        backgroundColor: 'white',
+                        margin: '5px',
+                        marginBottom: '10px',
+                        cursor: 'pointer',
+                        opacity: index === 0 ? '0.5' : '1',
                       }}
                       onClick={() => {
                         showQuestionDetail(a, index);
@@ -460,7 +459,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                     >
                       <IndexStyle>
                         <div>
-                          <span>{index + 1}</span>{" "}
+                          <span>{index + 1}</span>{' '}
                         </div>
                       </IndexStyle>
                       <div>{a.question}</div>
@@ -472,37 +471,37 @@ const Interview = ({ leaveCall, interviewDetails }) => {
               <div
                 className="question-detail"
                 style={{
-                  fontSize: "14px",
+                  fontSize: '14px',
                 }}
               >
-                <div style={{ marginTop: "18px" }}>
+                <div style={{ marginTop: '18px' }}>
                   <div
                     style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "100%",
+                      display: 'flex',
+                      flexDirection: 'column',
+                      height: '100%',
                     }}
                   >
                     <div>
                       <Stack direction="row" justifyContent="space-between">
                         <div
                           style={{
-                            display: "flex",
-                            alignItems: "center",
+                            display: 'flex',
+                            alignItems: 'center',
 
-                            marginBottom: "12px",
+                            marginBottom: '12px',
                           }}
                         >
                           <WhiteIndexStyle>
                             <div>
-                              <BodySBold>{activeNumber}</BodySBold>{" "}
+                              <BodySBold>{activeNumber}</BodySBold>{' '}
                             </div>
                           </WhiteIndexStyle>
 
                           <CompetencyStyle>
                             <BodySMedium>
                               {activeQuestionInfo?.competency}
-                            </BodySMedium>{" "}
+                            </BodySMedium>{' '}
                           </CompetencyStyle>
                         </div>
                         <Stack
@@ -513,7 +512,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                           <span
                             style={{
                               opacity:
-                                parseInt(activeNumber) === 1 ? "0.5" : "1",
+                                parseInt(activeNumber) === 1 ? '0.5' : '1',
                             }}
                             onClick={() => {
                               if (parseInt(activeNumber) !== 1) {
@@ -530,7 +529,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                             }}
                           >
                             <ElWrap w={33}>
-                              <StyledIconBtnM style={{ background: "white" }}>
+                              <StyledIconBtnM style={{ background: 'white' }}>
                                 {/* this is actually left arrow icon */}
                                 <RightArrowIcon />
                               </StyledIconBtnM>
@@ -541,8 +540,8 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                               opacity:
                                 parseInt(activeNumber) ===
                                 activeData?.questions?.length
-                                  ? "0.5"
-                                  : "1",
+                                  ? '0.5'
+                                  : '1',
                             }}
                             onClick={() => {
                               if (
@@ -562,60 +561,66 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                             }}
                           >
                             <ElWrap w={33}>
-                              <StyledIconBtnM style={{ background: "white" }}>
+                              <StyledIconBtnM style={{ background: 'white' }}>
                                 <LeftArrowIcon />
                               </StyledIconBtnM>
                             </ElWrap>
-                          </span>{" "}
+                          </span>{' '}
                         </Stack>
-                      </Stack>{" "}
+                      </Stack>{' '}
                       <Stack
                         alignItems="flex-start"
-                        style={{ marginLeft: "8px" }}
+                        style={{ marginLeft: '8px' }}
                       >
                         <BodyLMedium
                           style={{
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            textAlign: "flex-start",
-                            paddingTop: "16px",
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            textAlign: 'start',
+                            paddingTop: '16px',
                           }}
                         >
                           {activeQuestionInfo?.question}
                         </BodyLMedium>
                         <div
                           style={{
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            marginTop: "16px",
-                            paddingBottom: "8px",
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            marginTop: '16px',
+                            paddingBottom: '8px',
                           }}
                         >
                           <QuestionMeta
-                            question={"low"}
+                            question={'low'}
                             duration={activeQuestionInfo?.duration}
+                            difficulty={activeQuestionInfo?.difficulty}
                           />
                         </div>
 
                         <div
-                          style={{ marginTop: "16px", marginBottom: "28px" }}
+                          style={{ marginTop: '16px', marginBottom: '28px' }}
                         >
                           <RatingComponentL
                             interviewRoundId={interviewDetails.id}
                             question={activeQuestionInfo?.question}
+                            initialActiveTab={activeQuestionInfo?.rating}
                             id={activeQuestionInfo?.id}
-                            setRating={handleRating}
-                            rating={activeQuestionInfo?.rating}
+                            onUpdateRating={(rating: number) =>
+                              handleRating(rating, activeQuestionInfo)
+                            }
+                            rating={
+                              questionRatings[activeQuestionInfo.id] || null
+                            }
                             width={40}
                             height={40}
-                          />{" "}
+                          />{' '}
                         </div>
                       </Stack>
                     </div>
                     <GuidelinesSection>
                       <StyledAnswerPoints>
-                        <BodySBold style={{ marginBottom: "8px" }}>
-                          {"Guidelines"}
+                        <BodySBold style={{ marginBottom: '8px' }}>
+                          {'Guidelines'}
                         </BodySBold>
                         <ReactMarkdown components={components}>
                           {activeQuestionInfo?.answer}
@@ -636,15 +641,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                 spacing={1}
                 alignItems="flex-end"
               >
-                <InputLabelDiv style={{ width: "100%" }}>
-                  {/* <TextArea
-                    disable={false}
-                    placeholder={"Notes"}
-                    error={false}
-                    onChange={textAreaOnChange}
-                    name={"notes"}
-                    value={inputValue["notes"]}
-                  /> */}
+                <InputLabelDiv style={{ width: '100%' }}>
                   <Chat
                     notesEntered={notesEntered}
                     elapsedTime={initTime}
@@ -667,14 +664,14 @@ const Interview = ({ leaveCall, interviewDetails }) => {
         <Grid lg={12}>
           <Grid container>
             <Grid lg={10} md={10} sm={10} xs={10}>
-              <span style={{ fontWeight: "600", fontFamily: "ChillaxSemi" }}>
+              <span style={{ fontWeight: '600', fontFamily: 'ChillaxSemi' }}>
                 {interviewDetails.title}
               </span>
             </Grid>
             <Grid lg={2} md={2} sm={2} xs={2}>
               <span
                 onClick={collapseInterviewSideBar}
-                style={{ float: "right" }}
+                style={{ float: 'right' }}
               >
                 <BottomArrowIcon />
               </span>
@@ -685,32 +682,32 @@ const Interview = ({ leaveCall, interviewDetails }) => {
         <Grid lg={11}>
           <div
             style={{
-              backgroundColor: "#F6F6FB",
-              padding: "10px",
-              borderRadius: "10px",
-              display: "flex",
-              fontSize: "9px",
-              alignItems: "center",
-              alignContent: "center",
-              width: "fit-content",
+              backgroundColor: '#F6F6FB',
+              padding: '10px',
+              borderRadius: '10px',
+              display: 'flex',
+              fontSize: '9px',
+              alignItems: 'center',
+              alignContent: 'center',
+              width: 'fit-content',
             }}
           >
-            <span style={{ fontWeight: "lighter", marginLeft: "2px" }}>
-              {stage + ": "}
+            <span style={{ fontWeight: 'lighter', marginLeft: '2px' }}>
+              {stage + ': '}
             </span>
             <span
               style={{
-                fontWeight: "600",
-                fontFamily: "ChillaxSemi",
-                marginLeft: "2px",
+                fontWeight: '600',
+                fontFamily: 'ChillaxSemi',
+                marginLeft: '2px',
               }}
             >
               {stageName}
-            </span>{" "}
+            </span>{' '}
           </div>
-        </Grid>{" "}
+        </Grid>{' '}
         <br></br>
-        {sidebarTabs}{" "}
+        {sidebarTabs}{' '}
       </StyledTopView>
       <br></br>
       <StyledInnerDiv>
@@ -719,13 +716,13 @@ const Interview = ({ leaveCall, interviewDetails }) => {
             <>
               <p
                 style={{
-                  fontWeight: "600",
-                  fontFamily: "ChillaxSemi",
-                  fontSize: activeTab === 1 ? "20px" : "12px",
+                  fontWeight: '600',
+                  fontFamily: 'ChillaxSemi',
+                  fontSize: activeTab === 1 ? '20px' : '12px',
                 }}
               >
                 {interviewDetails.name}
-              </p>{" "}
+              </p>{' '}
               <br></br>
             </>
           ) : null}
@@ -767,21 +764,21 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     return (
       <Grid
         style={{
-          height: "100%", // Adjust the height as needed
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
+          height: '100%', // Adjust the height as needed
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
         }}
       >
         <span
           style={{
-            fontWeight: "600",
-            fontFamily: "ChillaxSemi",
-            fontSize: "1.5em",
-            width: "100%",
+            fontWeight: '600',
+            fontFamily: 'ChillaxSemi',
+            fontSize: '1.5em',
+            width: '100%',
             opacity: opacity, // Apply dynamic opacity value
-            transition: "opacity 1.5s ease-in-out", // Smooth transition for opacity change
+            transition: 'opacity 1.5s ease-in-out', // Smooth transition for opacity change
           }}
         >
           Waiting for candidate...
@@ -796,7 +793,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       <div>
         {/* {header} */}
         <StyledInterviewContent isCollapsed={isInterviewSideBarCollapsed}>
-          {interviewDetails.name !== "" || interviewDetails.name !== null ? (
+          {interviewDetails.name !== '' || interviewDetails.name !== null ? (
             interviewSideBarData
           ) : (
             <InterviewSideBarWaiting />
@@ -820,7 +817,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     const secondsNum = parseInt(seconds, 10);
 
     // Format minutes and seconds to 'mm:ss'
-    const formattedTime = `${minutes}:${secondsNum < 10 ? "0" : ""}${seconds}`;
+    const formattedTime = `${minutes}:${secondsNum < 10 ? '0' : ''}${seconds}`;
     return formattedTime;
   };
 
@@ -833,7 +830,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       time: getEmojiClickTime(),
     };
 
-    sendFeedback(data, cookies.access_token);
+    sendFeedback(data);
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     setReactClicked({
@@ -846,12 +843,14 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     });
   };
 
-  function notesEntered(notes: string) {
+  function notesEntered(notes: string, activeQuestionID: string) {
     // send feedback
     const data = {
       interview_round: interviewDetails.id,
       user: user.id,
       note: notes,
+      time: getEmojiClickTime(),
+      template_question: activeQuestionID,
     };
 
     sendFeedback(data, cookies.access_token);
@@ -861,11 +860,11 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     const overlayRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-      window.addEventListener("reaction_added", handleSendFlyingEmoji);
+      window.addEventListener('reaction_added', handleSendFlyingEmoji);
 
       // Clean up the event listener
       return () => {
-        window.removeEventListener("reaction_added", handleSendFlyingEmoji);
+        window.removeEventListener('reaction_added', handleSendFlyingEmoji);
       };
     }, []);
 
@@ -879,7 +878,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       const position = e.detail.position;
 
       if (emoji) {
-        callObject.sendAppMessage({ message: `${emoji}` }, "*");
+        callObject.sendAppMessage({ message: `${emoji}` }, '*');
         handleDisplayFlyingEmoji(emoji, position);
       }
     }
@@ -890,31 +889,21 @@ const Interview = ({ leaveCall, interviewDetails }) => {
           return;
         }
 
-        const node = document.createElement("div");
+        const node = document.createElement('div');
         node.appendChild(document.createTextNode(emoji));
         node.className =
-          Math.random() * 1 > 0.5 ? "emoji wiggle-1" : "emoji wiggle-2";
+          Math.random() * 1 > 0.5 ? 'emoji wiggle-1' : 'emoji wiggle-2';
         node.style.transform = `rotate(${-30 + Math.random() * 60}deg)`;
         node.style.left = `${position.left}px`; // Starting position from the button
         node.style.top = `${position.top - 70}px`; // Starting position from the button
-        node.style.position = "absolute";
+        node.style.position = 'absolute';
         overlayRef.current.appendChild(node);
 
-        node.addEventListener("animationend", (e) =>
+        node.addEventListener('animationend', (e) =>
           handleRemoveFlyingEmoji(e.target)
         );
       },
       [handleRemoveFlyingEmoji]
-    );
-
-    const handleReceiveFlyingEmoji = useCallback(
-      (e) => {
-        if (!overlayRef.current) {
-          return;
-        }
-        handleDisplayFlyingEmoji(e.data.message, e.data.position);
-      },
-      [handleDisplayFlyingEmoji]
     );
 
     return <EmojiOverlayWrapper ref={overlayRef} />;
@@ -925,10 +914,10 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       <GridContainer>
         <div
           style={{
-            paddingLeft: "26px",
-            marginTop: "26px",
-            maxWidth: "200px",
-            position: "absolute",
+            paddingLeft: '26px',
+            marginTop: '26px',
+            maxWidth: '200px',
+            position: 'absolute',
           }}
         >
           <StyledImage src={SintaLogo} alt="Sinta_Logo" />

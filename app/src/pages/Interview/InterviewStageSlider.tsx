@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from 'react';
 
 interface Question {
   number: string;
@@ -51,7 +51,7 @@ export default function InterviewStageSlider({
 
       parentDiv.scrollTo({
         left: scrollPos,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
@@ -70,12 +70,12 @@ export default function InterviewStageSlider({
     <div
       ref={parentRef}
       style={{
-        display: "flex",
-        width: "100%",
-        fontSize: "12px",
-        transition: "transform 0.3s",
-        overflow: "hidden",
-        whiteSpace: "nowrap",
+        display: 'flex',
+        width: '100%',
+        fontSize: '12px',
+        transition: 'transform 0.3s',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
       }}
     >
       {data &&
@@ -85,20 +85,20 @@ export default function InterviewStageSlider({
             ref={(ref) => (itemRefs.current[index] = ref as HTMLDivElement)}
             onClick={() => handleClick(index)}
             style={{
-              opacity: activeIndex === index ? "1" : "0.5",
-              cursor: "pointer",
-              padding: "0px",
-              marginRight: "10px",
-              paddingLeft: "0px",
+              opacity: activeIndex === index ? '1' : '0.5',
+              cursor: 'pointer',
+              padding: '0px',
+              marginRight: '10px',
+              paddingLeft: '0px',
             }}
           >
-            <span style={{ width: "90%", padding: "15px" }}>{stage.stage}</span>
+            <span style={{ width: '90%', padding: '15px' }}>{stage.stage}</span>
             <hr
               style={{
-                borderRadius: "20px",
-                border: "2px solid #6462F1",
-                marginBottom: "15px",
-                padding: "0px",
+                borderRadius: '20px',
+                border: '2px solid #6462F1',
+                marginBottom: '15px',
+                padding: '0px',
               }}
             />
           </div>

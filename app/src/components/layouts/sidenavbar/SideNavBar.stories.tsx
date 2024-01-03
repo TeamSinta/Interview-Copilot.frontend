@@ -1,9 +1,9 @@
-import type { StoryObj, Meta } from "@storybook/react";
+import type { StoryObj, Meta } from '@storybook/react';
 
-import SideNavBar from "./SideNavBar";
+import SideNavBar from './SideNavBar';
 
 const meta = {
-  title: "NavBar/SideNavBar",
+  title: 'NavBar/SideNavBar',
   component: SideNavBar,
 } as Meta<typeof SideNavBar>;
 export default meta;

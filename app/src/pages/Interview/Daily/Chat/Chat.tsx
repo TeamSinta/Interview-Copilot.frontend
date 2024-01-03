@@ -4,10 +4,10 @@ import React, {
   ChangeEvent,
   FormEvent,
   useEffect,
-} from "react";
-import { useAppMessage, useLocalParticipant } from "@daily-co/daily-react";
-import { Send } from "@/components/common/svgIcons/Icons";
-import styled, { css } from "styled-components";
+} from 'react';
+import { useAppMessage, useLocalParticipant } from '@daily-co/daily-react';
+import { Send } from '@/components/common/svgIcons/Icons';
+import styled, { css } from 'styled-components';
 const ChatWrapper = styled.aside`
   padding-top: 28px;
   background-color: #f5f5f5;
@@ -47,7 +47,7 @@ const ChatMessage = styled.li<{ isParticipant: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: ${({ isParticipant }) =>
-    isParticipant ? "flex-end" : "flex-start"};
+    isParticipant ? 'flex-end' : 'flex-start'};
 `;
 
 const ChatMessageBubble = styled.div<{ isParticipant: boolean }>`
@@ -55,8 +55,8 @@ const ChatMessageBubble = styled.div<{ isParticipant: boolean }>`
   border-radius: 10px;
   background-color: ${({ isParticipant }) =>
     isParticipant
-      ? "#6462F1"
-      : "#6462F1"}; // Set your desired bubble colors here
+      ? '#6462F1'
+      : '#6462F1'}; // Set your desired bubble colors here
   color: white;
   max-width: 70%;
   word-wrap: break-word;
@@ -69,7 +69,7 @@ const ChatMessageText = styled.p`
 
 const ChatMessageAuthor = styled.span<{ isParticipant: boolean }>`
   font-weight: bold;
-  color: ${({ isParticipant }) => (isParticipant ? "black" : "blue")};
+  color: ${({ isParticipant }) => (isParticipant ? 'black' : 'blue')};
 `;
 
 const ChatMessageTime = styled.span`
@@ -124,7 +124,7 @@ export default function Chat({
   const localParticipant = useLocalParticipant();
 
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>('');
 
   const sendAppMessage = useAppMessage({
     onAppMessage: useCallback(
@@ -148,16 +148,16 @@ export default function Chat({
       sendAppMessage(
         {
           message: message,
-          sender: localParticipant?.user_name || "Guest",
+          sender: localParticipant?.user_name || 'Guest',
         },
-        "*"
+        '*'
       );
 
       setMessages((prevMessages) => [
         ...prevMessages,
         {
           msg: message,
-          name: localParticipant?.user_name || "Guest",
+          name: localParticipant?.user_name || 'Guest',
           isParticipant: true,
           time: new Date().toLocaleTimeString(),
         },
@@ -168,7 +168,7 @@ export default function Chat({
   );
 
   useEffect(() => {
-    sendAppMessage({ msg: "Hi, everyone" }, "*");
+    sendAppMessage({ msg: 'Hi, everyone' }, '*');
     const handleIncomingMessage = (ev) => {
       setMessages((existingMessages) => [
         ...existingMessages,
@@ -181,10 +181,10 @@ export default function Chat({
       ]);
     };
 
-    window.addEventListener("app-message", handleIncomingMessage);
+    window.addEventListener('app-message', handleIncomingMessage);
 
     return () => {
-      window.removeEventListener("app-message", handleIncomingMessage);
+      window.removeEventListener('app-message', handleIncomingMessage);
     };
   }, [sendAppMessage]);
 
@@ -196,7 +196,7 @@ export default function Chat({
     e.preventDefault();
     if (!inputValue) return;
     sendMessage(inputValue);
-    setInputValue("");
+    setInputValue('');
   };
 
   return showChat ? (

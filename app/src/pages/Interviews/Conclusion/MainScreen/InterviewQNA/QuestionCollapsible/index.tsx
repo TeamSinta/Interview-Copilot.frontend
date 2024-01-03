@@ -1,2 +1,2 @@
-import { QuestionCollapsible } from "./QuestionCollapsible";
+import { QuestionCollapsible } from './QuestionCollapsible';
 export { QuestionCollapsible };

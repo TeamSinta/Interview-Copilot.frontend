@@ -1,33 +1,34 @@
-import { closeModal, selectModal } from "@/features/modal/modalSlice";
-import ReactDOM from "react-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { CloseIcon } from "../svgIcons/Icons";
-import { H2Bold } from "../typeScale/StyledTypeScale";
-import Modal from "./Modal";
-import { CloseDiv, ModalHeaderWrap } from "./StyledModal";
+import { closeModal, selectModal } from '@/features/modal/modalSlice';
+import ReactDOM from 'react-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { CloseIcon } from '../svgIcons/Icons';
+import { H2Bold } from '../typeScale/StyledTypeScale';
+import Modal from './Modal';
+import { CloseDiv, ModalHeaderWrap } from './StyledModal';
 
-import CreateInterviews from "@/components/common/modal/modalContents/CreateInterviews";
-import CreateDepartment from "./modalContents/CreateDepartment";
-import SelectValue from "./modalContents/SelectValues";
-import ModalL from "./ModalL";
-import SelectTemplate from "./modalContents/SelectTemplate";
-import MemberSettings from "./userSettingsModal/MemberSettings";
-import EditInterviews from "./modalContents/EditInterview";
-import EditInterviewers from "./modalContents/EditInterviewrs";
-import SelectAllQuestions from "./modalContents/SelectAllQuestions";
-import VideoSettings from "./modalContents/videoSettingsModal/VideoSettings";
-import VideoSettingsContent from "./modalContents/videoSettingsModal/VideoSettingsContent";
+import CreateTemplate from '@/components/common/modal/modalContents/CreateTemplate';
+import CreateDepartment from './modalContents/CreateDepartment';
+import SelectValue from './modalContents/SelectValues';
+import ModalL from './ModalL';
+import SelectTemplate from './modalContents/SelectTemplate';
+import MemberSettings from './userSettingsModal/MemberSettings';
+import EditInterviews from './modalContents/EditInterview';
+import EditInterviewers from './modalContents/EditInterviewrs';
+import SelectAllQuestions from './modalContents/SelectAllQuestions';
+import VideoSettingsContent from './modalContents/videoSettingsModal/VideoSettingsContent';
+import CreateQuestionBank from './modalContents/CreateQuestionBank';
 
 export enum MODAL_TYPE {
-  CREATE_DEP = "CREATE_DEP",
-  CREATE_INT = "CREATE_INT",
-  SELECT_VAL = "SELECT_VAL",
-  SELECT_TEM = "SELECT_TEM",
-  MEMBER_SET = "MEMBER_SET",
-  EDIT_INT = "EDIT_INT",
-  EDIT_MEM = "EDIT_MEM",
-  VIDEO_SETTINGS = "VIDEO_SET",
-  SELECT_ALL_QUESTIONS = "SELECT_ALL_QUESTIONS",
+  CREATE_DEP = 'CREATE_DEP',
+  CREATE_INT = 'CREATE_INT',
+  CREATE_QUEST_BANK = 'CREATE_QUEST_BANK',
+  SELECT_VAL = 'SELECT_VAL',
+  SELECT_TEM = 'SELECT_TEM',
+  MEMBER_SET = 'MEMBER_SET',
+  EDIT_INT = 'EDIT_INT',
+  EDIT_MEM = 'EDIT_MEM',
+  VIDEO_SETTINGS = 'VIDEO_SET',
+  SELECT_ALL_QUESTIONS = 'SELECT_ALL_QUESTIONS',
   // ModalL = "ModalL",
 }
 
@@ -57,7 +58,7 @@ export const ModalHeader = ({ title }: IModalHeader) => {
 };
 
 const ModalPortal = ({ children }: IModalPortal) => {
-  const el = document.getElementById("modal")!;
+  const el = document.getElementById('modal')!;
   return ReactDOM.createPortal(children, el);
 };
 
@@ -80,8 +81,14 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.CREATE_INT:
         return (
-          <Modal title="Create New Interview">
-            <CreateInterviews />
+          <Modal title="New Template">
+            <CreateTemplate />
+          </Modal>
+        );
+      case MODAL_TYPE.CREATE_QUEST_BANK:
+        return (
+          <Modal title="Create New Question Bank">
+            <CreateQuestionBank />
           </Modal>
         );
       case MODAL_TYPE.EDIT_INT:
@@ -119,13 +126,13 @@ const GlobalModal = (): JSX.Element => {
           <Modal title="Member Setting">
             <MemberSettings
               user={{
-                first_name: "",
-                last_name: "",
-                email: "",
-                role: "",
+                first_name: '',
+                last_name: '',
+                email: '',
+                role: '',
               }}
               onClose={function (): void {
-                throw new Error("Function not implemented.");
+                throw new Error('Function not implemented.');
               }}
             />
           </Modal>

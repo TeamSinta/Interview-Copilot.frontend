@@ -2,5 +2,5 @@ import {
   RatingComponent,
   RatingComponentL,
   PredefinedRatingsAndCompetency,
-} from "./RatingComponent";
+} from './RatingComponent';
 export { RatingComponent, RatingComponentL, PredefinedRatingsAndCompetency };

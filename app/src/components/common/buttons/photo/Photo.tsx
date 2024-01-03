@@ -1,13 +1,13 @@
-import { InitialsGenerator } from "@/utils/Utils";
-import { useEffect, useState } from "react";
+import { InitialsGenerator } from '@/utils/Utils';
+import { useEffect, useState } from 'react';
 import {
   Checked,
   NameCheckBox,
   PhotoCheckBox,
   PhotoCheckBoxCover,
   PhotoCheckBoxDiv,
-} from "./StyledPhoto";
-import { PhotoType } from "@/features/utils/utilEnum";
+} from './StyledPhoto';
+import { PhotoType } from '@/features/utils/utilEnum';
 
 export interface IPhotoProps {
   member_idx: number;
@@ -43,11 +43,11 @@ const Photo = (props: IPhotoProps) => {
         onSelect(member_idx);
         setSelectPhoto(selectPhoto ? false : true);
       }}
-      className={selectPhoto ? "checked" : ""}
+      className={selectPhoto ? 'checked' : ''}
     >
       {
         // Check if member_url is null, empty, or contains only spaces
-        member_url === null || member_url.trim() === "" ? (
+        member_url === null || member_url.trim() === '' ? (
           <NameCheckBox>
             {InitialsGenerator(member_firstName, member_lastName)}
           </NameCheckBox>
@@ -57,7 +57,7 @@ const Photo = (props: IPhotoProps) => {
       }
 
       <PhotoCheckBoxCover></PhotoCheckBoxCover>
-      <Checked className={selectPhoto ? "checked" : ""}></Checked>
+      <Checked className={selectPhoto ? 'checked' : ''}></Checked>
     </PhotoCheckBoxDiv>
   );
 };

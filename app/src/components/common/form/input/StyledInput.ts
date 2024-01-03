@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const InputLayout = styled.div`
   width: 100%;
@@ -25,14 +25,14 @@ export const Input = styled.input`
   }
 
   &.error {
-    box-shadow: 0px 2px 0px 0px ${(props) => props.theme.colors.red};
+    box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
   }
 `;
 
 export const InputError = styled.div`
   width: 100%;
   height: 40px;
-  background: ${(props) => props.theme.colors.red};
+
   position: absolute;
   bottom: 6px;
   border-radius: 12px;
@@ -64,6 +64,8 @@ export const InputIcon = styled.div`
 export const StyledTextarea = styled.textarea`
   border: none;
   line-height: 150%;
+  width: 100%;
+
   overflow: auto;
   outline: none;
   -webkit-box-shadow: none;
@@ -88,13 +90,13 @@ export const StyledTextarea = styled.textarea`
 
 export const StyledTextareaDiv = styled.div`
   .prose {
-    width: max-content;
+    width: 100%;
     height: max-content;
     top: 20px;
     position: absolute;
 
     ::after {
-      content: "         ";
+      content: '         ';
     }
 
     &:focus {
@@ -103,6 +105,8 @@ export const StyledTextareaDiv = styled.div`
   }
 
   .mdx-textarea {
+    height: 100%;
+    width: 100%;
     border: none;
     line-height: 150%;
     overflow: auto;
@@ -121,6 +125,9 @@ export const StyledTextareaDiv = styled.div`
     font: inherit;
     font-size: 14px;
     position: relative;
+    &.error {
+      box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
+    }
   }
   ul {
     list-style: disc;

@@ -1,55 +1,39 @@
+import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn';
+
 import {
-  IconBtnL,
-  IconBtnM,
-} from "@/components/common/buttons/iconBtn/IconBtn";
-import StatusFilter from "@/components/common/filters/statusFilter/StatusFilter";
-import TextArea from "@/components/common/form/textArea/TextArea";
-import TextInput from "@/components/common/form/textInput/TextInput";
-import {
-  BinIcon,
-  CheckIcon,
   CloseIcon,
   DocumentIcon,
-  EditIcon,
-  MoveIcon,
   PlusIcon,
   SelectArrowOpenIcon,
   Star1Icon,
   TimeIcon,
-} from "@/components/common/svgIcons/Icons";
+} from '@/components/common/svgIcons/Icons';
 import {
   BodyMBold,
   BodySMedium,
   H3Bold,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { H3 } from "@/components/common/typeScale/TypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { IQuestion } from "@/features/interviews/interviewsInterface";
-import {
-  BackgroundColor,
-  StatusDropdownFilter,
-} from "@/features/utils/utilEnum";
-import React, { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { H3 } from '@/components/common/typeScale/TypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { IQuestion } from '@/features/interviews/interviewsInterface';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import { Stack } from "@mui/material";
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { Stack } from '@mui/material';
 import {
-  InputDiv,
-  InputLabelDiv,
   OnverviewDetailTitle,
   OverviewDetailBody,
-  OverviewDetailEdit,
   OverviewDetailList,
   OverviewDetailTitle,
   OverviewDetails,
-} from "@/components/pages/interview/overview_detail/StyledOverviewDetail";
-import { useGetQuestionsQuery } from "@/features/questions/questionsAPISlice";
-import Loading from "@/components/common/elements/loading/Loading";
-import { DropdownFilter } from "@/components/common/filters/dropdownFilter/DropdownFilter.stories";
-import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { openModal } from "@/features/modal/modalSlice";
-import { useDispatch } from "react-redux";
+} from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
+import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import Loading from '@/components/common/elements/loading/Loading';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { openModal } from '@/features/modal/modalSlice';
+import { useDispatch } from 'react-redux';
 
 interface IState {
   [key: string]: any;
@@ -121,7 +105,7 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
       <>
         {/*  ====== OVERVIEW TITLE START ====== */}
         <OverviewDetailTitle>
-          <H3Bold> {`${questions.length} Questions` ?? "Questions"}</H3Bold>
+          <H3Bold> {`${questions.length} Questions` ?? 'Questions'}</H3Bold>
         </OverviewDetailTitle>
         {/*  ====== OVERVIEW TITLE END ====== */}
         <OverviewDetailBody>
@@ -138,7 +122,7 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
                       onClick={() => {
                         openDetailHandler(index, openItems.has(index));
                       }}
-                      className={openItems.has(index) ? "open" : "close"}
+                      className={openItems.has(index) ? 'open' : 'close'}
                     >
                       <BodyMBold>{question.question_text}</BodyMBold>
                       <SelectArrowOpenIcon />
@@ -172,7 +156,7 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
                   </div>
                 </div>
 
-                <div className={`detail ${openItems.has(index) ? "" : "none"}`}>
+                <div className={`detail ${openItems.has(index) ? '' : 'none'}`}>
                   <ReactMarkdown components={components}>
                     {question.guidelines}
                   </ReactMarkdown>
@@ -185,7 +169,7 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
         <Stack
           direction="row"
           spacing={1.5}
-          style={{ borderTop: "16px solid white" }}
+          style={{ borderTop: '16px solid white' }}
         >
           <TextIconBtnL
             disable={false}

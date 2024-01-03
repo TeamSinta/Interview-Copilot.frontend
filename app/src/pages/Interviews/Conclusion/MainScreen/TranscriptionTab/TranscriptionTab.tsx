@@ -1,11 +1,11 @@
-import React from "react";
-import InterviewQNA from "../InterviewQNA/InterviewQNA";
-import { transcriptionInfo } from "./TranscriptionTabConstants";
+import React from 'react';
+import InterviewQNA from '../InterviewQNA/InterviewQNA';
+import { transcriptionInfo } from './TranscriptionTabConstants';
 
 const TranscriptionTab = () => {
   return (
     <InterviewQNA
-      screen={"transcription"}
+      screen={'transcription'}
       questionData={transcriptionInfo?.questionData}
     />
   );

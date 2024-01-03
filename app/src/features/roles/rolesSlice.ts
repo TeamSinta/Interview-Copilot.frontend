@@ -1,24 +1,20 @@
-import { RootState } from "@/app/store";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { DataLoading } from "../utils/utilEnum";
-import { fetchMembers } from "./rolesAPI";
-import { IMember, IMockMembers, RolesCreateSlice } from "./rolesInterface";
-import { useGetCompanyMembersQuery } from "../settingsDetail/userSettingsAPI";
-import {
-  AccessToken,
-  CompanyID,
-  DepartmentID,
-} from "../settingsDetail/userSettingTypes";
-import { useEffect, useState } from "react";
+import { RootState } from '@/app/store';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { DataLoading } from '../utils/utilEnum';
+import { fetchMembers } from './rolesAPI';
+import { IMember, IMockMembers, RolesCreateSlice } from './rolesInterface';
+import { useGetCompanyMembersQuery } from '../settingsDetail/userSettingsAPI';
+import { CompanyID, DepartmentID } from '../settingsDetail/userSettingTypes';
+import { useEffect, useState } from 'react';
 
 export const initialState: RolesCreateSlice = {
-  title: "",
+  title: '',
   all_members: [
     {
       member_idx: 0,
-      member_name: "",
-      member_url: "",
-      member_type: "",
+      member_name: '',
+      member_url: '',
+      member_type: '',
       selected: false,
     },
   ],
@@ -26,12 +22,10 @@ export const initialState: RolesCreateSlice = {
 };
 
 export const useFetchSelectMembers = ({
-  access,
   company_id,
   department_id,
   sortCriteria,
 }: {
-  access: AccessToken;
   company_id: CompanyID;
   department_id: DepartmentID;
   sortCriteria: string;
@@ -39,7 +33,6 @@ export const useFetchSelectMembers = ({
   const [members, setMembers] = useState<IMockMembers[]>([]);
 
   const { data, isSuccess } = useGetCompanyMembersQuery({
-    access,
     company_id,
     department_id,
     sort_by: sortCriteria,
@@ -59,7 +52,7 @@ export const useFetchSelectMembers = ({
 };
 
 export const getMemberAsync = createAsyncThunk(
-  "roles/fetchMember",
+  'roles/fetchMember',
   async () => {
     const response = await fetchMembers();
     const all_members = response.data.map((memberItem) => ({
@@ -72,7 +65,7 @@ export const getMemberAsync = createAsyncThunk(
 
 //[Where]: How
 export const rolesSlice = createSlice({
-  name: "roles",
+  name: 'roles',
   initialState,
   extraReducers: (builder) => {
     builder.addCase(getMemberAsync.fulfilled, (state, action) => {

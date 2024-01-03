@@ -1,26 +1,21 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState, forwardRef } from 'react';
 import {
   InputDiv,
   InputLabelDiv,
   OverviewDetailEdit,
-} from "./StyledOverviewDetail";
+} from './StyledOverviewDetail';
 import {
   BinIcon,
   CheckIcon,
   CloseIcon,
-} from "@/components/common/svgIcons/Icons";
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { IconBtnL } from "@/components/common/buttons/iconBtn/IconBtn";
-import {
-  BackgroundColor,
-  StatusDropdownFilter,
-} from "@/features/utils/utilEnum";
-import ReactMarkdown from "react-markdown";
-import { H3 } from "@/components/common/typeScale/TypeScale";
-import TextInput from "@/components/common/form/textInput/TextInput";
-import StatusFilter from "@/components/common/filters/statusFilter/StatusFilter";
-import TextArea from "@/components/common/form/textArea/TextArea";
+} from '@/components/common/svgIcons/Icons';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { IconBtnL } from '@/components/common/buttons/iconBtn/IconBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import TextInput from '@/components/common/form/textInput/TextInput';
+import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter';
+import TextArea from '@/components/common/form/textArea/TextArea';
 
 interface IState {
   [key: string]: any;
@@ -33,20 +28,16 @@ interface CustomQuestionFormProps {
   onQuestionCreated: (questionId: number) => void; // Define a function signature that accepts questionId and returns void.
 }
 
-interface CustomQuestionFormRef {
-  focus: () => void;
-}
-
 function CustomQuestionForm(
   { onQuestionCreated }: CustomQuestionFormProps,
   ref: React.Ref<any>
 ) {
   const [inputValue, setInputValue] = useState<IState>({
-    title: "",
+    title: '',
     time: 0,
-    guidelines: "",
+    guidelines: '',
     difficulty: null,
-    competency: "",
+    competency: '',
   });
 
   const handleSelectDifficulty = (difficulty: any) => {
@@ -71,10 +62,10 @@ function CustomQuestionForm(
     // Clear the form fields or perform any other necessary actions
 
     setInputValue({
-      title: "",
+      title: '',
       time: 0,
-      guidelines: "", // Ensure you reset guidelines here
-      competency: "",
+      guidelines: '', // Ensure you reset guidelines here
+      competency: '',
       difficulty: null,
     });
   };
@@ -99,6 +90,37 @@ function CustomQuestionForm(
     }));
   };
 
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
+  const validateTime = (value: string): string | null => {
+    // First, check if the field is empty
+    if (!value.trim()) {
+      return 'Time is required'; // Error message for empty input
+    }
+
+    // Check if the value is a number and within the range 1-60
+    const numberValue = parseInt(value, 10);
+    if (isNaN(numberValue) || numberValue < 1 || numberValue > 60) {
+      return 'Please enter a number between 1 and 60'; // Error message for invalid input
+    }
+
+    return null; // No validation errors
+  };
+
   return (
     <>
       <div ref={ref}>
@@ -110,11 +132,12 @@ function CustomQuestionForm(
             <InputDiv>
               <TextInput
                 disable={false}
-                placeholder={"Title"}
+                placeholder={'Title'}
                 error={false}
+                validate={validateTitle}
                 onChange={inputOnChange}
-                name={"title"}
-                value={inputValue["title"]}
+                name={'title'}
+                value={inputValue['title']}
               />
               <ElWrap w={40} h={40}>
                 <IconBtnL
@@ -149,11 +172,11 @@ function CustomQuestionForm(
               </label>
               <TextInput
                 disable={false}
-                placeholder={"Competency"}
-                error={false}
+                placeholder={'Competency'}
+                validate={validateTitle}
                 onChange={inputOnChange}
-                name={"competency"}
-                value={inputValue["competency"]}
+                name={'competency'}
+                value={inputValue['competency']}
               />
             </InputLabelDiv>
             <InputLabelDiv className="time">
@@ -162,11 +185,11 @@ function CustomQuestionForm(
               </label>
               <TextInput
                 disable={false}
-                placeholder={"time"}
-                error={false}
+                placeholder={'time'}
+                validate={validateTime}
                 onChange={inputOnChange}
-                name={"time"}
-                value={inputValue["time"].toString()}
+                name={'time'}
+                value={inputValue['time'].toString()}
               />
             </InputLabelDiv>
             <InputLabelDiv className="difficulty">
@@ -185,11 +208,12 @@ function CustomQuestionForm(
             </label>
             <TextArea
               disable={false}
-              placeholder={"Guidelines"}
+              placeholder={'Guidelines'}
               error={false}
               onChange={textAreaOnChange}
-              name={"guidelines"}
-              value={inputValue["guidelines"]}
+              name={'guidelines'}
+              validate={() => null}
+              value={inputValue['guidelines']}
             />
           </InputLabelDiv>
         </OverviewDetailEdit>

@@ -1,42 +1,41 @@
-import { AppDispatch, RootState } from "@/app/store";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import GlobalModal, { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import { EditIcon, PlusIcon } from "@/components/common/svgIcons/Icons";
+import { AppDispatch, RootState } from '@/app/store';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { EditIcon, PlusIcon } from '@/components/common/svgIcons/Icons';
 import {
   H1,
   BodyLMedium,
   H2Medium,
   H2Bold,
   BodyMMedium,
-} from "@/components/common/typeScale/StyledTypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { openModal } from "@/features/modal/modalSlice";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { Key, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Stack, Box } from "@mui/material";
+} from '@/components/common/typeScale/StyledTypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { openModal } from '@/features/modal/modalSlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { Key, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Stack, Box } from '@mui/material';
 import TemplateHomeCard, {
   IMember,
-} from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
-import { useState } from "react";
-import { TemplateCardsBox } from "../Dashboard/StyledDashboard";
-import { useNavigate } from "react-router-dom";
-import { CreateInterviewBox, DepartmentHeading } from "./StyledTemplates";
+} from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
+import { useState } from 'react';
+import { InterviewsBox, TemplateCardsBox } from '../Dashboard/StyledDashboard';
+import { useNavigate } from 'react-router-dom';
+import { CreateInterviewBox, DepartmentHeading } from './StyledTemplates';
+
+import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
 import {
   IconBtnL,
   IconBtnM,
-} from "@/components/common/buttons/iconBtn/IconBtn";
-import DropdownFilter from "@/components/common/filters/dropdownFilter/DropdownFilter";
-import Loading from "@/components/common/elements/loading/Loading";
-import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
-import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
-import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
-import { TemplateQuestions } from "@/features/templates/templatesInterface";
-import { useCookies } from "react-cookie";
-import {
-  AccessToken,
-  CompanyID,
-} from "@/features/settingsDetail/userSettingTypes";
+} from '@/components/common/buttons/iconBtn/IconBtn';
+
+import Loading from '@/components/common/elements/loading/Loading';
+import DropdownFilter from '@/components/common/filters/dropdownFilter/DropdownFilter';
+
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
+import { TemplateQuestions } from '@/features/templates/templatesInterface';
+import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 
 export interface Template {
   roundId: Key | null | undefined;
@@ -59,32 +58,28 @@ const Templates = () => {
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
   const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user);
-  const [departmentId, setDepartmentId] = useState("");
-  const [sortCriteria, setSortCritiera] = useState("");
+  const [departmentId, setDepartmentId] = useState('');
+  const [sortCriteria, setSortCritiera] = useState('');
 
-  const [cookies, ,] = useCookies(["access_token"]);
-  const accessToken = cookies.access_token as AccessToken;
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyID = (!workspace.id
     ? user?.companies?.[0]?.id ?? workspace.id
     : workspace.id)! as unknown as CompanyID;
 
-  console.log(user);
+  const getFilteredTemplateQuestionsLength = (
+    templateQuestions: Record<string, TemplateQuestions> | null,
+    templateId: number | null
+  ): object => {
+    if (!templateQuestions || !templateId) {
+      return [];
+    }
 
-    const getFilteredTemplateQuestionsLength = (
-      templateQuestions: Record<string, TemplateQuestions> | null,
-      templateId: number | null
-    ): object => {
-      if (!templateQuestions || !templateId) {
-        return [];
-      }
+    const filteredQuestions = Object.values(templateQuestions).filter(
+      (templateQuestion) => templateQuestion.template_id === templateId
+    );
 
-      const filteredQuestions = Object.values(templateQuestions).filter(
-        (templateQuestion) => templateQuestion.template_id === templateId
-      );
-
-      return filteredQuestions;
-    };
+    return filteredQuestions;
+  };
 
   const getFilteredTemplateTopicsLength = (
     templateQuestions: Record<string, TemplateQuestions> | null,
@@ -161,7 +156,7 @@ const Templates = () => {
 
   const templatesByDepartment: { [key: string]: Template[] } =
     templateData.reduce((groups, template: Template) => {
-      const department = template.department || "General";
+      const department = template.department || 'General';
 
       if (!groups[department]) {
         groups[department] = [];
@@ -223,7 +218,7 @@ const Templates = () => {
                 <ElWrap w={168} h={114}>
                   <IconBtnL {...arg} />
                 </ElWrap>
-                <BodyMMedium style={{ color: "black", marginTop: "4px" }}>
+                <BodyMMedium style={{ color: 'black', marginTop: '4px' }}>
                   + New Template
                 </BodyMMedium>
               </Box>
@@ -233,20 +228,20 @@ const Templates = () => {
             <Stack
               direction="row"
               justifyContent="space-between"
-              style={{ marginTop: "32px" }}
+              style={{ marginTop: '32px' }}
             >
-              <H2Medium style={{ marginTop: "18px" }}>Your Templates</H2Medium>
+              <H2Medium style={{ marginTop: '18px' }}>Your Templates</H2Medium>
 
               <ElWrap w={180}>
                 <DropdownFilter
                   label="Sort By"
                   optionArr={[
-                    { name: "Name (A-Z)", value: "name-asc" },
-                    { name: "Name (Z-A)", value: "name-desc" },
-                    { name: "Permission Level", value: "permission" },
+                    { name: 'Name (A-Z)', value: 'name-asc' },
+                    { name: 'Name (Z-A)', value: 'name-desc' },
+                    { name: 'Permission Level', value: 'permission' },
                   ]}
                   dropdownName="sort"
-                  value={""}
+                  value={''}
                 />
               </ElWrap>
             </Stack>
@@ -257,62 +252,64 @@ const Templates = () => {
                   key={department}
                   direction="column"
                   spacing={1}
-                  style={{ paddingLeft: "38px", paddingRight: "38px" }}
+                  style={{ paddingLeft: '38px', paddingRight: '38px' }}
                 >
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    style={{ width: "100%" }}
-                  >
+                  <InterviewsBox>
                     <Stack
                       direction="row"
-                      alignItems="center"
                       justifyContent="space-between"
-                      spacing={1}
+                      alignItems="center"
+                      style={{ width: '100%' }}
                     >
-                      <DepartmentHeading>{department}</DepartmentHeading>
-                      <BodyLMedium> · </BodyLMedium>
-                      <BodyLMedium style={{ color: "grey" }}>
-                        {templates?.length} Roles
-                      </BodyLMedium>
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        spacing={1}
+                      >
+                        <DepartmentHeading>{department}</DepartmentHeading>
+                        <BodyLMedium> · </BodyLMedium>
+                        <BodyLMedium style={{ color: 'grey' }}>
+                          {templates?.length} Roles
+                        </BodyLMedium>
+                      </Stack>
+                      <Box style={{ margin: '8px' }}>
+                        <ElWrap w={32} h={32}>
+                          <IconBtnM
+                            icon={<EditIcon />}
+                            disable={false}
+                            className={BackgroundColor.WHITE}
+                            onClick={() => {}}
+                          />
+                        </ElWrap>
+                      </Box>
                     </Stack>
-                    <Box style={{ margin: "8px" }}>
-                      <ElWrap w={32} h={32}>
-                        <IconBtnM
-                          icon={<EditIcon />}
-                          disable={false}
-                          className={BackgroundColor.WHITE}
-                          onClick={() => {}}
-                        />
-                      </ElWrap>
-                    </Box>
-                  </Stack>
-                  <TemplateCardsBox>
-                    {templates.map(
-                      (
-                        template: Template // Specify the Template type
-                      ) => (
-                        <TemplateHomeCard
-                          key={template.id}
-                          title={template.role_title}
-                          disable={template.disable || false}
-                          questions={getFilteredTemplateQuestionsLength(
-                            templateQuestions,
-                            template.id
-                          )}
-                          sections={getFilteredTemplateTopicsLength(
-                            templateQuestions,
-                            template.id
-                          )}
-                          imageUrl={template.image}
-                          members={template.interviewers || []}
-                          // Include other template information as needed
-                          onClick={() => handleCardClick(template.id)}
-                        />
-                      )
-                    )}
-                  </TemplateCardsBox>
+                    <TemplateCardsBox>
+                      {templates.map(
+                        (
+                          template: Template // Specify the Template type
+                        ) => (
+                          <TemplateHomeCard
+                            key={template.id}
+                            title={template.role_title}
+                            disable={template.disable || false}
+                            questions={getFilteredTemplateQuestionsLength(
+                              templateQuestions,
+                              template.id
+                            )}
+                            sections={getFilteredTemplateTopicsLength(
+                              templateQuestions,
+                              template.id
+                            )}
+                            imageUrl={template.image}
+                            members={template.interviewers || []}
+                            // Include other template information as needed
+                            onClick={() => handleCardClick(template.id)}
+                          />
+                        )
+                      )}
+                    </TemplateCardsBox>
+                  </InterviewsBox>
                 </Stack>
               )
             )}
@@ -335,13 +332,13 @@ const Templates = () => {
             <img src={templateImage} alt="template_empty_screen" />
 
             <H1>Work’s always better together.</H1>
-            <Box sx={{ textAlign: "center" }}>
-              <BodyLMedium style={{ color: "#6C6685" }}>
-                {" "}
+            <Box sx={{ textAlign: 'center' }}>
+              <BodyLMedium style={{ color: '#6C6685' }}>
+                {' '}
                 Start by creating a interview template.
                 <br /> Invite your teammates to collaborate and quickly get a
                 sense of what’s happening
-                <br /> with interviews.{" "}
+                <br /> with interviews.{' '}
               </BodyLMedium>
             </Box>
             <ElWrap w={400} h={40}>

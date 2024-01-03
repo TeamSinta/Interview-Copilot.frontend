@@ -1,16 +1,14 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import { Stack } from "@mui/material";
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import { H1 } from "@/components/common/typeScale/StyledTypeScale";
-import ConclusionInterviewCard from "@/components/common/cards/conclusionInterivewCard/ConclusionInterviewCard";
-import { GridContainer } from "./StyledConclusions";
-import { Link, useNavigate } from "react-router-dom";
-import TextIconFilter from "@/components/common/filters/textIconFilter/TextIconFilter";
-import { BinIcon, ResumeIcon } from "@/components/common/svgIcons/Icons";
-import { getInterviews } from "../../features/interviews/interviewsAPI";
-import { useCookies } from "react-cookie";
-import { InterviewRoundCardProps } from "../../components/common/cards/interviewRoundCard/InterviewRoundCard";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import { Stack } from '@mui/material';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { H1 } from '@/components/common/typeScale/StyledTypeScale';
+import ConclusionInterviewCard from '@/components/common/cards/conclusionInterivewCard/ConclusionInterviewCard';
+import { GridContainer } from './StyledConclusions';
+import { useNavigate } from 'react-router-dom';
+import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconFilter';
+import { getInterviews } from '../../features/interviews/interviewsAPI';
+import { useCookies } from 'react-cookie';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -20,6 +18,7 @@ interface TabPanelProps {
 
 interface IInterviewRound {
   title: string;
+  id: string;
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -42,90 +41,26 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-const fakeInterviewRounds = [
-  {
-    name: "Alice Johnson",
-    title: "Frontend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 15, // 15 days ago
-  },
-  {
-    name: "Bob Smith",
-    title: "Backend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 2 * 30, // 2 months ago
-  },
-  {
-    name: "Charlie Williams",
-    title: "UX Designer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 45, // 45 days ago
-  },
-  {
-    name: "Daisy Brown",
-    title: "Data Scientist Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 365, // 1 year ago
-  },
-  {
-    name: "Alice Johnson",
-    title: "Frontend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 15, // 15 days ago
-  },
-  {
-    name: "Bob Smith",
-    title: "Backend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 2 * 30, // 2 months ago
-  },
-  {
-    name: "Charlie Williams",
-    title: "UX Designer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 45, // 45 days ago
-  },
-  {
-    name: "Daisy Brown",
-    title: "Data Scientist Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 365, // 1 year ago
-  },
-  {
-    name: "Alice Johnson",
-    title: "Frontend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 15, // 15 days ago
-  },
-  {
-    name: "Bob Smith",
-    title: "Backend Developer Interview",
-    disable: false,
-    date: new Date().getTime() - 1000 * 60 * 60 * 24 * 2 * 30, // 2 months ago
-  },
-];
-
 const TABS = {
-  INTERVIEWS: "interviews",
-  ARCHIVED: "archived",
+  INTERVIEWS: 'interviews',
+  ARCHIVED: 'archived',
 };
 
 export default function BasicTabs() {
   const [activeTab, setActiveTab] = React.useState(TABS.INTERVIEWS);
   const [interviews, setInterviews] = React.useState([]);
-
-  const [cookies, ,] = useCookies(["access_token"]);
+  const [cookies, ,] = useCookies(['access_token']);
 
   const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchInterviews = async () => {
-      const response = await getInterviews(cookies.access_token);
+      const response = await getInterviews();
       setInterviews(response);
     };
 
     fetchInterviews();
-  }, []);
+  }, [cookies.access_token]);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -137,7 +72,7 @@ export default function BasicTabs() {
         <Box>
           <BodySMedium
             style={{
-              color: "grey",
+              color: 'grey',
             }}
           >
             My Library
@@ -145,20 +80,23 @@ export default function BasicTabs() {
           <H1>Interviews</H1>
         </Box>
 
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: '100%' }}>
           <Box
             sx={{
-              marginBottom: "24px",
-              gap: "12px",
+              marginBottom: '24px',
+              gap: '12px',
+              display: 'flex',
             }}
           >
             <TextIconFilter
               label="Interviews"
+              icon={false}
               select={activeTab === TABS.INTERVIEWS}
               onClick={() => handleTabChange(TABS.INTERVIEWS)}
             />
             <TextIconFilter
               label="Archived"
+              icon={false}
               select={activeTab === TABS.ARCHIVED}
               onClick={() => handleTabChange(TABS.ARCHIVED)}
             />
@@ -166,11 +104,11 @@ export default function BasicTabs() {
           <Box
             sx={{
               borderBottom: 1,
-              borderColor: "divider",
-              padding: "2px",
-              gap: "12px",
-              display: "flex",
-              marginBottom: "24px",
+              borderColor: 'divider',
+              padding: '2px',
+              gap: '12px',
+              display: 'flex',
+              marginBottom: '24px',
             }}
           ></Box>
           {activeTab === TABS.INTERVIEWS && (
@@ -179,7 +117,7 @@ export default function BasicTabs() {
                 {interviews.map((interviewRound: IInterviewRound, index) => (
                   <div
                     onClick={() => {
-                      navigate("/interviews/conclusion/", {
+                      navigate('/interviews/conclusion/', {
                         state: { id: interviewRound.id, useTimer: false },
                       });
                     }}
@@ -189,7 +127,7 @@ export default function BasicTabs() {
                       key={index}
                       title={interviewRound.title}
                       disable={false}
-                      name={"default name"}
+                      name={'default name'}
                       date={new Date().getTime() - 1000 * 60 * 60 * 24 * 15}
                     />
                   </div>
@@ -198,9 +136,10 @@ export default function BasicTabs() {
             </CustomTabPanel>
           )}
           {activeTab === TABS.ARCHIVED && (
-            <CustomTabPanel value={activeTab} index={TABS.ARCHIVED}>
-
-            </CustomTabPanel>
+            <CustomTabPanel
+              value={activeTab}
+              index={TABS.ARCHIVED}
+            ></CustomTabPanel>
           )}
         </Box>
       </Stack>

@@ -1,7 +1,7 @@
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
 
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useState } from "react";
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useState } from 'react';
 import {
   Card,
   CardButtons,
@@ -10,18 +10,18 @@ import {
   CardSubTitle,
   CardSubTitleContent,
   CardWrap,
-} from "../card/StyledCard";
-import { IconBtnM } from "@/components/common/buttons/iconBtn/IconBtn";
-import { RightBracketIcon } from "@/components/common/svgIcons/Icons";
-import { PhotoIcon, NumberIcon } from "../card/StyledCard";
+} from '../card/StyledCard';
+import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn';
+import { RightBracketIcon } from '@/components/common/svgIcons/Icons';
+import { PhotoIcon, NumberIcon } from '../card/StyledCard';
 import {
   BodyMMedium,
   BodySMedium,
   BodySBold,
-} from "@/components/common/typeScale/StyledTypeScale";
-import Photos from "../../buttons/photo/Photos";
-import { InitialsGenerator } from "@/utils/Utils";
-import TempCover from "@/assets/images/cover_1.jpg";
+} from '@/components/common/typeScale/StyledTypeScale';
+import Photos from '../../buttons/photo/Photos';
+import { InitialsGenerator } from '@/utils/Utils';
+import TempCover from '@/assets/images/cover_1.jpg';
 
 export interface IMember {
   id: number;
@@ -50,7 +50,7 @@ const TemplateHomeCard = (props: ITemplateHomeCard) => {
   return (
     <ElWrap w={370} h={216}>
       <Card
-        className={(hover ? "hover" : "").concat(disable ? " disable" : "")}
+        className={(hover ? 'hover' : '').concat(disable ? ' disable' : '')}
         onClick={onClick}
       >
         <CardButtons>
@@ -76,10 +76,10 @@ const TemplateHomeCard = (props: ITemplateHomeCard) => {
           >
             <BodyMMedium
               style={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                maxWidth: "140px",
-                whiteSpace: "nowrap", // or some specific value that fits well in your design
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: '140px',
+                whiteSpace: 'nowrap', // or some specific value that fits well in your design
               }}
             >
               {title}
@@ -105,7 +105,7 @@ const TemplateHomeCard = (props: ITemplateHomeCard) => {
                               member.first_name,
                               member.last_name
                             )
-                          : ""}
+                          : ''}
                       </BodySBold>
                     </PhotoIcon>
                   </ElWrap>

@@ -1,10 +1,10 @@
 import {
   IconBtnL,
   IconBtnM,
-} from "@/components/common/buttons/iconBtn/IconBtn";
-import StatusFilter from "@/components/common/filters/statusFilter/StatusFilter";
-import TextArea from "@/components/common/form/textArea/TextArea";
-import TextInput from "@/components/common/form/textInput/TextInput";
+} from '@/components/common/buttons/iconBtn/IconBtn';
+import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter';
+import TextArea from '@/components/common/form/textArea/TextArea';
+import TextInput from '@/components/common/form/textInput/TextInput';
 import {
   BinIcon,
   CheckIcon,
@@ -16,24 +16,24 @@ import {
   SelectArrowOpenIcon,
   Star1Icon,
   TimeIcon,
-} from "@/components/common/svgIcons/Icons";
+} from '@/components/common/svgIcons/Icons';
 import {
   BodyMBold,
   BodySMedium,
   H3Bold,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { H3 } from "@/components/common/typeScale/TypeScale";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { IQuestion } from "@/features/interviews/interviewsInterface";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { H3 } from '@/components/common/typeScale/TypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { IQuestion } from '@/features/interviews/interviewsInterface';
 import {
   BackgroundColor,
   StatusDropdownFilter,
-} from "@/features/utils/utilEnum";
-import React, { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
+} from '@/features/utils/utilEnum';
+import React, { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import { Stack } from "@mui/material";
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { Stack } from '@mui/material';
 import {
   InputDiv,
   InputLabelDiv,
@@ -43,17 +43,16 @@ import {
   OverviewDetailList,
   OverviewDetailTitle,
   OverviewDetails,
-} from "@/components/pages/interview/overview_detail/StyledOverviewDetail";
-import { useGetQuestionsQuery } from "@/features/questions/questionsAPISlice";
-import Loading from "@/components/common/elements/loading/Loading";
+} from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
+import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import Loading from '@/components/common/elements/loading/Loading';
 
 interface IState {
   [key: string]: any;
   title: string;
   time: number;
-  detail: string;
+  guidelines: string;
 }
-
 const components = {
   h3: H3,
 };
@@ -64,9 +63,11 @@ const QuestionList = () => {
   const [openItems, setOpenItems] = useState(new Set());
   const [edit, setEdit] = useState(new Set());
   const [inputValue, setInputValue] = useState<IState>({
-    title: "",
+    question_text: '',
     time: 0,
-    detail: "",
+    guidelines: '',
+    difficulty: null,
+    competency: '',
   });
 
   const {
@@ -135,7 +136,41 @@ const QuestionList = () => {
   };
 
   const textAreaOnChange = (value: string) => {
-    inputValue["detail"] = value;
+    inputValue['guidelines'] = value;
+  };
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
+          >
+            Question is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
+  const validateTime = (value: string): string | null => {
+    // First, check if the field is empty
+    if (!value.trim()) {
+      return 'Time is required'; // Error message for empty input
+    }
+
+    // Check if the value is a number and within the range 1-60
+    const numberValue = parseInt(value, 10);
+    if (isNaN(numberValue) || numberValue < 1 || numberValue > 60) {
+      return 'Please enter a number between 1 and 60'; // Error message for invalid input
+    }
+
+    return null; // No validation errors
+  };
+
+  const handleSelectDifficulty = (difficulty: any) => {
+    setInputValue({ ...inputValue, difficulty });
   };
 
   // useEffect(() => {}, [dispatch, openItems]);
@@ -144,7 +179,7 @@ const QuestionList = () => {
       <>
         {/*  ====== OVERVIEW TITLE START ====== */}
         <OverviewDetailTitle>
-          <H3Bold> {`${questions.length} Questions` ?? "Questions"}</H3Bold>
+          <H3Bold> {`${questions.length} Questions` ?? 'Questions'}</H3Bold>
         </OverviewDetailTitle>
         {/*  ====== OVERVIEW TITLE END ====== */}
         <OverviewDetailBody>
@@ -163,7 +198,7 @@ const QuestionList = () => {
                         onClick={() => {
                           openDetailHandler(index, openItems.has(index));
                         }}
-                        className={openItems.has(index) ? "open" : "close"}
+                        className={openItems.has(index) ? 'open' : 'close'}
                       >
                         <BodyMBold>{question.question_text}</BodyMBold>
                         <SelectArrowOpenIcon />
@@ -213,7 +248,7 @@ const QuestionList = () => {
                   </div>
 
                   <div
-                    className={`detail ${openItems.has(index) ? "" : "none"}`}
+                    className={`detail ${openItems.has(index) ? '' : 'none'}`}
                   >
                     <ReactMarkdown components={components}>
                       {question.guidelines}
@@ -232,11 +267,11 @@ const QuestionList = () => {
                     <InputDiv>
                       <TextInput
                         disable={false}
-                        placeholder={"title"}
-                        error={false}
+                        placeholder={'Question'}
+                        validate={validateTitle}
                         onChange={inputOnChange}
-                        name={"title"}
-                        value={inputValue["title"]}
+                        name={'question_text'}
+                        value={inputValue['question_text']}
                       />
                       <ElWrap w={40} h={40}>
                         <IconBtnL
@@ -270,35 +305,38 @@ const QuestionList = () => {
                   <div className="dropdowns">
                     <InputLabelDiv className="competencies">
                       <label>
-                        <BodySMedium>Competencies</BodySMedium>
-                      </label>
-                      {/* <DropdownFilter
-                            // optionArr={optionArrGenerator(
-                            //   question.competency
-                            // )}
-                            // dropdownName={"competencies"}
-                          ></DropdownFilter> */}
-                    </InputLabelDiv>
-                    <InputLabelDiv className="time">
-                      <label>
-                        <BodySMedium>Time to reply</BodySMedium>
+                        <BodySMedium>Competency</BodySMedium>
                       </label>
                       <TextInput
                         disable={false}
-                        placeholder={"time"}
-                        error={false}
+                        placeholder={'Competency'}
+                        validate={validateTitle}
                         onChange={inputOnChange}
-                        name={"time"}
-                        value={inputValue["time"].toString()}
+                        name={'competency'}
+                        value={inputValue['competency']}
+                      />
+                    </InputLabelDiv>
+                    <InputLabelDiv className="time">
+                      <label>
+                        <BodySMedium>Time to reply (mins)</BodySMedium>
+                      </label>
+                      <TextInput
+                        disable={false}
+                        placeholder={'time'}
+                        validate={validateTime}
+                        onChange={inputOnChange}
+                        name={'time'}
+                        value={inputValue['time'].toString()}
                       />
                     </InputLabelDiv>
                     <InputLabelDiv className="senioriy">
                       <label>
-                        <BodySMedium>Seniority</BodySMedium>
+                        <BodySMedium>Difficulty</BodySMedium>
                       </label>
                       <StatusFilter
-                        status={StatusDropdownFilter.WAITING}
-                      ></StatusFilter>
+                        status={inputValue.difficulty} // Pass selected difficulty as status prop
+                        onSelectStatus={handleSelectDifficulty} // Step 2: Pass the callback function
+                      />
                     </InputLabelDiv>
                   </div>
                   <InputLabelDiv>
@@ -307,11 +345,12 @@ const QuestionList = () => {
                     </label>
                     <TextArea
                       disable={false}
-                      placeholder={"detail"}
+                      placeholder={'Guidelines'}
                       error={false}
                       onChange={textAreaOnChange}
-                      name={"detail"}
-                      value={inputValue["detail"]}
+                      name={'guidelines'}
+                      validate={() => null}
+                      value={inputValue['guidelines']}
                     />
                   </InputLabelDiv>
                 </OverviewDetailEdit>
@@ -323,7 +362,7 @@ const QuestionList = () => {
         <Stack
           direction="row"
           spacing={1.5}
-          style={{ borderTop: "16px solid white" }}
+          style={{ borderTop: '16px solid white' }}
         >
           <TextIconBtnL
             disable={false}

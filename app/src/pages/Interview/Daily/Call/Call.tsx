@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo } from 'react';
 import {
   useParticipantIds,
   useScreenShare,
@@ -7,11 +7,11 @@ import {
   DailyAudio,
   useDaily,
   useVideoTrack,
-} from "@daily-co/daily-react";
+} from '@daily-co/daily-react';
 
-import "./Call.css";
-import Tile from "../Tile/Tile";
-import UserMediaError from "../UserMediaError/UserMediaError";
+import './Call.css';
+import Tile from '../Tile/Tile';
+import UserMediaError from '../UserMediaError/UserMediaError';
 import {
   BodyLMedium,
   BodyLSemiBold,
@@ -19,10 +19,10 @@ import {
   BodySMedium,
   H1,
   H2Bold,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { BackgroundColor } from "@/features/utils/utilEnum";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { BackgroundColor } from '@/features/utils/utilEnum';
 
 export default function Call() {
   /* If a participant runs into a getUserMedia() error, we need to warn them. */
@@ -31,7 +31,7 @@ export default function Call() {
   /* We can use the useDailyEvent() hook to listen for daily-js events. Here's a full list
    * of all events: https://docs.daily.co/reference/daily-js/events */
   useDailyEvent(
-    "camera-error",
+    'camera-error',
     useCallback(() => {
       setGetUserMediaError(true);
     }, [])
@@ -41,7 +41,7 @@ export default function Call() {
   /* This is for displaying remote participants: this includes other humans, but also screen shares. */
   const { screens } = useScreenShare();
   const remoteParticipantIds: string[] | null = useParticipantIds({
-    filter: "remote",
+    filter: 'remote',
   });
 
   /* This is for displaying our self-view. */
@@ -55,19 +55,19 @@ export default function Call() {
   );
 
   const copyToClipboard = () => {
-    const textField = document.createElement("textarea");
+    const textField = document.createElement('textarea');
     textField.innerText = window.location.href;
     document.body.appendChild(textField);
     textField.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     textField.remove();
-    alert("Link copied to clipboard!");
+    alert('Link copied to clipboard!');
   };
 
   const renderCallScreen = () => (
     <>
       <DailyAudio />
-      <div className={screens.length! > 0 ? "is-screenshare" : "call"}>
+      <div className={screens.length! > 0 ? 'is-screenshare' : 'call'}>
         {localParticipant && !mutedVideo && (
           <Tile
             id={localParticipant.session_id}
@@ -78,7 +78,7 @@ export default function Call() {
         )}
         {mutedVideo && (
           <div className="join-now-box">
-            <H2Bold style={{ color: "white" }}>
+            <H2Bold style={{ color: 'white' }}>
               {localParticipant?.user_name} (You)
             </H2Bold>
           </div>
@@ -109,18 +109,18 @@ export default function Call() {
         ) : (
           <div className="join-now-box">
             <div className="content">
-              <BodyLSemiBold style={{ color: "white" }}>
+              <BodyLSemiBold style={{ color: 'white' }}>
                 ⚡️ Share the link with your candidate to start the meeting ⚡️
               </BodyLSemiBold>
               <div className="meeting-container">
                 <div className="meeting-link">
                   <BodyMMedium
                     style={{
-                      color: "white",
-                      whiteSpace: "nowrap",
-                      overflow: "scroll",
+                      color: 'white',
+                      whiteSpace: 'nowrap',
+                      overflow: 'scroll',
 
-                      display: "inline-block",
+                      display: 'inline-block',
                     }}
                   >
                     {window.location.href}

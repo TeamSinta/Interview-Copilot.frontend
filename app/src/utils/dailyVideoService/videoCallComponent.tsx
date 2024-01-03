@@ -1,47 +1,36 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  createContext,
-  useContext,
-  useRef,
-} from "react";
-import DailyIframe from "@daily-co/daily-js";
-import { DailyProvider, useDaily } from "@daily-co/daily-react";
-import videoApi from "./videoApi";
-import { roomUrlFromPageUrl, pageUrlFromRoomUrl } from "./utils";
-import Header from "@/pages/Interview/Daily/Header/Header";
-import HairCheck from "@/pages/Interview/Daily/HairCheck/HairCheck";
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import DailyIframe from '@daily-co/daily-js';
+import { DailyProvider } from '@daily-co/daily-react';
+import { roomUrlFromPageUrl, pageUrlFromRoomUrl } from './utils';
+import Header from '@/pages/Interview/Daily/Header/Header';
+import HairCheck from '@/pages/Interview/Daily/HairCheck/HairCheck';
 import {
   ApiErrorContainer,
   AppContainer,
   ApiErrorHeading1,
   ApiErrorParagraph,
   ApiErrorLink,
-} from "./StyledVideoCall"; // Update the import path
-import TopNavBar from "@/components/layouts/topnavbar/TopNavBar";
-import { Interview } from "@/pages/Interview";
-import { useLocation, useNavigate } from "react-router-dom";
-import { interviewDetail } from "../../mocks/mockDatas";
+} from './StyledVideoCall'; // Update the import path
+import { Interview } from '@/pages/Interview';
+import { useNavigate } from 'react-router-dom';
 
 const STATE = {
-  IDLE: "STATE_IDLE",
-  CREATING: "STATE_CREATING",
-  JOINING: "STATE_JOINING",
-  JOINED: "STATE_JOINED",
-  LEAVING: "STATE_LEAVING",
-  ERROR: "STATE_ERROR",
-  HAIRCHECK: "STATE_HAIRCHECK",
+  IDLE: 'STATE_IDLE',
+  CREATING: 'STATE_CREATING',
+  JOINING: 'STATE_JOINING',
+  JOINED: 'STATE_JOINED',
+  LEAVING: 'STATE_LEAVING',
+  ERROR: 'STATE_ERROR',
+  HAIRCHECK: 'STATE_HAIRCHECK',
 };
 
 export default function VideoCall() {
-  const location = useLocation();
   const navigate = useNavigate();
   const [appState, setAppState] = useState(STATE.IDLE);
   const [roomUrl, setRoomUrl] = useState(null);
   const [callObject, setCallObject] = useState(null);
   const [interviewRoundDetails, setInterviewRoundDetails] = useState(null);
-  const [apiError, setApiError] = useState(false);
+  const [apiError] = useState(false);
 
   const startHairCheck = useCallback(async (url) => {
     const existingInstance = DailyIframe.getCallInstance();
@@ -59,7 +48,7 @@ export default function VideoCall() {
   const setDetails = async (details: any) => {
     new Promise((res, rej) => {
       setInterviewRoundDetails(details);
-      localStorage.setItem("interviewRoundId", details.id);
+      localStorage.setItem('interviewRoundId', details.id);
       res(true);
     });
   };
@@ -94,9 +83,9 @@ export default function VideoCall() {
 
   useEffect(() => {
     if (roomUrl) {
-      localStorage.setItem("roomUrl", roomUrl);
+      localStorage.setItem('roomUrl', roomUrl);
     } else {
-      localStorage.removeItem("roomUrl");
+      localStorage.removeItem('roomUrl');
     }
   }, [roomUrl]);
 
@@ -111,7 +100,7 @@ export default function VideoCall() {
     if (roomUrl !== null) {
       const pageUrl = pageUrlFromRoomUrl(roomUrl);
       if (pageUrl !== window.location.href) {
-        window.history.replaceState(null, "", pageUrl);
+        window.history.replaceState(null, '', pageUrl);
       }
     }
   }, [roomUrl]);
@@ -119,26 +108,26 @@ export default function VideoCall() {
   useEffect(() => {
     if (!callObject) return;
 
-    const events = ["joined-meeting", "left-meeting", "error", "camera-error"];
+    const events = ['joined-meeting', 'left-meeting', 'error', 'camera-error'];
 
     function handleNewMeetingState() {
       switch (callObject.meetingState()) {
-        case "joined-meeting":
+        case 'joined-meeting':
           setAppState(STATE.JOINED);
           break;
-        case "left-meeting":
-          const interviewRoundId = localStorage.getItem("interviewRoundId");
+        case 'left-meeting':
+          const interviewRoundId = localStorage.getItem('interviewRoundId');
           localStorage.clear();
           callObject.destroy().then(() => {
             setRoomUrl(null);
             setCallObject(null);
             setAppState(STATE.IDLE);
-            navigate("/interviews/Conclusion", {
+            navigate('/interviews/conclusion/', {
               state: { id: interviewRoundId, useTimer: true },
             });
           });
           break;
-        case "error":
+        case 'error':
           setAppState(STATE.ERROR);
           break;
         default:
@@ -167,10 +156,10 @@ export default function VideoCall() {
           <ApiErrorHeading1>Error</ApiErrorHeading1>
           <ApiErrorParagraph>
             Room could not be created. Check if your `.env` file is set up
-            correctly. For more information, see the{" "}
+            correctly. For more information, see the{' '}
             <ApiErrorLink href="https://github.com/daily-demos/custom-video-daily-react-hooks#readme">
               readme
-            </ApiErrorLink>{" "}
+            </ApiErrorLink>{' '}
             :
           </ApiErrorParagraph>
         </ApiErrorContainer>

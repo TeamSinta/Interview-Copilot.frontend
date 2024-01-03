@@ -1,19 +1,19 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { DataLoading } from "../utils/utilEnum";
-import { RootState } from "@/app/store";
-import { getQuestionsBank } from "./interviewsAPI";
-import { IQuestion } from "./interviewsInterface";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { DataLoading } from '../utils/utilEnum';
+import { RootState } from '@/app/store';
+import { getQuestionsBank } from './interviewsAPI';
+import { IQuestion } from './interviewsInterface';
 
 export const initialState = {
   round: {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     members: [
       {
         member_idx: 0,
-        member_name: "",
-        member_url: "",
-        member_type: "",
+        member_name: '',
+        member_url: '',
+        member_type: '',
         selected: false,
       },
     ],
@@ -24,14 +24,14 @@ export const initialState = {
   questions: [] as IQuestion[],
   selectedQuestionBank: {
     id: 0,
-    title: "",
+    title: '',
   },
   selectedQuestion: [] as IQuestion[],
   status: DataLoading.UNSEND,
 };
 
 export const getQuestionsBanksAsync = createAsyncThunk(
-  "interviews/templates",
+  'interviews/templates',
   async () => {
     const response = await getQuestionsBank();
     return response; // Adjust the response data
@@ -39,7 +39,7 @@ export const getQuestionsBanksAsync = createAsyncThunk(
 );
 
 export const interviewsSlice = createSlice({
-  name: "questionBanks",
+  name: 'questionBanks',
   initialState,
   extraReducers: (builder) => {
     builder.addCase(getQuestionsBanksAsync.fulfilled, (state, action) => {

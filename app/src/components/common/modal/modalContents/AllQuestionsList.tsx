@@ -1,21 +1,21 @@
-import { AppDispatch } from "@/app/store";
-import { IQuestion } from "@/features/interviews/interviewsInterface";
+import { AppDispatch } from '@/app/store';
+import { IQuestion } from '@/features/interviews/interviewsInterface';
 import {
   selectInterview,
   setSelectedQuestion,
-} from "@/features/interviews/interviewsSlice";
-import { BackgroundColor } from "@/features/utils/utilEnum";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { IconBtnL } from "../../buttons/iconBtn/IconBtn";
+} from '@/features/interviews/interviewsSlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { IconBtnL } from '../../buttons/iconBtn/IconBtn';
 import {
   BinIcon,
   GraphIcon,
   PlusIcon,
   SelectArrowOpenIcon,
   TimeIcon,
-} from "../../svgIcons/Icons";
-import { BodyLBold, BodySMedium } from "../../typeScale/StyledTypeScale";
+} from '../../svgIcons/Icons';
+import { BodyLBold, BodySMedium } from '../../typeScale/StyledTypeScale';
 import {
   DetailOpenIcon,
   QuestionListContentLists,
@@ -23,15 +23,15 @@ import {
   QuestionListWrap,
   QuestionNumber,
   QuestionValue,
-} from "./StyledModalContents";
-import Loading from "../../elements/loading/Loading";
-import { useGetQuestionsQuery } from "@/features/questions/questionsAPISlice";
+} from './StyledModalContents';
+import Loading from '../../elements/loading/Loading';
+import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
 
 const AllQuestionsList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedQuestion } = useSelector(selectInterview);
   const [openItems, setOpenItems] = useState(new Set());
-  const [html, setHtml] = useState<string>("");
+  const [html, setHtml] = useState<string>('');
   const [questions, setQuestions] = useState<IQuestion[]>([]);
 
   const openDetailHandler = (id: number, isOpen: boolean) => {
@@ -123,7 +123,7 @@ const AllQuestionsList = () => {
                         openItems.has(question.id)
                       );
                     }}
-                    className={openItems.has(question.id) ? "open" : "close"}
+                    className={openItems.has(question.id) ? 'open' : 'close'}
                   >
                     <SelectArrowOpenIcon />
                   </DetailOpenIcon>
@@ -144,7 +144,7 @@ const AllQuestionsList = () => {
                 </div>
                 <div
                   className={
-                    openItems.has(question.id) ? "detail" : "detail none"
+                    openItems.has(question.id) ? 'detail' : 'detail none'
                   }
                 >
                   <div dangerouslySetInnerHTML={{ __html: html }}></div>

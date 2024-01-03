@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState } from 'react';
 import {
   useDaily,
   useScreenShare,
@@ -6,7 +6,7 @@ import {
   useVideoTrack,
   useAudioTrack,
   useDailyEvent,
-} from "@daily-co/daily-react";
+} from '@daily-co/daily-react';
 
 import {
   NavCamIcon,
@@ -19,7 +19,7 @@ import {
   SoundIcon,
   SettingIcon,
   ChatIcon,
-} from "@/components/common/svgIcons/Icons";
+} from '@/components/common/svgIcons/Icons';
 
 import {
   StyledBottomBar,
@@ -27,14 +27,14 @@ import {
   StyledColumns,
   StyledFinishBtn,
   StyledMiddleColumns,
-} from "./StyledBottomNavBar";
-import { Grid } from "@mui/material";
-import "./index.css";
-import { openModal } from "@/features/modal/modalSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/app/store";
-import { MODAL_TYPE } from "@/components/common/modal/GlobalModal";
-import Chat from "../Chat/Chat";
+} from './StyledBottomNavBar';
+import { Grid } from '@mui/material';
+import './index.css';
+import { openModal } from '@/features/modal/modalSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/app/store';
+import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import Chat from '../Chat/Chat';
 
 function BottomNavBarCandidate(props: any) {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
@@ -61,7 +61,7 @@ function BottomNavBarCandidate(props: any) {
   const [newChatMessage, setNewChatMessage] = useState(false);
 
   useDailyEvent(
-    "app-message",
+    'app-message',
     useCallback(() => {
       if (!showChat) {
         setNewChatMessage(true);
@@ -90,11 +90,11 @@ function BottomNavBarCandidate(props: any) {
   };
   return (
     <StyledBottomBar>
-      <Grid container style={{ justifyContent: "space-between" }}>
+      <Grid container style={{ justifyContent: 'space-between' }}>
         <Grid lg={2} md={2} sm={2} xl={2} xs={2}>
           <StyledColumns>
             <StyledBottomNavButtons
-              style={{ marginLeft: "22px" }}
+              style={{ marginLeft: '22px' }}
               onClick={toggleAudio}
               type="button"
             >
@@ -106,9 +106,9 @@ function BottomNavBarCandidate(props: any) {
             <StyledBottomNavButtons onClick={openSettingsModal}>
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  stroke: "white",
+                  display: 'flex',
+                  alignItems: 'center',
+                  stroke: 'white',
                 }}
               >
                 <SettingIcon />
@@ -118,13 +118,13 @@ function BottomNavBarCandidate(props: any) {
         </Grid>
 
         <Grid lg={6} md={6} sm={6} xl={6} xs={6}>
-          {" "}
+          {' '}
           <StyledMiddleColumns>
             {/* Integrate Daily's tray components here */}
             <StyledBottomNavButtons
               onClick={toggleScreenShare}
               type="button"
-              style={{ gap: "4px" }}
+              style={{ gap: '4px' }}
             >
               {isSharingScreen ? (
                 <NavScreenShareIcon />
@@ -133,40 +133,40 @@ function BottomNavBarCandidate(props: any) {
               )}
               <span
                 className="record-label"
-                style={{ marginLeft: "5px", marginRight: "5px" }}
+                style={{ marginLeft: '5px', marginRight: '5px' }}
               >
-                {isSharingScreen ? " Stop sharing screen" : " Share screen"}
+                {isSharingScreen ? ' Stop sharing screen' : ' Share screen'}
               </span>
             </StyledBottomNavButtons>
 
-            <div style={{ marginRight: "10px", marginLeft: "10px" }}>
+            <div style={{ marginRight: '10px', marginLeft: '10px' }}>
               <NavCircle />
             </div>
 
             <StyledBottomNavButtons onClick={toggleChat} type="button">
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 <span
                   className="record-label"
-                  style={{ marginLeft: "5px", marginRight: "5px" }}
+                  style={{ marginLeft: '5px', marginRight: '5px' }}
                 >
-                  {showChat ? "Hide Chat" : "Chat"}
-                </span>{" "}
-                <span className="icon" style={{ marginLeft: "5px" }}>
+                  {showChat ? 'Hide Chat' : 'Chat'}
+                </span>{' '}
+                <span className="icon" style={{ marginLeft: '5px' }}>
                   {showChat ? (
-                    <div style={{ display: "flex", stroke: "white" }}>
-                      {" "}
-                      <ChatIcon />{" "}
+                    <div style={{ display: 'flex', stroke: 'white' }}>
+                      {' '}
+                      <ChatIcon />{' '}
                     </div>
                   ) : (
-                    <div style={{ display: "flex", stroke: "white" }}>
-                      {" "}
-                      <ChatIcon />{" "}
+                    <div style={{ display: 'flex', stroke: 'white' }}>
+                      {' '}
+                      <ChatIcon />{' '}
                     </div>
                   )}
                 </span>
@@ -177,9 +177,9 @@ function BottomNavBarCandidate(props: any) {
         </Grid>
 
         <Grid lg={2} md={2} sm={2} xl={2} xs={2}>
-          {" "}
+          {' '}
           <Chat showChat={showChat} toggleChat={toggleChat} />
-          <StyledColumns style={{ paddingRight: "20px", float: "right" }}>
+          <StyledColumns style={{ paddingRight: '20px', float: 'right' }}>
             <StyledFinishBtn className="accentPurple" onClick={leaveCall}>
               Finish
             </StyledFinishBtn>

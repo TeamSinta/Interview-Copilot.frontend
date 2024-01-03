@@ -1,14 +1,14 @@
-import React from "react";
-import { type Meta, type StoryObj } from "@storybook/react";
-import { TextIconBtnL, TextIconBtnLL, TextIconBtnXL } from "./TextIconBtn";
+import React from 'react';
+import { type Meta, type StoryObj } from '@storybook/react';
+import { TextIconBtnL, TextIconBtnLL, TextIconBtnXL } from './TextIconBtn';
 import {
   PlusIcon,
   GoogleIcon,
   RightBracketIcon,
   AsteriskIcon,
   ArrowDownIcon,
-} from "@/components/common/svgIcons/Icons";
-import { BackgroundColor } from "@/features/utils/utilEnum";
+} from '@/components/common/svgIcons/Icons';
+import { BackgroundColor } from '@/features/utils/utilEnum';
 
 const icons = {
   Plus: <PlusIcon />,
@@ -19,40 +19,40 @@ const icons = {
 };
 
 const meta = {
-  title: "common/buttons/TextIconButton",
+  title: 'common/buttons/TextIconButton',
   component: TextIconBtnL,
   argTypes: {
     icon: {
       control: {
-        type: "select",
+        type: 'select',
         options: Object.keys(icons),
         mapping: {
           icons,
         },
       },
-      description: "Icon components",
+      description: 'Icon components',
     },
     label: {
       control: {
-        type: "text",
+        type: 'text',
       },
-      description: "Text for button",
+      description: 'Text for button',
     },
     disable: {
       control: {
-        type: "boolean",
+        type: 'boolean',
       },
-      description: "Disable or able",
+      description: 'Disable or able',
     },
     className: {
       control: {
-        type: "select",
+        type: 'select',
       },
       options: [BackgroundColor.ACCENT_PURPLE, BackgroundColor.WHITE],
       table: { defaultValue: { summary: BackgroundColor.ACCENT_PURPLE } },
     },
   },
-  decorators: [(story) => <div style={{ width: "223px" }}>{story()}</div>],
+  decorators: [(story) => <div style={{ width: '223px' }}>{story()}</div>],
 } as Meta<typeof TextIconBtnL>;
 export default meta;
 
@@ -60,7 +60,7 @@ type Story = StoryObj<typeof meta>;
 
 export const PrimaryTextIconBtnPXL: Story = {
   args: {
-    label: "Create Custom Role",
+    label: 'Create Custom Role',
     icon: <AsteriskIcon />,
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
@@ -72,7 +72,7 @@ export const PrimaryTextIconBtnPXL: Story = {
 
 export const DisableTextIconBtnPXL: Story = {
   args: {
-    label: "Create Custom Role",
+    label: 'Create Custom Role',
     icon: <AsteriskIcon />,
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
@@ -84,7 +84,7 @@ export const DisableTextIconBtnPXL: Story = {
 
 export const PrimaryTextIconBtnWXL: Story = {
   args: {
-    label: "Add Role from Template",
+    label: 'Add Role from Template',
     icon: <ArrowDownIcon />,
     disable: false,
     className: BackgroundColor.WHITE,
@@ -96,7 +96,7 @@ export const PrimaryTextIconBtnWXL: Story = {
 
 export const DisableTextIconBtnWXL: Story = {
   args: {
-    label: "Add Role from Template",
+    label: 'Add Role from Template',
     icon: <ArrowDownIcon />,
     disable: true,
     className: BackgroundColor.WHITE,
@@ -108,7 +108,7 @@ export const DisableTextIconBtnWXL: Story = {
 
 export const PrimaryTextIconBtnPLL: Story = {
   args: {
-    label: "Drop or Browse your file",
+    label: 'Drop or Browse your file',
     icon: <ArrowDownIcon />,
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
@@ -120,7 +120,7 @@ export const PrimaryTextIconBtnPLL: Story = {
 
 export const DisableTextIconBtnPLL: Story = {
   args: {
-    label: "Drop or Browse your file",
+    label: 'Drop or Browse your file',
     icon: <ArrowDownIcon />,
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
@@ -132,7 +132,7 @@ export const DisableTextIconBtnPLL: Story = {
 
 export const PrimaryTextIconBtnPL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.ACCENT_PURPLE,
@@ -141,7 +141,7 @@ export const PrimaryTextIconBtnPL: Story = {
 
 export const DisableTextIconBtnPL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.ACCENT_PURPLE,
@@ -150,7 +150,7 @@ export const DisableTextIconBtnPL: Story = {
 
 export const PrimaryTextIconBtnWL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     icon: <PlusIcon />,
     disable: false,
     className: BackgroundColor.WHITE,
@@ -159,7 +159,7 @@ export const PrimaryTextIconBtnWL: Story = {
 
 export const DisableTextIconBtnWL: Story = {
   args: {
-    label: "Create",
+    label: 'Create',
     icon: <PlusIcon />,
     disable: true,
     className: BackgroundColor.WHITE,

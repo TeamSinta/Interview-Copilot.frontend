@@ -4,60 +4,54 @@ import React, {
   ChangeEvent,
   FormEvent,
   useEffect,
-} from "react";
+} from 'react';
 import {
   useLocalParticipant,
   useDevices,
   useDaily,
   useDailyEvent,
   DailyVideo,
-} from "@daily-co/daily-react";
-import UserMediaError from "../UserMediaError/UserMediaError";
-import { MenuItem } from "@mui/material";
+} from '@daily-co/daily-react';
+import UserMediaError from '../UserMediaError/UserMediaError';
+import { MenuItem } from '@mui/material';
 import {
   VideoContainer,
   ButtonWrapper,
   Wrapper,
   SelectBox,
   HomeContainer,
-} from "./StyledHairCheck";
-import { Stack } from "@mui/material";
-import ElWrap from "@/components/layouts/elWrap/ElWrap";
-import { TextIconBtnL } from "@/components/common/buttons/textIconBtn/TextIconBtn";
-import { BackgroundColor } from "@/features/utils/utilEnum";
+} from './StyledHairCheck';
+import { Stack } from '@mui/material';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
 import {
   CloseIcon,
   RightBracketIcon,
   VideoCam,
   VideoMic,
   VideoSound,
-} from "@/components/common/svgIcons/Icons";
-import TextInput from "@/components/common/form/textInput/TextInput";
-import Slider from "@/components/common/slider/CustomSlider";
-import InterviewRoundCard from "@/components/common/cards/interviewRoundCard/InterviewRoundCard";
+} from '@/components/common/svgIcons/Icons';
+import TextInput from '@/components/common/form/textInput/TextInput';
+import Slider from '@/components/common/slider/CustomSlider';
+import InterviewRoundCard from '@/components/common/cards/interviewRoundCard/InterviewRoundCard';
 import {
   BodySMedium,
   H3Bold,
-} from "@/components/common/typeScale/StyledTypeScale";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../app/store";
-import {
-  createInterviewRound,
-  getCandidateByUsername,
-} from "../../../../features/interviews/interviewsAPI";
-import { useCookies } from "react-cookie";
-import { IMember } from "@/components/common/cards/teamplateHomeCard/TemplateHomeCard";
-import { useGetTemplateQuestionsQuery } from "@/features/templates/templatesQuestionsAPISlice";
-import DropUpBtn from "@/components/common/dropUpBtn/dropUpBtn";
-import { TemplateQuestions } from "@/features/templates/templatesInterface";
-import DropdownFilter from "../../../../components/common/filters/dropdownFilter/DropdownFilter";
-import IconButton from "@mui/material/IconButton";
-import { useGetTemplatesQuery } from "@/features/templates/templatesAPISlice";
-import { Template } from "@/pages/Templates_/Templates";
-import {
-  AccessToken,
-  CompanyID,
-} from "@/features/settingsDetail/userSettingTypes";
+} from '@/components/common/typeScale/StyledTypeScale';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../app/store';
+import { createInterviewRound } from '../../../../features/interviews/interviewsAPI';
+import { IMember } from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
+import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
+import DropUpBtn from '@/components/common/dropUpBtn/dropUpBtn';
+import { TemplateQuestions } from '@/features/templates/templatesInterface';
+import DropdownFilter from '../../../../components/common/filters/dropdownFilter/DropdownFilter';
+import IconButton from '@mui/material/IconButton';
+import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
+import { Template } from '@/pages/Templates_/Templates';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { useCookies } from 'react-cookie';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -86,18 +80,13 @@ export default function HairCheck({
 
   const [getUserMediaError, setGetUserMediaError] = useState(false);
   const [templates, setTemplates] = useState<Template[]>([]);
-  const [newTitle, setTitle] = useState("");
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
+  const [newTitle, setTitle] = useState('');
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
     null
   );
 
-  const [cookies, ,] = useCookies(["access_token"]);
   const workspace = useSelector((state: RootState) => state.workspace);
 
-  const [departmentId, setDepartmentId] = useState("");
-  const [sortCriteria, setSortCritiera] = useState("");
-
-  const accessToken = cookies.access_token as AccessToken;
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyID = (!workspace.id
     ? user?.companies?.[0]?.id ?? workspace.id
@@ -117,7 +106,7 @@ export default function HairCheck({
     const pathname = urlObj.pathname;
 
     // Split the pathname by '/' and filter out empty strings
-    const segments = pathname.split("/").filter((segment) => segment !== "");
+    const segments = pathname.split('/').filter((segment) => segment !== '');
 
     // Get the last segment
     const lastSegment = segments[segments.length - 1];
@@ -126,27 +115,32 @@ export default function HairCheck({
   };
 
   const startMeeting = async () => {
-    if (newTitle === "") throw new Error("Empty candidate username");
-    if (selectedTemplateId === "" || !selectedTemplateId)
-      throw new Error("Empty selected template");
+    if (newTitle === '') throw new Error('Empty candidate username');
+    if (!selectedTemplate) throw new Error('Empty selected template');
 
     try {
       const title = newTitle;
+      const candidate_id = 1;
       const meeting_room_id = getRoomNameFromUrl(callObject?.properties.url);
+      const company_id = companyId;
+      const user_id = user.id;
+
       const response = await createInterviewRound(
         title,
-        selectedTemplateId,
-        cookies.access_token,
-        meeting_room_id
+        selectedTemplate.id, // Use the selectedTemplate's id
+        meeting_room_id,
+        candidate_id,
+        user_id,
+        company_id
       );
 
       const interviewDetails = {
         id: response.id,
         title: response.title,
         template_id: response.template_id,
-        email: "support@sintahr.com",
-        name: "Template Details",
-        // candidate_id: candidateId,
+        email: 'support@sintahr.com',
+        name: selectedTemplate.role_title,
+        candidate_id: candidate_id,
       };
 
       setInterviewRoundDetails(interviewDetails).then(() => {
@@ -158,19 +152,13 @@ export default function HairCheck({
   };
 
   useDailyEvent(
-    "camera-error",
+    'camera-error',
     useCallback(() => {
       setGetUserMediaError(true);
     }, [])
   );
 
-  const {
-    data: templatesData,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetTemplatesQuery();
+  const { data: templatesData, isSuccess } = useGetTemplatesQuery();
 
   useEffect(() => {
     if (isSuccess) {
@@ -197,8 +185,8 @@ export default function HairCheck({
   //   callObject.setUserName(e.target.value);
   // };
   useEffect(() => {
-    callObject?.setUserName(user.first_name || "");
-  }, [localParticipant]);
+    callObject?.setUserName(user.first_name || '');
+  }, [callObject, localParticipant, user.first_name]);
 
   const join = (e: FormEvent) => {
     e.preventDefault();
@@ -247,6 +235,26 @@ export default function HairCheck({
     </MenuItem>
   ));
 
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{
+              paddingTop: '40px',
+              color: 'gray',
+              textAlign: 'center',
+            }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return getUserMediaError ? (
     <UserMediaError />
   ) : (
@@ -258,16 +266,16 @@ export default function HairCheck({
               sessionId={localParticipant.session_id}
               mirror
               style={{
-                flex: "1",
-                height: "500px",
-                maxWidth: "690px",
+                flex: '1',
+                height: '500px',
+                maxWidth: '690px',
               }}
-              fit={"cover"}
+              fit={'cover'}
             />
 
             <Stack
               direction="row"
-              sx={{ marginTop: "4px", gap: "4px", display: "flex" }}
+              sx={{ marginTop: '4px', gap: '4px', display: 'flex' }}
             >
               <DropUpBtn
                 mainButtonContent={<VideoMic />}
@@ -291,48 +299,48 @@ export default function HairCheck({
               direction="row"
               justifyContent="space-between"
               style={{
-                width: "100%",
-                paddingTop: "16px",
-                paddingBottom: "18px",
+                width: '100%',
+                paddingTop: '16px',
+                paddingBottom: '18px',
               }}
               spacing={1}
             >
               <H3Bold>Create a meeting</H3Bold>
-              <IconButton onClick={cancelCall} style={{ stroke: "black" }}>
+              <IconButton onClick={cancelCall} style={{ stroke: 'black' }}>
                 <CloseIcon />
               </IconButton>
             </Stack>
             <BodySMedium>Title of your meeting</BodySMedium>
-            <div style={{ width: "100%" }}>
+            <div style={{ width: '100%' }}>
               <ElWrap>
                 <TextInput
                   name="title"
                   disable={false}
                   placeholder={`Enter your Interview title here!`}
-                  error={false}
                   value={newTitle}
                   onChange={(e) => {
                     setTitle(e.target.value);
                   }}
+                  validate={validateTitle}
                 />
               </ElWrap>
             </div>
           </Stack>
           <div
-            style={{ width: "100%", marginTop: "16px", marginBottom: "34px" }}
+            style={{ width: '100%', marginTop: '16px', marginBottom: '34px' }}
           >
             <DropdownFilter
               label="Department"
               optionArr={[
-                { name: "Name (A-Z)", value: "name-asc" },
-                { name: "Name (Z-A)", value: "name-desc" },
-                { name: "Permission Level", value: "permission" },
+                { name: 'Name (A-Z)', value: 'name-asc' },
+                { name: 'Name (Z-A)', value: 'name-desc' },
+                { name: 'Permission Level', value: 'permission' },
               ]}
               dropdownName="All templates"
-              value={""}
+              value={''}
             />
           </div>
-          <div style={{ height: "100%" }}>
+          <div style={{ height: '100%' }}>
             <Slider
               items={templates}
               renderItem={(template: Template) => (
@@ -353,9 +361,12 @@ export default function HairCheck({
                     })
                   )}
                   onClick={(templateId) => {
-                    setSelectedTemplateId(templateId);
+                    const selected = templates.find(
+                      (template) => template.id === templateId
+                    );
+                    setSelectedTemplate(selected || null);
                   }}
-                  selected={selectedTemplateId === template.id}
+                  selected={selectedTemplate?.id === template.id}
                 />
               )}
             />
@@ -370,15 +381,6 @@ export default function HairCheck({
                 className={BackgroundColor.ACCENT_PURPLE}
               />
             </ElWrap>
-            {/* <ElWrap w={360} h={40}>
-              <TextIconBtnL
-                disable={false}
-                label="Back to Start"
-                icon={<RightBracketIcon />}
-                onClick={cancelCall}
-                className={BackgroundColor.WHITE}
-              />
-            </ElWrap> */}
           </ButtonWrapper>
         </SelectBox>
       </HomeContainer>

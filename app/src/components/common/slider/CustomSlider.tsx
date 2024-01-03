@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { SliderContent, CustomSlider } from "./StyledCustomSlider";
+import React, { useState } from 'react';
+import { SliderContent, CustomSlider } from './StyledCustomSlider';
 
 type SliderProps<T> = {
   items: T[]; // An array of items of any type
@@ -14,7 +14,7 @@ const Slider = <T extends {}>({ items, renderItem }: SliderProps<T>) => {
       <SliderContent>
         {items.map((item, index) => (
           <div
-            className={index === activeIndex ? "active" : "inactive"}
+            className={index === activeIndex ? 'active' : 'inactive'}
             key={index}
           >
             {renderItem(item)}
