@@ -125,7 +125,6 @@ export default function HairCheck({
       const response = await createInterviewRound(
         title,
         selectedTemplateId,
-        cookies.access_token,
         meeting_room_id,
         candidate_id
       );

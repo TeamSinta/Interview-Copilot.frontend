@@ -24,7 +24,6 @@ export const getQuestionsBank = async () => {
 export const createInterviewRound = async (
   title: string,
   template_id: string | null,
-  token: string,
   meeting_room_id: string,
   candidate_id: number
 ) => {
@@ -35,16 +34,9 @@ export const createInterviewRound = async (
     candidate_id: candidate_id,
   };
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  };
   const result = await instance.post(
     `${BACKEND_URL}/interview-rounds/create/`,
     data,
-    config
   );
 
   return result.data;
