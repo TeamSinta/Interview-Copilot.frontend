@@ -37,11 +37,11 @@ const EditInterviewers = () => {
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
 
+
   const stringTemplateId = templateId?.toString();
 
   const { data: templateData } = useGetTemplateDetailQuery(stringTemplateId);
 
-  // console.log(templateData);
 
   const { members } = useFetchCompanyMembers({
     company_id: companyId,
