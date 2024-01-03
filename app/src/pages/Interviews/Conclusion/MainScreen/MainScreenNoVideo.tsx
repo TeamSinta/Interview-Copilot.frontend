@@ -119,7 +119,6 @@ const MainScreenNoVideo: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     fetchData();
   }, [interviewRoundId, cookies.access_token]);
 
-  console.log(interviewRoundQuestions);
 
   const infoTabs = useMemo(
     () => (

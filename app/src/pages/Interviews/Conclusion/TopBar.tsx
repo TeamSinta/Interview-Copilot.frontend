@@ -60,7 +60,7 @@ const TopBar = ({ interviewRoundId }) => {
   }, [cookies.access_token, interviewRoundId]);
 
   const departmentName = departmentTitle || 'General';
-  const candidateTitle = candidateName || 'Unknown Contact';
+  const candidateTitle = candidateName || 'Unknown Candidate';
   return (
     <React.Fragment>
       <Grid container spacing={1} style={{ gap: '8px' }}>

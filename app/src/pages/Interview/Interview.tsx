@@ -380,7 +380,6 @@ const Interview = ({ leaveCall, interviewDetails }) => {
 
     useEffect(() => {}, [activeQuestionInfo]);
 
-    console.log(activeQuestionInfo);
     function resetList() {
       setCollapseQuestion(false);
     }

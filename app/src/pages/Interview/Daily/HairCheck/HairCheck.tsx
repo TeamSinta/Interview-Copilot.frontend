@@ -81,10 +81,9 @@ export default function HairCheck({
   const [getUserMediaError, setGetUserMediaError] = useState(false);
   const [templates, setTemplates] = useState<Template[]>([]);
   const [newTitle, setTitle] = useState('');
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
     null
   );
-  const [cookies, ,] = useCookies(['access_token']);
 
   const workspace = useSelector((state: RootState) => state.workspace);
 
@@ -117,19 +116,22 @@ export default function HairCheck({
 
   const startMeeting = async () => {
     if (newTitle === '') throw new Error('Empty candidate username');
-    if (selectedTemplateId === '' || !selectedTemplateId)
-      throw new Error('Empty selected template');
+    if (!selectedTemplate) throw new Error('Empty selected template');
 
     try {
       const title = newTitle;
       const candidate_id = 1;
       const meeting_room_id = getRoomNameFromUrl(callObject?.properties.url);
+      const company_id = companyId;
+      const user_id = user.id;
 
       const response = await createInterviewRound(
         title,
-        selectedTemplateId,
+        selectedTemplate.id, // Use the selectedTemplate's id
         meeting_room_id,
-        candidate_id
+        candidate_id,
+        user_id,
+        company_id
       );
 
       const interviewDetails = {
@@ -137,7 +139,7 @@ export default function HairCheck({
         title: response.title,
         template_id: response.template_id,
         email: 'support@sintahr.com',
-        name: 'Template Details',
+        name: selectedTemplate.role_title,
         candidate_id: candidate_id,
       };
 
@@ -359,9 +361,12 @@ export default function HairCheck({
                     })
                   )}
                   onClick={(templateId) => {
-                    setSelectedTemplateId(templateId);
+                    const selected = templates.find(
+                      (template) => template.id === templateId
+                    );
+                    setSelectedTemplate(selected || null);
                   }}
-                  selected={selectedTemplateId === template.id}
+                  selected={selectedTemplate?.id === template.id}
                 />
               )}
             />
@@ -376,15 +381,6 @@ export default function HairCheck({
                 className={BackgroundColor.ACCENT_PURPLE}
               />
             </ElWrap>
-            {/* <ElWrap w={360} h={40}>
-              <TextIconBtnL
-                disable={false}
-                label="Back to Start"
-                icon={<RightBracketIcon />}
-                onClick={cancelCall}
-                className={BackgroundColor.WHITE}
-              />
-            </ElWrap> */}
           </ButtonWrapper>
         </SelectBox>
       </HomeContainer>

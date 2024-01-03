@@ -141,12 +141,10 @@ const CreateInterviews = () => {
 
   const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
-    console.log(event.target.value);
   };
 
   const textAreaOnChange = (value: string) => {
     setDescription(value);
-    console.log(value);
   };
 
   const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {

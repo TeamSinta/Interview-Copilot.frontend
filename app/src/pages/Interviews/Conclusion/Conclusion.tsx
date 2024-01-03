@@ -70,7 +70,6 @@ const Conclusion: React.FC = () => {
 
   const [isVideoEmpty, setIsVideoEmpty] = useState<boolean | null>(null);
 
-  console.log(interviewRound);
 
   useEffect(() => {
     const fetchRatings = async () => {

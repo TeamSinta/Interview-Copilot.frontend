@@ -52,8 +52,7 @@ const InterviewStage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [departmentId, setDepartmentId] = useState('');
-  const [sortCriteria, setSortCritiera] = useState('');
+
 
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
@@ -73,14 +72,6 @@ const InterviewStage = () => {
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
 
-  const departments = useFetchCompanyDepartments(companyId as CompanyID);
-
-  const handleSetDepartment = (value: string) => {
-    setDepartmentId(value);
-  };
-  const handleSortMembers = (value: string) => {
-    setSortCritiera(value);
-  };
 
   useEffect(() => {
     if (templateId) {

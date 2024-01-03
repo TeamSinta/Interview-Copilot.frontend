@@ -13,6 +13,7 @@ type FeedbackData = {
   template_question: string;
 };
 
+
 export const getQuestionsBank = async () => {
   return await instance
     .get(`${BACKEND_URL}/question/question-banks/`)
@@ -26,13 +27,17 @@ export const createInterviewRound = async (
   title: string,
   template_id: string | null,
   meeting_room_id: string,
-  candidate_id: number
+  candidate_id: number,
+  user_id: number,
+  company_id:string,
 ) => {
   const data = {
     title: title,
     template_id: template_id,
     room_id: meeting_room_id,
     candidate_id: candidate_id,
+    user_id: user_id,
+    company_id: company_id
   };
 
   const result = await instance.post(
