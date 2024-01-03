@@ -53,7 +53,6 @@ const InterviewStage = () => {
   const [startX, setStartX] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
 
@@ -71,7 +70,6 @@ const InterviewStage = () => {
   } = useGetTemplatesQuery();
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
-
 
   useEffect(() => {
     if (templateId) {

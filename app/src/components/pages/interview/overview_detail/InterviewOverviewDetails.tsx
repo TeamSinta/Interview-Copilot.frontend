@@ -272,7 +272,6 @@ const InterviewOverviewDetails = () => {
     return null; // No validation errors
   };
 
-
   return (
     <OverviewDetails>
       {!selectedSection ? (
