@@ -20,15 +20,10 @@ import PublicRoutes from './authenticated/PublicRoutes';
 const Routers = () => {
   return (
     <Routes>
-      <Route
-        path=""
-        element={
-          <PublicRoutes>
-            <Route path="/login" element={<LoginScreen />} />
-            <Route path="/sign-up" element={<SignUpScreen />} />
-          </PublicRoutes>
-        }
-      />
+      <Route path="" element={<PublicRoutes />}>
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/sign-up" element={<SignUpScreen />} />
+      </Route>
       <Route path="/video-call" element={<CheckType />} />
       <Route path="end-call-screen" element={<EndCallScreen />} />
 
