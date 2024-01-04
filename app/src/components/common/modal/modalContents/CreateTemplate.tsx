@@ -125,6 +125,7 @@ const CreateInterviews = () => {
       location: null,
       interviewers: selectedMemberIds,
       company: companyId,
+      user: user.id,
       department_id: departmentId,
       description: description, // Use the description state here
     };
