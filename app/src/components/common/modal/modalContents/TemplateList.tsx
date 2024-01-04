@@ -34,21 +34,21 @@ const TemplateList = () => {
   return (
     <TemplateListWrap>
       <TemplateListInputWrap>
-        <ElWrap w={462} h={40}>
+        <ElWrap h={40}>
           <SearchInput
             disable={false}
             placeholder={'Search for a questions'}
             error={false}
           />
         </ElWrap>
-        <div className="filterWrap">
+        {/* <div className="filterWrap">
           <BodySMedium>Role:</BodySMedium>
           <DropdownFilter
             optionArr={[{ name: 'Designer', value: 'Designer' }]}
             dropdownName={'Role'}
             value={''}
           />
-        </div>
+        </div> */}
       </TemplateListInputWrap>
       <TemplateListContentWrap>
         {status === DataLoading.FULFILLED ? (

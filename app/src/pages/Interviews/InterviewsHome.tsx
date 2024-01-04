@@ -53,6 +53,7 @@ export default function BasicTabs() {
 
   const navigate = useNavigate();
 
+  console.log(interviews);
   React.useEffect(() => {
     const fetchInterviews = async () => {
       const response = await getInterviews();
@@ -125,10 +126,10 @@ export default function BasicTabs() {
                   >
                     <ConclusionInterviewCard
                       key={index}
-                      title={interviewRound.title}
+                      title={interviewRound.candidate_name}
                       disable={false}
-                      name={'default name'}
-                      date={new Date().getTime() - 1000 * 60 * 60 * 24 * 15}
+                      name={interviewRound.title}
+                      date={interviewRound.created_at}
                     />
                   </div>
                 ))}

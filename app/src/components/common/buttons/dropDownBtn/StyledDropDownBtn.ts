@@ -4,14 +4,14 @@ interface IDropdownOpen {
   open: boolean;
 }
 
-export const CustomButton = styled.button`
+export const CustomButton = styled.div`
   background: ${(props) => props.theme.colors.whisperGrey};
   height: 40px;
   border: 0;
   outline: none;
   font-size: 12px;
-
-  border-radius: 0 0 12px 12px;
+  color: black;
+  border-radius: 0 0 8px 8px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,7 +42,7 @@ export const CustomButton = styled.button`
 export const ButtonWrap = styled.div`
   text-align: center;
   background: ${(props) => props.theme.colors.whisperGrey};
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 8px 8px;
   transition: 0.5s;
   border: 1px solid black;
   width: 100%;

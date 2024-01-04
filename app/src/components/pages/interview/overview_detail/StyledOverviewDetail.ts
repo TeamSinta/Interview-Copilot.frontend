@@ -26,7 +26,7 @@ export const OverviewDetailList = styled.div`
   gap: 16px;
   flex-direction: column;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgba(246, 246, 251, 0.5);
   height: auto;
 
@@ -48,7 +48,7 @@ export const OverviewDetailList = styled.div`
         padding: 6px;
         display: flex;
         width: 32px;
-        border-radius: 10px;
+        border-radius: 8px;
         justify-content: center;
         align-items: center;
         background-color: ${(props) => props.theme.colors.white};
@@ -73,7 +73,7 @@ export const OverviewDetailList = styled.div`
       align-items: center;
       outline: 1px solid ${(props) => props.theme.colors.black};
       outline-offset: -1px;
-      border-radius: 10px;
+      border-radius: 8px;
       background-color: ${(props) => props.theme.colors.white};
     }
 
@@ -128,7 +128,7 @@ export const OverviewDetailEdit = styled.div`
   padding: 20px;
   display: flex;
   gap: 16px;
-  border-radius: 12px;
+  border-radius: 8px;
   flex-direction: column;
   outline: 1px solid ${(props) => props.theme.colors.black};
   outline-offset: -1px;

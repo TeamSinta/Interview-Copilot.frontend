@@ -5,10 +5,10 @@ export const Card = styled.div`
   width: inherit;
   height: inherit;
   position: relative;
-  border-radius: 12px;
+  border-radius: 8px;
   background: ${(props) => props.theme.colors.lightPurple};
   transition: 0.3s;
-
+  z-index: 0;
   &.hover {
     cursor: pointer;
     background: ${(props) => props.theme.colors.palePurple};

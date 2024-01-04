@@ -11,7 +11,7 @@ const InvitationBoxContainer = styled.div`
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid #121212;
-  z-index: 999; /* Ensure it's above other content */
+  z-index: 0; /* Ensure it's above other content */
 `;
 
 const InvitationBoxContent = styled.div`

@@ -70,8 +70,12 @@ import { ReactComponent as MoreVert } from '@/assets/svg/more_vert_icon.svg';
 import { ReactComponent as VideoMicIcon } from '@/assets/svg/VideoMicIcon.svg';
 import { ReactComponent as VideoCamIcon } from '@/assets/svg/VideoCamIcon.svg';
 import { ReactComponent as VideoSoundIcon } from '@/assets/svg/VideoSoundIcon.svg';
+import { ReactComponent as VideoCamOffIcon } from '@/assets/svg/VideoCamOff.svg';
+import { ReactComponent as VideoMicOffIcon } from '@/assets/svg/VideoMicOff.svg';
 
 import { ReactComponent as Emoji } from '@/assets/svg/emoji.svg';
+
+import { ReactComponent as DropDown } from '@/assets/svg/DropDown Icon Button M.svg';
 
 export const SintaIcon = (): JSX.Element => {
   return <Logo />;
@@ -84,6 +88,13 @@ export const VideoMic = (): JSX.Element => {
 export const VideoSound = (): JSX.Element => {
   return <VideoSoundIcon />;
 };
+export const VideoMicOff = (): JSX.Element => {
+  return <VideoMicOffIcon />;
+};
+
+export const VideoCamoff = (): JSX.Element => {
+  return <VideoCamOffIcon />;
+};
 
 export const Send = (): JSX.Element => {
   return <SendIcon />;
@@ -91,6 +102,9 @@ export const Send = (): JSX.Element => {
 
 export const VideoCam = (): JSX.Element => {
   return <VideoCamIcon />;
+};
+export const DropUpIcon = (): JSX.Element => {
+  return <DropDown />;
 };
 
 export const EmojiIcon = (): JSX.Element => {

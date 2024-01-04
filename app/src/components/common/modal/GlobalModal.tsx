@@ -93,7 +93,7 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.EDIT_INT:
         return (
-          <Modal title="Edit Interview">
+          <Modal title="Interview Details">
             <EditInterviews />
           </Modal>
         );
@@ -105,7 +105,7 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.SELECT_VAL:
         return (
-          <Modal title="Create your Sections">
+          <Modal title="Sections">
             <SelectValue />
           </Modal>
         );
