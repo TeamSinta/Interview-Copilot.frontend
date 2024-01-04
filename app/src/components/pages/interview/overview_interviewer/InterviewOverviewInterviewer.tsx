@@ -2,7 +2,7 @@
 import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn';
 import Photo from '@/components/common/buttons/photo/Photo';
 import Photos from '@/components/common/buttons/photo/Photos';
-import { EditIcon } from '@/components/common/svgIcons/Icons';
+import { EditIcon, PlusIcon } from '@/components/common/svgIcons/Icons';
 import { H3Bold } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import {
@@ -35,7 +35,7 @@ const InterviewOverviewInterviewer = () => {
         <H3Bold>Interviewers</H3Bold>
         <ElWrap w={32} h={32}>
           <IconBtnM
-            icon={<EditIcon />}
+            icon={<PlusIcon />}
             disable={false}
             className={BackgroundColor.WHITE}
             onClick={() => {

@@ -90,7 +90,7 @@ export const StyledBtnLL = styled(StyledBtnXL)`
 
 export const StyledButtonM = styled(StyledButton)`
   height: 32px;
-  border-radius: 10px;
+  border-radius: 8px;
 `;
 
 export const StyledButtonS = styled.button`
@@ -272,7 +272,7 @@ export const StyledRatingBtnL = styled.button`
   position: relative;
   outline: 1px solid ${(props) => props.theme.colors.black};
   outline-offset: -1px;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0px 2px 0px #121212;
   height: 40px;
   width: 100%;
