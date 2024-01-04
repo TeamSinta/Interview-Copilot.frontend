@@ -15,6 +15,7 @@ import QuestionBankStage from '@/pages/Questions/QuestionBanksTab/QuestionBankSt
 import SignUpScreen from '@/pages/SignUp/SignUp';
 import CheckType from './CheckType';
 import EndCallScreen from '@/pages/Interview/Daily/Call/EndCallScreenExternal';
+import NotificationsPage from '@/pages/Notifications';
 
 const Routers = () => {
   return (
@@ -28,6 +29,7 @@ const Routers = () => {
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/templates" element={<Templates />}></Route>
+        <Route path="/notifications" element={<NotificationsPage />}></Route>
         <Route path="/templates/:templateId" element={<InterviewStage />} />
         {/* <Route
       path="/interviews/:department/:round
