@@ -43,6 +43,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Template } from './Templates_/Templates';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 
 const InterviewStage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -209,8 +210,9 @@ const InterviewStage = () => {
       <InterviewOverviewContainer>
         <Title>
           <H2Bold>Interview Overview</H2Bold>
-          <ElWrap w={32} h={32}>
-            <IconBtnM
+          <ElWrap w={200} h={38}>
+            <TextIconBtnL
+              label="Edit Details"
               icon={<EditIcon />}
               disable={false}
               className={BackgroundColor.WHITE}

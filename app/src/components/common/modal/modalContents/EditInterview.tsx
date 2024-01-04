@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch } from '@/app/store';
 import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
 import { InputLayout } from '@/components/common/form/input/StyledInput';
 import TextArea from '@/components/common/form/textArea/TextArea';
@@ -6,8 +6,8 @@ import TextInput from '@/components/common/form/textInput/TextInput';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { closeModal } from '@/features/modal/modalSlice';
 import { BackgroundColor } from '@/features/utils/utilEnum';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
 
 import { CoverPictureContainer } from '@/pages/Interview/StyledInterview';
@@ -15,7 +15,6 @@ import { Stack } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import {
   useDeleteTemplateMutation,
   useGetTemplateDetailQuery,
@@ -31,48 +30,27 @@ const titleInputArg = {
   name: 'role_title',
 };
 
-const descriptionInputArg = {
-  error: false,
-  disable: false,
-  placeholder: 'Description',
-  name: 'description',
-};
-
-interface IState {
-  [key: string]: any;
-  role_title: string;
-  description: string;
-}
-
 const EditInterviews = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { templateId } = useParams();
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user);
-  const workspace = useSelector((state: RootState) => state.workspace);
 
-  // definitely should look over this, idk what TS is doing here om on the companyId type.
-  const companyId: CompanyID = (!workspace.id
-    ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
+  const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
 
-  const [inputValue, setInputValue] = useState<IState>({
-    role_title: '',
-    description: '',
-  });
+  const descriptionInputRef = useRef<{ triggerValidation: () => void } | null>(
+    null
+  );
+
+  const [title, setTitle] = useState(''); // Separate state for title
+  const [description, setDescription] = useState(''); // Separate state for description
 
   // Example hook to fetch template details - replace with your actual implementation
-  const { data: templateData } = useGetTemplateDetailQuery({
-    company_id: companyId,
-    id: templateId,
-  });
+  const { data: templateData } = useGetTemplateDetailQuery(templateId);
 
   useEffect(() => {
     if (templateData) {
-      setInputValue({
-        role_title: templateData.role_title,
-        description: templateData.description,
-      });
+      setTitle(templateData?.role_title); // Directly set the title string
+      setDescription(templateData?.description); // Directly set the description string
     }
   }, [templateData]);
 
@@ -80,12 +58,37 @@ const EditInterviews = () => {
   const [deleteTemplate] = useDeleteTemplateMutation();
 
   const handleNext = async () => {
+    let hasError = false; // Track if there's any validation error
+
+    if (!title.trim()) {
+      if (titleInputRef.current) {
+        titleInputRef.current.triggerValidation();
+      }
+      hasError = true;
+    } else {
+      hasError = false; // Reset to false when the title is not empty
+    }
+
+    if (!description.trim()) {
+      if (descriptionInputRef.current) {
+        descriptionInputRef.current.triggerValidation();
+      }
+      hasError = true;
+    } else {
+      hasError = false; // Reset to false when the description is not empty
+    }
+
+    if (hasError) {
+      return; // Stop if there's any validation error
+    }
     try {
       const requestData = {
         id: templateId,
-        ...inputValue, // Assuming your update endpoint needs these fields
+        description: description,
+        role_title: title, // Assuming your update endpoint needs these fields
         // Add other fields as required
       };
+
       await updateTemplate(requestData).unwrap();
       dispatch(closeModal());
       navigate(0);
@@ -109,14 +112,6 @@ const EditInterviews = () => {
     }
   };
 
-  const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue({
-      ...inputValue,
-
-      [event.target.name]: event.target.value,
-    });
-  };
-
   const validateTitle = (value: string): string | null => {
     if (!value.trim()) {
       return (
@@ -133,8 +128,25 @@ const EditInterviews = () => {
     return null;
   };
 
+  const validateDescription = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium style={{ color: 'gray', textAlign: 'end' }}>
+            Description is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
+  const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
   const textAreaOnChange = (value: string) => {
-    inputValue['detail'] = value;
+    setDescription(value);
   };
 
   return (
@@ -144,19 +156,26 @@ const EditInterviews = () => {
         <TextInput
           {...titleInputArg}
           onChange={inputOnChange}
-          value={inputValue['role_title']}
+          value={title}
           validate={validateTitle}
+          ref={titleInputRef}
         />
       </InputLayout>
       <InputLayout>
         <BodySMedium>Description</BodySMedium>
-        {/* Need to switch back to textAREA component, Suwon help plsss? */}
 
-        <TextArea
-          {...descriptionInputArg}
-          onChange={textAreaOnChange}
-          value={inputValue['description']}
-        />
+        {templateData?.description && (
+          <TextArea
+            disable={false}
+            placeholder={'Description'}
+            error={false}
+            validate={validateDescription}
+            onChange={textAreaOnChange}
+            name={'description'}
+            value={templateData?.description}
+            ref={descriptionInputRef}
+          />
+        )}
       </InputLayout>
       <Stack
         direction="row"

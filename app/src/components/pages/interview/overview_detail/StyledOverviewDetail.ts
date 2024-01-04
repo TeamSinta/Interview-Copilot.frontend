@@ -26,7 +26,7 @@ export const OverviewDetailList = styled.div`
   gap: 16px;
   flex-direction: column;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgba(246, 246, 251, 0.5);
   height: auto;
 

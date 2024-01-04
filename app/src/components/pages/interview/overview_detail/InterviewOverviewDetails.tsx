@@ -175,8 +175,9 @@ const InterviewOverviewDetails = () => {
       reply_time: question.question.reply_time,
       competency: question.question.competency,
       difficulty: question.question.difficulty,
-      // Add competency here if you have that data in question
     });
+
+    console.log(question);
   };
 
   const inputOnChange = (
@@ -525,7 +526,7 @@ const InterviewOverviewDetails = () => {
                               </label>
                               <TextArea
                                 disable={false}
-                                placeholder={'guidelines'}
+                                placeholder={'Guidelines'}
                                 error={false}
                                 validate={() => null}
                                 onChange={textAreaOnChange}

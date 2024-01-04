@@ -80,9 +80,13 @@ const SelectValue = () => {
   };
 
   const onSelectComp = (value: string) => {
-    const temp = [...selectedComp, value];
-    setSelectedComp(temp);
+    if (!selectedComp.includes(value)) {
+      // Check if the value is not already in the array
+      const temp = [...selectedComp, value];
+      setSelectedComp(temp);
+    }
   };
+
 
   const checkActive = (value: string) => {
     const exit = selectedComp.find((comp) => value === comp);
@@ -99,14 +103,13 @@ const SelectValue = () => {
   };
 
   const onClickNewComp = () => {
-    const exit = selectedComp.find((comp) => newComp === comp);
-    if (!exit) {
-      competencies.push(newComp);
-      onSelectComp(newComp);
+    if (newComp && !selectedComp.includes(newComp)) {
+      // Check if the newComp is not empty and not already in the array
+      const temp = [...selectedComp, newComp];
+      setSelectedComp(temp);
+      setNewComp(''); // Reset newComp to empty after adding
     }
-    setNewComp('');
   };
-
   const {
     data: questionsResponse,
     isLoading,

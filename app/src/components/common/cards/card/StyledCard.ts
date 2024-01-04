@@ -5,7 +5,7 @@ export const Card = styled.div`
   width: inherit;
   height: inherit;
   position: relative;
-  border-radius: 12px;
+  border-radius: 8px;
   background: ${(props) => props.theme.colors.lightPurple};
   transition: 0.3s;
 
