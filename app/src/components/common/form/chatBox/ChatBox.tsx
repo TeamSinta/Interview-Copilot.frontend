@@ -14,26 +14,17 @@ import {
 } from './StyledChatBot';
 import { IconBtnL } from '../../buttons/iconBtn/IconBtn';
 import { BackgroundColor } from '@/features/utils/utilEnum';
-import {
-  LeftArrowIcon,
-  PencilIcon,
-  PlayIcon,
-  Send,
-} from '../../svgIcons/Icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import { PencilIcon, Send } from '../../svgIcons/Icons';
+import { useDispatch } from 'react-redux';
+
 import { addNote } from '@/features/interviews/notesSlice';
 
 const Chat = (props: any) => {
-  const { elapsedTime, reactClicked, notesEntered, activeQuestionID } = props;
+  const { elapsedTime, notesEntered, activeQuestionID } = props;
   const [lastMessage, setLastMessage] = useState<string>('');
   const [inputText, setInputText] = useState<string>('');
-  const comments = useSelector((state: RootState) => state.notes.notes);
-  const commentInputRef = useRef<HTMLInputElement>(null);
-
   const dispatch = useDispatch(); // Get the dispatch function from Redux
-
-  const [showPrompt, setShowPrompt] = useState<boolean>(false);
+  const [, setShowPrompt] = useState<boolean>(false);
   const [messages, setMessages] = useState<
     { text: string; editing: boolean }[]
   >([]);
@@ -59,7 +50,7 @@ const Chat = (props: any) => {
       const timestamp = getCurrentTime();
       const timeDelta = calculateTimeDelta(timestamp);
       dispatch(addNote({ comment: trimmedText, timestamp, timeDelta }));
-      notesEntered(trimmedText);
+      notesEntered(trimmedText, activeQuestionID);
       // Show the prompt when a message is sent
     }
   };
@@ -77,7 +68,7 @@ const Chat = (props: any) => {
         const timestamp = getCurrentTime();
         const timeDelta = calculateTimeDelta(timestamp);
         dispatch(addNote({ comment: trimmedText, timestamp, timeDelta }));
-        notesEntered(trimmedText);
+        notesEntered(trimmedText, activeQuestionID);
         // Show the prompt when a message is sent
       }
     }

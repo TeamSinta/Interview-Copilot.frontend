@@ -117,6 +117,22 @@ const EditInterviews = () => {
     });
   };
 
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   const textAreaOnChange = (value: string) => {
     inputValue['detail'] = value;
   };
@@ -129,6 +145,7 @@ const EditInterviews = () => {
           {...titleInputArg}
           onChange={inputOnChange}
           value={inputValue['role_title']}
+          validate={validateTitle}
         />
       </InputLayout>
       <InputLayout>

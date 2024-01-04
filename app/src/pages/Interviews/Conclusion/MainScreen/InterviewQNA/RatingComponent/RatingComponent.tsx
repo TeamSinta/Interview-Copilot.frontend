@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyledIconBtnM,
   StyledRatingBtnL,
@@ -261,16 +261,21 @@ export const RatingComponent: React.FC<any> = ({
 
 export function RatingComponentL({
   question,
-  setRating,
-  rating,
+  rating: propRating,
+  onUpdateRating,
   id,
   width = 0,
   height = 0,
 }: Props) {
-  const [activeTab, setActiveTab] = useState<any>(null);
-  const handleRating = (rate: any) => {
+  const [activeTab, setActiveTab] = useState(propRating);
+
+  useEffect(() => {
+    setActiveTab(propRating);
+  }, [propRating]);
+
+  const handleRating = (rate: number) => {
     setActiveTab(rate);
-    setRating(rate, id);
+    onUpdateRating(rate); // Trigger the callback to update the rating in the parent component
   };
 
   return (
@@ -290,6 +295,7 @@ export function RatingComponentL({
           </span>{' '}
         </StyledIconBtnM>
       </ElWrap>
+
       <ElWrap w={35}>
         <StyledIconBtnM>
           <span onClick={() => handleRating(2)}>
@@ -297,6 +303,7 @@ export function RatingComponentL({
           </span>{' '}
         </StyledIconBtnM>{' '}
       </ElWrap>
+
       <ElWrap w={35}>
         <StyledIconBtnM>
           <span onClick={() => handleRating(3)}>

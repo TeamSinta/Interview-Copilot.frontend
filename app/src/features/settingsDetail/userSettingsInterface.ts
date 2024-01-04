@@ -16,4 +16,4 @@ export type MembersList = {
 export interface IDepartment {
   title: string;
   id: string;
-};
+}

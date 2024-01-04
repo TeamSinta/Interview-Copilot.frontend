@@ -6,7 +6,7 @@ import {
   CustomButton,
   ButtonWrap,
   DropdownArrowIconDiv,
-} from './StyledDropDownBtn'; // ensure the import path is correct
+} from './StyledDropDownBtn';
 
 interface ICustomButtonConfig {
   label: string;
@@ -64,23 +64,23 @@ export const DropDownButton = (props: IDropDownButtonProps): JSX.Element => {
           <BodyMMedium>{label}</BodyMMedium>
 
           <div>{icon}</div>
+          {dropdownVisible && (
+            <ButtonWrap>
+              {buttons.map((buttonConfig, index) => (
+                <CustomButton
+                  key={index}
+                  onClick={buttonConfig.onClick}
+                  disabled={false}
+                  className={className}
+                >
+                  <BodyMMedium>{buttonConfig.label}</BodyMMedium>
+                  <div>{buttonConfig.icon}</div>
+                </CustomButton>
+              ))}
+            </ButtonWrap>
+          )}
         </StyledButton>
       </DropdownArrowIconDiv>
-      {dropdownVisible && (
-        <ButtonWrap>
-          {buttons.map((buttonConfig, index) => (
-            <CustomButton
-              key={index}
-              onClick={buttonConfig.onClick}
-              disabled={false}
-              className={className}
-            >
-              <BodyMMedium>{buttonConfig.label}</BodyMMedium>
-              <div>{buttonConfig.icon}</div>
-            </CustomButton>
-          ))}
-        </ButtonWrap>
-      )}
     </div>
   );
 };

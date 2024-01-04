@@ -22,6 +22,9 @@ import { BackgroundColor } from '@/features/utils/utilEnum.js';
 import ElWrap from '@/components/layouts/elWrap/ElWrap.js';
 import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn.js';
 import WebSockComp from '../../../components/common/socket/websock';
+import MainScreenNoVideo from './MainScreen/MainScreenNoVideo.js';
+import { LoadingCircle } from '@/components/common/elements/longLoading/LoadLoading.js';
+import Loading from '@/components/common/elements/loading/Loading.js';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -63,28 +66,26 @@ const Conclusion: React.FC = () => {
   const [interviewTitle, setInterviewTitle] = useState('');
   const [interviewerName, setInterviewerName] = useState('');
   const [interviewerPicture, setInterviewerPicture] = useState('');
+  const [interviewRound, setInterviewRound] = useState<any>(null);
+
+  const [isVideoEmpty, setIsVideoEmpty] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Set a timeout to hide the loader after 2 minutes
-
     const fetchRatings = async () => {
-      const interviewRound = await getInterview(
+      const interviewData = await getInterview(
         location.state.id,
         cookies.access_token
       );
-
-      setInterviewTitle(interviewRound.title);
-      setInterviewerPicture(interviewRound.interviewer.profile_picture);
-
+      setInterviewRound(interviewData); // Store interview data in the state
+      setInterviewTitle(interviewData.title);
+      setInterviewerPicture(interviewData.interviewer.profile_picture);
       setInterviewerName(
-        ` ${interviewRound.interviewer.first_name}` +
-          ` ` +
-          `${interviewRound.interviewer.last_name}`
+        `${interviewData.interviewer.first_name} ${interviewData.interviewer.last_name}`
       );
+      setIsVideoEmpty(!interviewData || !interviewData.video_uri);
     };
 
     fetchRatings();
-    // Clear the timeout if the component unmounts or if the loader is hidden before the timeout
   }, [cookies.access_token, location.state.id]);
 
   const endLoader = () => {
@@ -173,7 +174,14 @@ const Conclusion: React.FC = () => {
           <MainWrapper>
             <TopBar interviewRoundId={location.state.id} />
           </MainWrapper>
-          <MainScreen interviewRoundId={location.state.id} />
+          {isVideoEmpty === null ? (
+            // Show a loading indicator while fetching data
+            <Loading />
+          ) : isVideoEmpty ? (
+            <MainScreenNoVideo interviewRoundId={location.state.id} />
+          ) : (
+            <MainScreen interviewRoundId={location.state.id} />
+          )}
         </>
       )}
     </>

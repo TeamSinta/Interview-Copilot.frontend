@@ -10,8 +10,6 @@ import {
   StyledCard,
   StyledCardContent,
   StyledCardMedia,
-  StyledBox,
-  CenteredTypography,
 } from './StyledInterviewRoundCard';
 import Photos from '../../buttons/photo/Photos';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';

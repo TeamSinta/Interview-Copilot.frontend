@@ -42,7 +42,6 @@ interface UserModalProps {
 }
 
 const MemberSettings: React.FC<UserModalProps> = () => {
-  
   const [memberDepartments, setMemberDepartments] = useState<IOption[]>([]);
   const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user.user);
@@ -50,7 +49,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
 
   const [getMemberDepartments] = useGetUserDepartmentsMutation();
   const [createDepartmentMember, { isSuccess, data }] =
-  useCreateDepartmentMemberMutation();
+    useCreateDepartmentMemberMutation();
   const dispatch = useDispatch<AppDispatch>();
 
   const companyId: CompanyID = (!workspace.id
@@ -62,7 +61,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
   useEffect(() => {
     getMemberDepartments({
       user_id: member.id,
-      company_id: member.id,
+      company_id: companyId,
     }).then((response) => {
       if ('data' in response) {
         const data = response.data as unknown as IDepartment[];

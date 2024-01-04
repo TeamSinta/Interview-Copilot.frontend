@@ -26,7 +26,7 @@ import {
   VideoSound,
 } from '@/components/common/svgIcons/Icons';
 import TextInput from '@/components/common/form/textInput/TextInput';
-import { H1 } from '@/components/common/typeScale/StyledTypeScale';
+import { BodySMedium, H1 } from '@/components/common/typeScale/StyledTypeScale';
 import DropUpBtn from '@/components/common/dropUpBtn/dropUpBtn';
 import Sintaimage from '@/assets/images/SintaLogo.png';
 
@@ -111,6 +111,26 @@ export default function HairCheckCandidate({
     </MenuItem>
   ));
 
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{
+              paddingTop: '40px',
+              color: 'gray',
+              textAlign: 'center',
+            }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return getUserMediaError ? (
     <UserMediaError />
   ) : (
@@ -166,6 +186,7 @@ export default function HairCheckCandidate({
                 disable={false}
                 placeholder="Name"
                 error={false}
+                validate={validateTitle}
                 onChange={onChange}
                 value={localParticipant?.user_name || ' '}
               />

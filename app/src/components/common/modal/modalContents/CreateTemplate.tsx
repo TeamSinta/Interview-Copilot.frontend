@@ -15,7 +15,7 @@ import { useFetchSelectMembers } from '@/features/roles/rolesSlice';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { RootState } from '@/app/store';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useAddTemplateMutation } from '@/features/templates/templatesAPISlice';
@@ -37,12 +37,6 @@ const descriptionInputArg = {
   name: 'description',
 };
 
-interface IState {
-  [key: string]: any;
-  title: string;
-  description: string;
-}
-
 const CreateInterviews = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
@@ -50,8 +44,14 @@ const CreateInterviews = () => {
   const [sortCriteria] = useState('');
   const [departmentId, setDepartmentId] = useState('');
   const [selectedMembers, setSelectedMembers] = useState<IMember[]>([]);
+  const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
+  const descriptionInputRef = useRef<{ triggerValidation: () => void } | null>(
+    null
+  );
 
-  // definitely should look over this, idk what TS is doing here om on the companyId type.
+  const [title, setTitle] = useState(''); // Separate state for title
+  const [description, setDescription] = useState(''); // Separate state for description
+
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
@@ -85,26 +85,48 @@ const CreateInterviews = () => {
     setSelectedMembers(updatedMembers);
   };
 
-  const [inputValue, setInputValue] = useState<IState>({
-    title: '',
-    description: '',
-  });
-
   const [addTemplate] = useAddTemplateMutation();
 
   const handleNext = async () => {
-    // Define the data to send to the server
+    let hasError = false; // Track if there's any validation error
+
+    if (!title.trim()) {
+      if (titleInputRef.current) {
+        titleInputRef.current.triggerValidation();
+      }
+      hasError = true;
+    } else {
+      hasError = false; // Reset to false when the title is not empty
+    }
+
+    if (!description.trim()) {
+      if (descriptionInputRef.current) {
+        descriptionInputRef.current.triggerValidation();
+      }
+      hasError = true;
+    } else {
+      hasError = false; // Reset to false when the description is not empty
+    }
+
+    if (hasError) {
+      return; // Stop if there's any validation error
+    }
+
     const selectedMemberIds = selectedMembers
       .filter((member) => member.selected)
       .map((member) => member.id);
 
+    if (selectedMemberIds.length === 0) {
+      selectedMemberIds.push(user.id);
+    }
     // Define the data to send to the server
     const requestData = {
-      role_title: inputValue.title,
+      role_title: title,
       location: null,
       interviewers: selectedMemberIds,
       company: companyId,
       department_id: departmentId,
+      description: description, // Use the description state here
     };
 
     try {
@@ -118,14 +140,11 @@ const CreateInterviews = () => {
   };
 
   const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue({
-      ...inputValue,
-      [event.target.name]: event.target.value,
-    });
+    setTitle(event.target.value);
   };
 
   const textAreaOnChange = (value: string) => {
-    inputValue['description'] = value;
+    setDescription(value);
   };
 
   const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
@@ -135,6 +154,36 @@ const CreateInterviews = () => {
         templateID: templateID,
       })
     );
+  };
+
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
+  const validateDescription = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium style={{ color: 'gray', textAlign: 'end' }}>
+            Description is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
   };
 
   const departments = useFetchCompanyDepartments(companyId as CompanyID);
@@ -150,7 +199,9 @@ const CreateInterviews = () => {
         <TextInput
           {...titleInputArg}
           onChange={inputOnChange}
-          value={inputValue['title']}
+          value={title}
+          validate={validateTitle}
+          ref={titleInputRef}
         />
       </InputLayout>
       <InputLayout>
@@ -158,7 +209,9 @@ const CreateInterviews = () => {
         <TextArea
           {...descriptionInputArg}
           onChange={textAreaOnChange}
-          value={inputValue['description']}
+          value={description}
+          validate={validateDescription}
+          ref={descriptionInputRef}
         />
       </InputLayout>
       <InputLayout>

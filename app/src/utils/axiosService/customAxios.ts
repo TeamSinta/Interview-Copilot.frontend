@@ -6,12 +6,6 @@ export const instance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
-enum Env {
-  STORY = 'story',
-  MOCK = 'mock',
-  DEVELOPE = 'develope',
-}
-
 //Temporary suspension of service due to the incomplete implementation of the login function.
 const requestHandler = async (
   config: InternalAxiosRequestConfig

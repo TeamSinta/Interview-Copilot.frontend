@@ -241,6 +241,37 @@ const InterviewOverviewDetails = () => {
     0
   );
 
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
+  const validateTime = (value: string): string | null => {
+    // First, check if the field is empty
+    if (!value.trim()) {
+      return 'Time is required'; // Error message for empty input
+    }
+
+    // Check if the value is a number and within the range 1-60
+    const numberValue = parseInt(value, 10);
+    if (isNaN(numberValue) || numberValue < 1 || numberValue > 60) {
+      return 'Please enter a number between 1 and 60'; // Error message for invalid input
+    }
+
+    return null; // No validation errors
+  };
+
   return (
     <OverviewDetails>
       {!selectedSection ? (
@@ -410,6 +441,7 @@ const InterviewOverviewDetails = () => {
                                   error={false}
                                   onChange={inputOnChange}
                                   name={'question_text'}
+                                  validate={validateTitle}
                                   value={inputValue['question_text']}
                                 />
                                 <ElWrap w={40} h={40}>
@@ -456,6 +488,7 @@ const InterviewOverviewDetails = () => {
                                   disable={false}
                                   placeholder={'Competency'}
                                   error={false}
+                                  validate={validateTitle}
                                   onChange={inputOnChange}
                                   name={'competency'}
                                   value={inputValue['competency']}
@@ -463,12 +496,15 @@ const InterviewOverviewDetails = () => {
                               </InputLabelDiv>
                               <InputLabelDiv className="time">
                                 <label>
-                                  <BodySMedium>Time for reply</BodySMedium>
+                                  <BodySMedium>
+                                    Time for reply (mins)
+                                  </BodySMedium>
                                 </label>
                                 <TextInput
                                   disable={false}
                                   placeholder={'time'}
                                   error={false}
+                                  validate={validateTime}
                                   onChange={inputOnChange}
                                   name={'reply_time'}
                                   value={inputValue['reply_time'].toString()}
@@ -491,6 +527,7 @@ const InterviewOverviewDetails = () => {
                                 disable={false}
                                 placeholder={'guidelines'}
                                 error={false}
+                                validate={() => null}
                                 onChange={textAreaOnChange}
                                 name={'guidelines'}
                                 value={inputValue['guidelines']}

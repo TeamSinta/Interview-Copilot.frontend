@@ -41,7 +41,10 @@ import {
 } from '@/components/common/typeScale/StyledTypeScale';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../app/store';
-import { createInterviewRound } from '../../../../features/interviews/interviewsAPI';
+import {
+  createCandidate,
+  createInterviewRound,
+} from '../../../../features/interviews/interviewsAPI';
 import { IMember } from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 import DropUpBtn from '@/components/common/dropUpBtn/dropUpBtn';
@@ -51,6 +54,7 @@ import IconButton from '@mui/material/IconButton';
 import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import { Template } from '@/pages/Templates_/Templates';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { useCookies } from 'react-cookie';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -80,7 +84,7 @@ export default function HairCheck({
   const [getUserMediaError, setGetUserMediaError] = useState(false);
   const [templates, setTemplates] = useState<Template[]>([]);
   const [newTitle, setTitle] = useState('');
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
     null
   );
 
@@ -113,21 +117,46 @@ export default function HairCheck({
     return lastSegment;
   };
 
+  const generateRandomUsername = (length = 8) => {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
+  };
+
   const startMeeting = async () => {
     if (newTitle === '') throw new Error('Empty candidate username');
-    if (selectedTemplateId === '' || !selectedTemplateId)
-      throw new Error('Empty selected template');
+    if (!selectedTemplate) throw new Error('Empty selected template');
 
     try {
       const title = newTitle;
-      const candidate_id = 1;
       const meeting_room_id = getRoomNameFromUrl(callObject?.properties.url);
+      const company_id = companyId;
+      const user_id = user.id;
+
+      const candidateData = {
+        name: 'Sinta Candidate',
+        username: generateRandomUsername(),
+        user_id: user_id, // Assuming you have the user's ID here
+      };
+
+      console.log(candidateData);
+
+      const candidateResponse = await createCandidate(candidateData);
+      const candidate_id = candidateResponse.id; // Replace with actual response property
+
       const response = await createInterviewRound(
         title,
-        selectedTemplateId,
-        cookies.access_token,
+        selectedTemplate.id, // Use the selectedTemplate's id
         meeting_room_id,
-        candidate_id
+        candidate_id,
+        user_id,
+        company_id
       );
 
       const interviewDetails = {
@@ -135,7 +164,7 @@ export default function HairCheck({
         title: response.title,
         template_id: response.template_id,
         email: 'support@sintahr.com',
-        name: 'Template Details',
+        name: selectedTemplate.role_title,
         candidate_id: candidate_id,
       };
 
@@ -154,13 +183,7 @@ export default function HairCheck({
     }, [])
   );
 
-  const {
-    data: templatesData,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetTemplatesQuery();
+  const { data: templatesData, isSuccess } = useGetTemplatesQuery();
 
   useEffect(() => {
     if (isSuccess) {
@@ -188,7 +211,7 @@ export default function HairCheck({
   // };
   useEffect(() => {
     callObject?.setUserName(user.first_name || '');
-  }, [localParticipant]);
+  }, [callObject, localParticipant, user.first_name]);
 
   const join = (e: FormEvent) => {
     e.preventDefault();
@@ -236,6 +259,26 @@ export default function HairCheck({
       {camera.device.label}
     </MenuItem>
   ));
+
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{
+              paddingTop: '40px',
+              color: 'gray',
+              textAlign: 'center',
+            }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
 
   return getUserMediaError ? (
     <UserMediaError />
@@ -299,11 +342,11 @@ export default function HairCheck({
                   name="title"
                   disable={false}
                   placeholder={`Enter your Interview title here!`}
-                  error={false}
                   value={newTitle}
                   onChange={(e) => {
                     setTitle(e.target.value);
                   }}
+                  validate={validateTitle}
                 />
               </ElWrap>
             </div>
@@ -343,9 +386,12 @@ export default function HairCheck({
                     })
                   )}
                   onClick={(templateId) => {
-                    setSelectedTemplateId(templateId);
+                    const selected = templates.find(
+                      (template) => template.id === templateId
+                    );
+                    setSelectedTemplate(selected || null);
                   }}
-                  selected={selectedTemplateId === template.id}
+                  selected={selectedTemplate?.id === template.id}
                 />
               )}
             />
@@ -360,15 +406,6 @@ export default function HairCheck({
                 className={BackgroundColor.ACCENT_PURPLE}
               />
             </ElWrap>
-            {/* <ElWrap w={360} h={40}>
-              <TextIconBtnL
-                disable={false}
-                label="Back to Start"
-                icon={<RightBracketIcon />}
-                onClick={cancelCall}
-                className={BackgroundColor.WHITE}
-              />
-            </ElWrap> */}
           </ButtonWrapper>
         </SelectBox>
       </HomeContainer>
