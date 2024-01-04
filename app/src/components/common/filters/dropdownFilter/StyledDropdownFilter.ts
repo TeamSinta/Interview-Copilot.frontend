@@ -178,11 +178,14 @@ export const OptionUl = styled.ul<IDropdownOpen>`
   ${(props) =>
     props.open
       ? css`
-          top: 40px;
-          padding: 12px 0;
+          top: 4px;
+          padding: 46px 0 0 0;
           width: 100%;
           opacity: 1;
           visibility: visible;
+          z-index: -1;
+          position: absolute;
+          max-height: 360px;
           /* transition: opacity 0.3s ease, visibility 0.3s ease,
             transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32); */
           /* transition: 0.2s ease-in; */

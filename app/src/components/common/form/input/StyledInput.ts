@@ -93,6 +93,7 @@ export const StyledTextareaDiv = styled.div`
     width: 100%;
     height: max-content;
     top: 20px;
+    left: 20px;
     position: absolute;
 
     ::after {
@@ -116,7 +117,7 @@ export const StyledTextareaDiv = styled.div`
     box-shadow: none;
     resize: none;
     border-radius: 12px;
-    padding: 20px;
+
     min-height: 82px;
     display: flex;
     justify-content: start;
