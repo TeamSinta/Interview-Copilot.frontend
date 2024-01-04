@@ -12,11 +12,11 @@ export const templateQuestionsAPI = createApi({
       return headers;
     },
   }),
-  tagTypes: ['TQuestions'],
+  tagTypes: ['Questions'],
   endpoints: (builder) => ({
     getTemplateQuestions: builder.query<object, void>({
       query: () => 'template_questions/',
-      providesTags: ['TQuestions'],
+      providesTags: ['Questions'],
     }),
     addTemplateQuestion: builder.mutation({
       query: (template) => ({
@@ -24,7 +24,7 @@ export const templateQuestionsAPI = createApi({
         method: 'POST',
         body: template,
       }),
-      invalidatesTags: ['TQuestions'],
+      invalidatesTags: ['Questions'],
     }),
     updateTemplateQuestion: builder.mutation({
       query: (question) => ({
@@ -32,7 +32,7 @@ export const templateQuestionsAPI = createApi({
         method: 'PATCH',
         body: question,
       }),
-      invalidatesTags: ['TQuestions'],
+      invalidatesTags: ['Questions'],
     }),
     deleteTemplateQuestion: builder.mutation({
       query: (id) => ({
@@ -40,7 +40,7 @@ export const templateQuestionsAPI = createApi({
         method: 'DELETE',
         body: id,
       }),
-      invalidatesTags: ['TQuestions'],
+      invalidatesTags: ['Questions'],
     }),
   }),
 });

@@ -103,7 +103,7 @@ const SelectTemplate = () => {
     <>
       {/* ===== Templates Start ===== */}
       <TemplateLayout>
-        <H2Bold>Templates</H2Bold>
+        <H2Bold>Questions</H2Bold>
         <TemplateBody>
           {selectedQuestionBank.id === 0 ? <TemplateList /> : <QuestionList />}
           <Outlet />

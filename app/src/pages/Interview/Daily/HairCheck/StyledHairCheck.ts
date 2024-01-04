@@ -57,8 +57,30 @@ export const Wrapper = styled.div`
   }
 `;
 
+export const DropdownButton = styled.div`
+position: absolute;
+top: 0;
+right: 0;
+cursor: pointer;
+
+`;
+
 export const Wrapper_Box = styled.div`
   padding: 5px;
+`;
+
+export const IconButtonWrapper = styled(Box)`
+   position: relative;
+  display: inline-flex;
+  align-items: start;
+`;
+export const IconWrapper = styled.div`
+  width: 24px;
+  height: 24px;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const Title = styled(H3Bold)``;

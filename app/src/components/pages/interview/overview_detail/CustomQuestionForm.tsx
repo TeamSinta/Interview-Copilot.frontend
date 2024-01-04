@@ -8,6 +8,7 @@ import {
   BinIcon,
   CheckIcon,
   CloseIcon,
+  PlusIcon,
 } from '@/components/common/svgIcons/Icons';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
@@ -25,11 +26,12 @@ interface IState {
 }
 
 interface CustomQuestionFormProps {
-  onQuestionCreated: (questionId: number) => void; // Define a function signature that accepts questionId and returns void.
+  onQuestionCreated: (questionId: number) => void;
+  onClose: () => void; // Add this line
 }
 
 function CustomQuestionForm(
-  { onQuestionCreated }: CustomQuestionFormProps,
+  { onQuestionCreated, onClose }: CustomQuestionFormProps,
   ref: React.Ref<any>
 ) {
   const [inputValue, setInputValue] = useState<IState>({
@@ -144,21 +146,14 @@ function CustomQuestionForm(
                   disable={false}
                   onClick={handleSubmit}
                   className={BackgroundColor.ACCENT_PURPLE}
-                  icon={<CheckIcon />}
+                  icon={<PlusIcon />}
                 />
               </ElWrap>
+
               <ElWrap w={40} h={40}>
                 <IconBtnL
                   disable={false}
-                  onClick={() => {}}
-                  className={BackgroundColor.WHITE}
-                  icon={<BinIcon />}
-                />
-              </ElWrap>
-              <ElWrap w={40} h={40}>
-                <IconBtnL
-                  disable={false}
-                  onClick={() => {}}
+                  onClick={onClose}
                   className={BackgroundColor.WHITE}
                   icon={<CloseIcon />}
                 />

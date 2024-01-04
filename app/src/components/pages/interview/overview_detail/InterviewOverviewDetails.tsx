@@ -105,7 +105,7 @@ const InterviewOverviewDetails = () => {
 
   const [newQuestion] = useAddTemplateQuestionMutation();
   const [deleteQuestion] = useDeleteTemplateQuestionMutation();
-  const [updateQuestion] = useUpdateTemplateQuestionMutation();
+  const [updateQuestion] = useUpdateQuestionMutation();
 
   const {
     data: questions,
@@ -113,6 +113,7 @@ const InterviewOverviewDetails = () => {
     isSuccess,
     isError,
     error,
+    refetch,
   } = useGetTemplateQuestionsQuery();
 
   // Move the useEffect hook to the top level
@@ -210,19 +211,29 @@ const InterviewOverviewDetails = () => {
     }
   };
 
-  const handleUpdateQuestion = async (questionID: string) => {
+  const handleUpdateQuestion = async (templateQuestion: string) => {
+    if (!templateQuestion || !templateQuestion.question) {
+      console.error('Invalid template question data');
+      return;
+    }
+
     const requestData = {
-      id: questionID,
-      template_id: templateID,
-      topic: String(selectedSection.id),
-      ...inputValue,
+      id: templateQuestion.question.id, // Get the question ID
+      template_id: templateID, // Assuming templateID is available in scope
+      topic: String(selectedSection.id), // Assuming selectedSection is available in scope
+      ...inputValue, // Other values from the form or input
     };
+
+    console.log('Updating question with data:', requestData);
+
     try {
       await updateQuestion(requestData).unwrap();
-      setShowCustomQuestionForm(false);
+      setEdit(new Set());
+      openDetailHandler(templateQuestion.id, false);
+      refetch();
     } catch (error) {
+      console.error('Failed to update question:', error);
       // Handle error, e.g., display a notification
-      console.error('Failed to add question:', error);
     }
   };
 
@@ -256,6 +267,10 @@ const InterviewOverviewDetails = () => {
     }
 
     return null;
+  };
+
+  const handleClose = () => {
+    setShowCustomQuestionForm(false);
   };
 
   const validateTime = (value: string): string | null => {
@@ -449,7 +464,7 @@ const InterviewOverviewDetails = () => {
                                   <IconBtnL
                                     disable={false}
                                     onClick={() =>
-                                      handleUpdateQuestion(question.id)
+                                      handleUpdateQuestion(question)
                                     }
                                     className={BackgroundColor.ACCENT_PURPLE}
                                     icon={<CheckIcon />}
@@ -543,6 +558,7 @@ const InterviewOverviewDetails = () => {
                     <CustomQuestionForm
                       onQuestionCreated={handleQuestionCreated}
                       ref={customQuestionFormRef}
+                      onClose={handleClose}
                     />
                   )}
                 </OverviewDetailBody>

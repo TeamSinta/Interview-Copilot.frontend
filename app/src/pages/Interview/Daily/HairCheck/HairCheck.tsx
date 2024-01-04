@@ -11,25 +11,32 @@ import {
   useDaily,
   useDailyEvent,
   DailyVideo,
+  useVideoTrack,
+  useAudioTrack,
 } from '@daily-co/daily-react';
 import UserMediaError from '../UserMediaError/UserMediaError';
-import { MenuItem } from '@mui/material';
+import { Icon, Menu, MenuItem } from '@mui/material';
 import {
   VideoContainer,
   ButtonWrapper,
   Wrapper,
-  SelectBox,
+  IconButtonWrapper,
   HomeContainer,
+  IconWrapper,
+  DropdownButton,
+  SelectBox,
 } from './StyledHairCheck';
 import { Stack } from '@mui/material';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import {
-  CloseIcon,
+  DropUpIcon,
   RightBracketIcon,
   VideoCam,
+  VideoCamoff,
   VideoMic,
+  VideoMicOff,
   VideoSound,
 } from '@/components/common/svgIcons/Icons';
 import TextInput from '@/components/common/form/textInput/TextInput';
@@ -55,6 +62,7 @@ import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import { Template } from '@/pages/Templates_/Templates';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useCookies } from 'react-cookie';
+import { TextBtnM } from '@/components/common/buttons/textBtn/TextBtn';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -260,6 +268,42 @@ export default function HairCheck({
     </MenuItem>
   ));
 
+  const localVideo = useVideoTrack(localParticipant?.session_id);
+  const localAudio = useAudioTrack(localParticipant?.session_id);
+  const mutedVideo = localVideo.isOff;
+  const mutedAudio = localAudio.isOff;
+
+  const toggleVideo = useCallback(() => {
+    callObject?.setLocalVideo(mutedVideo);
+  }, [callObject, mutedVideo]);
+
+  const toggleAudio = useCallback(() => {
+    callObject?.setLocalAudio(mutedAudio);
+  }, [callObject, mutedAudio]);
+
+  const [micMenuAnchorEl, setMicMenuAnchorEl] = useState(null);
+  const [speakerMenuAnchorEl, setSpeakerMenuAnchorEl] = useState(null);
+  const [cameraMenuAnchorEl, setCameraMenuAnchorEl] = useState(null);
+
+  // Handlers for opening and closing menus
+  const handleMicMenuClick = (event) => {
+    setMicMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleSpeakerMenuClick = (event) => {
+    setSpeakerMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleCameraMenuClick = (event) => {
+    setCameraMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setMicMenuAnchorEl(null);
+    setSpeakerMenuAnchorEl(null);
+    setCameraMenuAnchorEl(null);
+  };
+
   const validateTitle = (value: string): string | null => {
     if (!value.trim()) {
       return (
@@ -302,18 +346,65 @@ export default function HairCheck({
               direction="row"
               sx={{ marginTop: '4px', gap: '4px', display: 'flex' }}
             >
-              <DropUpBtn
-                mainButtonContent={<VideoMic />}
-                dropdownItems={microphoneItems}
-              />
-              <DropUpBtn
-                mainButtonContent={<VideoSound />}
-                dropdownItems={speakerItems}
-              />
-              <DropUpBtn
-                mainButtonContent={<VideoCam />}
-                dropdownItems={cameraItems}
-              />
+              <IconButtonWrapper>
+                <IconButton onClick={toggleVideo}>
+                  {mutedVideo ? <VideoCamoff /> : <VideoCam />}
+                </IconButton>
+                <DropdownButton onClick={handleCameraMenuClick}>
+                  <IconWrapper>
+                    <DropUpIcon />
+                  </IconWrapper>
+                </DropdownButton>
+              </IconButtonWrapper>
+              <Menu
+                anchorEl={cameraMenuAnchorEl}
+                keepMounted
+                open={Boolean(cameraMenuAnchorEl)}
+                onClose={handleClose}
+              >
+                {cameraItems}
+              </Menu>
+              {/* Toggle Audio Button */}
+              <IconButtonWrapper>
+                <IconButton onClick={toggleAudio}>
+                  {mutedAudio ? <VideoMicOff /> : <VideoMic />}
+                </IconButton>
+                <DropdownButton onClick={handleMicMenuClick}>
+                  <IconWrapper>
+                    <DropUpIcon />
+                  </IconWrapper>
+                </DropdownButton>
+              </IconButtonWrapper>
+
+              <Menu
+                anchorEl={micMenuAnchorEl}
+                keepMounted
+                open={Boolean(micMenuAnchorEl)}
+                onClose={handleClose}
+              >
+                {microphoneItems}
+              </Menu>
+              {/* Audio Button with Dropdown */}
+              <IconButtonWrapper>
+                <IconButton>
+                  <VideoSound />
+                </IconButton>
+                <DropdownButton onClick={handleSpeakerMenuClick}>
+                  <IconWrapper>
+                    <DropUpIcon />
+                  </IconWrapper>
+                </DropdownButton>
+              </IconButtonWrapper>
+              <Menu
+                anchorEl={speakerMenuAnchorEl}
+                keepMounted
+                open={Boolean(speakerMenuAnchorEl)}
+                onClose={handleClose}
+              >
+                {speakerItems}
+              </Menu>
+
+              {/* Microphone Button with Dropdown */}
             </Stack>
           </VideoContainer>
         )}
@@ -331,9 +422,14 @@ export default function HairCheck({
               spacing={1}
             >
               <H3Bold>Create a meeting</H3Bold>
-              <IconButton onClick={cancelCall} style={{ stroke: 'black' }}>
-                <CloseIcon />
-              </IconButton>
+              <ElWrap w={60}>
+                <TextBtnM
+                  disable={false}
+                  label="Back"
+                  onClick={cancelCall}
+                  className={BackgroundColor.WHITE}
+                />
+              </ElWrap>
             </Stack>
             <BodySMedium>Title of your meeting</BodySMedium>
             <div style={{ width: '100%' }}>
@@ -357,9 +453,8 @@ export default function HairCheck({
             <DropdownFilter
               label="Department"
               optionArr={[
-                { name: 'Name (A-Z)', value: 'name-asc' },
-                { name: 'Name (Z-A)', value: 'name-desc' },
-                { name: 'Permission Level', value: 'permission' },
+                { name: 'Sort (A-Z)', value: 'name-asc' },
+                { name: 'Sort (Z-A)', value: 'name-desc' },
               ]}
               dropdownName="All templates"
               value={''}
