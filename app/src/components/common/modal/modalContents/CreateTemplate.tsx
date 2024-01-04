@@ -48,7 +48,6 @@ const CreateInterviews = () => {
   const descriptionInputRef = useRef<{ triggerValidation: () => void } | null>(
     null
   );
-
   const [title, setTitle] = useState(''); // Separate state for title
   const [description, setDescription] = useState(''); // Separate state for description
 
@@ -84,6 +83,18 @@ const CreateInterviews = () => {
     );
     setSelectedMembers(updatedMembers);
   };
+
+
+  const [fetchTrigger, setFetchTrigger] = useState(0);
+
+  // Fetch departments with an additional trigger
+  const departments = useFetchCompanyDepartments(companyId as CompanyID, fetchTrigger);
+
+  // Function to trigger re-fetching departments
+  const refetchDepartments = () => {
+    setFetchTrigger(prev => prev + 1); // Increment to trigger refetch
+  };
+
 
   const [addTemplate] = useAddTemplateMutation();
 
@@ -125,6 +136,7 @@ const CreateInterviews = () => {
       location: null,
       interviewers: selectedMemberIds,
       company: companyId,
+      user: user.id,
       department_id: departmentId,
       description: description, // Use the description state here
     };
@@ -186,7 +198,6 @@ const CreateInterviews = () => {
     return null;
   };
 
-  const departments = useFetchCompanyDepartments(companyId as CompanyID);
 
   const handleSetDepartment = (value: string) => {
     setDepartmentId(value);
@@ -220,7 +231,7 @@ const CreateInterviews = () => {
           handleSetDepartment={handleSetDepartment}
           workspaceId={workspace.id}
         />
-        <NewDepartment />
+        <NewDepartment onDepartmentCreated={refetchDepartments} />
         <BodySMedium>Members</BodySMedium>
         <PhotoContainer>
           <Photos>

@@ -1,8 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { getCookieValue } from '../cookieUtils';
 
-export const instance = axios.create({
-});
+export const instance = axios.create({});
 
 //Temporary suspension of service due to the incomplete implementation of the login function.
 const requestHandler = async (

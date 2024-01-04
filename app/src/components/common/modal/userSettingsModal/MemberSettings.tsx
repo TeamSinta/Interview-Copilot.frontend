@@ -61,7 +61,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
   useEffect(() => {
     getMemberDepartments({
       user_id: member.id,
-      company_id: member.id,
+      company_id: companyId,
     }).then((response) => {
       if ('data' in response) {
         const data = response.data as unknown as IDepartment[];

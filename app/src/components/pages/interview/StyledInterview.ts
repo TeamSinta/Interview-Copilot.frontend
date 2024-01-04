@@ -28,7 +28,7 @@ export const Title = styled.div`
   justify-content: space-between;
   width: 100%;
   align-items: center;
-  padding: 0px 2px 0 0 ;
+  padding: 0px 2px 0 0;
 `;
 
 export const Subtitle = styled.div`

@@ -8,7 +8,7 @@ export const Card = styled.div`
   border-radius: 8px;
   background: ${(props) => props.theme.colors.lightPurple};
   transition: 0.3s;
-    z-index: 0;
+  z-index: 0;
   &.hover {
     cursor: pointer;
     background: ${(props) => props.theme.colors.palePurple};

@@ -41,8 +41,6 @@ const EditInterviewers = () => {
 
   const { data: templateData } = useGetTemplateDetailQuery(stringTemplateId);
 
-  // console.log(templateData);
-
   const { members } = useFetchCompanyMembers({
     company_id: companyId,
     department_id: departmentId,
