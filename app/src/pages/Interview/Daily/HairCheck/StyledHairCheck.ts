@@ -58,11 +58,10 @@ export const Wrapper = styled.div`
 `;
 
 export const DropdownButton = styled.div`
-position: absolute;
-top: 0;
-right: 0;
-cursor: pointer;
-
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
 `;
 
 export const Wrapper_Box = styled.div`
@@ -70,7 +69,7 @@ export const Wrapper_Box = styled.div`
 `;
 
 export const IconButtonWrapper = styled(Box)`
-   position: relative;
+  position: relative;
   display: inline-flex;
   align-items: start;
 `;

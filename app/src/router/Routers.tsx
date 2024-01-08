@@ -15,13 +15,16 @@ import QuestionBankStage from '@/pages/Questions/QuestionBanksTab/QuestionBankSt
 import SignUpScreen from '@/pages/SignUp/SignUp';
 import CheckType from './CheckType';
 import EndCallScreen from '@/pages/Interview/Daily/Call/EndCallScreenExternal';
+import PublicRoutes from './authenticated/PublicRoutes';
 import NotificationsPage from '@/pages/Notifications';
 
 const Routers = () => {
   return (
     <Routes>
-      <Route path="/login" element={<LoginScreen />} />
-      <Route path="/sign-up" element={<SignUpScreen />} />
+      <Route path="" element={<PublicRoutes />}>
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/sign-up" element={<SignUpScreen />} />
+      </Route>
       <Route path="/video-call" element={<CheckType />} />
       <Route path="end-call-screen" element={<EndCallScreen />} />
 
@@ -34,8 +37,8 @@ const Routers = () => {
         {/* <Route
       path="/interviews/:department/:round
         element={<InterviewStage />}
-      /> */}
-
+      />
+      */}
         <Route path="/settings" element={<Settings />} />
         <Route path="/interviews" element={<Conclusions />} />
         <Route path="/questionbank" element={<Questions />} />

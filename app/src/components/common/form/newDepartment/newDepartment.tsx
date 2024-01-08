@@ -16,6 +16,10 @@ const TextBtnLProps = {
   className: BackgroundColor.WHITE,
 };
 
+interface NewDepartmentProps {
+  onDepartmentCreated: () => void;
+}
+
 export interface IInviteProps {
   invite_member: {
     member_email: string;
@@ -28,37 +32,40 @@ export interface IInviteProps {
     | DataLoading.REJECTED;
 }
 
-const NewDepartment = () => {
-  //redux
+const NewDepartment: React.FC<NewDepartmentProps> = ({ onDepartmentCreated }) => {
+
 
   const [newDepartmentName, setNewDepartmentName] = useState('');
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
 
-  // Mutation hook
+
   const [createNewDepartment, { isLoading }] = useCreateNewDepartmentMutation();
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
 
-  // Input change handler
+
   const onDepartmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewDepartmentName(e.target.value);
   };
 
   const CreateNewDepartment = async () => {
     await createNewDepartment({
-      company_id: companyId, // The selected company ID
-      departmentTitle: newDepartmentName, // The name of the new department
+      company_id: companyId,
+      departmentTitle: newDepartmentName,
     })
       .unwrap()
       .then((response) => {
         // Handle success
+        onDepartmentCreated();
+        setNewDepartmentName('');
       })
       .catch((error) => {
         // Handle error
       });
   };
+
 
   return (
     <InviteWrap>
