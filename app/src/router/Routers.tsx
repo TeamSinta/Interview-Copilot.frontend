@@ -22,6 +22,7 @@ const Routers = () => {
   return (
     <Routes>
       <Route path="" element={<PublicRoutes />}>
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/sign-up" element={<SignUpScreen />} />
       </Route>
