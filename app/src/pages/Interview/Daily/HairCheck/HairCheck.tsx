@@ -63,8 +63,8 @@ import { Template } from '@/pages/Templates_/Templates';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useCookies } from 'react-cookie';
 import { TextBtnM } from '@/components/common/buttons/textBtn/TextBtn';
-import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
+import DepartmentDropDown from '@/components/common/dropDown/departments/DepartmentDropdown';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -456,18 +456,9 @@ export default function HairCheck({
             {' '}
             <DepartmentDropDown
               departments={departments}
-              handleSetDepartment={console.log('hi')}
+              handleSetDepartment={console.log('hi')} // this should set the departmentid to then fetch the templates for that department only?
               workspaceId={workspace.id}
             />
-            {/* <DropdownFilter
-              label="Department"
-              optionArr={[
-                { name: 'Sort (A-Z)', value: 'name-asc' },
-                { name: 'Sort (Z-A)', value: 'name-desc' },
-              ]}
-              dropdownName="All templates"
-              value={''}
-            /> */}
           </div>
           <div style={{ height: '100%' }}>
             <Slider

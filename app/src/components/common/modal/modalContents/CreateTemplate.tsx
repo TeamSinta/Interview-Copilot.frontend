@@ -19,9 +19,9 @@ import { useEffect, useRef, useState } from 'react';
 import { RootState } from '@/app/store';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useAddTemplateMutation } from '@/features/templates/templatesAPISlice';
-import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import NewDepartment from '../../form/newDepartment/newDepartment';
+import DepartmentDropDown from '../../dropDown/departments/DepartmentDropdown';
 
 const titleInputArg = {
   error: false,
@@ -84,17 +84,18 @@ const CreateInterviews = () => {
     setSelectedMembers(updatedMembers);
   };
 
-
   const [fetchTrigger, setFetchTrigger] = useState(0);
 
   // Fetch departments with an additional trigger
-  const departments = useFetchCompanyDepartments(companyId as CompanyID, fetchTrigger);
+  const departments = useFetchCompanyDepartments(
+    companyId as CompanyID,
+    fetchTrigger
+  );
 
   // Function to trigger re-fetching departments
   const refetchDepartments = () => {
-    setFetchTrigger(prev => prev + 1); // Increment to trigger refetch
+    setFetchTrigger((prev) => prev + 1); // Increment to trigger refetch
   };
-
 
   const [addTemplate] = useAddTemplateMutation();
 
@@ -197,7 +198,6 @@ const CreateInterviews = () => {
 
     return null;
   };
-
 
   const handleSetDepartment = (value: string) => {
     setDepartmentId(value);
