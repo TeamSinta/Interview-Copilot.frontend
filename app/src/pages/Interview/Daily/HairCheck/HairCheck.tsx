@@ -63,6 +63,8 @@ import { Template } from '@/pages/Templates_/Templates';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useCookies } from 'react-cookie';
 import { TextBtnM } from '@/components/common/buttons/textBtn/TextBtn';
+import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
+import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -103,6 +105,7 @@ export default function HairCheck({
     ? user?.companies?.[0]?.id ?? workspace.id
     : workspace.id)! as unknown as CompanyID;
 
+  const departments = useFetchCompanyDepartments(companyId as CompanyID);
   //setQuestions
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
@@ -450,7 +453,13 @@ export default function HairCheck({
           <div
             style={{ width: '100%', marginTop: '16px', marginBottom: '34px' }}
           >
-            <DropdownFilter
+            {' '}
+            <DepartmentDropDown
+              departments={departments}
+              handleSetDepartment={console.log('hi')}
+              workspaceId={workspace.id}
+            />
+            {/* <DropdownFilter
               label="Department"
               optionArr={[
                 { name: 'Sort (A-Z)', value: 'name-asc' },
@@ -458,7 +467,7 @@ export default function HairCheck({
               ]}
               dropdownName="All templates"
               value={''}
-            />
+            /> */}
           </div>
           <div style={{ height: '100%' }}>
             <Slider
