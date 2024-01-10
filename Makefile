@@ -3,7 +3,7 @@
 
 .PHONY: build
 build:
-		docker compose build
+		docker compose -f docker-compose-staging.yaml build
 
 .PHONY: install
 install:
@@ -31,10 +31,6 @@ format-lint-all:
 		make prettier linting check-types
 
 # Run Commands #
-.PHONY: run
-run:
-	vlt config init
-	vlt run -c "make run-dev"
 
 .PHONY: run-dev
 run-dev:
