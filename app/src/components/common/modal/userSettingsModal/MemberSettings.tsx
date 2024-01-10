@@ -28,7 +28,7 @@ import {
   MemberInformationContainer,
   ProfilePicture,
 } from './StyledMemberSettings';
-import DepartmentDropDown from '../../dropDown/departments/DepartmentDropdown';
+import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 
 interface UserModalProps {
   user: {

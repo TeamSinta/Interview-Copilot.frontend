@@ -14,7 +14,7 @@ import {
   useFetchCompanyMembers,
 } from './useFetchAndSortMembers';
 import { useState } from 'react';
-import DepartmentDropDown from '@/components/common/dropDown/departments/DepartmentDropdown';
+import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 
 const MemberTab = () => {
   const dispatch = useDispatch<AppDispatch>();

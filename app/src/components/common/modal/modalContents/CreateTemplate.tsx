@@ -21,7 +21,7 @@ import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useAddTemplateMutation } from '@/features/templates/templatesAPISlice';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import NewDepartment from '../../form/newDepartment/newDepartment';
-import DepartmentDropDown from '../../dropDown/departments/DepartmentDropdown';
+import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 
 const titleInputArg = {
   error: false,

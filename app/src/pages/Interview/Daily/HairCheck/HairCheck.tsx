@@ -64,7 +64,7 @@ import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useCookies } from 'react-cookie';
 import { TextBtnM } from '@/components/common/buttons/textBtn/TextBtn';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
-import DepartmentDropDown from '@/components/common/dropDown/departments/DepartmentDropdown';
+import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 
 interface HairCheckProps {
   joinCall: () => void;
