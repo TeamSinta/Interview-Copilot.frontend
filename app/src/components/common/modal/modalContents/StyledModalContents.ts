@@ -318,3 +318,21 @@ export const SelectedQuestionList = styled.div`
     align-items: center;
   }
 `;
+
+/** ==== COVER LIBRARY ====*/
+export const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const SvgContainer = styled.div`
+  width: 50%;
+  box-sizing: border-box;
+  padding: 10px;
+`;
+
+export const SvgImage = styled.img`
+  border-radius: 19.45px;
+  background: #ffe2c1;
+  margin-bottom: 8px;
+`;
