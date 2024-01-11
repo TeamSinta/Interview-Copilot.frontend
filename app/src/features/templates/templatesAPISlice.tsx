@@ -12,6 +12,7 @@ export const templatesAPI = createApi({
       return headers;
     },
   }),
+  
   tagTypes: ['Templates', 'Topics'],
   endpoints: (builder) => ({
     getTemplates: builder.query<object, void>({
