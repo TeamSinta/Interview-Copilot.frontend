@@ -15,8 +15,8 @@ import { AppDispatch } from '@/app/store';
 import { useUpdateTemplateMutation } from '@/features/templates/templatesAPISlice';
 
 const preSelectedCovers = [
-  '/public/svg/cover_1.svg',
-  '/public/svg/Cover_2.svg',
+  '/public/images/cover_1.jpg',
+  '/public/images/cover_2.jpg',
   '/public/svg/Cover_3.svg',
   '/public/svg/Cover_4.svg',
   '/public/svg/Cover_5.svg',
@@ -24,29 +24,12 @@ const preSelectedCovers = [
 ];
 
 const CoverLibrary = () => {
-  const [selectedSvg, setSelectedSvg] = useState<string | Blob | null>(null);
+  const [selectedSvg, setSelectedSvg] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { templateId } = useParams();
 
   const [updateTemplate] = useUpdateTemplateMutation();
-
-  const handleSvgClick = async (svg: string) => {
-    try {
-      const response = await fetch(svg);
-
-      if (!response.ok) {
-        console.error('Failed to fetch SVG file:', response.status);
-        return;
-      }
-
-      const blob = await response.blob();
-
-      setSelectedSvg(blob);
-    } catch (error) {
-      console.error('Error fetching SVG file:', error);
-    }
-  };
 
   const handleSave = async () => {
     try {
@@ -60,14 +43,14 @@ const CoverLibrary = () => {
         return;
       }
 
+      const data = await fetch(selectedSvg);
+      const blob = await data.blob();
+
       const formData = new FormData();
       formData.append('id', templateId);
-      formData.append('image', selectedSvg, 'image.svg');
+      formData.append('image', blob, 'cover_2.jpg');
 
-      const response = await updateTemplate({
-        template: FormData,
-        id: templateId,
-      }).unwrap();
+      const response = await updateTemplate(formData).unwrap();
       console.log('Update template data ===> ', response);
       dispatch(closeModal());
       navigate(0);
@@ -85,12 +68,14 @@ const CoverLibrary = () => {
       >
         <Container>
           {preSelectedCovers.map((svg, index) => (
-            <SvgContainer key={index} onClick={() => handleSvgClick(svg)}>
+            <SvgContainer key={index} onClick={() => setSelectedSvg(svg)}>
               <SvgImage
                 src={svg}
                 alt={`SVG ${index + 1}`}
                 style={{
                   border: selectedSvg === svg ? '2px solid #6462F1' : 'none',
+                  width: '100px',
+                  height: '100px',
                 }}
               />
             </SvgContainer>
