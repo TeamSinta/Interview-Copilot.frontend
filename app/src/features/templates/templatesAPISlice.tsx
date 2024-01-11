@@ -35,8 +35,8 @@ export const templatesAPI = createApi({
     }),
 
     updateTemplate: builder.mutation({
-      query: (template) => ({
-        url: `/templates/templates/${template.id}/`,
+      query: ({ template, id }) => ({
+        url: `/templates/templates/${id}/`,
         method: 'PATCH',
         body: template,
       }),

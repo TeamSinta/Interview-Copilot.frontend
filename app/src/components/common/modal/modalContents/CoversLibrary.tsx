@@ -24,16 +24,28 @@ const preSelectedCovers = [
 ];
 
 const CoverLibrary = () => {
-  const [selectedSvg, setSelectedSvg] = useState<File | string | null>(null);
+  const [selectedSvg, setSelectedSvg] = useState<string | Blob | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { templateId } = useParams();
 
   const [updateTemplate] = useUpdateTemplateMutation();
 
-  const handleSvgClick = (svg: string) => {
-    setSelectedSvg(svg);
-    console.log('Selected SVG:', svg);
+  const handleSvgClick = async (svg: string) => {
+    try {
+      const response = await fetch(svg);
+
+      if (!response.ok) {
+        console.error('Failed to fetch SVG file:', response.status);
+        return;
+      }
+
+      const blob = await response.blob();
+
+      setSelectedSvg(blob);
+    } catch (error) {
+      console.error('Error fetching SVG file:', error);
+    }
   };
 
   const handleSave = async () => {
@@ -50,19 +62,12 @@ const CoverLibrary = () => {
 
       const formData = new FormData();
       formData.append('id', templateId);
+      formData.append('image', selectedSvg, 'image.svg');
 
-      if (typeof selectedSvg === 'string') {
-        formData.append('image', selectedSvg);
-      } else {
-        if (selectedSvg) {
-          formData.append('image', selectedSvg as Blob);
-        } else {
-          console.error('Invalid file type selected.');
-          return;
-        }
-      }
-
-      const response = await updateTemplate(formData).unwrap();
+      const response = await updateTemplate({
+        template: FormData,
+        id: templateId,
+      }).unwrap();
       console.log('Update template data ===> ', response);
       dispatch(closeModal());
       navigate(0);
