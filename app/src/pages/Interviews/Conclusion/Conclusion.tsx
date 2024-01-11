@@ -14,7 +14,7 @@ import styled from 'styled-components';
 
 import { useNavigate, useLocation } from 'react-router-dom'; // <-- Import useNavigate
 import SummarizerLoader from '@/components/common/elements/longLoading/LongLoading.js';
-import { Divider, Grid, Stack } from '@mui/material';
+import { Container, Divider, Grid, Stack } from '@mui/material';
 import { getInterview } from '@/features/interviews/interviewsAPI.js';
 import { useCookies } from 'react-cookie';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn.js';
@@ -165,25 +165,38 @@ const Conclusion: React.FC = () => {
 
   return (
     <>
-      <WebSockComp interviewRoundId={location.state.id} endLoader={endLoader} />
-      {showLoader && location.state.useTimer ? (
-        <SummarizerLoader /> // Show loader if showLoader is true
-      ) : (
-        <>
-          {header}
-          <MainWrapper>
-            <TopBar interviewRoundId={location.state.id} />
-          </MainWrapper>
-          {isVideoEmpty === null ? (
-            // Show a loading indicator while fetching data
-            <Loading />
-          ) : isVideoEmpty ? (
-            <MainScreenNoVideo interviewRoundId={location.state.id} />
-          ) : (
-            <MainScreen interviewRoundId={location.state.id} />
-          )}
-        </>
-      )}
+      <Container
+        style={{
+          margin: '0',
+          padding: '0',
+          width: '100%',
+          minWidth: '400px',
+          maxWidth: '100%',
+        }}
+      >
+        <WebSockComp
+          interviewRoundId={location.state.id}
+          endLoader={endLoader}
+        />
+        {showLoader && location.state.useTimer ? (
+          <SummarizerLoader /> // Show loader if showLoader is true
+        ) : (
+          <>
+            {header}
+            <MainWrapper>
+              <TopBar interviewRoundId={location.state.id} />
+            </MainWrapper>
+            {isVideoEmpty === null ? (
+              // Show a loading indicator while fetching data
+              <Loading />
+            ) : isVideoEmpty ? (
+              <MainScreenNoVideo interviewRoundId={location.state.id} />
+            ) : (
+              <MainScreen interviewRoundId={location.state.id} />
+            )}
+          </>
+        )}
+      </Container>
     </>
   );
 };
