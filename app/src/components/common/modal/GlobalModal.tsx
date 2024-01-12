@@ -13,6 +13,7 @@ import ModalL from './ModalL';
 import SelectTemplate from './modalContents/SelectTemplate';
 import MemberSettings from './userSettingsModal/MemberSettings';
 import EditInterviews from './modalContents/EditInterview';
+import AddCustomQuestion from './modalContents/AddCustomQuestion';
 import EditInterviewers from './modalContents/EditInterviewrs';
 import SelectAllQuestions from './modalContents/SelectAllQuestions';
 import VideoSettingsContent from './modalContents/videoSettingsModal/VideoSettingsContent';
@@ -22,6 +23,7 @@ export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
   CREATE_INT = 'CREATE_INT',
   CREATE_QUEST_BANK = 'CREATE_QUEST_BANK',
+  ADD_CUSTOM_QUESTION = 'ADD_CUSTOM_QUESTION',
   SELECT_VAL = 'SELECT_VAL',
   SELECT_TEM = 'SELECT_TEM',
   MEMBER_SET = 'MEMBER_SET',
@@ -91,6 +93,12 @@ const GlobalModal = (): JSX.Element => {
             <CreateQuestionBank />
           </Modal>
         );
+        case MODAL_TYPE.ADD_CUSTOM_QUESTION:
+          return (
+            <Modal title="New Question">
+              <AddCustomQuestion />
+            </Modal>
+          );
       case MODAL_TYPE.EDIT_INT:
         return (
           <Modal title="Interview Details">

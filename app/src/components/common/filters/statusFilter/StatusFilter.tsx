@@ -13,6 +13,8 @@ import {
 } from '../dropdownFilter/StyledDropdownFilter';
 import { StatusDropdownFilter } from '@/features/utils/utilEnum';
 import { BodyMMedium } from '../../typeScale/StyledTypeScale';
+import { StyledButtonCustom } from '../../buttons/button/StyledBtn';
+import { TextIconFilterIcon } from '../textIconFilter/StyledTextIconFilter';
 
 const optionArr: StatusDropdownFilter[] = [
   StatusDropdownFilter.LOW,
@@ -21,11 +23,13 @@ const optionArr: StatusDropdownFilter[] = [
 ];
 
 interface IStatusFilterProps {
+  label?: string;
+  icon?: JSX.Element;
   status:
-    | StatusDropdownFilter.LOW
-    | StatusDropdownFilter.MEDIUM
-    | StatusDropdownFilter.HIGH
-    | null;
+  | StatusDropdownFilter.LOW
+  | StatusDropdownFilter.MEDIUM
+  | StatusDropdownFilter.HIGH
+  | null;
   onSelectStatus: (status: StatusDropdownFilter | null) => void; // Add this callback prop
 }
 
@@ -59,7 +63,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         {/* <DropdownLabel></DropdownLabel> */}
         <StatusDropdownWrap
           onMouseEnter={() => {
-            setShadow(true);
+            props.label === 'Difficulty' ? setShadow(false) : setShadow(true)
           }}
           onMouseLeave={() => {
             setShadow(false);
@@ -69,12 +73,24 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
             setShadow(false);
           }}
         >
-          <StatusDropdownEl
-            onClick={onSelectOpen}
-            bg={selectedItem}
-            open={open}
-          >
-            <SelectedItemDiv>
+            {props.label === 'Difficulty' && props.icon ? (
+              <SelectedItemDiv
+              onClick={onSelectOpen}
+              >
+              <StyledButtonCustom style={{padding:'10px 16px' , minWidth:'120px'}}>
+                <TextIconFilterIcon>{props.icon}</TextIconFilterIcon>
+                <BodyMMedium>
+                {selectedItem === null ? props.label : selectedItemName}
+                </BodyMMedium>
+              </StyledButtonCustom>
+              </SelectedItemDiv>
+            ) : (
+              <StatusDropdownEl
+                onClick={onSelectOpen}
+                bg={selectedItem}
+                open={open}
+              >
+              <SelectedItemDiv>
               <BodyMMedium>
                 {selectedItem === null ? `------------` : selectedItemName}
               </BodyMMedium>
@@ -83,6 +99,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               </DropdownArrowIconDiv>
             </SelectedItemDiv>
           </StatusDropdownEl>
+            )}
           <OptionUl open={open}>
             <OptionLi>
               <OptionA
