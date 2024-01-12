@@ -331,8 +331,17 @@ export const SvgContainer = styled.div`
   padding: 10px;
 `;
 
+export const BtnContainer = styled.div`
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 26%;
+`;
+
 export const SvgImage = styled.img`
-  border-radius: 19.45px;
+  border-radius: 26px;
   background: #ffe2c1;
   margin-bottom: 8px;
+  width: 311px;
 `;

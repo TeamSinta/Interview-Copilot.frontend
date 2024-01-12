@@ -1,6 +1,7 @@
 import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import {
+  BtnContainer,
   Container,
   ModalContentWrap,
   SvgContainer,
@@ -15,12 +16,12 @@ import { AppDispatch } from '@/app/store';
 import { useUpdateTemplateMutation } from '@/features/templates/templatesAPISlice';
 
 const preSelectedCovers = [
-  '/public/images/cover_1.jpg',
-  '/public/images/cover_2.jpg',
-  '/public/svg/Cover_3.svg',
-  '/public/svg/Cover_4.svg',
-  '/public/svg/Cover_5.svg',
-  '/public/svg/Cover_6.svg',
+  '/public/images/cover_6.jpg',
+  '/public/images/cover_7.jpg',
+  '/public/images/Cover_3.jpg',
+  '/public/images/Cover_1.jpg',
+  '/public/images/Cover_4.jpg',
+  '/public/images/Cover_5.jpg',
 ];
 
 const CoverLibrary = () => {
@@ -74,22 +75,24 @@ const CoverLibrary = () => {
                 alt={`SVG ${index + 1}`}
                 style={{
                   border: selectedSvg === svg ? '2px solid #6462F1' : 'none',
-                  width: '100px',
-                  height: '100px',
+                  boxShadow:
+                    selectedSvg === svg
+                      ? '0 8px 8px 0 rgb(206, 205, 238), 0 8px 20px 0 rgb(206, 205, 238)'
+                      : 'none',
                 }}
               />
             </SvgContainer>
           ))}
         </Container>
       </Stack>
-      <div style={{ marginTop: '8px' }}>
+      <BtnContainer>
         <TextBtnL
           label="Save"
           disable={!selectedSvg}
           onClick={handleSave}
           className={BackgroundColor.ACCENT_PURPLE}
         />
-      </div>
+      </BtnContainer>
     </ModalContentWrap>
   );
 };
