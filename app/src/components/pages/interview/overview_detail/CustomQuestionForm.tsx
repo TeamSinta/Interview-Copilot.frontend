@@ -1,33 +1,37 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState } from 'react';
+import { FormControlLabel } from '@mui/material';
+import Switch from '@mui/material/Switch';
+
 import {
-  InputDiv,
-  InputLabelDiv,
-  OverviewDetailEdit,
-} from './StyledOverviewDetail';
-import {
-  BinIcon,
-  CheckIcon,
-  CloseIcon,
-  PlusIcon,
+  StarIcon,
+  TimeIcon,
+  DocumentIcon
 } from '@/components/common/svgIcons/Icons';
-import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import { IconBtnL } from '@/components/common/buttons/iconBtn/IconBtn';
 import { BackgroundColor } from '@/features/utils/utilEnum';
-import TextInput from '@/components/common/form/textInput/TextInput';
-import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter';
 import TextArea from '@/components/common/form/textArea/TextArea';
+import TextInput from '@/components/common/form/textInput/TextInput';
+import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
+
+import { closeModal } from '@/features/modal/modalSlice';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter';
+import { AppDispatch } from '@/app/store';
+import { useDispatch } from 'react-redux';
+import { InputLayout } from '@/components/common/form/input/StyledInput';
+
 
 interface IState {
   [key: string]: any;
   title: string;
-  time: number;
+  time: string;
   guidelines: string;
 }
 
 interface CustomQuestionFormProps {
   onQuestionCreated: (questionId: number) => void;
-  onClose: () => void; // Add this line
+  onClose?: () => void; // Add this line
 }
 
 function CustomQuestionForm(
@@ -36,36 +40,52 @@ function CustomQuestionForm(
 ) {
   const [inputValue, setInputValue] = useState<IState>({
     title: '',
-    time: 0,
+    time: '',
     guidelines: '',
     difficulty: null,
-    competency: '',
+    competency: null,
   });
+  const dispatch = useDispatch<AppDispatch>();
+  const [addMoreQuestion, setAddMoreQuestion] = React.useState<boolean>(false)
+
 
   const handleSelectDifficulty = (difficulty: any) => {
     setInputValue({ ...inputValue, difficulty });
   };
+  const handleSelectCompetency = (competency: any) => {
+    setInputValue({ ...inputValue, competency });
+  };
+  const handleSelectTime = (time: any) => {
+    setInputValue({ ...inputValue, time });
+  };
+
+  const handleSwitchChange = () => {
+    setAddMoreQuestion(!addMoreQuestion);
+  };
 
   const handleSubmit = () => {
     // Validate input and perform any necessary checks
-
-    const numericValueAsNumber = parseInt(inputValue.time, 10);
-
+    const numericNumber =  inputValue.time !== '' ?  inputValue.time.split(' ')[0] : 5;
     const newQuestion = {
       question_text: inputValue.title,
-      reply_time: numericValueAsNumber,
+      reply_time: numericNumber,
       competency: inputValue.competency,
-      difficulty: inputValue.difficulty,
+      difficulty: inputValue.difficulty ? inputValue.difficulty : 'Low',
       guidelines: inputValue.guidelines,
       // Add more fields as needed
     };
-
     onQuestionCreated(newQuestion);
+    if (!addMoreQuestion) {
+      dispatch(closeModal());
+    } else {
+      setAddMoreQuestion(false);
+    }
+
     // Clear the form fields or perform any other necessary actions
 
     setInputValue({
       title: '',
-      time: 0,
+      time: '',
       guidelines: '', // Ensure you reset guidelines here
       competency: '',
       difficulty: null,
@@ -108,110 +128,72 @@ function CustomQuestionForm(
     return null;
   };
 
-  const validateTime = (value: string): string | null => {
-    // First, check if the field is empty
-    if (!value.trim()) {
-      return 'Time is required'; // Error message for empty input
-    }
-
-    // Check if the value is a number and within the range 1-60
-    const numberValue = parseInt(value, 10);
-    if (isNaN(numberValue) || numberValue < 1 || numberValue > 60) {
-      return 'Please enter a number between 1 and 60'; // Error message for invalid input
-    }
-
-    return null; // No validation errors
-  };
 
   return (
     <>
       <div ref={ref}>
-        <OverviewDetailEdit>
-          <InputLabelDiv>
-            <label>
-              <BodySMedium>Question</BodySMedium>
-            </label>
-            <InputDiv>
-              <TextInput
-                disable={false}
-                placeholder={'Title'}
-                error={false}
-                validate={validateTitle}
-                onChange={inputOnChange}
-                name={'title'}
-                value={inputValue['title']}
-              />
-              <ElWrap w={40} h={40}>
-                <IconBtnL
-                  disable={false}
-                  onClick={handleSubmit}
-                  className={BackgroundColor.ACCENT_PURPLE}
-                  icon={<PlusIcon />}
-                />
-              </ElWrap>
-
-              <ElWrap w={40} h={40}>
-                <IconBtnL
-                  disable={false}
-                  onClick={onClose}
-                  className={BackgroundColor.WHITE}
-                  icon={<CloseIcon />}
-                />
-              </ElWrap>
-            </InputDiv>
-          </InputLabelDiv>
-          <div className="dropdowns">
-            <InputLabelDiv className="competencies">
-              <label>
-                <BodySMedium>Competency</BodySMedium>
-              </label>
-              <TextInput
-                disable={false}
-                placeholder={'Competency'}
-                validate={validateTitle}
-                onChange={inputOnChange}
-                name={'competency'}
-                value={inputValue['competency']}
-              />
-            </InputLabelDiv>
-            <InputLabelDiv className="time">
-              <label>
-                <BodySMedium>Time for reply (mins)</BodySMedium>
-              </label>
-              <TextInput
-                disable={false}
-                placeholder={'time'}
-                validate={validateTime}
-                onChange={inputOnChange}
-                name={'time'}
-                value={inputValue['time'].toString()}
-              />
-            </InputLabelDiv>
-            <InputLabelDiv className="difficulty">
-              <label>
-                <BodySMedium>Difficulty</BodySMedium>
-              </label>
-              <StatusFilter
-                status={inputValue.difficulty} // Pass selected difficulty as status prop
-                onSelectStatus={handleSelectDifficulty} // Step 2: Pass the callback function
-              />
-            </InputLabelDiv>
-          </div>
-          <InputLabelDiv>
-            <label>
-              <BodySMedium>Guidelines</BodySMedium>
-            </label>
-            <TextArea
+        <InputLayout style={{ marginBottom: '15px' }}>
+          <BodySMedium>Question</BodySMedium>
+          <TextInput
+            disable={false}
+            placeholder={'e.g. What are your strengths?'}
+            validate={validateTitle}
+            onChange={inputOnChange}
+            name={'title'}
+            id={'CustomQuestionTitle'}
+            value={inputValue['title']}
+          />
+        </InputLayout>
+        <InputLayout >
+          <BodySMedium>Guidelines</BodySMedium>
+          <TextArea
+            disable={false}
+            placeholder={'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'}
+            error={false}
+            onChange={textAreaOnChange}
+            name={'guidelines'}
+            validate={() => null}
+            value={inputValue['guidelines']}
+          />
+        </InputLayout>
+        <div style={{ marginTop: '15px', display: 'flex', gap: '16px', marginBottom: '21px' }} >
+            <StatusFilter
+            icon={<StarIcon />}
+            label={'Competency'}
+            id={'customQuestion'}
+            status={inputValue.competency}
+            onSelectStatus={handleSelectCompetency}
+            
+          />
+           <StatusFilter
+            icon={<TimeIcon />}
+            label={'Time to reply'}
+            id={'customQuestion'}
+            status={inputValue.difficulty}
+            onSelectStatus={handleSelectTime}
+          />
+          <StatusFilter
+            icon={<DocumentIcon />}
+            id={'customQuestion'}
+            label={'Difficulty'}
+            status={inputValue.difficulty}
+            onSelectStatus={handleSelectDifficulty}
+          />
+        </div>
+        <div style={{ borderTop: '1px solid #C7C7C7', paddingTop: '10px', width: '100%', display: 'flex', justifyContent: 'right' }}>
+          <FormControlLabel
+            control={<Switch checked={addMoreQuestion} onChange={handleSwitchChange} />}
+            label={<BodySMedium>Create More</BodySMedium>}
+          />
+          <ElWrap w={155} h={40}>
+            <TextBtnL
+              label="Create Question"
               disable={false}
-              placeholder={'Guidelines'}
-              error={false}
-              onChange={textAreaOnChange}
-              name={'guidelines'}
-              validate={() => null}
-              value={inputValue['guidelines']}
+              onClick={handleSubmit}
+              className={BackgroundColor.ACCENT_PURPLE}
             />
-          </InputLabelDiv>
-        </OverviewDetailEdit>
+          </ElWrap>
+        </div>
       </div>
     </>
   );

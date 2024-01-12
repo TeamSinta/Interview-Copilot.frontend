@@ -27,6 +27,13 @@ export const Input = styled.input`
   &.error {
     box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
   }
+  &.customStyle {
+    padding: 10px 16px;
+    border-radius: 8px;
+    ::placeholder {
+      color: #979696;
+    }
+  }
 `;
 
 export const InputError = styled.div`
@@ -90,7 +97,7 @@ export const StyledTextarea = styled.textarea`
 
 export const StyledTextareaDiv = styled.div`
   .prose {
-    width: 100%;
+    // width: 100%;
     height: max-content;
     top: 20px;
     left: 20px;
@@ -102,6 +109,12 @@ export const StyledTextareaDiv = styled.div`
 
     &:focus {
       outline: none;
+    }
+    &.customProse {
+      top: 14px;
+      left: 16px;
+      right: 16px;
+      position: absolute;
     }
   }
 
@@ -129,7 +142,7 @@ export const StyledTextareaDiv = styled.div`
     &.error {
       box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
     }
-  }
+     }
   ul {
     list-style: disc;
     font-size: 12px;

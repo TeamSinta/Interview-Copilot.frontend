@@ -115,7 +115,7 @@ const InterviewOverviewDetails = () => {
     error,
     refetch,
   } = useGetTemplateQuestionsQuery();
-
+  
   // Move the useEffect hook to the top level
   useEffect(() => {}, [dispatch, openItems]);
   useEffect(() => {
@@ -585,6 +585,7 @@ const InterviewOverviewDetails = () => {
                   <TextIconBtnL
                     disable={false}
                     onClick={() => {
+                      onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION, { templateID })
                       setShowCustomQuestionForm(!showCustomQuestionForm);
                       // Scroll to the CustomQuestionForm when it's opened
                       if (
