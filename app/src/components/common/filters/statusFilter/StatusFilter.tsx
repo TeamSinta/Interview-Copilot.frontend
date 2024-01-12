@@ -87,7 +87,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         {/* <DropdownLabel></DropdownLabel> */}
         <StatusDropdownWrap
           onMouseEnter={() => {
-            setShadow(true);
+            props.label === 'Difficulty' ? setShadow(false) : setShadow(true)
           }}
           onMouseLeave={() => {
             setShadow(false);
