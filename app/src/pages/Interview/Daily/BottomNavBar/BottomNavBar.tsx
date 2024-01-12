@@ -41,9 +41,13 @@ import { useDispatch } from 'react-redux';
 import Chat from '../Chat/Chat';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { openModal } from '@/features/modal/modalSlice';
+import Switch from '@mui/material/Switch';
+import RecordingPrompt from './RecordingPrompt';
 
 function BottomNavBar(props: any) {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [recordSwitch, setRecordSwitch] = useState(false);
+  const [isRecordingStart, setIsRecordingStart] = useState<boolean>(false);
 
   const [isEmojiTrayOpened, setIsEmojiTrayOpened] = useState<boolean>(false);
   const {
@@ -56,7 +60,7 @@ function BottomNavBar(props: any) {
   const callObject = useDaily();
   const { isSharingScreen, startScreenShare, stopScreenShare } =
     useScreenShare();
-  const { startRecording, stopRecording, isRecording, type } = useRecording();
+  const { startRecording, stopRecording, isRecording } = useRecording();
   const localParticipant = useLocalParticipant();
   const localVideo = useVideoTrack(localParticipant?.session_id);
   const localAudio = useAudioTrack(localParticipant?.session_id);
@@ -77,6 +81,16 @@ function BottomNavBar(props: any) {
   };
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(openModal({ modalType }));
+  };
+
+  const handleRecordingToggle = () => {
+    if (recordSwitch) {
+      stopRecording();
+    } else {
+      startRecording();
+    }
+    setRecordSwitch(!recordSwitch);
+    setIsRecordingStart(!isRecording);
   };
 
   const [showChat, setShowChat] = useState(false);
@@ -126,7 +140,12 @@ function BottomNavBar(props: any) {
 
   return (
     <>
-      {' '}
+      {isRecording && (
+        <RecordingPrompt
+          isOpen={isRecordingStart}
+          isRecording={isRecordingStart}
+        />
+      )}{' '}
       <StyledBottomBar>
         <BottomBarColumnsContainer>
           {width && width > 1120 && (
@@ -145,7 +164,11 @@ function BottomNavBar(props: any) {
                       {isRecording ? 'Stop ' : 'Start '} Recording
                     </span>{' '}
                     <span className="icon" style={{ marginLeft: '5px' }}>
-                      <NavFullScreenIcon />
+                      <Switch
+                        checked={recordSwitch}
+                        onChange={handleRecordingToggle}
+                        color="default"
+                      />
                     </span>
                   </div>
                 </StyledBottomNavButtons>
