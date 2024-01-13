@@ -16,21 +16,21 @@ import { AppDispatch } from '@/app/store';
 import { useUpdateTemplateMutation } from '@/features/templates/templatesAPISlice';
 
 const preSelectedCovers = [
-  '/public/images/cover_6.jpg',
-  '/public/images/cover_7.jpg',
-  '/public/images/Cover_3.jpg',
-  '/public/images/Cover_1.jpg',
-  '/public/images/Cover_4.jpg',
-  '/public/images/Cover_5.jpg',
+  'cover_6.jpg',
+  'cover_7.jpg',
+  'Cover_3.jpg',
+  'Cover_1.jpg',
+  'Cover_4.jpg',
+  'Cover_5.jpg',
 ];
-
+const path = '/public/images/';
 const CoverLibrary = () => {
   const [selectedSvg, setSelectedSvg] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { templateId } = useParams();
 
-  const [updateTemplate] = useUpdateTemplateMutation();
+  const [updateTemplate, { isLoading }] = useUpdateTemplateMutation();
 
   const handleSave = async () => {
     try {
@@ -44,15 +44,14 @@ const CoverLibrary = () => {
         return;
       }
 
-      const data = await fetch(selectedSvg);
+      const data = await fetch(path + selectedSvg);
       const blob = await data.blob();
 
       const formData = new FormData();
       formData.append('id', templateId);
-      formData.append('image', blob, 'cover_2.jpg');
+      formData.append('image', blob, selectedSvg);
 
-      const response = await updateTemplate(formData).unwrap();
-      console.log('Update template data ===> ', response);
+      await updateTemplate(formData).unwrap();
       dispatch(closeModal());
       navigate(0);
     } catch (error) {
@@ -69,9 +68,9 @@ const CoverLibrary = () => {
       >
         <Container>
           {preSelectedCovers.map((svg, index) => (
-            <SvgContainer key={index} onClick={() => setSelectedSvg(svg)}>
+            <SvgContainer key={svg} onClick={() => setSelectedSvg(svg)}>
               <SvgImage
-                src={svg}
+                src={path + svg}
                 alt={`SVG ${index + 1}`}
                 style={{
                   border: selectedSvg === svg ? '2px solid #6462F1' : 'none',
@@ -88,7 +87,7 @@ const CoverLibrary = () => {
       <BtnContainer>
         <TextBtnL
           label="Save"
-          disable={!selectedSvg}
+          disable={!selectedSvg || isLoading}
           onClick={handleSave}
           className={BackgroundColor.ACCENT_PURPLE}
         />

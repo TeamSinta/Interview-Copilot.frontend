@@ -128,6 +128,7 @@ const GlobalModal = (): JSX.Element => {
           <Modal title="Member Setting">
             <MemberSettings
               user={{
+                id: '',
                 first_name: '',
                 last_name: '',
                 email: '',
