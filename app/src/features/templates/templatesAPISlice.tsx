@@ -12,7 +12,7 @@ export const templatesAPI = createApi({
       return headers;
     },
   }),
-  
+
   tagTypes: ['Templates', 'Topics'],
   endpoints: (builder) => ({
     getTemplates: builder.query<object, void>({
@@ -36,11 +36,15 @@ export const templatesAPI = createApi({
     }),
 
     updateTemplate: builder.mutation({
-      query: (template) => ({
-        url: `/templates/templates/${template.id}/`,
-        method: 'PATCH',
-        body: template,
-      }),
+      query: (template) => {
+        const id =
+          template instanceof FormData ? template.get('id') : template.id;
+        return {
+          url: `/templates/templates/${id}/`,
+          method: 'PATCH',
+          body: template,
+        };
+      },
       invalidatesTags: ['Templates'],
     }),
 
