@@ -6,6 +6,7 @@ import { ModalContainer, ModalLayout } from './StyledModal';
 export interface IModalProps {
   children: React.ReactNode[] | React.ReactNode;
   title: string;
+  btn?:string
 }
 
 const Modal = (props: IModalProps) => {
@@ -21,7 +22,7 @@ const Modal = (props: IModalProps) => {
       <ModalContainer onClick={(e) => e.stopPropagation()}
         style={{ width: modalWidth , borderRadius:modalBorderRadius }}
       >
-        <ModalHeader title={props.title}></ModalHeader>
+        <ModalHeader title={props.title} btn={props.btn}></ModalHeader>
         {props.children}
       </ModalContainer>
     </ModalLayout>

@@ -20,6 +20,7 @@ import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter'
 import { AppDispatch } from '@/app/store';
 import { useDispatch } from 'react-redux';
 import { InputLayout } from '@/components/common/form/input/StyledInput';
+import { CustomQuestionFilterDiv, CustomQuestionModalBottomDiv, CustomQuestionModalLine } from './StyledOverviewDetail';
 
 interface IState {
   [key: string]: any;
@@ -129,7 +130,7 @@ function CustomQuestionForm(
 
   return (
     <div ref={ref}>
-      <InputLayout style={{ marginBottom: '15px' }}>
+      <InputLayout className='customizeForQuestion'>
         <BodySMedium>Question</BodySMedium>
         <TextInput
           disable={false}
@@ -155,14 +156,7 @@ function CustomQuestionForm(
           value={inputValue['guidelines']}
         />
       </InputLayout>
-      <div
-        style={{
-          marginTop: '15px',
-          display: 'flex',
-          gap: '16px',
-          marginBottom: '21px',
-        }}
-      >
+     <CustomQuestionFilterDiv>
         <StatusFilter
           icon={<StarIcon />}
           label={'Competency'}
@@ -184,15 +178,9 @@ function CustomQuestionForm(
           status={inputValue.difficulty}
           onSelectStatus={handleSelectDifficulty}
         />
-      </div>
-      <div
-        style={{
-          borderTop: '1px solid #C7C7C7',
-          paddingTop: '10px',
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'right',
-        }}
+      </CustomQuestionFilterDiv>
+        <CustomQuestionModalLine />
+      <CustomQuestionModalBottomDiv
       >
         <FormControlLabel
           control={
@@ -208,8 +196,8 @@ function CustomQuestionForm(
             className={BackgroundColor.ACCENT_PURPLE}
           />
         </ElWrap>
-      </div>
-    </div>
+      </CustomQuestionModalBottomDiv>
+    </div >
   );
 }
 

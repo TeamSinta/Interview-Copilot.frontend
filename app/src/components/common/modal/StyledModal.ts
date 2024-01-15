@@ -5,6 +5,24 @@ export const ModalHeaderWrap = styled.div`
   justify-content: space-between;
 `;
 
+export const ModalHeaderIconWrap = styled.div`
+  display: flex;
+  height:22px;
+  margin-top:5px;
+  gap:8px
+
+`;
+export const ArrowDiv = styled.div`
+  svg {
+    stroke: ${(props) => props.theme.colors.black};
+    width: 24px;
+    height: 20px;
+  }
+  :hover {
+    cursor: pointer;
+  }
+`;
+
 export const CloseDiv = styled.div`
   svg {
     stroke: ${(props) => props.theme.colors.black};

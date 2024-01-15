@@ -61,6 +61,10 @@ export const StyledButton = styled.button`
     }
   }
 
+  &.customizeHeight {
+    height: 20px;
+  }
+
   &.white {
     background: ${(props) => props.theme.colors.white};
     color: ${(props) => props.theme.colors.black};

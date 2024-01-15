@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import {
+  DropdownArrowIconDiv,
   OptionA,
   OptionLi,
   OptionUl,
@@ -15,6 +16,7 @@ import { StyledButtonCustom } from '../../buttons/button/StyledBtn';
 import { TextIconFilterIcon } from '../textIconFilter/StyledTextIconFilter';
 import { TransparentDropdownTitle } from '../../buttons/dropDownBtn/StyledDropDownBtn';
 import { Switch } from '@mui/base';
+import { SelectArrowOpenIcon } from '../../svgIcons/Icons';
 
 const optionArrTime = Array.from({ length: 60 }, (_, index) => {
   const minute = index + 1;
@@ -40,19 +42,18 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const [openOnlyOne, setOpenOnlyOne] = useState<string | null>(null);
   const [shadow, setShadow] = useState(false);
   const [isHover, setIsHover] = useState<string | null>(null);
-  const [selectedItemName, setSelectedItemName] =
-    useState<StatusDropdownFilter | null | string>(props.status);
-  const [selectedItem, setSelectedItem] = useState<StatusDropdownFilter | null | string>(
-    props.status
-  );
-
+  const [selectedItemName, setSelectedItemName] = useState<
+    StatusDropdownFilter | null | string
+  >(props.status);
+  const [selectedItem, setSelectedItem] = useState<
+    StatusDropdownFilter | null | string
+  >(props.status);
 
   const onSelectOpen = (): void => {
-    //  setOpenOnlyOne(label)
     if (open) {
-      setOpen(false)
+      setOpen(false);
     } else {
-      setOpen(true)
+      setOpen(true);
     }
   };
 
@@ -60,12 +61,12 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
     setOpenOnlyOne((prevActiveDropdown) =>
       prevActiveDropdown === label ? null : label
     );
-    console.log('label diff', label)
-    // onSelectOpen()
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
-  const onHover = (item: string | ((prevState: null | string) => null) | null) => {
+  const onHover = (
+    item: string | ((prevState: null | string) => null) | null
+  ) => {
     setIsHover(item);
   };
 
@@ -76,7 +77,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const onSelectedItem = (item: StatusDropdownFilter | null | string): void => {
     setSelectedItem(item);
     setSelectedItemName(item);
-    setOpen(false);
+     setOpen(false);
     setIsHover(null);
     props.onSelectStatus(item);
   };
@@ -93,9 +94,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         >
           <div style={{ width: '30px', marginTop: '2px' }}>
             {isHover === value && selectedItem !== value && <Switch />}{' '}
-            {/* Show Switch on hover */}
             {selectedItem === value && <Switch checked />}{' '}
-            {/* Pass 'selected' prop when item is selected */}
           </div>
           <BodyMMedium>{value}</BodyMMedium>
         </OptionA>
@@ -105,29 +104,22 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
 
   return (
     <StatusDropdownLayout>
-      {/* <DropdownLabel></DropdownLabel> */}
       <StatusDropdownWrap
         onMouseEnter={() => {
-          onDiffSelect(props.label as string)
+          onDiffSelect(props.label as string);
           props.id === 'customQuestion' ? setShadow(false) : setShadow(true);
         }}
         onMouseLeave={() => {
           setShadow(false);
-          // setOpenOnlyOne(null)
-          onDiffSelect(props.label as string)
-          
-           }}
+          onDiffSelect(props.label as string);
+        }}
         className={shadow ? 'hover' : ''}
         onClick={() => {
           setShadow(false);
         }}
       >
         {props.id === 'customQuestion' && props.icon ? (
-          <SelectedItemDiv
-          //  onClick={() => onDiffSelect(props.label as string)}
-          // onMouseEnter={() => onDiffSelect(props.label as string)}
-          // <SelectedItemDiv onClick={() => onSelectOpen(props.label as string)}
-          >
+          <SelectedItemDiv>
             <StyledButtonCustom
               style={{ padding: '10px 16px', minWidth: '120px' }}
             >
@@ -139,7 +131,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
           </SelectedItemDiv>
         ) : (
           <StatusDropdownEl
-            // onClick={onSelectOpen}
+            onClick={onSelectOpen}
             bg={selectedItem}
             open={open}
           >
@@ -147,14 +139,14 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               <BodyMMedium>
                 {selectedItem === null ? `------------` : selectedItemName}
               </BodyMMedium>
-              {/* <DropdownArrowIconDiv onClick={onSelectOpen} open={open}> */}
-              {/* <SelectArrowOpenIcon />
-              </DropdownArrowIconDiv> */}
+              <DropdownArrowIconDiv onClick={onSelectOpen} open={open}>
+                <SelectArrowOpenIcon />
+              </DropdownArrowIconDiv>
             </SelectedItemDiv>
           </StatusDropdownEl>
         )}
         <OptionUl
-          open={openOnlyOne ===props.label ? open : false}
+          open={openOnlyOne === props.label ? open : false}
           className={props.id === 'customQuestion' ? 'customizeUl' : ''}
         >
           {props.id !== 'customQuestion' ? (
@@ -167,8 +159,8 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
                 ------------
               </OptionA>
             </OptionLi>
-          ) : null }
-          {(props.label === 'Competency' && openOnlyOne === 'Competency') && (
+          ) : null}
+          {props.label === 'Competency' && openOnlyOne === 'Competency' && (
             <>
               <TransparentDropdownTitle>
                 <BodySMedium>Add {props.label}</BodySMedium>
@@ -178,26 +170,26 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               )}
             </>
           )}
-          {(props.label === 'Time to reply' && openOnlyOne === 'Time to reply') && (
-            <>
-            <TransparentDropdownTitle>
-              <BodySMedium>Add {props.label}</BodySMedium>
-            </TransparentDropdownTitle>
-           { Object.entries(optionArrTime).map(([key, value]) =>
-              renderOption({ key, value })
+          {props.label === 'Time to reply' &&
+            openOnlyOne === 'Time to reply' && (
+              <>
+                <TransparentDropdownTitle>
+                  <BodySMedium>Add {props.label}</BodySMedium>
+                </TransparentDropdownTitle>
+                {Object.entries(optionArrTime).map(([key, value]) =>
+                  renderOption({ key, value })
+                )}
+              </>
             )}
-          </>
-          )
-          }
-          {(props.label === 'Difficulty' && openOnlyOne === 'Difficulty') && (
+          {props.label === 'Difficulty' && openOnlyOne === 'Difficulty' && (
             <>
-            <TransparentDropdownTitle>
-              <BodySMedium>Add {props.label}</BodySMedium>
-            </TransparentDropdownTitle>
-           { Object.entries(StatusDropdownFilter).map(([key, value]) =>
-              renderOption({ key, value })
-            )}
-          </>
+              <TransparentDropdownTitle>
+                <BodySMedium>Add {props.label}</BodySMedium>
+              </TransparentDropdownTitle>
+              {Object.entries(StatusDropdownFilter).map(([key, value]) =>
+                renderOption({ key, value })
+              )}
+            </>
           )}
         </OptionUl>
       </StatusDropdownWrap>
@@ -206,5 +198,3 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
 };
 
 export default StatusFilter;
-
-
