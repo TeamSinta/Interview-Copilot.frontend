@@ -77,3 +77,36 @@ export const ModalContainerL = styled(ModalContainer)`
   gap: 30px;
   flex-direction: row;
 `;
+
+export const IconContainer = styled.div`
+  width: 44.46px;
+  height: 19.38px;
+  position: relative;
+  background: white;
+  box-shadow: 0px 2.280125141143799px 0px #121212;
+  border-radius: 6.84px;
+  border: 1.14px #121212 solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 3px;
+`;
+
+export const IconWithText = styled.div`
+  color: var(--Black-main, #121212);
+  font-family: Chillax;
+  font-size: 8.606px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  padding-top: 2px;
+`;
+
+export const ArrowIcon = styled.img`
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  stroke-width: 1.354px;
+  stroke: var(--Black-main, #121212);
+  margin: 8px 11px 0px;
+`;

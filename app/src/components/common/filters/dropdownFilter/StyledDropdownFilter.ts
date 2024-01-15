@@ -172,14 +172,14 @@ export const OptionA = styled.a`
   }
   &.customOptionA {
     display: flex;
-    padding:10px 16px;
-    margin-left:9px;
-    margin-right:9px;
-    border-radius:8px;
+    padding: 10px 16px;
+    margin-left: 9px;
+    margin-right: 9px;
+    border-radius: 8px;
   }
   &.customOptionA:hover {
     background: var(--BG, #f6f6fb);
-}
+  }
 `;
 
 export const OptionUl = styled.ul<IDropdownOpen>`
@@ -209,11 +209,11 @@ export const OptionUl = styled.ul<IDropdownOpen>`
           &.customizeUl {
             background: ${(props) => props.theme.colors.white};
             box-shadow: 0px 4px 32px -2px rgba(0, 0, 0, 0.25);
+            margin-top: 40px;
             padding: 0;
-            margin-top:39px;
-            padding-bottom:5px;
-            width:180px;
-            max-height:180px;
+            padding-bottom: 5px;
+            width: 180px;
+            max-height: 180px;
           }
 
           ${DropdownEl} {

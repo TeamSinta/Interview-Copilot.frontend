@@ -1,10 +1,16 @@
 import { closeModal, selectModal } from '@/features/modal/modalSlice';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { CloseIcon, RightBracketIcon } from '../svgIcons/Icons';
+import { CloseIcon } from '../svgIcons/Icons';
 import { H2Bold } from '../typeScale/StyledTypeScale';
 import Modal from './Modal';
-import { ArrowDiv, CloseDiv, ModalHeaderIconWrap, ModalHeaderWrap } from './StyledModal';
+import {
+  ArrowIcon,
+  CloseDiv,
+  IconContainer,
+  IconWithText,
+  ModalHeaderWrap,
+} from './StyledModal';
 
 import CreateTemplate from '@/components/common/modal/modalContents/CreateTemplate';
 import CreateDepartment from './modalContents/CreateDepartment';
@@ -18,8 +24,8 @@ import EditInterviewers from './modalContents/EditInterviewrs';
 import SelectAllQuestions from './modalContents/SelectAllQuestions';
 import VideoSettingsContent from './modalContents/videoSettingsModal/VideoSettingsContent';
 import CreateQuestionBank from './modalContents/CreateQuestionBank';
-import { StyledButton, StyledButtonM, StyledButtonS } from '../buttons/button/StyledBtn';
-import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import Logo from 'src/assets/svg/icon.svg';
+import Arrow from 'src/assets/svg/arrow.svg';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
@@ -38,40 +44,32 @@ export enum MODAL_TYPE {
 
 interface IModalHeader {
   title: string;
-  btn?: string;
+  icon?: React.ReactNode;
 }
 
 interface IModalPortal {
   children: React.ReactElement;
 }
 
-export const ModalHeader = ({ title , btn }: IModalHeader) => {
+export const ModalHeader = ({ title, icon }: IModalHeader) => {
   const dispatch = useDispatch();
 
   return (
     <ModalHeaderWrap>
-      <div style={{display:'flex', gap:10 }}>
-      {btn && (
-        <ModalHeaderIconWrap>
-        <ElWrap w={44}>
-        <StyledButton className='customizeHeight' >
-          {btn}
-        </StyledButton>
-        </ElWrap>
-        <ArrowDiv
-        onClick={() => {
-          dispatch(closeModal());
-        }}
-      >
-        <RightBracketIcon />
-      </ArrowDiv>
-
-        </ModalHeaderIconWrap>
-      )}
-
-      <H2Bold>{title}</H2Bold>
-      </div>
-     
+      <H2Bold style={{ display: 'flex' }}>
+        {icon && (
+          <>
+            <IconContainer>
+              <IconWithText>
+                {icon}
+                <span style={{ marginLeft: '4px' }}>TEM</span>
+              </IconWithText>
+            </IconContainer>
+            <ArrowIcon src={Arrow} alt="arrow" />
+          </>
+        )}
+        {title}
+      </H2Bold>
       <CloseDiv
         onClick={() => {
           dispatch(closeModal());
@@ -119,9 +117,11 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.ADD_CUSTOM_QUESTION:
         return (
-          <Modal title="New Question" btn='Tem'>
-            <AddCustomQuestion />
-          </Modal>
+          <div style={{ display: 'flex' }}>
+            <Modal title="New Question" icon={<img src={Logo} alt="Logo" />}>
+              <AddCustomQuestion />
+            </Modal>
+          </div>
         );
       case MODAL_TYPE.EDIT_INT:
         return (

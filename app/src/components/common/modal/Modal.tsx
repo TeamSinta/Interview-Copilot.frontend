@@ -6,23 +6,25 @@ import { ModalContainer, ModalLayout } from './StyledModal';
 export interface IModalProps {
   children: React.ReactNode[] | React.ReactNode;
   title: string;
-  btn?:string
+  icon?: React.ReactNode;
 }
 
 const Modal = (props: IModalProps) => {
   const dispatch = useDispatch();
-  const modalWidth = props.title === 'Covers Library' || 'New Question' ? '784px' : '480px';
-  const modalBorderRadius = props.title === 'New Question'? '8px' : '';
+  const modalWidth =
+    props.title === 'Covers Library' || 'New Question' ? '784px' : '480px';
+  const modalBorderRadius = props.title === 'New Question' ? '8px' : '';
   return (
     <ModalLayout
       onClick={() => {
         dispatch(closeModal());
       }}
     >
-      <ModalContainer onClick={(e) => e.stopPropagation()}
-        style={{ width: modalWidth , borderRadius:modalBorderRadius }}
+      <ModalContainer
+        onClick={(e) => e.stopPropagation()}
+        style={{ width: modalWidth, borderRadius: modalBorderRadius }}
       >
-        <ModalHeader title={props.title} btn={props.btn}></ModalHeader>
+        <ModalHeader title={props.title} icon={props.icon}></ModalHeader>
         {props.children}
       </ModalContainer>
     </ModalLayout>
