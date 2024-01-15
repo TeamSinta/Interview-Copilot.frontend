@@ -6,36 +6,35 @@ import { useSelector } from 'react-redux';
 import { selectInterviewDetail } from '@/features/interviewDetail/interviewDetailSlice';
 import { useAddTemplateQuestionMutation } from '@/features/templates/templatesQuestionsAPISlice';
 
-
 const AddCustomQuestion = () => {
-    const { templateId } = useParams();
-    const { selectedSection } = useSelector(selectInterviewDetail);
-    const [newQuestion] = useAddTemplateQuestionMutation();
+  const { templateId } = useParams();
+  const { selectedSection } = useSelector(selectInterviewDetail);
+  const [newQuestion] = useAddTemplateQuestionMutation();
 
-    const templateID = templateId;
-    const customQuestionFormRef = useRef(null);
-    const handleQuestionCreated = async (question: {}) => {
-        const requestData = {
-            template_id: templateID,
-            topic: String(selectedSection.id),
-            question: question,
-        };
-        try {
-            await newQuestion(requestData).unwrap();
-        } catch (error) {
-            // Handle error, e.g., display a notification
-            console.error('Failed to add question:', error);
-        }
+  const templateID = templateId;
+  const customQuestionFormRef = useRef(null);
+  const handleQuestionCreated = async (question: {}) => {
+    const requestData = {
+      template_id: templateID,
+      topic: String(selectedSection.id),
+      question: question,
     };
+    try {
+      await newQuestion(requestData).unwrap();
+    } catch (error) {
+      // Handle error, e.g., display a notification
+      console.error('Failed to add question:', error);
+    }
+  };
 
-    return (
-        <ModalContentWrap>
-            <CustomQuestionForm
-                ref={customQuestionFormRef}
-                onQuestionCreated={handleQuestionCreated}
-            />
-        </ModalContentWrap >
-    );
+  return (
+    <ModalContentWrap>
+      <CustomQuestionForm
+        ref={customQuestionFormRef}
+        onQuestionCreated={handleQuestionCreated}
+      />
+    </ModalContentWrap>
+  );
 };
 
 export default AddCustomQuestion;

@@ -18,33 +18,22 @@ import { TextIconFilterIcon } from '../textIconFilter/StyledTextIconFilter';
 import { TransparentDropdownTitle } from '../../buttons/dropDownBtn/StyledDropDownBtn';
 import { Switch } from '@mui/base';
 
-
-const optionArr: StatusDropdownFilter[] = [
-  StatusDropdownFilter.LOW,
-  StatusDropdownFilter.MEDIUM,
-  StatusDropdownFilter.HIGH,
-];
-
 const optionArrTime = Array.from({ length: 60 }, (_, index) => {
   const minute = index + 1;
   return `${minute} minute${minute > 1 ? 's' : ''}`;
 });
 
-const optionArrCompetency = [
-  'Leadership',
-  'Teamwork',
-  'Empathy',
-];
+const optionArrCompetency = ['Leadership', 'Teamwork', 'Empathy'];
 
 interface IStatusFilterProps {
   label?: string;
-  id?:string;
+  id?: string;
   icon?: JSX.Element;
   status:
-  | StatusDropdownFilter.LOW
-  | StatusDropdownFilter.MEDIUM
-  | StatusDropdownFilter.HIGH
-  | null;
+    | StatusDropdownFilter.LOW
+    | StatusDropdownFilter.MEDIUM
+    | StatusDropdownFilter.HIGH
+    | null;
   onSelectStatus?: (status: StatusDropdownFilter | null) => void; // Add this callback prop
 }
 
@@ -81,40 +70,62 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
     props.onSelectStatus(item);
   };
 
-  return (
-    <>
-      <StatusDropdownLayout>
-        {/* <DropdownLabel></DropdownLabel> */}
-        <StatusDropdownWrap
-          onMouseEnter={() => {
-            props.label === 'Difficulty' ? setShadow(false) : setShadow(true)
-          }}
-          onMouseLeave={() => {
-            setShadow(false);
-          }}
-          className={shadow ? 'hover' : ''}
-          onClick={() => {
-            setShadow(false);
-          }}
+  const renderOption = ({ key, value }) => {
+    return (
+      <OptionLi key={key}>
+        <OptionA
+          className={`customOptionA ${
+            selectedItem === value ? 'selected' : ''
+          }`}
+          onMouseEnter={() => onHover(value)}
+          onMouseLeave={onUnhover}
+          onClick={() => onSelectedItem(value)}
         >
-            {props.id === 'customQuestion' && props.icon ? (
-              <SelectedItemDiv
-              onClick={onSelectOpen}
-              >
-              <StyledButtonCustom style={{padding:'10px 16px' , minWidth:'120px'}}>
-                <TextIconFilterIcon>{props.icon}</TextIconFilterIcon>
-                <BodyMMedium>
+          <div style={{ width: '30px', marginTop: '2px' }}>
+            {isHover === value && selectedItem !== value && <Switch />}{' '}
+            {/* Show Switch on hover */}
+            {selectedItem === value && <Switch checked />}{' '}
+            {/* Pass 'selected' prop when item is selected */}
+          </div>
+          <BodyMMedium>{value}</BodyMMedium>
+        </OptionA>
+      </OptionLi>
+    );
+  };
+
+  return (
+    <StatusDropdownLayout>
+      {/* <DropdownLabel></DropdownLabel> */}
+      <StatusDropdownWrap
+        onMouseEnter={() => {
+          props.label === 'Difficulty' ? setShadow(false) : setShadow(true);
+        }}
+        onMouseLeave={() => {
+          setShadow(false);
+        }}
+        className={shadow ? 'hover' : ''}
+        onClick={() => {
+          setShadow(false);
+        }}
+      >
+        {props.id === 'customQuestion' && props.icon ? (
+          <SelectedItemDiv onClick={onSelectOpen}>
+            <StyledButtonCustom
+              style={{ padding: '10px 16px', minWidth: '120px' }}
+            >
+              <TextIconFilterIcon>{props.icon}</TextIconFilterIcon>
+              <BodyMMedium>
                 {selectedItem === null ? props.label : selectedItemName}
-                </BodyMMedium>
-              </StyledButtonCustom>
-              </SelectedItemDiv>
-            ) : (
-              <StatusDropdownEl
-                onClick={onSelectOpen}
-                bg={selectedItem}
-                open={open}
-              >
-              <SelectedItemDiv>
+              </BodyMMedium>
+            </StyledButtonCustom>
+          </SelectedItemDiv>
+        ) : (
+          <StatusDropdownEl
+            onClick={onSelectOpen}
+            bg={selectedItem}
+            open={open}
+          >
+            <SelectedItemDiv>
               <BodyMMedium>
                 {selectedItem === null ? `------------` : selectedItemName}
               </BodyMMedium>
@@ -123,8 +134,11 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               </DropdownArrowIconDiv>
             </SelectedItemDiv>
           </StatusDropdownEl>
-            )}
-          <OptionUl open={open} className={ props.id === 'customQuestion' ? 'customizeUl' : ''} >
+        )}
+        <OptionUl
+          open={open}
+          className={props.id === 'customQuestion' ? 'customizeUl' : ''}
+        >
           {props.id !== 'customQuestion' ? (
             <OptionLi>
               <OptionA
@@ -134,69 +148,61 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               >
                 ------------
               </OptionA>
-            </OptionLi>) : (
-               <TransparentDropdownTitle>
-               <BodySMedium>Add {props.label}</BodySMedium>
-               </TransparentDropdownTitle>
+            </OptionLi>
+          ) : (
+            <TransparentDropdownTitle>
+              <BodySMedium>Add {props.label}</BodySMedium>
+            </TransparentDropdownTitle>
+          )}
+          {props.label === 'Competency' &&
+            optionArrCompetency.map((item, index) => (
+              <OptionLi key={index}>
+                <OptionA
+                  className={`customOptionA ${
+                    selectedItem === item ? 'selected' : ''
+                  }`}
+                  onMouseEnter={() => onHover(item)}
+                  onMouseLeave={onUnhover}
+                  onClick={() => onSelectedItem(item)}
+                >
+                  <div style={{ width: '30px', marginTop: '2px' }}>
+                    {isHover === item && selectedItem !== item && <Switch />}{' '}
+                    {/* Show Switch on hover */}
+                    {selectedItem === item && <Switch checked />}{' '}
+                    {/* Pass 'selected' prop when item is selected */}
+                  </div>
+                  <BodyMMedium>{item}</BodyMMedium>
+                </OptionA>
+              </OptionLi>
+            ))}
+          {props.label === 'Time to reply' &&
+            optionArrTime.map((item, index) => (
+              <OptionLi key={index}>
+                <OptionA
+                  className={`customOptionA ${
+                    selectedItem === item ? 'selected' : ''
+                  }`}
+                  onMouseEnter={() => onHover(item)}
+                  onMouseLeave={onUnhover}
+                  onClick={() => onSelectedItem(item)}
+                >
+                  <div style={{ width: '30px', marginTop: '2px' }}>
+                    {isHover === item && selectedItem !== item && <Switch />}{' '}
+                    {/* Show Switch on hover */}
+                    {selectedItem === item && <Switch checked />}{' '}
+                    {/* Pass 'selected' prop when item is selected */}
+                  </div>
+                  <BodyMMedium>{item}</BodyMMedium>
+                </OptionA>
+              </OptionLi>
+            ))}
+          {props.label === 'Difficulty' &&
+            Object.entries(StatusDropdownFilter).map(([key, value]) =>
+              renderOption({ key, value })
             )}
-        {props.label === 'Competency' &&  (
-          optionArrCompetency.map((item, index) => (
-            <OptionLi key={index}>
-              <OptionA
-                className={`customOptionA ${selectedItem === item ? 'selected' : ''}`}
-                onMouseEnter={() => onHover(item)}
-                onMouseLeave={onUnhover}
-                onClick={() => onSelectedItem(item)}
-              >
-                <div style={{ width: '30px', marginTop: '2px' }}>
-                  {isHover === item && selectedItem !== item && <Switch />} {/* Show Switch on hover */}
-                  {selectedItem === item && <Switch checked />} {/* Pass 'selected' prop when item is selected */}
-                </div>
-                <BodyMMedium>{item}</BodyMMedium>
-              </OptionA>
-            </OptionLi>
-          ))
-        )}
-         {props.label === 'Time to reply' &&  (
-          optionArrTime.map((item, index) => (
-            <OptionLi key={index}>
-              <OptionA
-                className={`customOptionA ${selectedItem === item ? 'selected' : ''}`}
-                onMouseEnter={() => onHover(item)}
-                onMouseLeave={onUnhover}
-                onClick={() => onSelectedItem(item)}
-              >
-                <div style={{ width: '30px', marginTop: '2px' }}>
-                  {isHover === item && selectedItem !== item && <Switch />} {/* Show Switch on hover */}
-                  {selectedItem === item && <Switch checked />} {/* Pass 'selected' prop when item is selected */}
-                </div>
-                <BodyMMedium>{item}</BodyMMedium>
-              </OptionA>
-            </OptionLi>
-          ))
-        )}
-         {props.label === 'Difficulty' &&  (
-          optionArr.map((item, index) => (
-            <OptionLi key={index}>
-              <OptionA
-                className={`customOptionA ${selectedItem === item ? 'selected' : ''}`}
-                onMouseEnter={() => onHover(item)}
-                onMouseLeave={onUnhover}
-                onClick={() => onSelectedItem(item)}
-              >
-                <div style={{ width: '30px', marginTop: '2px' }}>
-                  {isHover === item && selectedItem !== item && <Switch />} {/* Show Switch on hover */}
-                  {selectedItem === item && <Switch checked />} {/* Pass 'selected' prop when item is selected */}
-                </div>
-                <BodyMMedium>{item}</BodyMMedium>
-              </OptionA>
-            </OptionLi>
-          ))
-        )}
-          </OptionUl>
-        </StatusDropdownWrap>
-      </StatusDropdownLayout>
-    </>
+        </OptionUl>
+      </StatusDropdownWrap>
+    </StatusDropdownLayout>
   );
 };
 

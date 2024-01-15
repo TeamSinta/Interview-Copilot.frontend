@@ -5,7 +5,7 @@ import Switch from '@mui/material/Switch';
 import {
   StarIcon,
   TimeIcon,
-  DocumentIcon
+  DocumentIcon,
 } from '@/components/common/svgIcons/Icons';
 
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
@@ -20,7 +20,6 @@ import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter'
 import { AppDispatch } from '@/app/store';
 import { useDispatch } from 'react-redux';
 import { InputLayout } from '@/components/common/form/input/StyledInput';
-
 
 interface IState {
   [key: string]: any;
@@ -46,8 +45,7 @@ function CustomQuestionForm(
     competency: null,
   });
   const dispatch = useDispatch<AppDispatch>();
-  const [addMoreQuestion, setAddMoreQuestion] = React.useState<boolean>(false)
-
+  const [addMoreQuestion, setAddMoreQuestion] = React.useState<boolean>(false);
 
   const handleSelectDifficulty = (difficulty: any) => {
     setInputValue({ ...inputValue, difficulty });
@@ -63,10 +61,10 @@ function CustomQuestionForm(
     setAddMoreQuestion(!addMoreQuestion);
   };
 
-
   const handleSubmit = () => {
     // Validate input and perform any necessary checks
-    const numericNumber =  inputValue.time !== '' ?  inputValue.time.split(' ')[0] : 5;
+    const numericNumber =
+      inputValue.time !== '' ? inputValue.time.split(' ')[0] : 5;
     const newQuestion = {
       question_text: inputValue.title,
       reply_time: numericNumber,
@@ -129,74 +127,89 @@ function CustomQuestionForm(
     return null;
   };
 
-
   return (
-    <>
-      <div ref={ref}>
-        <InputLayout style={{ marginBottom: '15px' }}>
-          <BodySMedium>Question</BodySMedium>
-          <TextInput
-            disable={false}
-            placeholder={'e.g. What are your strengths?'}
-            validate={validateTitle}
-            onChange={inputOnChange}
-            name={'title'}
-            id={'CustomQuestionTitle'}
-            value={inputValue['title']}
-          />
-        </InputLayout>
-        <InputLayout >
-          <BodySMedium>Guidelines</BodySMedium>
-          <TextArea
-            disable={false}
-            placeholder={'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'}
-            error={false}
-            onChange={textAreaOnChange}
-            name={'guidelines'}
-            validate={() => null}
-            value={inputValue['guidelines']}
-          />
-        </InputLayout>
-        <div style={{ marginTop: '15px', display: 'flex', gap: '16px', marginBottom: '21px' }} >
-            <StatusFilter
-            icon={<StarIcon />}
-            label={'Competency'}
-            id={'customQuestion'}
-            status={inputValue.competency}
-            onSelectStatus={handleSelectCompetency}
-            
-          />
-           <StatusFilter
-            icon={<TimeIcon />}
-            label={'Time to reply'}
-            id={'customQuestion'}
-            status={inputValue.difficulty}
-            onSelectStatus={handleSelectTime}
-          />
-          <StatusFilter
-            icon={<DocumentIcon />}
-            id={'customQuestion'}
-            label={'Difficulty'}
-            status={inputValue.difficulty}
-            onSelectStatus={handleSelectDifficulty}
-          />
-        </div>
-        <div style={{ borderTop: '1px solid #C7C7C7', paddingTop: '10px', width: '100%', display: 'flex', justifyContent: 'right' }}>
-          <FormControlLabel
-            control={<Switch checked={addMoreQuestion} onChange={handleSwitchChange} />}
-            label={<BodySMedium>Create More</BodySMedium>}
-          />
-          <ElWrap w={155} h={40}>
-            <TextBtnL
-              label="Create Question"
-              disable={false}
-              onClick={handleSubmit}
-              className={BackgroundColor.ACCENT_PURPLE}
-            />
-          </ElWrap>
-        </div>
+    <div ref={ref}>
+      <InputLayout style={{ marginBottom: '15px' }}>
+        <BodySMedium>Question</BodySMedium>
+        <TextInput
+          disable={false}
+          placeholder={'e.g. What are your strengths?'}
+          validate={validateTitle}
+          onChange={inputOnChange}
+          name={'title'}
+          id={'CustomQuestionTitle'}
+          value={inputValue['title']}
+        />
+      </InputLayout>
+      <InputLayout>
+        <BodySMedium>Guidelines</BodySMedium>
+        <TextArea
+          disable={false}
+          placeholder={
+            'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'
+          }
+          error={false}
+          onChange={textAreaOnChange}
+          name={'guidelines'}
+          validate={() => null}
+          value={inputValue['guidelines']}
+        />
+      </InputLayout>
+      <div
+        style={{
+          marginTop: '15px',
+          display: 'flex',
+          gap: '16px',
+          marginBottom: '21px',
+        }}
+      >
+        <StatusFilter
+          icon={<StarIcon />}
+          label={'Competency'}
+          id={'customQuestion'}
+          status={inputValue.competency}
+          onSelectStatus={handleSelectCompetency}
+        />
+        <StatusFilter
+          icon={<TimeIcon />}
+          label={'Time to reply'}
+          id={'customQuestion'}
+          status={inputValue.difficulty}
+          onSelectStatus={handleSelectTime}
+        />
+        <StatusFilter
+          icon={<DocumentIcon />}
+          id={'customQuestion'}
+          label={'Difficulty'}
+          status={inputValue.difficulty}
+          onSelectStatus={handleSelectDifficulty}
+        />
       </div>
-       </>
+      <div
+        style={{
+          borderTop: '1px solid #C7C7C7',
+          paddingTop: '10px',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'right',
+        }}
+      >
+        <FormControlLabel
+          control={
+            <Switch checked={addMoreQuestion} onChange={handleSwitchChange} />
+          }
+          label={<BodySMedium>Create More</BodySMedium>}
+        />
+        <ElWrap w={155} h={40}>
+          <TextBtnL
+            label="Create Question"
+            disable={false}
+            onClick={handleSubmit}
+            className={BackgroundColor.ACCENT_PURPLE}
+          />
+        </ElWrap>
+      </div>
+    </div>
   );
 }
 
