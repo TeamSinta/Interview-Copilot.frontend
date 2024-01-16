@@ -15,6 +15,11 @@ export const StyledStack = styled(Stack)`
   position: -webkit-fixed; /* For Safari */
   position: fixed;
   overflow-y: auto;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const LogoImage = styled.img`

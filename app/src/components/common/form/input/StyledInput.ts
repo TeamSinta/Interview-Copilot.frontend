@@ -118,6 +118,12 @@ export const StyledTextareaDiv = styled.div`
     resize: none;
     border-radius: 12px;
 
+    scrollbar-width: none;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
     min-height: 82px;
     display: flex;
     justify-content: start;
