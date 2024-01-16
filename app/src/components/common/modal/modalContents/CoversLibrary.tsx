@@ -18,12 +18,12 @@ import { useUpdateTemplateMutation } from '@/features/templates/templatesAPISlic
 const preSelectedCovers = [
   'cover_6.jpg',
   'cover_7.jpg',
-  'Cover_3.jpg',
-  'Cover_1.jpg',
-  'Cover_4.jpg',
-  'Cover_5.jpg',
+  'cover_3.jpg',
+  'cover_1.jpg',
+  'cover_4.jpg',
+  'cover_5.jpg',
 ];
-const path = '/public/images/';
+const path = '/images/';
 const CoverLibrary = () => {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
@@ -46,7 +46,6 @@ const CoverLibrary = () => {
 
       const data = await fetch(path + selectedImg);
       const blob = await data.blob();
-
       const formData = new FormData();
       formData.append('id', templateId);
       formData.append('image', blob, selectedImg);
