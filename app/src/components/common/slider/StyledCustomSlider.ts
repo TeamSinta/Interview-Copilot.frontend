@@ -6,11 +6,6 @@ export const CustomSlider = styled.div`
   justify-content: space-between;
   width: 100%;
   overflow: scroll;
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 export const SliderButton = styled.button`
@@ -25,9 +20,4 @@ export const SliderContent = styled.div`
   display: flex;
   overflow: scroll;
   gap: 14px;
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;

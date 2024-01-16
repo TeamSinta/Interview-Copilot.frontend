@@ -161,11 +161,6 @@ export const QeustionHeader = styled(TemplateListInputWrap)`
 export const QuestionListContentWrap = styled.div`
   height: 521px;
   overflow: scroll;
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 export const QuestionListContentLists = styled.div`

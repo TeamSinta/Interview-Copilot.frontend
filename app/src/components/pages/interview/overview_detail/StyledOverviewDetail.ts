@@ -19,11 +19,6 @@ export const OverviewDetailBody = styled.div`
   flex-direction: column;
   height: 500px;
   overflow-y: scroll;
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 export const OverviewDetailList = styled.div`

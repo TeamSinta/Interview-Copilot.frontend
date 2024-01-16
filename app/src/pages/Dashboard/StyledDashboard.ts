@@ -115,11 +115,6 @@ export const TemplateCardsBox = styled(Box)`
   width: 100%;
   overflow-x: auto; // Enable horizontal scrolling
   cursor: grab; // Set cursor style for dragging
-  scrollbar-width: none;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 export const TemplateEmptyBox = styled(Box)`
