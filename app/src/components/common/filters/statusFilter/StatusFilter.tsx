@@ -31,7 +31,8 @@ interface IStatusFilterProps {
     | StatusDropdownFilter.LOW
     | StatusDropdownFilter.MEDIUM
     | StatusDropdownFilter.HIGH
-    | null;
+    | null
+    |string;
   onSelectStatus?: (status: StatusDropdownFilter | null) => void; // Add this callback prop
 }
 
@@ -40,11 +41,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const [openOnlyOne, setOpenOnlyOne] = useState<string | null>(null);
   const [shadow, setShadow] = useState(false);
   const [isHover, setIsHover] = useState<string | null>(null);
-  const [selectedItemName, setSelectedItemName] =
-    useState<StatusDropdownFilter | null>(props.status);
-  const [selectedItem, setSelectedItem] = useState<StatusDropdownFilter | null>(
-    props.status
-  );
+
   const onDiffSelect = (label: string | null) => {
     setOpenOnlyOne((prevActiveDropdown) =>
       prevActiveDropdown === label ? null : label
@@ -63,27 +60,25 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   };
 
   const onSelectedItem = (item: StatusDropdownFilter | null | string): void => {
-    setSelectedItem(item as StatusDropdownFilter | null);
-    setSelectedItemName(item as StatusDropdownFilter | null);
     setOpen(false);
     setIsHover(null);
     props.onSelectStatus?.(item as StatusDropdownFilter | null);
   };
 
-  const renderOption = ({ key, value }: { key: string; value: string }) => {
+    const renderOption = ({ key, value }: { key: string; value: string }) => {
     return (
       <OptionLi key={key}>
         <OptionA
           className={`customOptionA ${
-            selectedItem === value ? 'selected' : ''
+            props.status === value ? 'selected' : ''
           }`}
           onMouseEnter={() => onHover(value)}
           onMouseLeave={onUnhover}
           onClick={() => onSelectedItem(value)}
         >
           <div style={{ width: '30px', marginTop: '2px' }}>
-            {isHover === value && selectedItem !== value && <Switch />}{' '}
-            {selectedItem === value && <Switch checked />}{' '}
+            {isHover === value && props.status !== value && <Switch />}{' '}
+            {props.status === value && <Switch checked />}{' '}
           </div>
           <BodyMMedium>{value}</BodyMMedium>
         </OptionA>
@@ -112,15 +107,15 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
             <StyledButtonCustom >
               <TextIconFilterIcon>{props.icon}</TextIconFilterIcon>
               <BodyMMedium>
-                {selectedItem === null ? props.label : selectedItemName}
+                {props.status === null || props.status === '' ? props.label : props.status}
               </BodyMMedium>
             </StyledButtonCustom>
           </SelectedItemDiv>
         ) : (
-          <StatusDropdownEl bg={selectedItem} open={open}>
+          <StatusDropdownEl bg={props.status} open={open}>
             <SelectedItemDiv>
               <BodyMMedium>
-                {selectedItem === null ? `------------` : selectedItemName}
+                {props.status === null ? `------------` : props.status}
               </BodyMMedium>
             </SelectedItemDiv>
           </StatusDropdownEl>
@@ -150,8 +145,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               )}
             </>
           )}
-          {props.label === 'Time to reply' &&
-            openOnlyOne === 'Time to reply' && (
+          {props.label === 'Time to reply' && openOnlyOne === 'Time to reply' && (
               <>
                 <TransparentDropdownTitle>
                   <BodySMedium>Add {props.label}</BodySMedium>

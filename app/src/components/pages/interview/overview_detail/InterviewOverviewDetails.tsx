@@ -369,11 +369,14 @@ const InterviewOverviewDetails = () => {
                             </div>
                           </div>
                           <div className="summary">
-                            <div className="comp" key={index}>
-                              <BodySMedium>
-                                {question.question.competency}
-                              </BodySMedium>
-                            </div>
+                            {question.question.competency !== null && (
+                              <div className="comp" key={index}>
+                                <BodySMedium>
+                                  {question.question.competency}
+                                </BodySMedium>
+                              </div>
+
+                            )}
 
                             <div className="icon-div">
                               <div className="time-level">
@@ -393,7 +396,7 @@ const InterviewOverviewDetails = () => {
                           <div
                             className={`detail ${
                               openItems.has(question.id) ? '' : 'none'
-                            }`}
+                              }`}
                           >
                             <ReactMarkdown components={components}>
                               {question.question.guidelines}

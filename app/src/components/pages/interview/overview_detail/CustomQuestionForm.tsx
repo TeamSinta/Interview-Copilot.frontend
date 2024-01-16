@@ -21,12 +21,15 @@ import { AppDispatch } from '@/app/store';
 import { useDispatch } from 'react-redux';
 import { InputLayout } from '@/components/common/form/input/StyledInput';
 import { CustomQuestionFilterDiv, CustomQuestionModalBottomDiv, CustomQuestionModalLine } from './StyledOverviewDetail';
+import { RotateIcon } from '@/components/common/filters/textIconFilter/StyledTextIconFilter';
 
 interface IState {
   [key: string]: any;
   title: string;
   time: string;
   guidelines: string;
+  difficulty: null,
+  competency: null,
 }
 
 interface CustomQuestionFormProps {
@@ -56,7 +59,7 @@ function CustomQuestionForm(
     setInputValue({ ...inputValue, difficulty });
   };
   const handleSelectCompetency = (competency: any) => {
-    setInputValue({ ...inputValue, competency });
+        setInputValue({ ...inputValue, competency });
   };
   const handleSelectTime = (time: any) => {
     setInputValue({ ...inputValue, time });
@@ -102,21 +105,22 @@ function CustomQuestionForm(
       // Add more fields as needed
     };
     onQuestionCreated(newQuestion);
-    if (!addMoreQuestion) {
-      dispatch(closeModal());
-    } else {
-      setAddMoreQuestion(false);
-    }
-
     // Clear the form fields or perform any other necessary actions
 
     setInputValue({
       title: '',
       time: '',
       guidelines: '', // Ensure you reset guidelines here
-      competency: '',
+      competency: null,
       difficulty: null,
     });
+
+    if (!addMoreQuestion) {
+      dispatch(closeModal());
+    } else {
+      setAddMoreQuestion(false);
+    }
+
   };
 
   const inputOnChange = (
@@ -168,7 +172,7 @@ function CustomQuestionForm(
 
     return null;
   };
-
+  
   return (
     <div ref={ref}>
       <InputLayout className='customizeForQuestion'>
@@ -195,9 +199,10 @@ function CustomQuestionForm(
           name={'guidelines'}
           validate={validateDescription}
           value={inputValue['guidelines']}
+          ref={descriptionInputRef}
         />
       </InputLayout>
-     <CustomQuestionFilterDiv>
+      <CustomQuestionFilterDiv>
         <StatusFilter
           icon={<StarIcon />}
           label={'Competency'}
@@ -209,18 +214,18 @@ function CustomQuestionForm(
           icon={<TimeIcon />}
           label={'Time to reply'}
           id={'customQuestion'}
-          status={inputValue.difficulty}
+          status={inputValue.time}
           onSelectStatus={handleSelectTime}
         />
         <StatusFilter
-          icon={<DocumentIcon />}
+          icon={<RotateIcon><DocumentIcon /></RotateIcon>}
           id={'customQuestion'}
           label={'Difficulty'}
           status={inputValue.difficulty}
           onSelectStatus={handleSelectDifficulty}
         />
       </CustomQuestionFilterDiv>
-        <CustomQuestionModalLine />
+      <CustomQuestionModalLine />
       <CustomQuestionModalBottomDiv
       >
         <FormControlLabel
