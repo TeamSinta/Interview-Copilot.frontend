@@ -3,9 +3,9 @@ import { BackgroundColor } from '@/features/utils/utilEnum';
 import {
   BtnContainer,
   Container,
+  ImageStyle,
+  ImgContainer,
   ModalContentWrap,
-  SvgContainer,
-  SvgImage,
 } from './StyledModalContents';
 import { Stack } from '@mui/material';
 import { useState } from 'react';
@@ -25,7 +25,7 @@ const preSelectedCovers = [
 ];
 const path = '/public/images/';
 const CoverLibrary = () => {
-  const [selectedSvg, setSelectedSvg] = useState<string | null>(null);
+  const [selectedImg, setSelectedImg] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { templateId } = useParams();
@@ -34,7 +34,7 @@ const CoverLibrary = () => {
 
   const handleSave = async () => {
     try {
-      if (!selectedSvg) {
+      if (!selectedImg) {
         console.error('No file selected.');
         return;
       }
@@ -44,12 +44,12 @@ const CoverLibrary = () => {
         return;
       }
 
-      const data = await fetch(path + selectedSvg);
+      const data = await fetch(path + selectedImg);
       const blob = await data.blob();
 
       const formData = new FormData();
       formData.append('id', templateId);
-      formData.append('image', blob, selectedSvg);
+      formData.append('image', blob, selectedImg);
 
       await updateTemplate(formData).unwrap();
       dispatch(closeModal());
@@ -67,27 +67,27 @@ const CoverLibrary = () => {
         sx={{ alignItems: 'center' }}
       >
         <Container>
-          {preSelectedCovers.map((svg, index) => (
-            <SvgContainer key={svg} onClick={() => setSelectedSvg(svg)}>
-              <SvgImage
-                src={path + svg}
-                alt={`SVG ${index + 1}`}
+          {preSelectedCovers.map((img, index) => (
+            <ImgContainer key={img} onClick={() => setSelectedImg(img)}>
+              <ImageStyle
+                src={path + img}
+                alt={img}
                 style={{
-                  border: selectedSvg === svg ? '2px solid #6462F1' : 'none',
+                  border: selectedImg === img ? '2px solid #6462F1' : 'none',
                   boxShadow:
-                    selectedSvg === svg
+                    selectedImg === img
                       ? '0 8px 8px 0 rgb(206, 205, 238), 0 8px 20px 0 rgb(206, 205, 238)'
                       : 'none',
                 }}
               />
-            </SvgContainer>
+            </ImgContainer>
           ))}
         </Container>
       </Stack>
       <BtnContainer>
         <TextBtnL
           label="Save"
-          disable={!selectedSvg || isLoading}
+          disable={!selectedImg || isLoading}
           onClick={handleSave}
           className={BackgroundColor.ACCENT_PURPLE}
         />
