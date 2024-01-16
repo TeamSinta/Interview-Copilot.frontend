@@ -4,7 +4,7 @@ import { InputLayout } from '@/components/common/form/input/StyledInput';
 import TextArea from '@/components/common/form/textArea/TextArea';
 import TextInput from '@/components/common/form/textInput/TextInput';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
-import { closeModal } from '@/features/modal/modalSlice';
+import { closeModal, openModal } from '@/features/modal/modalSlice';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -22,6 +22,7 @@ import {
 } from '@/features/templates/templatesAPISlice';
 import { TextIconBtnL } from '../../buttons/textIconBtn/TextIconBtn';
 import { BinIcon, DocumentIcon } from '../../svgIcons/Icons';
+import { MODAL_TYPE } from '../GlobalModal';
 
 const titleInputArg = {
   error: false,
@@ -149,6 +150,10 @@ const EditInterviews = () => {
     setDescription(value);
   };
 
+  const onClickModalOpen = (modalType: MODAL_TYPE) => {
+    dispatch(openModal({ modalType }));
+  };
+
   return (
     <ModalContentWrap>
       <InputLayout>
@@ -190,7 +195,9 @@ const EditInterviews = () => {
               icon={<DocumentIcon />}
               disable={false}
               className={BackgroundColor.WHITE}
-              onClick={() => {}}
+              onClick={() => {
+                onClickModalOpen(MODAL_TYPE.COVER_LIBRARY);
+              }}
             />
           </ElWrap>
         </CoverPictureContainer>

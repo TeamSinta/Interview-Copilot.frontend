@@ -10,14 +10,17 @@ export interface IModalProps {
 
 const Modal = (props: IModalProps) => {
   const dispatch = useDispatch();
-
+  const modalWidth = props.title === 'Covers Library' ? '720px' : '480px';
   return (
     <ModalLayout
       onClick={() => {
         dispatch(closeModal());
       }}
     >
-      <ModalContainer onClick={(e) => e.stopPropagation()}>
+      <ModalContainer
+        onClick={(e) => e.stopPropagation()}
+        style={{ width: modalWidth }}
+      >
         <ModalHeader title={props.title}></ModalHeader>
         {props.children}
       </ModalContainer>
