@@ -6,8 +6,8 @@ export const InputLayout = styled.div`
   flex-direction: column;
   gap: 8px;
   position: relative;
-  $.customizeForQuestion {
-    marginBottom: '15px'
+  &.customizeForQuestion {
+    margin-bottom: 15px;
   }
 `;
 

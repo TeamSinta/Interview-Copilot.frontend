@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FormControlLabel } from '@mui/material';
 import Switch from '@mui/material/Switch';
 
@@ -47,6 +47,10 @@ function CustomQuestionForm(
   });
   const dispatch = useDispatch<AppDispatch>();
   const [addMoreQuestion, setAddMoreQuestion] = React.useState<boolean>(false);
+  const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
+  const descriptionInputRef = useRef<{ triggerValidation: () => void } | null>(
+    null
+  );
 
   const handleSelectDifficulty = (difficulty: any) => {
     setInputValue({ ...inputValue, difficulty });
@@ -64,12 +68,35 @@ function CustomQuestionForm(
 
   const handleSubmit = () => {
     // Validate input and perform any necessary checks
+    let hasError = false; // Track if there's any validation error
+
+    if (!inputValue.title.trim()) {
+      if (titleInputRef.current) {
+        titleInputRef.current.triggerValidation();
+      }
+      hasError = true;
+    } else {
+      hasError = false; // Reset to false when the title is not empty
+    }
+
+    if (!inputValue.guidelines.trim()) {
+      if (descriptionInputRef.current) {
+        descriptionInputRef.current.triggerValidation();
+      }
+      hasError = true;
+    } else {
+      hasError = false; // Reset to false when the description is not empty
+    }
+
+    if (hasError) {
+      return; // Stop if there's any validation error
+    }
     const numericNumber =
       inputValue.time !== '' ? inputValue.time.split(' ')[0] : 5;
     const newQuestion = {
       question_text: inputValue.title,
       reply_time: numericNumber,
-      competency: inputValue.competency,
+      competency: inputValue.competency ? inputValue.competency : '',
       difficulty: inputValue.difficulty ? inputValue.difficulty : 'Low',
       guidelines: inputValue.guidelines,
       // Add more fields as needed
@@ -128,6 +155,20 @@ function CustomQuestionForm(
     return null;
   };
 
+  const validateDescription = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium style={{ color: 'gray', textAlign: 'end' }}>
+            Description is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div ref={ref}>
       <InputLayout className='customizeForQuestion'>
@@ -152,7 +193,7 @@ function CustomQuestionForm(
           error={false}
           onChange={textAreaOnChange}
           name={'guidelines'}
-          validate={() => null}
+          validate={validateDescription}
           value={inputValue['guidelines']}
         />
       </InputLayout>

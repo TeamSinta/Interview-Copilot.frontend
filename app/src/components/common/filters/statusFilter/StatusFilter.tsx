@@ -109,9 +109,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
       >
         {props.id === 'customQuestion' && props.icon ? (
           <SelectedItemDiv>
-            <StyledButtonCustom
-              style={{ padding: '10px 16px', minWidth: '120px' }}
-            >
+            <StyledButtonCustom >
               <TextIconFilterIcon>{props.icon}</TextIconFilterIcon>
               <BodyMMedium>
                 {selectedItem === null ? props.label : selectedItemName}

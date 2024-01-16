@@ -79,7 +79,7 @@ export const StyledButton = styled.button`
 `;
 
 export const StyledButtonCustom = styled.button`
-   display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -90,6 +90,8 @@ export const StyledButtonCustom = styled.button`
   padding: 10px 16px;
   transition: 0.3s;
   font-size: 14px;
+  min-width: 150px;
+  padding: 10px 16px;
   z-index:999;
   :hover {
     cursor: pointer;
