@@ -96,7 +96,7 @@ function CustomQuestionForm(
     const newQuestion = {
       question_text: inputValue.title,
       reply_time: numericNumber,
-      competency: inputValue.competency ? inputValue.competency : '',
+      competency: inputValue.competency,
       difficulty: inputValue.difficulty ? inputValue.difficulty : 'Low',
       guidelines: inputValue.guidelines,
       // Add more fields as needed
