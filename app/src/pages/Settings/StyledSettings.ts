@@ -118,3 +118,21 @@ export const ChildElement = styled.div`
   gap: 24px;
   text-align: center;
 `;
+
+
+export const DepartmentListContainer = styled.div`
+  max-height: calc(100vh - 650px);
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 0.01rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+`;

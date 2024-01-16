@@ -6,6 +6,7 @@ import { SettingsContainer, PageContainer } from './StyledSettings';
 import MemberTab from '@/components/pages/settings/memberTab/MemberTab';
 import { TABS } from '@/features/utils/utilEnum';
 import UserTab from '@/components/pages/settings/Profiletab/UserTab';
+import DepartmentTab from '@/components/pages/settings/departmentsTab/DepartmentTab';
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState(TABS.PROFILE);
@@ -38,10 +39,18 @@ const SettingsPage = () => {
           select={activeTab === 'members'}
           onClick={() => handleTabChange(TABS.MEMBERS)}
         />
+
+          <TextIconFilter
+          label="Departments"
+          icon={false}
+          select={activeTab === 'departments'}
+          onClick={() => handleTabChange(TABS.DEPARTMENTS)}
+        />
       </Box>
       <PageContainer>
         {activeTab === TABS.PROFILE && <UserTab />}
         {activeTab === TABS.MEMBERS && <MemberTab />}
+        {activeTab === TABS.DEPARTMENTS && <DepartmentTab />}
       </PageContainer>
     </SettingsContainer>
   );

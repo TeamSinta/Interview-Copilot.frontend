@@ -26,6 +26,7 @@ export enum StatusDropdownFilter {
 export enum TABS {
   PROFILE = 'profile',
   MEMBERS = 'members',
+  DEPARTMENTS = 'departments',
 }
 
 export enum SORT_CRITERIA {
