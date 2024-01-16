@@ -21,5 +21,5 @@ export interface IDepartment {
 
 export type DepartmentsList = {
   id: number;
-  title: string;
+  name: string;
 }

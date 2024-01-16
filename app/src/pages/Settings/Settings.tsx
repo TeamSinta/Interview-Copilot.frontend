@@ -7,9 +7,12 @@ import MemberTab from '@/components/pages/settings/memberTab/MemberTab';
 import { TABS } from '@/features/utils/utilEnum';
 import UserTab from '@/components/pages/settings/Profiletab/UserTab';
 import DepartmentTab from '@/components/pages/settings/departmentsTab/DepartmentTab';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState(TABS.PROFILE);
+  const workspace = useSelector((state: RootState) => state.workspace);
 
   const handleTabChange = (tab: TABS) => {
     setActiveTab(tab);
@@ -17,7 +20,7 @@ const SettingsPage = () => {
 
   return (
     <SettingsContainer>
-      <H1>Settings</H1>
+      <H1>Settings {'>'} {workspace.name}</H1>
       <Box
         sx={{
           paddingTop: '20px',

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const DepartmentCardContainer = styled.div`
   width: 100%;
-  height: 72px;
+  height: 42px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,6 +19,7 @@ export const DepartmentCardContainer = styled.div`
 
 
 export const DepartmentDetails = styled.div`
+  margin-left: 16px;
   flex-direction: column;
 `;
 

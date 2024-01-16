@@ -16,7 +16,7 @@ import {
 interface DepartmentCardProps {
   department: {
     id: number;
-    title: string;
+    name: string;
   };
   onClick: (department: any) => void;
 }
@@ -27,7 +27,7 @@ const SettingsDepartmentCard: React.FC<DepartmentCardProps> = ({ department, onC
       <Stack direction="row" gap="16px" sx={{ width: '316px' }}>
         <DepartmentDetails>
           <BodyLMedium>
-            {department}
+            {department.name}
           </BodyLMedium>
         </DepartmentDetails>
       </Stack>

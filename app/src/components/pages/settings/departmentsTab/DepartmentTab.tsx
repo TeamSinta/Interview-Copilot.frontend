@@ -7,7 +7,7 @@ import StyledInvitationBox from '@/components/common/form/inviteBox/InviteBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
-// import MemberList from './DepartmentList';
+// import MemberList from './DepartmentList';\
 import SortingDropdown from './SortingDropdown';
 import {
   useFetchCompanyDepartments,
@@ -15,6 +15,9 @@ import {
 } from './useFetchAndSortMembers';
 import { useState } from 'react';
 import DepartmentList from './DepartmentList';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { PlusIcon } from '@/components/common/svgIcons/Icons';
+import { BackgroundColor } from '@/features/utils/utilEnum';
 
 const DepartmentTab = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -69,7 +72,15 @@ const DepartmentTab = () => {
         </Stack>
         <DepartmentList departments={departments} onClickModalOpen={onClickModalOpen} />
       </Stack>
-      <StyledInvitationBox />
+      <ElWrap h={40} w={282}>
+          <TextIconBtnL
+            label="Add Department"
+            icon={<PlusIcon />}
+            disable={false}
+            className={BackgroundColor.ACCENT_PURPLE}
+            onClick={() => {}}
+          />
+        </ElWrap>
       <GlobalModal></GlobalModal>
     </>
   );
