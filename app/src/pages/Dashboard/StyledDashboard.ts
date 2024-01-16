@@ -101,7 +101,7 @@ export const InterviewsBox = styled(Box)`
   border-radius: 8px;
   border: 1px solid #e0e0e0;
   width: 100%;
-  padding: 24px 0px 24px 24px;
+  padding: 24px 24px 24px 24px;
 `;
 
 export const TemplateCardsBox = styled(Box)`
@@ -115,6 +115,11 @@ export const TemplateCardsBox = styled(Box)`
   width: 100%;
   overflow-x: auto; // Enable horizontal scrolling
   cursor: grab; // Set cursor style for dragging
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const TemplateEmptyBox = styled(Box)`
