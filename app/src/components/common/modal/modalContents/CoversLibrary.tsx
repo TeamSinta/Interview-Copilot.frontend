@@ -18,12 +18,12 @@ import { useUpdateTemplateMutation } from '@/features/templates/templatesAPISlic
 const preSelectedCovers = [
   'cover_6.jpg',
   'cover_7.jpg',
-  'Cover_3.jpg',
-  'Cover_1.jpg',
-  'Cover_4.jpg',
-  'Cover_5.jpg',
+  'cover_3.jpg',
+  'cover_1.jpg',
+  'cover_4.jpg',
+  'cover_5.jpg',
 ];
-const path = '/public/images/';
+const path = '/images/';
 const CoverLibrary = () => {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
@@ -34,6 +34,8 @@ const CoverLibrary = () => {
 
   const handleSave = async () => {
     try {
+      console.log('Starting handleSave function');
+
       if (!selectedImg) {
         console.error('No file selected.');
         return;
@@ -44,20 +46,32 @@ const CoverLibrary = () => {
         return;
       }
 
+      console.log('Selected Image:', selectedImg);
+      console.log('Template ID:', templateId);
+
       const data = await fetch(path + selectedImg);
+      console.log('Image fetch response:', data);
+
       const blob = await data.blob();
+      console.log('Image blob:', blob);
 
       const formData = new FormData();
       formData.append('id', templateId);
       formData.append('image', blob, selectedImg);
 
+      console.log('FormData:', formData);
+
       await updateTemplate(formData).unwrap();
+      console.log('Template updated successfully');
+
       dispatch(closeModal());
       navigate(0);
     } catch (error) {
       console.error('Error updating template:', error);
     }
   };
+
+  console.log('Rendering CoverLibrary component', path + preSelectedCovers[0]);
 
   return (
     <ModalContentWrap>
