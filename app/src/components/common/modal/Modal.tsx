@@ -9,10 +9,11 @@ export interface IModalProps {
   icon?: React.ReactNode;
 }
 
+const updatedModals = ['Covers Library', 'New Question'];
+
 const Modal = (props: IModalProps) => {
   const dispatch = useDispatch();
-  const modalWidth =
-    props.title === 'Covers Library' || 'New Question' ? '784px' : '480px';
+  const modalWidth = updatedModals.includes(props.title) ? '784px' : '480px';
   const modalBorderRadius = props.title === 'New Question' ? '8px' : '';
   return (
     <ModalLayout
@@ -24,7 +25,7 @@ const Modal = (props: IModalProps) => {
         onClick={(e) => e.stopPropagation()}
         style={{ width: modalWidth, borderRadius: modalBorderRadius }}
       >
-        <ModalHeader title={props.title} icon={props.icon}></ModalHeader>
+        <ModalHeader title={props.title} icon={props.icon} />
         {props.children}
       </ModalContainer>
     </ModalLayout>
