@@ -1,7 +1,7 @@
 import { closeModal } from '@/features/modal/modalSlice';
 import { useDispatch } from 'react-redux';
-import { ModalHeader } from './GlobalModal';
-import { ModalContainer, ModalLayout } from './StyledModal';
+import { ModalHeader } from '@/components/common/modal/GlobalModal';
+import { ModalContainer, ModalLayout } from '@/components/common/modal/StyledModal';
 
 export interface IModalProps {
   children: React.ReactNode[] | React.ReactNode;

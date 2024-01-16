@@ -1,9 +1,9 @@
 import { closeModal, selectModal } from '@/features/modal/modalSlice';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { CloseIcon } from '../svgIcons/Icons';
-import { H2Bold } from '../typeScale/StyledTypeScale';
-import Modal from './Modal';
+import { CloseIcon } from '@/components/common/svgIcons/Icons';
+import { H2Bold } from '@/components/common/typeScale/StyledTypeScale';
+import Modal from '@/components/common/modal/Modal';
 import {
   ArrowIcon,
   CloseDiv,

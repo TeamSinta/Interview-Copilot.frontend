@@ -12,8 +12,8 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react';
-import { StyledTextareaDiv } from '../input/StyledInput';
-import { BodySMedium } from '../../typeScale/StyledTypeScale';
+import { StyledTextareaDiv } from '@/components/common/form/input/StyledInput';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 
 interface ITextAreaProps {
   disable: boolean;

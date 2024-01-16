@@ -8,12 +8,12 @@ import {
   StatusDropdownEl,
   StatusDropdownLayout,
   StatusDropdownWrap,
-} from '../dropdownFilter/StyledDropdownFilter';
-import { StatusDropdownFilter } from '@/features/utils/utilEnum';
-import { BodyMMedium, BodySMedium } from '../../typeScale/StyledTypeScale';
-import { StyledButtonCustom } from '../../buttons/button/StyledBtn';
-import { TextIconFilterIcon } from '../textIconFilter/StyledTextIconFilter';
-import { TransparentDropdownTitle } from '../../buttons/dropDownBtn/StyledDropDownBtn';
+} from '@/components/common/filters/dropdownFilter/StyledDropdownFilter';
+import { CompetencyDropDownFilter, StatusDropdownFilter } from '@/features/utils/utilEnum';
+import { BodyMMedium, BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { StyledButtonCustom } from '@/components/common/buttons/button/StyledBtn';
+import { TextIconFilterIcon } from '@/components/common/filters/textIconFilter/StyledTextIconFilter';
+import { TransparentDropdownTitle } from '@/components/common/buttons/dropDownBtn/StyledDropDownBtn';
 import { Switch } from '@mui/base';
 
 const optionArrTime = Array.from({ length: 60 }, (_, index) => {
@@ -21,7 +21,6 @@ const optionArrTime = Array.from({ length: 60 }, (_, index) => {
   return `${minute} minute${minute > 1 ? 's' : ''}`;
 });
 
-const optionArrCompetency = ['Leadership', 'Teamwork', 'Empathy'];
 
 interface IStatusFilterProps {
   label?: string;
@@ -31,9 +30,12 @@ interface IStatusFilterProps {
     | StatusDropdownFilter.LOW
     | StatusDropdownFilter.MEDIUM
     | StatusDropdownFilter.HIGH
+    | CompetencyDropDownFilter.LEADERSHIP
+    | CompetencyDropDownFilter.EMPATHY
+    | CompetencyDropDownFilter.TEAMWORK
     | null
     |string;
-  onSelectStatus?: (status: StatusDropdownFilter | null) => void; // Add this callback prop
+  onSelectStatus?: (status: StatusDropdownFilter | CompetencyDropDownFilter | null) => void; // Add this callback prop
 }
 
 const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
@@ -59,10 +61,10 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
     setIsHover(null);
   };
 
-  const onSelectedItem = (item: StatusDropdownFilter | null | string): void => {
+  const onSelectedItem = (item: StatusDropdownFilter | CompetencyDropDownFilter | null | string): void => {
     setOpen(false);
     setIsHover(null);
-    props.onSelectStatus?.(item as StatusDropdownFilter | null);
+    props.onSelectStatus?.(item as StatusDropdownFilter | CompetencyDropDownFilter | null);
   };
 
     const renderOption = ({ key, value }: { key: string; value: string }) => {
@@ -140,7 +142,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               <TransparentDropdownTitle>
                 <BodySMedium>Add {props.label}</BodySMedium>
               </TransparentDropdownTitle>
-              {Object.entries(optionArrCompetency).map(([key, value]) =>
+              {Object.entries(CompetencyDropDownFilter).map(([key, value]) =>
                 renderOption({ key, value })
               )}
             </>

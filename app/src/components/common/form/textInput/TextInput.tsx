@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Input, InputError, InputLayout } from '../input/StyledInput';
+import { Input, InputError, InputLayout } from '@/components/common/form/input/StyledInput';
 
 export interface ITextInput {
   disable: boolean;
