@@ -19,7 +19,7 @@ import StatusFilter, {
   StatusFilterType,
 } from '@/components/common/filters/statusFilter/StatusFilter';
 import { RotateIcon } from '@/components/common/filters/textIconFilter/StyledTextIconFilter';
-import { InputLayout } from '@/components/common/form/input/StyledInput';
+import { InputLayout, StyledTextarea, TextAreaError } from '@/components/common/form/input/StyledInput';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { closeModal } from '@/features/modal/modalSlice';
 import {
@@ -32,7 +32,7 @@ import {
   CustomQuestionModalBottomDiv,
   CustomQuestionModalLine,
 } from './StyledOverviewDetail';
-import { validateDescription, validateTitle } from '@/utils/inputValidations';
+import {validateTitle } from '@/utils/inputValidations';
 
 interface IState {
   // [key: string]: any;
@@ -62,6 +62,7 @@ function CustomQuestionForm(
   const [inputValue, setInputValue] = useState<IState>(initialState);
   const dispatch = useDispatch<AppDispatch>();
   const [addMoreQuestion, setAddMoreQuestion] = React.useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
   const descriptionInputRef = useRef<{ triggerValidation: () => void } | null>(
     null
@@ -133,15 +134,11 @@ function CustomQuestionForm(
       ...inputValue,
       [event.target.name]: event.target.value,
     });
-  };
-
-  const textAreaOnChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newGuidelinesValue = String(event);
-
-    setInputValue((prevInputValue) => ({
-      ...prevInputValue,
-      guidelines: newGuidelinesValue,
-    }));
+    if(event.target.name === 'guidelines' && !event.target.value.trim() ){
+      setError('Description is required')
+    }else{
+      setError('')
+    }
   };
 
   return (
@@ -160,18 +157,17 @@ function CustomQuestionForm(
       </InputLayout>
       <InputLayout>
         <BodySMedium>Guidelines</BodySMedium>
-        <TextArea
-          disable={false}
-          placeholder={
-            'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'
-          }
-          error={false}
-          onChange={textAreaOnChange}
-          name={'guidelines'}
-          validate={validateDescription}
-          value={inputValue['guidelines']}
-          ref={descriptionInputRef}
+        <StyledTextarea
+            disabled={false}
+            className={`customStyle ${error ? 'error' : ''}`}
+            placeholder={
+              'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'
+            }
+            onChange={inputOnChange}
+            name={'guidelines'}
+            value={inputValue.guidelines}
         />
+         {error ? <TextAreaError className='customizeForTextArea'>{error}</TextAreaError> : null }
       </InputLayout>
       <CustomQuestionFilterDiv>
         <StatusFilter

@@ -49,6 +49,17 @@ export const InputError = styled.div`
   z-index: -999;
 `;
 
+export const TextAreaError = styled.div`
+  font-size: 12px;
+  font-family: 'Chillax';
+  position: absolute;
+  bottom: -20px;
+  right:0px;
+  border-radius: 12px;
+  z-index: 999;
+  color: gray;
+  `;
+
 export const SerchInputLayout = styled.div`
   position: relative;
 `;
@@ -95,6 +106,23 @@ export const StyledTextarea = styled.textarea`
 
   :focus {
     outline: 1px solid ${(props) => props.theme.colors.black};
+  }
+  :disabled {
+    cursor: not-allowed;
+    opacity: 0.30000001192092896;
+  }
+  &.error {
+    box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
+  }
+
+  &.customStyle {
+    border-radius: 8px;
+    ::placeholder {
+      color: #979696;
+    }
+    :focus {
+      outline: none;
+    }
   }
 `;
 

@@ -67,7 +67,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
       setOpen('');
     } else {
       setOpen(props.label!);
-    }
+     }
   };
 
   const dropdownFilter = () => {
@@ -89,7 +89,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         <OptionA
           className={`customOptionA ${
             props.status === value ? 'selected' : ''
-          }`}
+            }`}
           onMouseEnter={() => onHover(value)}
           onMouseLeave={onUnhover}
           onClick={() => onSelectedItem(value)}
@@ -160,12 +160,12 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               </OptionA>
             </OptionLi>
           ) : null}
-          <TransparentDropdownTitle>
-            <BodySMedium>Add {props.label}</BodySMedium>
-          </TransparentDropdownTitle>
-          {Object.entries(dropdownFilter()).map(([key, value]) =>
-            renderOption({ key, value })
-          )}
+              <TransparentDropdownTitle>
+                <BodySMedium>Add {props.label}</BodySMedium>
+              </TransparentDropdownTitle>
+              {Object.entries(dropdownFilter()).map(([key, value]) =>
+                renderOption({ key, value })
+              )}
         </OptionUl>
       </StatusDropdownWrap>
     </StatusDropdownLayout>
