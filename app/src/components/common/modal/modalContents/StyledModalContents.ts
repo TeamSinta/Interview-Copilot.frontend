@@ -325,7 +325,7 @@ export const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-export const SvgContainer = styled.div`
+export const ImgContainer = styled.div`
   width: 50%;
   box-sizing: border-box;
   padding: 10px;
@@ -339,7 +339,7 @@ export const BtnContainer = styled.div`
   margin: 0 26%;
 `;
 
-export const SvgImage = styled.img`
+export const ImageStyle = styled.img`
   border-radius: 26px;
   background: #ffe2c1;
   margin-bottom: 8px;
