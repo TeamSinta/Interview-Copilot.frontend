@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import {
   OptionA,
@@ -9,8 +9,14 @@ import {
   StatusDropdownLayout,
   StatusDropdownWrap,
 } from '@/components/common/filters/dropdownFilter/StyledDropdownFilter';
-import { CompetencyDropDownFilter, StatusDropdownFilter } from '@/features/utils/utilEnum';
-import { BodyMMedium, BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import {
+  CompetencyDropDownFilter,
+  StatusDropdownFilter,
+} from '@/features/utils/utilEnum';
+import {
+  BodyMMedium,
+  BodySMedium,
+} from '@/components/common/typeScale/StyledTypeScale';
 import { StyledButtonCustom } from '@/components/common/buttons/button/StyledBtn';
 import { TextIconFilterIcon } from '@/components/common/filters/textIconFilter/StyledTextIconFilter';
 import { TransparentDropdownTitle } from '@/components/common/buttons/dropDownBtn/StyledDropDownBtn';
@@ -21,35 +27,24 @@ const optionArrTime = Array.from({ length: 60 }, (_, index) => {
   return `${minute} minute${minute > 1 ? 's' : ''}`;
 });
 
+export type StatusFilterType =
+  | StatusDropdownFilter
+  | CompetencyDropDownFilter
+  | null
+  | string;
 
 interface IStatusFilterProps {
   label?: string;
   id?: string;
   icon?: JSX.Element;
-  status:
-    | StatusDropdownFilter.LOW
-    | StatusDropdownFilter.MEDIUM
-    | StatusDropdownFilter.HIGH
-    | CompetencyDropDownFilter.LEADERSHIP
-    | CompetencyDropDownFilter.EMPATHY
-    | CompetencyDropDownFilter.TEAMWORK
-    | null
-    |string;
-  onSelectStatus?: (status: StatusDropdownFilter | CompetencyDropDownFilter | null) => void; // Add this callback prop
+  status: StatusFilterType;
+  onSelectStatus?: (status: StatusFilterType) => void;
 }
 
 const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
-  const [open, setOpen] = useState(false);
-  const [openOnlyOne, setOpenOnlyOne] = useState<string | null>(null);
+  const [open, setOpen] = useState<string>('');
   const [shadow, setShadow] = useState(false);
   const [isHover, setIsHover] = useState<string | null>(null);
-
-  const onDiffSelect = (label: string | null) => {
-    setOpenOnlyOne((prevActiveDropdown) =>
-      prevActiveDropdown === label ? null : label
-    );
-    setOpen(true);
-  };
 
   const onHover = (
     item: string | ((prevState: null | string) => null) | null
@@ -61,13 +56,34 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
     setIsHover(null);
   };
 
-  const onSelectedItem = (item: StatusDropdownFilter | CompetencyDropDownFilter | null | string): void => {
-    setOpen(false);
+  const onSelectedItem = (item: StatusFilterType): void => {
+    setOpen('');
     setIsHover(null);
-    props.onSelectStatus?.(item as StatusDropdownFilter | CompetencyDropDownFilter | null);
+    props.onSelectStatus?.(item);
   };
 
-    const renderOption = ({ key, value }: { key: string; value: string }) => {
+  const onSelectOpen = (): void => {
+    if (open === props.label) {
+      setOpen('');
+    } else {
+      setOpen(props.label!);
+    }
+  };
+
+  const dropdownFilter = () => {
+    switch (props.label) {
+      case 'Competency':
+        return CompetencyDropDownFilter;
+      case 'Time to reply':
+        return optionArrTime;
+      case 'Difficulty':
+        return StatusDropdownFilter;
+      default:
+        return [];
+    }
+  };
+
+  const renderOption = ({ key, value }: { key: string; value: string }) => {
     return (
       <OptionLi key={key}>
         <OptionA
@@ -92,12 +108,10 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
     <StatusDropdownLayout>
       <StatusDropdownWrap
         onMouseEnter={() => {
-          onDiffSelect(props.label as string);
-          props.id === 'customQuestion' ? setShadow(false) : setShadow(true);
+          setShadow(true);
         }}
         onMouseLeave={() => {
           setShadow(false);
-          onDiffSelect(props.label as string);
         }}
         className={shadow ? 'hover' : ''}
         onClick={() => {
@@ -105,16 +119,22 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         }}
       >
         {props.id === 'customQuestion' && props.icon ? (
-          <SelectedItemDiv>
-            <StyledButtonCustom >
+          <SelectedItemDiv onClick={onSelectOpen}>
+            <StyledButtonCustom>
               <TextIconFilterIcon>{props.icon}</TextIconFilterIcon>
               <BodyMMedium>
-                {props.status === null || props.status === '' ? props.label : props.status}
+                {props.status === null || props.status === ''
+                  ? props.label
+                  : props.status}
               </BodyMMedium>
             </StyledButtonCustom>
           </SelectedItemDiv>
         ) : (
-          <StatusDropdownEl bg={props.status} open={open}>
+          <StatusDropdownEl
+            onClick={onSelectOpen}
+            bg={props.status}
+            open={props.label === open}
+          >
             <SelectedItemDiv>
               <BodyMMedium>
                 {props.status === null ? `------------` : props.status}
@@ -123,8 +143,11 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
           </StatusDropdownEl>
         )}
         <OptionUl
-          open={openOnlyOne === props.label ? open : false}
+          open={props.label === open}
           className={props.id === 'customQuestion' ? 'customizeUl' : ''}
+          onMouseLeave={() => {
+            setOpen('');
+          }}
         >
           {props.id !== 'customQuestion' ? (
             <OptionLi>
@@ -137,35 +160,11 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               </OptionA>
             </OptionLi>
           ) : null}
-          {props.label === 'Competency' && openOnlyOne === 'Competency' && (
-            <>
-              <TransparentDropdownTitle>
-                <BodySMedium>Add {props.label}</BodySMedium>
-              </TransparentDropdownTitle>
-              {Object.entries(CompetencyDropDownFilter).map(([key, value]) =>
-                renderOption({ key, value })
-              )}
-            </>
-          )}
-          {props.label === 'Time to reply' && openOnlyOne === 'Time to reply' && (
-              <>
-                <TransparentDropdownTitle>
-                  <BodySMedium>Add {props.label}</BodySMedium>
-                </TransparentDropdownTitle>
-                {Object.entries(optionArrTime).map(([key, value]) =>
-                  renderOption({ key, value })
-                )}
-              </>
-            )}
-          {props.label === 'Difficulty' && openOnlyOne === 'Difficulty' && (
-            <>
-              <TransparentDropdownTitle>
-                <BodySMedium>Add {props.label}</BodySMedium>
-              </TransparentDropdownTitle>
-              {Object.entries(StatusDropdownFilter).map(([key, value]) =>
-                renderOption({ key, value })
-              )}
-            </>
+          <TransparentDropdownTitle>
+            <BodySMedium>Add {props.label}</BodySMedium>
+          </TransparentDropdownTitle>
+          {Object.entries(dropdownFilter()).map(([key, value]) =>
+            renderOption({ key, value })
           )}
         </OptionUl>
       </StatusDropdownWrap>

@@ -1,53 +1,65 @@
-import React, { useRef, useState } from 'react';
 import { FormControlLabel } from '@mui/material';
 import Switch from '@mui/material/Switch';
+import React, { useRef, useState } from 'react';
 
 import {
+  DocumentIcon,
   StarIcon,
   TimeIcon,
-  DocumentIcon,
 } from '@/components/common/svgIcons/Icons';
 
-import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import { BackgroundColor } from '@/features/utils/utilEnum';
+import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
 import TextArea from '@/components/common/form/textArea/TextArea';
 import TextInput from '@/components/common/form/textInput/TextInput';
-import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { BackgroundColor } from '@/features/utils/utilEnum';
 
-import { closeModal } from '@/features/modal/modalSlice';
-import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
-import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter';
 import { AppDispatch } from '@/app/store';
-import { useDispatch } from 'react-redux';
-import { InputLayout } from '@/components/common/form/input/StyledInput';
-import { CustomQuestionFilterDiv, CustomQuestionModalBottomDiv, CustomQuestionModalLine } from './StyledOverviewDetail';
+import StatusFilter, {
+  StatusFilterType,
+} from '@/components/common/filters/statusFilter/StatusFilter';
 import { RotateIcon } from '@/components/common/filters/textIconFilter/StyledTextIconFilter';
+import { InputLayout } from '@/components/common/form/input/StyledInput';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { closeModal } from '@/features/modal/modalSlice';
+import {
+  CompetencyDropDownFilter,
+  StatusDropdownFilter,
+} from '@/features/utils/utilEnum';
+import { useDispatch } from 'react-redux';
+import {
+  CustomQuestionFilterDiv,
+  CustomQuestionModalBottomDiv,
+  CustomQuestionModalLine,
+} from './StyledOverviewDetail';
+import { validateDescription, validateTitle } from '@/utils/inputValidations';
 
 interface IState {
-  [key: string]: any;
+  // [key: string]: any;
   title: string;
   time: string;
   guidelines: string;
-  difficulty: null,
-  competency: null,
+  difficulty: StatusDropdownFilter;
+  competency: CompetencyDropDownFilter | null;
 }
 
+const initialState: IState = {
+  title: '',
+  time: '5 minutes',
+  guidelines: '',
+  difficulty: StatusDropdownFilter.LOW,
+  competency: null,
+};
+
 interface CustomQuestionFormProps {
-  onQuestionCreated: (questionId: number) => void;
-  onClose?: () => void; // Add this line
+  onQuestionCreated: (question: {}) => void;
 }
 
 function CustomQuestionForm(
-  { onQuestionCreated, onClose }: CustomQuestionFormProps,
+  { onQuestionCreated }: CustomQuestionFormProps,
   ref: React.Ref<any>
 ) {
-  const [inputValue, setInputValue] = useState<IState>({
-    title: '',
-    time: '',
-    guidelines: '',
-    difficulty: null,
-    competency: null,
-  });
+  const [inputValue, setInputValue] = useState<IState>(initialState);
   const dispatch = useDispatch<AppDispatch>();
   const [addMoreQuestion, setAddMoreQuestion] = React.useState<boolean>(false);
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
@@ -55,14 +67,8 @@ function CustomQuestionForm(
     null
   );
 
-  const handleSelectDifficulty = (difficulty: any) => {
-    setInputValue({ ...inputValue, difficulty });
-  };
-  const handleSelectCompetency = (competency: any) => {
-        setInputValue({ ...inputValue, competency });
-  };
-  const handleSelectTime = (time: any) => {
-    setInputValue({ ...inputValue, time });
+  const handleSelectStatus = (value: StatusFilterType, field: string) => {
+    setInputValue({ ...inputValue, [field]: value });
   };
 
   const handleSwitchChange = () => {
@@ -100,27 +106,22 @@ function CustomQuestionForm(
       question_text: inputValue.title,
       reply_time: numericNumber,
       competency: inputValue.competency,
-      difficulty: inputValue.difficulty ? inputValue.difficulty : 'Low',
+      difficulty: inputValue.difficulty
+        ? inputValue.difficulty
+        : StatusDropdownFilter.LOW,
       guidelines: inputValue.guidelines,
       // Add more fields as needed
     };
     onQuestionCreated(newQuestion);
     // Clear the form fields or perform any other necessary actions
 
-    setInputValue({
-      title: '',
-      time: '',
-      guidelines: '', // Ensure you reset guidelines here
-      competency: null,
-      difficulty: null,
-    });
+    setInputValue(initialState);
 
     if (!addMoreQuestion) {
       dispatch(closeModal());
     } else {
       setAddMoreQuestion(false);
     }
-
   };
 
   const inputOnChange = (
@@ -143,39 +144,9 @@ function CustomQuestionForm(
     }));
   };
 
-  const validateTitle = (value: string): string | null => {
-    if (!value.trim()) {
-      return (
-        <>
-          <BodySMedium
-            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
-          >
-            Title is required{' '}
-          </BodySMedium>
-        </>
-      );
-    }
-
-    return null;
-  };
-
-  const validateDescription = (value: string): string | null => {
-    if (!value.trim()) {
-      return (
-        <>
-          <BodySMedium style={{ color: 'gray', textAlign: 'end' }}>
-            Description is required{' '}
-          </BodySMedium>
-        </>
-      );
-    }
-
-    return null;
-  };
-  
   return (
     <div ref={ref}>
-      <InputLayout className='customizeForQuestion'>
+      <InputLayout className="customizeForQuestion">
         <BodySMedium>Question</BodySMedium>
         <TextInput
           disable={false}
@@ -208,26 +179,35 @@ function CustomQuestionForm(
           label={'Competency'}
           id={'customQuestion'}
           status={inputValue.competency}
-          onSelectStatus={handleSelectCompetency}
+          onSelectStatus={(competency: StatusFilterType) =>
+            handleSelectStatus(competency, 'competency')
+          }
         />
         <StatusFilter
           icon={<TimeIcon />}
           label={'Time to reply'}
           id={'customQuestion'}
           status={inputValue.time}
-          onSelectStatus={handleSelectTime}
+          onSelectStatus={(time: StatusFilterType) =>
+            handleSelectStatus(time, 'time')
+          }
         />
         <StatusFilter
-          icon={<RotateIcon><DocumentIcon /></RotateIcon>}
+          icon={
+            <RotateIcon>
+              <DocumentIcon />
+            </RotateIcon>
+          }
           id={'customQuestion'}
           label={'Difficulty'}
           status={inputValue.difficulty}
-          onSelectStatus={handleSelectDifficulty}
+          onSelectStatus={(difficulty: StatusFilterType) =>
+            handleSelectStatus(difficulty, 'difficulty')
+          }
         />
       </CustomQuestionFilterDiv>
       <CustomQuestionModalLine />
-      <CustomQuestionModalBottomDiv
-      >
+      <CustomQuestionModalBottomDiv>
         <FormControlLabel
           control={
             <Switch checked={addMoreQuestion} onChange={handleSwitchChange} />
@@ -243,7 +223,7 @@ function CustomQuestionForm(
           />
         </ElWrap>
       </CustomQuestionModalBottomDiv>
-    </div >
+    </div>
   );
 }
 
