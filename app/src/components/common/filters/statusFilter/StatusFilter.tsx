@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 
 import {
   OptionA,
@@ -39,11 +39,13 @@ interface IStatusFilterProps {
   icon?: JSX.Element;
   status: StatusFilterType;
   onSelectStatus?: (status: StatusFilterType) => void;
+  openDropdown: string; // Add a new prop to track the open dropdown
+  onOpenDropdown: (label: string) => void;
 }
 
 const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const [open, setOpen] = useState<string>('');
-  const [shadow, setShadow] = useState(false);
+    const [shadow, setShadow] = useState(false);
   const [isHover, setIsHover] = useState<string | null>(null);
 
   const onHover = (
@@ -63,12 +65,23 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   };
 
   const onSelectOpen = (): void => {
-    if (open === props.label) {
-      setOpen('');
+    // console.log(props,"<===props")
+    // if (open === props.label) {
+    //   // setNameOfOpenDropdown(props.label)
+    //   setOpen('');
+    // } else  {
+    //   setOpen(props.label!);
+    //   // setNameOfOpenDropdown('')
+    //  }
+    //   // console.log('open nameOfOpenDropdown' , nameOfOpenDropdown)
+    if (props.openDropdown === props.label) {
+      props.onOpenDropdown(''); // Close the dropdown if it's already open
     } else {
-      setOpen(props.label!);
-     }
+      props.onOpenDropdown(props.label!); // Open the clicked dropdown
+    }
   };
+  console.log('open ' , open)
+
 
   const dropdownFilter = () => {
     switch (props.label) {
@@ -116,6 +129,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         className={shadow ? 'hover' : ''}
         onClick={() => {
           setShadow(false);
+          onSelectOpen();
         }}
       >
         {props.id === 'customQuestion' && props.icon ? (
@@ -131,19 +145,19 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
           </SelectedItemDiv>
         ) : (
           <StatusDropdownEl
-            onClick={onSelectOpen}
-            bg={props.status}
-            open={props.label === open}
-          >
+        onClick={onSelectOpen}
+        bg={props.status}
+        open={props.label === open}
+        >
             <SelectedItemDiv>
-              <BodyMMedium>
-                {props.status === null ? `------------` : props.status}
-              </BodyMMedium>
-            </SelectedItemDiv>
-          </StatusDropdownEl>
+        <BodyMMedium>
+        {props.status === null ? `------------` : props.status}
+        </BodyMMedium>
+        </SelectedItemDiv>
+        </StatusDropdownEl>
         )}
         <OptionUl
-          open={props.label === open}
+          open={props.label === props.openDropdown}
           className={props.id === 'customQuestion' ? 'customizeUl' : ''}
           onMouseLeave={() => {
             setOpen('');

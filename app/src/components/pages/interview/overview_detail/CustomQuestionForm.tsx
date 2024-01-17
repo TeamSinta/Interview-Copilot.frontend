@@ -67,6 +67,11 @@ function CustomQuestionForm(
   const descriptionInputRef = useRef<{ triggerValidation: () => void } | null>(
     null
   );
+  const [openDropdown, setOpenDropdown] = useState<string>('');
+
+  const handleOpenDropdown = (label: string) => {
+    setOpenDropdown(label);
+  };
 
   const handleSelectStatus = (value: StatusFilterType, field: string) => {
     setInputValue({ ...inputValue, [field]: value });
@@ -178,6 +183,8 @@ function CustomQuestionForm(
           onSelectStatus={(competency: StatusFilterType) =>
             handleSelectStatus(competency, 'competency')
           }
+          openDropdown={openDropdown}
+          onOpenDropdown={handleOpenDropdown}
         />
         <StatusFilter
           icon={<TimeIcon />}
@@ -187,6 +194,8 @@ function CustomQuestionForm(
           onSelectStatus={(time: StatusFilterType) =>
             handleSelectStatus(time, 'time')
           }
+          openDropdown={openDropdown}
+          onOpenDropdown={handleOpenDropdown}
         />
         <StatusFilter
           icon={
@@ -200,6 +209,8 @@ function CustomQuestionForm(
           onSelectStatus={(difficulty: StatusFilterType) =>
             handleSelectStatus(difficulty, 'difficulty')
           }
+          openDropdown={openDropdown}
+          onOpenDropdown={handleOpenDropdown}
         />
       </CustomQuestionFilterDiv>
       <CustomQuestionModalLine />
