@@ -65,23 +65,12 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   };
 
   const onSelectOpen = (): void => {
-    // console.log(props,"<===props")
-    // if (open === props.label) {
-    //   // setNameOfOpenDropdown(props.label)
-    //   setOpen('');
-    // } else  {
-    //   setOpen(props.label!);
-    //   // setNameOfOpenDropdown('')
-    //  }
-    //   // console.log('open nameOfOpenDropdown' , nameOfOpenDropdown)
     if (props.openDropdown === props.label) {
       props.onOpenDropdown(''); // Close the dropdown if it's already open
     } else {
       props.onOpenDropdown(props.label!); // Open the clicked dropdown
     }
   };
-  console.log('open ' , open)
-
 
   const dropdownFilter = () => {
     switch (props.label) {
