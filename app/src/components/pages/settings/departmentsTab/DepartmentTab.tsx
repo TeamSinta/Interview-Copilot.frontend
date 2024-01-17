@@ -70,17 +70,20 @@ const DepartmentTab = () => {
             />
           </ElWrap>
         </Stack>
-        <DepartmentList departments={departments} onClickModalOpen={onClickModalOpen} />
+        <DepartmentList
+          departments={departments}
+          onClickModalOpen={onClickModalOpen}
+        />
       </Stack>
       <ElWrap h={40} w={282}>
-          <TextIconBtnL
-            label="Add Department"
-            icon={<PlusIcon />}
-            disable={false}
-            className={BackgroundColor.ACCENT_PURPLE}
-            onClick={() => {}}
-          />
-        </ElWrap>
+        <TextIconBtnL
+          label="Add Department"
+          icon={<PlusIcon />}
+          disable={false}
+          className={BackgroundColor.ACCENT_PURPLE}
+          onClick={() => {}}
+        />
+      </ElWrap>
       <GlobalModal></GlobalModal>
     </>
   );

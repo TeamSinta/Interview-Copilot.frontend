@@ -2,6 +2,7 @@ import React from 'react';
 import { MoreVertIcon } from '../../svgIcons/Icons';
 import { Stack, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
+import { TruncateText } from '@/utils/Utils';
 
 import {
   DepartmentCardContainer,
@@ -9,9 +10,7 @@ import {
   DepartmentDetails,
   PermissionLevel,
 } from './StyledDepartmentCard'; // Adjust the import path to match your file structure
-import {
-  BodyLMedium,
-} from '../../typeScale/StyledTypeScale';
+import { BodyLMedium } from '../../typeScale/StyledTypeScale';
 
 interface DepartmentCardProps {
   department: {
@@ -21,14 +20,15 @@ interface DepartmentCardProps {
   onClick: (department: any) => void;
 }
 
-const SettingsDepartmentCard: React.FC<DepartmentCardProps> = ({ department, onClick }) => {
+const SettingsDepartmentCard: React.FC<DepartmentCardProps> = ({
+  department,
+  onClick,
+}) => {
   return (
     <DepartmentCardContainer onClick={() => onClick(department)}>
       <Stack direction="row" gap="16px" sx={{ width: '316px' }}>
         <DepartmentDetails>
-          <BodyLMedium>
-            {department.name}
-          </BodyLMedium>
+          <BodyLMedium>{TruncateText(department.name, 40)}</BodyLMedium>
         </DepartmentDetails>
       </Stack>
       <PermissionLevel>
@@ -39,8 +39,7 @@ const SettingsDepartmentCard: React.FC<DepartmentCardProps> = ({ department, onC
             border: '1.5px #121212 solid',
             padding: '7px 21px',
           }}
-        >
-        </div>
+        ></div>
       </PermissionLevel>
 
       <EditButton2>
