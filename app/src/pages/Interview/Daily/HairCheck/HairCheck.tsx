@@ -307,6 +307,10 @@ export default function HairCheck({
     setCameraMenuAnchorEl(null);
   };
 
+  const handleSetDepartment = () => {
+    console.log('set department');
+  };
+
   const validateTitle = (value: string): string | null => {
     if (!value.trim()) {
       return (
@@ -456,7 +460,7 @@ export default function HairCheck({
             {' '}
             <DepartmentDropDown
               departments={departments}
-              handleSetDepartment={console.log('hi')} // this should set the departmentid to then fetch the templates for that department only?
+              handleSetDepartment={handleSetDepartment} // this should set the departmentid to then fetch the templates for that department only?
               workspaceId={workspace.id}
             />
           </div>
