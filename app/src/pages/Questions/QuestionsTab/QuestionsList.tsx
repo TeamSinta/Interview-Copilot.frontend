@@ -1,3 +1,6 @@
+import { AppDispatch } from '@/app/store';
+import { useParams } from 'react-router-dom';
+
 import {
   IconBtnL,
   IconBtnM,
@@ -46,6 +49,10 @@ import {
 } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
 import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
 import Loading from '@/components/common/elements/loading/Loading';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { useDispatch } from 'react-redux';
+import { openModal } from '@/features/modal/modalSlice';
+
 
 interface IState {
   [key: string]: any;
@@ -77,6 +84,19 @@ const QuestionList = () => {
     isError,
     error,
   } = useGetQuestionsQuery();
+  
+  const dispatch = useDispatch<AppDispatch>();
+  const { templateId } = useParams();
+  const templateID = templateId;
+
+  const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
+    dispatch(
+      openModal({
+        modalType: modalType,
+        templateID: templateID,
+      })
+    );
+  };
 
   React.useEffect(() => {
     if (isSuccess) {
@@ -366,13 +386,18 @@ const QuestionList = () => {
         >
           <TextIconBtnL
             disable={false}
-            onClick={() => {}}
+            onClick={() => {
+              onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION, {
+                templateID,
+              });
+            }}
             className={BackgroundColor.ACCENT_PURPLE}
             icon={<PlusIcon />}
             label="Add Question"
           />
         </Stack>
       </>
+      <GlobalModal></GlobalModal>
     </OverviewDetails>
   );
 };
