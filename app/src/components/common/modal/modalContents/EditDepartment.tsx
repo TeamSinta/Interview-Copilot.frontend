@@ -47,9 +47,9 @@ const EditDepartment = () => {
   //   dispatch(selectedMember({ memberIdx: memberIdx }));
   // };
 
-  // const onEditDepTtileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   dispatch(setEditDepTitleInput({ [e.target.name]: e.target.value }));
-  // };
+  const onEditDepTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setEditDepTitleInput({ [e.target.name]: e.target.value }));
+  };
 
   // const onEditDepartmentClick = () => {
   //   dispatch(getMemberAsync());
@@ -62,8 +62,13 @@ const EditDepartment = () => {
   return (
     <ModalContentWrap>
       <InputLayout>
-        <BodySMedium>Title</BodySMedium>
-        <TextInput {...titleInputArg} onChange={(e) => {}} value={title} />
+        <BodySMedium style={{ opacity: 0.7 }}> Title</BodySMedium>
+        <TextInput
+          {...titleInputArg}
+          onChange={(e) => {}}
+          placeholder={`${title}`}
+          value={''}
+        />
         <PhotoContainer>
           <BodySMedium>Members</BodySMedium>
         </PhotoContainer>
