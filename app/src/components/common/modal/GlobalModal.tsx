@@ -18,15 +18,16 @@ import SelectAllQuestions from './modalContents/SelectAllQuestions';
 import VideoSettingsContent from './modalContents/videoSettingsModal/VideoSettingsContent';
 import CreateQuestionBank from './modalContents/CreateQuestionBank';
 import CoverLibrary from './modalContents/CoversLibrary';
+import EditDepartment from './modalContents/EditDepartment';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
+  DEPARTMENT_SET = 'DEPARTMENT_SET',
   CREATE_INT = 'CREATE_INT',
   CREATE_QUEST_BANK = 'CREATE_QUEST_BANK',
   SELECT_VAL = 'SELECT_VAL',
   SELECT_TEM = 'SELECT_TEM',
   MEMBER_SET = 'MEMBER_SET',
-  DEPARTMENT_SET = 'DEPARTMENT_SET',
   EDIT_INT = 'EDIT_INT',
   EDIT_MEM = 'EDIT_MEM',
   VIDEO_SETTINGS = 'VIDEO_SET',
@@ -74,6 +75,12 @@ const GlobalModal = (): JSX.Element => {
         return (
           <Modal title="Create New Departments">
             <CreateDepartment />
+          </Modal>
+        );
+      case MODAL_TYPE.DEPARTMENT_SET:
+        return (
+          <Modal title="Department Details">
+            <EditDepartment />
           </Modal>
         );
       case MODAL_TYPE.SELECT_ALL_QUESTIONS:
