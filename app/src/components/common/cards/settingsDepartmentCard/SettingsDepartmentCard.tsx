@@ -39,7 +39,9 @@ const SettingsDepartmentCard: React.FC<DepartmentCardProps> = ({
             border: '1.5px #121212 solid',
             padding: '7px 21px',
           }}
-        ></div>
+        >
+          Dep. Role
+        </div>
       </PermissionLevel>
 
       <EditButton2>

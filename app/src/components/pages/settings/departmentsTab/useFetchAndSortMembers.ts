@@ -36,12 +36,17 @@ export const useFetchCompanyMembers = ({
   return { members };
 };
 
-export const useFetchCompanyDepartments = (companyId: CompanyID, trigger?: number) => {
+export const useFetchCompanyDepartments = (
+  companyId: CompanyID,
+  sort_by: string,
+  trigger?: number
+) => {
   const [departments, setDepartments] = useState<IOption[]>([]);
   const [getCompanyDepartments] = useGetCompanyDepartmentsMutation();
 
   useEffect(() => {
-    getCompanyDepartments({ company_id: companyId })
+    console.log('useEffect triggered');
+    getCompanyDepartments({ company_id: companyId, sort_by: sort_by })
       .then((response) => {
         if ('data' in response && 'data') {
           const transformedData = (response.data as unknown as any[]).map(
@@ -57,7 +62,7 @@ export const useFetchCompanyDepartments = (companyId: CompanyID, trigger?: numbe
         }
       })
       .catch((error) => console.error('Error fetching company users:', error));
-  }, [companyId, getCompanyDepartments, trigger]);
+  }, [companyId, sort_by, getCompanyDepartments, trigger]);
 
   return departments;
 };

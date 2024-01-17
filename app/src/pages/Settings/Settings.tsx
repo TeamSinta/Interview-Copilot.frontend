@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Box } from '@mui/material';
-import { H1 } from '@/components/common/typeScale/StyledTypeScale';
+import { Box, Stack } from '@mui/material';
+import { BodySMedium, H1 } from '@/components/common/typeScale/StyledTypeScale';
 import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconFilter';
 import { SettingsContainer, PageContainer } from './StyledSettings';
 import MemberTab from '@/components/pages/settings/memberTab/MemberTab';
@@ -19,14 +19,21 @@ const SettingsPage = () => {
   };
 
   return (
-    <SettingsContainer>
-      <H1>Settings {'>'} {workspace.name}</H1>
+    <Stack spacing={3}>
+      <Box>
+        <BodySMedium
+          style={{
+            color: 'grey',
+          }}
+        >
+          {workspace.name}
+        </BodySMedium>
+        <H1>Settings</H1>
+      </Box>
       <Box
         sx={{
-          paddingTop: '20px',
-          paddingBottom: '28px',
           display: 'flex',
-          gap: '4px',
+          gap: '12px',
         }}
       >
         <TextIconFilter
@@ -43,7 +50,7 @@ const SettingsPage = () => {
           onClick={() => handleTabChange(TABS.MEMBERS)}
         />
 
-          <TextIconFilter
+        <TextIconFilter
           label="Departments"
           icon={false}
           select={activeTab === 'departments'}
@@ -55,7 +62,7 @@ const SettingsPage = () => {
         {activeTab === TABS.MEMBERS && <MemberTab />}
         {activeTab === TABS.DEPARTMENTS && <DepartmentTab />}
       </PageContainer>
-    </SettingsContainer>
+    </Stack>
   );
 };
 

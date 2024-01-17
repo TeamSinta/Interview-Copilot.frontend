@@ -44,11 +44,15 @@ const DepartmentTab = () => {
     );
   };
 
-  const handleSortMembers = (value: string) => {
+  const handleSortDepartments = (value: string) => {
+    console.log('Trying to sort');
     setSortCritiera(value);
   };
 
-  const departments = useFetchCompanyDepartments(companyId as CompanyID);
+  const departments = useFetchCompanyDepartments(
+    companyId as CompanyID,
+    sortCriteria as string
+  );
 
   const handleSetDepartment = (value: string) => {
     setDepartmentId(value);
@@ -66,7 +70,7 @@ const DepartmentTab = () => {
           <ElWrap w={120}>
             <SortingDropdown
               sortCriteria={sortCriteria}
-              handleSortMembers={handleSortMembers}
+              handleSortDepartments={handleSortDepartments}
             />
           </ElWrap>
         </Stack>
