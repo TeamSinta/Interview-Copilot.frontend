@@ -1,40 +1,37 @@
 import { AppDispatch } from '@/app/store';
 import SettingsUserCard from '@/components/common/cards/settingsUserCard/SettingsUserCard';
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import PaginationComponent from '@/components/common/pagination/pagination';
 import { setMemberInfo } from '@/features/members/memberSlice';
 import { MembersList } from '@/features/settingsDetail/userSettingsInterface';
+import usePagination from '@/hooks/usePagination';
 import { UserListContainer } from '@/pages/Settings/StyledSettings';
-import { Pagination, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-
-const PAGE_SIZE = 5;
 
 const MemberList: React.FC<{
   members: MembersList[];
   onClickModalOpen: (modalType: MODAL_TYPE) => void;
 }> = ({ members, onClickModalOpen }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [page, setPage] = useState(1);
+  const ITEMS_PER_PAGE = 5;
 
-  // calc pages
-  const pageCount = Math.ceil(members.length / PAGE_SIZE);
-
-  // get names for current page
-  const indexOfLastItem = page * PAGE_SIZE;
-  const indexOfFirstItem = indexOfLastItem - PAGE_SIZE;
-  const currentMembers = members.slice(indexOfFirstItem, indexOfLastItem);
-
-  const handlePageChange = (
-    _event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
-    setPage(page);
-  };
+  const {
+    currentPageItems: currentMembers,
+    handlePageChange,
+    currentPage,
+    pageCount,
+  } = usePagination(members, ITEMS_PER_PAGE);
 
   return (
     <>
+      <PaginationComponent
+        pageCount={pageCount}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
       <UserListContainer>
         <Stack direction="column" spacing={3}>
           {currentMembers.map((member) => (
@@ -57,13 +54,6 @@ const MemberList: React.FC<{
           ))}
         </Stack>
       </UserListContainer>
-      <Pagination
-        count={pageCount}
-        page={page}
-        onChange={handlePageChange}
-        showFirstButton
-        showLastButton
-      />
     </>
   );
 };
