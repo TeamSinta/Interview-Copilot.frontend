@@ -43,6 +43,7 @@ import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { openModal } from '@/features/modal/modalSlice';
 import Switch from '@mui/material/Switch';
 import RecordingPrompt from './RecordingPrompt';
+import RoomService from '@/utils/dailyVideoService/videoApi';
 
 function BottomNavBar(props: any) {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
@@ -60,13 +61,19 @@ function BottomNavBar(props: any) {
   const callObject = useDaily();
   const { isSharingScreen, startScreenShare, stopScreenShare } =
     useScreenShare();
-  const { startRecording, stopRecording, isRecording } = useRecording();
+  const { startRecording, stopRecording, isRecording, recordingId } =
+    useRecording();
   const localParticipant = useLocalParticipant();
   const localVideo = useVideoTrack(localParticipant?.session_id);
   const localAudio = useAudioTrack(localParticipant?.session_id);
   const mutedVideo = localVideo.isOff;
   const mutedAudio = localAudio.isOff;
   const { width } = useWindowSize();
+
+  const getMeetingURL = async (recordingId: string) => {
+    const response = await RoomService.finishMeeting(recordingId);
+    console.log('response++++', response);
+  };
 
   const toggleVideo = useCallback(() => {
     callObject.setLocalVideo(mutedVideo);
@@ -396,7 +403,15 @@ function BottomNavBar(props: any) {
             )}
             <Chat showChat={showChat} toggleChat={toggleChat} />
             <StyledColumns style={{ paddingRight: '20px', float: 'right' }}>
-              <StyledFinishBtn className="accentPurple" onClick={leaveCall}>
+              <StyledFinishBtn
+                className="accentPurple"
+                onClick={() => {
+                  leaveCall();
+                  if (recordingId) {
+                    getMeetingURL(recordingId);
+                  }
+                }}
+              >
                 Finish
               </StyledFinishBtn>
             </StyledColumns>
