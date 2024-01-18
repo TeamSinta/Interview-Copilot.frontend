@@ -122,8 +122,8 @@ function CustomQuestionForm(
       guidelines: inputValue.guidelines,
       // Add more fields as needed
     };
-    // handleQuestionEdit(newQuestion)
-    // Clear the form fields or perform any other necessary actions
+  
+    onQuestionCreated(newQuestion);
 
     setInputValue(initialState);
 
