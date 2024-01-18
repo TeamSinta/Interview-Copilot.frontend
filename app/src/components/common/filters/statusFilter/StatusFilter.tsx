@@ -150,6 +150,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
           className={props.id === 'customQuestion' ? 'customizeUl' : ''}
           onMouseLeave={() => {
             setOpen('');
+            props.onOpenDropdown('')
           }}
         >
           {props.id !== 'customQuestion' ? (

@@ -1,6 +1,6 @@
 import { FormControlLabel } from '@mui/material';
 import Switch from '@mui/material/Switch';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
   DocumentIcon,
@@ -9,7 +9,6 @@ import {
 } from '@/components/common/svgIcons/Icons';
 
 import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
-import TextArea from '@/components/common/form/textArea/TextArea';
 import TextInput from '@/components/common/form/textInput/TextInput';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { BackgroundColor } from '@/features/utils/utilEnum';
@@ -21,26 +20,27 @@ import StatusFilter, {
 import { RotateIcon } from '@/components/common/filters/textIconFilter/StyledTextIconFilter';
 import { InputLayout, StyledTextarea, TextAreaError } from '@/components/common/form/input/StyledInput';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
-import { closeModal } from '@/features/modal/modalSlice';
+import {closeModal } from '@/features/modal/modalSlice';
 import {
   CompetencyDropDownFilter,
   StatusDropdownFilter,
 } from '@/features/utils/utilEnum';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   CustomQuestionFilterDiv,
   CustomQuestionModalBottomDiv,
   CustomQuestionModalLine,
 } from './StyledOverviewDetail';
 import {validateTitle } from '@/utils/inputValidations';
+import { selectModal } from '@/features/modal/modalSlice';
 
 interface IState {
   // [key: string]: any;
   title: string;
   time: string;
   guidelines: string;
-  difficulty: StatusDropdownFilter;
-  competency: CompetencyDropDownFilter | null;
+  difficulty?: StatusDropdownFilter;
+  competency?: CompetencyDropDownFilter | null;
 }
 
 const initialState: IState = {
@@ -53,10 +53,11 @@ const initialState: IState = {
 
 interface CustomQuestionFormProps {
   onQuestionCreated: (question: {}) => void;
+  handleQuestionEdit: (question: {}) => void
 }
 
 function CustomQuestionForm(
-  { onQuestionCreated }: CustomQuestionFormProps,
+  { onQuestionCreated , handleQuestionEdit }: CustomQuestionFormProps,
   ref: React.Ref<any>
 ) {
   const [inputValue, setInputValue] = useState<IState>(initialState);
@@ -69,6 +70,9 @@ function CustomQuestionForm(
   );
   const [openDropdown, setOpenDropdown] = useState<string>('');
 
+
+  const modalData = useSelector(selectModal);
+  const dataForEdit = modalData?.dataForEdit;
   const handleOpenDropdown = (label: string) => {
     setOpenDropdown(label);
   };
@@ -80,8 +84,7 @@ function CustomQuestionForm(
   const handleSwitchChange = () => {
     setAddMoreQuestion(!addMoreQuestion);
   };
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Validate input and perform any necessary checks
     let hasError = false; // Track if there's any validation error
 
@@ -109,6 +112,7 @@ function CustomQuestionForm(
     const numericNumber =
       inputValue.time !== '' ? inputValue.time.split(' ')[0] : 5;
     const newQuestion = {
+      id: dataForEdit?.question?.id ? dataForEdit?.question?.id : '',
       question_text: inputValue.title,
       reply_time: numericNumber,
       competency: inputValue.competency,
@@ -118,7 +122,7 @@ function CustomQuestionForm(
       guidelines: inputValue.guidelines,
       // Add more fields as needed
     };
-    onQuestionCreated(newQuestion);
+    // handleQuestionEdit(newQuestion)
     // Clear the form fields or perform any other necessary actions
 
     setInputValue(initialState);
@@ -145,6 +149,17 @@ function CustomQuestionForm(
       setError('')
     }
   };
+  useEffect(() => {
+    if(dataForEdit){
+      setInputValue({
+        title: dataForEdit?.question_text ? dataForEdit?.question_text : '',
+        guidelines: dataForEdit?.guidelines ? dataForEdit?.guidelines : '',
+        difficulty: dataForEdit?.difficulty ? (dataForEdit.difficulty as StatusDropdownFilter) : StatusDropdownFilter.LOW,
+        competency: dataForEdit?.competency ? (dataForEdit.competency as CompetencyDropDownFilter) : null,
+        time: dataForEdit?.reply_time ? `${dataForEdit?.reply_time} minute${parseInt(dataForEdit?.reply_time)  > 1 ? 's' : ''}` : '5 minutes'
+      })
+    }
+  },[])
 
   return (
     <div ref={ref}>
@@ -179,7 +194,7 @@ function CustomQuestionForm(
           icon={<StarIcon />}
           label={'Competency'}
           id={'customQuestion'}
-          status={inputValue.competency}
+          status={inputValue.competency!}
           onSelectStatus={(competency: StatusFilterType) =>
             handleSelectStatus(competency, 'competency')
           }
@@ -205,7 +220,7 @@ function CustomQuestionForm(
           }
           id={'customQuestion'}
           label={'Difficulty'}
-          status={inputValue.difficulty}
+          status={inputValue.difficulty!}
           onSelectStatus={(difficulty: StatusFilterType) =>
             handleSelectStatus(difficulty, 'difficulty')
           }

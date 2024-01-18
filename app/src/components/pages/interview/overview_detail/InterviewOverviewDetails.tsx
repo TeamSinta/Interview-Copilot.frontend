@@ -81,6 +81,7 @@ const InterviewOverviewDetails = () => {
     difficulty: '',
     competency: '',
   });
+  const [editValues , setEditValues] = useState<any>({})
 
   const { templateId } = useParams();
   const templateID = templateId;
@@ -122,11 +123,12 @@ const InterviewOverviewDetails = () => {
     return question?.topic === selectedSection?.id;
   });
 
-  const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
+    const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
     dispatch(
       openModal({
         modalType: modalType,
         templateID: templateID,
+        dataForEdit : editValues.question
       })
     );
   };
@@ -159,6 +161,7 @@ const InterviewOverviewDetails = () => {
       competency: question.question.competency,
       difficulty: question.question.difficulty,
     });
+    setEditValues(question)
 
     console.log(question);
   };
@@ -205,7 +208,7 @@ const InterviewOverviewDetails = () => {
       ...inputValue, // Other values from the form or input
     };
 
-    console.log('Updating question with data:', requestData);
+console.log('Updating question with data:', requestData);
 
     try {
       await updateQuestion(requestData).unwrap();
@@ -350,6 +353,9 @@ const InterviewOverviewDetails = () => {
                                       edit.has(question.id)
                                     );
                                     setEditDetailInputs(question);
+                                    onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION, {
+                                      templateID,
+                                    });
                                   }}
                                   icon={<EditIcon />}
                                   className={BackgroundColor.WHITE}
