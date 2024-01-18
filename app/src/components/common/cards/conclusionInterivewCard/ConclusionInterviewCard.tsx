@@ -17,8 +17,12 @@ interface IConclusionInterviewCardProps {
   date: number;
 }
 
-const formatDateDifference = (creationDate: string) => {
-  return creationDate.split(',')[0];
+const formatDateDifference = (creationDate: string | number) => {
+  const dateObject =
+    typeof creationDate === 'string'
+      ? new Date(creationDate)
+      : new Date(creationDate * 1000);
+  return dateObject.toLocaleString();
 };
 
 const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
