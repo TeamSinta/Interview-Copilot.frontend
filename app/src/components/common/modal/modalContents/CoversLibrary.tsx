@@ -8,29 +8,47 @@ import {
   ModalContentWrap,
 } from './StyledModalContents';
 import { Stack } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { closeModal } from '@/features/modal/modalSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store';
-import { useUpdateTemplateMutation } from '@/features/templates/templatesAPISlice';
+import {
+  useGetTemplateDetailQuery,
+  useUpdateTemplateMutation,
+} from '@/features/templates/templatesAPISlice';
 
+interface CoverLibraryProps {
+  setSelectedImg: React.Dispatch<React.SetStateAction<string | null>>;
+}
 const preSelectedCovers = [
-  'cover_6.jpg',
-  'cover_7.jpg',
-  'cover_3.jpg',
-  'cover_1.jpg',
-  'cover_4.jpg',
-  'cover_5.jpg',
+  'cover_6',
+  'cover_7',
+  'cover_3',
+  'cover_1',
+  'cover_4',
+  'cover_5',
 ];
 const path = '/images/';
-const CoverLibrary = () => {
-  const [selectedImg, setSelectedImg] = useState<string | null>(null);
+const ext = '.jpg';
+const CoverLibrary: React.FC<CoverLibraryProps> = () => {
+  const [selectedImg, setSelectedImg] = useState<string | null>();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { templateId } = useParams();
 
   const [updateTemplate, { isLoading }] = useUpdateTemplateMutation();
+
+  const { data: templateData } = useGetTemplateDetailQuery(templateId);
+
+  useEffect(() => {
+    if (templateData) {
+      const imgFound = preSelectedCovers.find((img) =>
+        templateData?.image?.includes(img)
+      );
+      if (imgFound) setSelectedImg(imgFound);
+    }
+  }, [templateData]);
 
   const handleSave = async () => {
     try {
@@ -44,11 +62,11 @@ const CoverLibrary = () => {
         return;
       }
 
-      const data = await fetch(path + selectedImg);
+      const data = await fetch(path + selectedImg + ext);
       const blob = await data.blob();
       const formData = new FormData();
       formData.append('id', templateId);
-      formData.append('image', blob, selectedImg);
+      formData.append('image', blob, selectedImg + ext);
 
       await updateTemplate(formData).unwrap();
       dispatch(closeModal());
@@ -57,7 +75,6 @@ const CoverLibrary = () => {
       console.error('Error updating template:', error);
     }
   };
-
   return (
     <ModalContentWrap>
       <Stack
@@ -66,10 +83,10 @@ const CoverLibrary = () => {
         sx={{ alignItems: 'center' }}
       >
         <Container>
-          {preSelectedCovers.map((img, index) => (
+          {preSelectedCovers.map((img) => (
             <ImgContainer key={img} onClick={() => setSelectedImg(img)}>
               <ImageStyle
-                src={path + img}
+                src={path + img + ext}
                 alt={img}
                 style={{
                   border: selectedImg === img ? '2px solid #6462F1' : 'none',
