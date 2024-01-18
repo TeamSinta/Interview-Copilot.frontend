@@ -63,6 +63,7 @@ const Questions = () => {
         <Box sx={{ width: '100%' }}>
           <Box
             sx={{
+              padding: '2px',
               gap: '12px',
               display: 'flex',
               marginBottom: '22px',

@@ -138,7 +138,7 @@ const UserTab = () => {
                 onChange={(e) => {
                   setFirstName(e.target.value);
                 }}
-                name="lastName"
+                name="firstName"
                 value={firstName || ''}
               />
             </Stack>

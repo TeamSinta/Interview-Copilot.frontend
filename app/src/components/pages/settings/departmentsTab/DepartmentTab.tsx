@@ -45,7 +45,6 @@ const DepartmentTab = () => {
   };
 
   const handleSortDepartments = (value: string) => {
-    console.log('Trying to sort');
     setSortCritiera(value);
   };
 
@@ -53,10 +52,6 @@ const DepartmentTab = () => {
     companyId as CompanyID,
     sortCriteria as string
   );
-
-  const handleSetDepartment = (value: string) => {
-    setDepartmentId(value);
-  };
 
   return (
     <>

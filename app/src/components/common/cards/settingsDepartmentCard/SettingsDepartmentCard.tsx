@@ -15,7 +15,7 @@ import { BodyLMedium } from '../../typeScale/StyledTypeScale';
 interface DepartmentCardProps {
   department: {
     id: number;
-    name: string;
+    title: string;
   };
   onClick: (department: any) => void;
 }
@@ -28,7 +28,7 @@ const SettingsDepartmentCard: React.FC<DepartmentCardProps> = ({
     <DepartmentCardContainer onClick={() => onClick(department)}>
       <Stack direction="row" gap="16px" sx={{ width: '316px' }}>
         <DepartmentDetails>
-          <BodyLMedium>{TruncateText(department.name, 40)}</BodyLMedium>
+          <BodyLMedium>{TruncateText(department.title, 40)}</BodyLMedium>
         </DepartmentDetails>
       </Stack>
       <PermissionLevel>

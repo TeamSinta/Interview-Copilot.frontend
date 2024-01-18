@@ -57,6 +57,16 @@ const SettingsPage = () => {
           onClick={() => handleTabChange(TABS.DEPARTMENTS)}
         />
       </Box>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: 'divider',
+          padding: '2px',
+          gap: '12px',
+          display: 'flex',
+          marginBottom: '24px',
+        }}
+      ></Box>
       <PageContainer>
         {activeTab === TABS.PROFILE && <UserTab />}
         {activeTab === TABS.MEMBERS && <MemberTab />}

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const UserCardContainer = styled.div`
   width: 100%;
-  height: 72px;
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;

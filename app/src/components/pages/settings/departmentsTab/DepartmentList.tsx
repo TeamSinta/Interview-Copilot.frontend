@@ -41,7 +41,7 @@ const DepartmentList: React.FC<{
                 dispatch(
                   setDepartmentInfo({
                     id: department.id,
-                    title: department.name,
+                    title: department.title,
                   })
                 );
                 onClickModalOpen(MODAL_TYPE.DEPARTMENT_SET);

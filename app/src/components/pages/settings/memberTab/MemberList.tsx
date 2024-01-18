@@ -33,7 +33,7 @@ const MemberList: React.FC<{
         onPageChange={handlePageChange}
       />
       <UserListContainer>
-        <Stack direction="column" spacing={3}>
+        <Stack direction="column" spacing={1}>
           {currentMembers.map((member) => (
             <SettingsUserCard
               key={member.id}

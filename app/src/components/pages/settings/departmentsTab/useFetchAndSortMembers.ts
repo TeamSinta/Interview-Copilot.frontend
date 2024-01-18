@@ -7,8 +7,13 @@ import {
   useGetCompanyMembersQuery,
 } from '@/features/settingsDetail/userSettingsAPI';
 import { MembersList } from '@/features/settingsDetail/userSettingsInterface';
-import { IOption } from '@/types/common';
 import { useEffect, useState } from 'react';
+
+interface IOption {
+  title: string;
+  id: string;
+  selected?: boolean;
+}
 
 export const useFetchCompanyMembers = ({
   company_id,
@@ -51,8 +56,8 @@ export const useFetchCompanyDepartments = (
         if ('data' in response && 'data') {
           const transformedData = (response.data as unknown as any[]).map(
             (department) => ({
-              name: department.title,
-              value: department.id.toString(),
+              title: department.title,
+              id: department.id,
               selected: false,
             })
           );

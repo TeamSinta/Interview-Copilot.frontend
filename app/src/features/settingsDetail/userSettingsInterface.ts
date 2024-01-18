@@ -18,8 +18,7 @@ export interface IDepartment {
   id: string;
 }
 
-
 export type DepartmentsList = {
   id: number;
-  name: string;
-}
+  title: string;
+};

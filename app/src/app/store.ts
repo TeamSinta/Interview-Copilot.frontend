@@ -17,6 +17,7 @@ import { QuestionsAPI } from '@/features/questions/questionsAPISlice';
 import { templateQuestionsAPI } from '@/features/templates/templatesQuestionsAPISlice';
 import questionsBankSliceReducer from '@/features/questions/questionBankSlice';
 import departmentReducer from '@/features/departments/departmentSlice';
+import { departmentsAPI } from '@/features/departments/departmentsAPI';
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ export const store = configureStore({
     [templatesAPI.reducerPath]: templatesAPI.reducer,
     [QuestionsAPI.reducerPath]: QuestionsAPI.reducer,
     [templateQuestionsAPI.reducerPath]: templateQuestionsAPI.reducer,
+    [departmentsAPI.reducerPath]: departmentsAPI.reducer,
     user: userReducer,
     workspace: workSpaceReducer,
     member: memberReducer,
@@ -44,7 +46,8 @@ export const store = configureStore({
       userAPI.middleware,
       templatesAPI.middleware,
       QuestionsAPI.middleware,
-      templateQuestionsAPI.middleware
+      templateQuestionsAPI.middleware,
+      departmentsAPI.middleware
     ),
 });
 
