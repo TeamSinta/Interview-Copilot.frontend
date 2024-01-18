@@ -91,6 +91,9 @@ const ModalPortal = ({ children }: IModalPortal) => {
 const GlobalModal = (): JSX.Element => {
   const { modalType, isOpen } = useSelector(selectModal);
 
+  const modalData = useSelector(selectModal);
+  const dataForEdit = modalData?.dataForEdit;
+
   const renderModal = () => {
     switch (modalType) {
       case MODAL_TYPE.CREATE_DEP:
@@ -120,7 +123,10 @@ const GlobalModal = (): JSX.Element => {
       case MODAL_TYPE.ADD_CUSTOM_QUESTION:
         return (
           <div style={{ display: 'flex' }}>
-            <Modal title="New Question" icon={<img src={Logo} alt="Logo" />}>
+            <Modal
+              title={!dataForEdit ? 'New Question' : 'Update Question'}
+              icon={<img src={Logo} alt="Logo" />}
+            >
               <AddCustomQuestion />
             </Modal>
           </div>

@@ -1,7 +1,5 @@
 import { AppDispatch } from '@/app/store';
-import {
-  IconBtnM
-} from '@/components/common/buttons/iconBtn/IconBtn';
+import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import Loading from '@/components/common/elements/loading/Loading';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
@@ -14,7 +12,7 @@ import {
   QuestionIcon,
   SelectArrowOpenIcon,
   Star1Icon,
-  TimeIcon
+  TimeIcon,
 } from '@/components/common/svgIcons/Icons';
 import {
   BodyLMedium,
@@ -27,16 +25,11 @@ import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { selectInterviewDetail } from '@/features/interviewDetail/interviewDetailSlice';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
 import { openModal } from '@/features/modal/modalSlice';
-import { useUpdateQuestionMutation } from '@/features/questions/questionsAPISlice';
 import {
-  useAddTemplateQuestionMutation,
   useDeleteTemplateQuestionMutation,
   useGetTemplateQuestionsQuery,
 } from '@/features/templates/templatesQuestionsAPISlice';
-import {
-  BackgroundColor,
-  DataLoading
-} from '@/features/utils/utilEnum';
+import { BackgroundColor, DataLoading } from '@/features/utils/utilEnum';
 import { Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -52,7 +45,7 @@ import {
   OverviewDetailTitle,
   OverviewDetails,
   StyledImage,
-  TimeQuestionDiv
+  TimeQuestionDiv,
 } from './StyledOverviewDetail';
 
 interface IState {
@@ -81,14 +74,12 @@ const InterviewOverviewDetails = () => {
     difficulty: '',
     competency: '',
   });
-  const [editValues , setEditValues] = useState<any>({})
+  const [editValues, setEditValues] = useState<any>({});
 
   const { templateId } = useParams();
   const templateID = templateId;
 
-  const [newQuestion] = useAddTemplateQuestionMutation();
   const [deleteQuestion] = useDeleteTemplateQuestionMutation();
-  const [updateQuestion] = useUpdateQuestionMutation();
 
   const {
     data: questions,
@@ -96,7 +87,6 @@ const InterviewOverviewDetails = () => {
     isSuccess,
     isError,
     error,
-    refetch,
   } = useGetTemplateQuestionsQuery();
 
   // Move the useEffect hook to the top level
@@ -123,12 +113,12 @@ const InterviewOverviewDetails = () => {
     return question?.topic === selectedSection?.id;
   });
 
-    const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
+  const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
     dispatch(
       openModal({
         modalType: modalType,
         templateID: templateID,
-        dataForEdit : editValues.question
+        dataForEdit: editValues.question,
       })
     );
   };
@@ -161,64 +151,7 @@ const InterviewOverviewDetails = () => {
       competency: question.question.competency,
       difficulty: question.question.difficulty,
     });
-    setEditValues(question)
-
-    console.log(question);
-  };
-
-  const inputOnChange = (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setInputValue({
-      ...inputValue,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const textAreaOnChange = (value: string) => {
-    inputValue['detail'] = value;
-  };
-
-  const handleQuestionCreated = async (question: {}) => {
-    const requestData = {
-      template_id: templateID,
-      topic: String(selectedSection.id),
-      question: question,
-    };
-    try {
-      await newQuestion(requestData).unwrap();
-    } catch (error) {
-      // Handle error, e.g., display a notification
-      console.error('Failed to add question:', error);
-    }
-  };
-
-  const handleUpdateQuestion = async (templateQuestion: string) => {
-    if (!templateQuestion || !templateQuestion.question) {
-      console.error('Invalid template question data');
-      return;
-    }
-
-    const requestData = {
-      id: templateQuestion.question.id, // Get the question ID
-      template_id: templateID, // Assuming templateID is available in scope
-      topic: String(selectedSection.id), // Assuming selectedSection is available in scope
-      ...inputValue, // Other values from the form or input
-    };
-
-console.log('Updating question with data:', requestData);
-
-    try {
-      await updateQuestion(requestData).unwrap();
-      setEdit(new Set());
-      openDetailHandler(templateQuestion.id, false);
-      refetch();
-    } catch (error) {
-      console.error('Failed to update question:', error);
-      // Handle error, e.g., display a notification
-    }
+    setEditValues(question);
   };
 
   const handleDeleteTemplateQuestion = async (questionID: string) => {
@@ -236,37 +169,6 @@ console.log('Updating question with data:', requestData);
       accumulator + parseInt(question.question.reply_time, 10),
     0
   );
-
-  const validateTitle = (value: string): string | null => {
-    if (!value.trim()) {
-      return (
-        <>
-          <BodySMedium
-            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
-          >
-            Title is required{' '}
-          </BodySMedium>
-        </>
-      );
-    }
-
-    return null;
-  };
-
-  const validateTime = (value: string): string | null => {
-    // First, check if the field is empty
-    if (!value.trim()) {
-      return 'Time is required'; // Error message for empty input
-    }
-
-    // Check if the value is a number and within the range 1-60
-    const numberValue = parseInt(value, 10);
-    if (isNaN(numberValue) || numberValue < 1 || numberValue > 60) {
-      return 'Please enter a number between 1 and 60'; // Error message for invalid input
-    }
-
-    return null; // No validation errors
-  };
 
   return (
     <OverviewDetails>
@@ -353,9 +255,12 @@ console.log('Updating question with data:', requestData);
                                       edit.has(question.id)
                                     );
                                     setEditDetailInputs(question);
-                                    onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION, {
-                                      templateID,
-                                    });
+                                    onClickModalOpen(
+                                      MODAL_TYPE.ADD_CUSTOM_QUESTION,
+                                      {
+                                        templateID,
+                                      }
+                                    );
                                   }}
                                   icon={<EditIcon />}
                                   className={BackgroundColor.WHITE}
@@ -381,7 +286,6 @@ console.log('Updating question with data:', requestData);
                                   {question.question.competency}
                                 </BodySMedium>
                               </div>
-
                             )}
 
                             <div className="icon-div">
@@ -402,7 +306,7 @@ console.log('Updating question with data:', requestData);
                           <div
                             className={`detail ${
                               openItems.has(question.id) ? '' : 'none'
-                              }`}
+                            }`}
                           >
                             <ReactMarkdown components={components}>
                               {question.question.guidelines}

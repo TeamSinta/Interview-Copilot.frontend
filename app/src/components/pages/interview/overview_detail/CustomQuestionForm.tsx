@@ -18,9 +18,13 @@ import StatusFilter, {
   StatusFilterType,
 } from '@/components/common/filters/statusFilter/StatusFilter';
 import { RotateIcon } from '@/components/common/filters/textIconFilter/StyledTextIconFilter';
-import { InputLayout, StyledTextarea, TextAreaError } from '@/components/common/form/input/StyledInput';
+import {
+  InputLayout,
+  StyledTextarea,
+  TextAreaError,
+} from '@/components/common/form/input/StyledInput';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
-import {closeModal } from '@/features/modal/modalSlice';
+import { closeModal } from '@/features/modal/modalSlice';
 import {
   CompetencyDropDownFilter,
   StatusDropdownFilter,
@@ -31,11 +35,11 @@ import {
   CustomQuestionModalBottomDiv,
   CustomQuestionModalLine,
 } from './StyledOverviewDetail';
-import {validateTitle } from '@/utils/inputValidations';
+import { validateTitle } from '@/utils/inputValidations';
 import { selectModal } from '@/features/modal/modalSlice';
+import { useUpdateQuestionMutation } from '@/features/questions/questionsAPISlice';
 
 interface IState {
-  // [key: string]: any;
   title: string;
   time: string;
   guidelines: string;
@@ -50,16 +54,16 @@ const initialState: IState = {
   difficulty: StatusDropdownFilter.LOW,
   competency: null,
 };
-
 interface CustomQuestionFormProps {
   onQuestionCreated: (question: {}) => void;
-  handleQuestionEdit: (question: {}) => void
 }
 
 function CustomQuestionForm(
-  { onQuestionCreated , handleQuestionEdit }: CustomQuestionFormProps,
+  { onQuestionCreated }: CustomQuestionFormProps,
   ref: React.Ref<any>
 ) {
+  const modalData = useSelector(selectModal);
+  const dataForEdit = modalData?.dataForEdit;
   const [inputValue, setInputValue] = useState<IState>(initialState);
   const dispatch = useDispatch<AppDispatch>();
   const [addMoreQuestion, setAddMoreQuestion] = React.useState<boolean>(false);
@@ -69,10 +73,8 @@ function CustomQuestionForm(
     null
   );
   const [openDropdown, setOpenDropdown] = useState<string>('');
+  const [updateQuestion] = useUpdateQuestionMutation();
 
-
-  const modalData = useSelector(selectModal);
-  const dataForEdit = modalData?.dataForEdit;
   const handleOpenDropdown = (label: string) => {
     setOpenDropdown(label);
   };
@@ -84,6 +86,23 @@ function CustomQuestionForm(
   const handleSwitchChange = () => {
     setAddMoreQuestion(!addMoreQuestion);
   };
+
+  const handleUpdateQuestion = async (templateQuestion: any) => {
+    if (!templateQuestion || !templateQuestion) {
+      console.error('Invalid template question data');
+      return;
+    }
+    const requestData = {
+      ...templateQuestion,
+    };
+    try {
+      await updateQuestion(requestData).unwrap();
+      dispatch(closeModal());
+    } catch (error) {
+      console.error('Failed to update question:', error);
+    }
+  };
+
   const handleSubmit = async () => {
     // Validate input and perform any necessary checks
     let hasError = false; // Track if there's any validation error
@@ -107,12 +126,12 @@ function CustomQuestionForm(
     }
 
     if (hasError) {
-      return; // Stop if there's any validation error
+      return;
     }
     const numericNumber =
       inputValue.time !== '' ? inputValue.time.split(' ')[0] : 5;
     const newQuestion = {
-      id: dataForEdit?.question?.id ? dataForEdit?.question?.id : '',
+      id: dataForEdit?.id ? dataForEdit?.id : '',
       question_text: inputValue.title,
       reply_time: numericNumber,
       competency: inputValue.competency,
@@ -120,11 +139,13 @@ function CustomQuestionForm(
         ? inputValue.difficulty
         : StatusDropdownFilter.LOW,
       guidelines: inputValue.guidelines,
-      // Add more fields as needed
     };
-  
-    onQuestionCreated(newQuestion);
-
+    if (dataForEdit) {
+      await handleUpdateQuestion(newQuestion);
+      dispatch(closeModal());
+    } else {
+      onQuestionCreated(newQuestion);
+    }
     setInputValue(initialState);
 
     if (!addMoreQuestion) {
@@ -143,23 +164,25 @@ function CustomQuestionForm(
       ...inputValue,
       [event.target.name]: event.target.value,
     });
-    if(event.target.name === 'guidelines' && !event.target.value.trim() ){
-      setError('Description is required')
-    }else{
-      setError('')
+    if (event.target.name === 'guidelines' && !event.target.value.trim()) {
+      setError('Description is required');
+    } else {
+      setError('');
     }
   };
   useEffect(() => {
-    if(dataForEdit){
+    if (dataForEdit) {
       setInputValue({
-        title: dataForEdit?.question_text ? dataForEdit?.question_text : '',
-        guidelines: dataForEdit?.guidelines ? dataForEdit?.guidelines : '',
-        difficulty: dataForEdit?.difficulty ? (dataForEdit.difficulty as StatusDropdownFilter) : StatusDropdownFilter.LOW,
-        competency: dataForEdit?.competency ? (dataForEdit.competency as CompetencyDropDownFilter) : null,
-        time: dataForEdit?.reply_time ? `${dataForEdit?.reply_time} minute${parseInt(dataForEdit?.reply_time)  > 1 ? 's' : ''}` : '5 minutes'
-      })
+        title: dataForEdit?.question_text,
+        guidelines: dataForEdit?.guidelines,
+        difficulty: dataForEdit.difficulty as StatusDropdownFilter,
+        competency: dataForEdit.competency as CompetencyDropDownFilter,
+        time: `${dataForEdit?.reply_time} minute${
+          parseInt(dataForEdit?.reply_time) > 1 ? 's' : ''
+        }`,
+      });
     }
-  },[])
+  }, [dataForEdit]);
 
   return (
     <div ref={ref}>
@@ -178,16 +201,20 @@ function CustomQuestionForm(
       <InputLayout>
         <BodySMedium>Guidelines</BodySMedium>
         <StyledTextarea
-            disabled={false}
-            className={`customStyle ${error ? 'error' : ''}`}
-            placeholder={
-              'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'
-            }
-            onChange={inputOnChange}
-            name={'guidelines'}
-            value={inputValue.guidelines}
+          disabled={false}
+          className={`customStyle ${error ? 'error' : ''}`}
+          placeholder={
+            'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'
+          }
+          onChange={inputOnChange}
+          name={'guidelines'}
+          value={inputValue.guidelines}
         />
-         {error ? <TextAreaError className='customizeForTextArea'>{error}</TextAreaError> : null }
+        {error ? (
+          <TextAreaError className="customizeForTextArea">
+            {error}
+          </TextAreaError>
+        ) : null}
       </InputLayout>
       <CustomQuestionFilterDiv>
         <StatusFilter
@@ -230,15 +257,17 @@ function CustomQuestionForm(
       </CustomQuestionFilterDiv>
       <CustomQuestionModalLine />
       <CustomQuestionModalBottomDiv>
-        <FormControlLabel
-          control={
-            <Switch checked={addMoreQuestion} onChange={handleSwitchChange} />
-          }
-          label={<BodySMedium>Create More</BodySMedium>}
-        />
+        {!dataForEdit ? (
+          <FormControlLabel
+            control={
+              <Switch checked={addMoreQuestion} onChange={handleSwitchChange} />
+            }
+            label={<BodySMedium>Create More</BodySMedium>}
+          />
+        ) : null}
         <ElWrap w={155} h={40}>
           <TextBtnL
-            label="Create Question"
+            label={!dataForEdit ? 'Create Question' : 'Update Question'}
             disable={false}
             onClick={handleSubmit}
             className={BackgroundColor.ACCENT_PURPLE}
