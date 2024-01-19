@@ -1,3 +1,6 @@
+import { AppDispatch } from '@/app/store';
+import { useParams } from 'react-router-dom';
+
 import {
   IconBtnL,
   IconBtnM,
@@ -25,12 +28,8 @@ import {
 import { H3 } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
-import {
-  BackgroundColor,
-  StatusDropdownFilter,
-} from '@/features/utils/utilEnum';
-import React, { useEffect, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import React, { useState } from 'react';
 
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { Stack } from '@mui/material';
@@ -44,8 +43,15 @@ import {
   OverviewDetailTitle,
   OverviewDetails,
 } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
-import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import {
+  useDeleteQuestionMutation,
+  useGetQuestionsQuery,
+} from '@/features/questions/questionsAPISlice';
 import Loading from '@/components/common/elements/loading/Loading';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { useDispatch } from 'react-redux';
+import { openModal } from '@/features/modal/modalSlice';
+import ReactMarkdown from 'react-markdown';
 
 interface IState {
   [key: string]: any;
@@ -69,7 +75,6 @@ const QuestionList = () => {
     difficulty: null,
     competency: '',
   });
-
   const {
     data: questionsResponse,
     isLoading,
@@ -77,6 +82,25 @@ const QuestionList = () => {
     isError,
     error,
   } = useGetQuestionsQuery();
+  const [deleteQuestion] = useDeleteQuestionMutation();
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { templateId } = useParams();
+  const templateID = templateId;
+
+  const onClickModalOpen = (
+    modalType: MODAL_TYPE,
+    templateID: any,
+    dataForEdit?: any
+  ) => {
+    dispatch(
+      openModal({
+        modalType: modalType,
+        templateID: templateID,
+        dataForEdit: dataForEdit,
+      })
+    );
+  };
 
   React.useEffect(() => {
     if (isSuccess) {
@@ -121,6 +145,15 @@ const QuestionList = () => {
       if (Object.keys(inputValue).includes(key)) {
         inputValue[key] = question[key];
       }
+    }
+  };
+
+  const handleDeleteTemplateQuestion = async (questionID: number) => {
+    try {
+      console.log('Question id here: ', questionID);
+      await deleteQuestion(questionID);
+    } catch (error) {
+      console.error('Error deleting question:', error);
     }
   };
 
@@ -205,9 +238,11 @@ const QuestionList = () => {
                       </OnverviewDetailTitle>
                     </div>
                     <div className="summary">
-                      <div className="comp" key={index}>
-                        <BodySMedium>{question.competency}</BodySMedium>
-                      </div>
+                      {question.competency !== null && (
+                        <div className="comp" key={index}>
+                          <BodySMedium>{question.competency}</BodySMedium>
+                        </div>
+                      )}
 
                       <div className="icon-div">
                         <div className="time-level">
@@ -225,11 +260,14 @@ const QuestionList = () => {
                         <IconBtnM
                           disable={false}
                           onClick={() => {
-                            editDetailHandler(
-                              question.id,
-                              edit.has(question.id)
-                            );
                             setEditDetailInputs(question);
+                            onClickModalOpen(
+                              MODAL_TYPE.ADD_CUSTOM_QUESTION,
+                              {
+                                templateID,
+                              },
+                              question
+                            );
                           }}
                           icon={<EditIcon />}
                           className={BackgroundColor.WHITE}
@@ -238,7 +276,9 @@ const QuestionList = () => {
                       <ElWrap h={32} w={32}>
                         <IconBtnM
                           disable={false}
-                          onClick={() => {}}
+                          onClick={() =>
+                            handleDeleteTemplateQuestion(question.id)
+                          }
                           icon={<BinIcon />}
                           className={BackgroundColor.WHITE}
                         />
@@ -366,13 +406,18 @@ const QuestionList = () => {
         >
           <TextIconBtnL
             disable={false}
-            onClick={() => {}}
+            onClick={() => {
+              onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION, {
+                templateID,
+              });
+            }}
             className={BackgroundColor.ACCENT_PURPLE}
             icon={<PlusIcon />}
             label="Add Question"
           />
         </Stack>
       </>
+      <GlobalModal></GlobalModal>
     </OverviewDetails>
   );
 };

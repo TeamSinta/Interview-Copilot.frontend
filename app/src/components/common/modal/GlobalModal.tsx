@@ -1,10 +1,16 @@
 import { closeModal, selectModal } from '@/features/modal/modalSlice';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { CloseIcon } from '../svgIcons/Icons';
-import { H2Bold } from '../typeScale/StyledTypeScale';
-import Modal from './Modal';
-import { CloseDiv, ModalHeaderWrap } from './StyledModal';
+import { CloseIcon } from '@/components/common/svgIcons/Icons';
+import { H2Bold } from '@/components/common/typeScale/StyledTypeScale';
+import Modal from '@/components/common/modal/Modal';
+import {
+  ArrowIcon,
+  CloseDiv,
+  IconContainer,
+  IconWithText,
+  ModalHeaderWrap,
+} from './StyledModal';
 
 import CreateTemplate from '@/components/common/modal/modalContents/CreateTemplate';
 import CreateDepartment from './modalContents/CreateDepartment';
@@ -13,16 +19,20 @@ import ModalL from './ModalL';
 import SelectTemplate from './modalContents/SelectTemplate';
 import MemberSettings from './userSettingsModal/MemberSettings';
 import EditInterviews from './modalContents/EditInterview';
+import AddCustomQuestion from './modalContents/AddCustomQuestion';
 import EditInterviewers from './modalContents/EditInterviewrs';
 import SelectAllQuestions from './modalContents/SelectAllQuestions';
 import VideoSettingsContent from './modalContents/videoSettingsModal/VideoSettingsContent';
 import CreateQuestionBank from './modalContents/CreateQuestionBank';
+import Logo from 'src/assets/svg/icon.svg';
+import Arrow from 'src/assets/svg/arrow.svg';
 import CoverLibrary from './modalContents/CoversLibrary';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
   CREATE_INT = 'CREATE_INT',
   CREATE_QUEST_BANK = 'CREATE_QUEST_BANK',
+  ADD_CUSTOM_QUESTION = 'ADD_CUSTOM_QUESTION',
   SELECT_VAL = 'SELECT_VAL',
   SELECT_TEM = 'SELECT_TEM',
   MEMBER_SET = 'MEMBER_SET',
@@ -36,18 +46,32 @@ export enum MODAL_TYPE {
 
 interface IModalHeader {
   title: string;
+  icon?: React.ReactNode;
 }
 
 interface IModalPortal {
   children: React.ReactElement;
 }
 
-export const ModalHeader = ({ title }: IModalHeader) => {
+export const ModalHeader = ({ title, icon }: IModalHeader) => {
   const dispatch = useDispatch();
 
   return (
     <ModalHeaderWrap>
-      <H2Bold>{title}</H2Bold>
+      <H2Bold style={{ display: 'flex' }}>
+        {icon && (
+          <>
+            <IconContainer>
+              <IconWithText>
+                {icon}
+                <span style={{ marginLeft: '4px' }}>TEM</span>
+              </IconWithText>
+            </IconContainer>
+            <ArrowIcon src={Arrow} alt="arrow" />
+          </>
+        )}
+        {title}
+      </H2Bold>
       <CloseDiv
         onClick={() => {
           dispatch(closeModal());
@@ -66,6 +90,9 @@ const ModalPortal = ({ children }: IModalPortal) => {
 
 const GlobalModal = (): JSX.Element => {
   const { modalType, isOpen } = useSelector(selectModal);
+
+  const modalData = useSelector(selectModal);
+  const dataForEdit = modalData?.dataForEdit;
 
   const renderModal = () => {
     switch (modalType) {
@@ -92,6 +119,17 @@ const GlobalModal = (): JSX.Element => {
           <Modal title="Create New Question Bank">
             <CreateQuestionBank />
           </Modal>
+        );
+      case MODAL_TYPE.ADD_CUSTOM_QUESTION:
+        return (
+          <div style={{ display: 'flex' }}>
+            <Modal
+              title={!dataForEdit ? 'New Question' : 'Update Question'}
+              icon={<img src={Logo} alt="Logo" />}
+            >
+              <AddCustomQuestion />
+            </Modal>
+          </div>
         );
       case MODAL_TYPE.EDIT_INT:
         return (
