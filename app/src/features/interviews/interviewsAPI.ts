@@ -124,6 +124,27 @@ export const getInterviewRoundQuestions = async (
   }
 };
 
+export const updateInterviewRound = async (
+  interviewRoundId: string,
+  url: string
+) => {
+  try {
+    const data = {
+      interview_round_id: interviewRoundId,
+      video_uri: url,
+    };
+
+    const response = await instance.put(
+      `${BACKEND_URL}/interview-rounds/${interviewRoundId}/update/`,
+      data
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getCandidateByUsername = async (
   username: string,
   token: string

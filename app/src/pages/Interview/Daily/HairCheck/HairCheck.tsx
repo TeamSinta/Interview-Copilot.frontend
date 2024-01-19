@@ -95,6 +95,7 @@ export default function HairCheck({
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
     null
   );
+  const [isFormValid, setFormValid] = useState(true);
 
   const workspace = useSelector((state: RootState) => state.workspace);
 
@@ -138,8 +139,14 @@ export default function HairCheck({
   };
 
   const startMeeting = async () => {
-    if (newTitle === '') throw new Error('Empty candidate username');
+    if (newTitle === '' || !selectedTemplate)
+      throw new Error('Empty candidate username');
     if (!selectedTemplate) throw new Error('Empty selected template');
+
+    if (newTitle === '') {
+      setFormValid(false);
+      return;
+    }
 
     try {
       const title = newTitle;
@@ -223,6 +230,11 @@ export default function HairCheck({
 
   const join = (e: FormEvent) => {
     e.preventDefault();
+    if (newTitle === '' || !selectedTemplate) {
+      setFormValid(false);
+      return;
+    }
+    setFormValid(true);
     joinCall();
   };
 
