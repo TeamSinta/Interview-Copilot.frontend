@@ -184,7 +184,7 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
           />
           <TextIconBtnL
             disable={false}
-            onClick={() => {}}
+            onClick={() => { onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION,{questionBankID})}}
             className={BackgroundColor.ACCENT_PURPLE}
             icon={<Star1Icon />}
             label="Add Custom Question"

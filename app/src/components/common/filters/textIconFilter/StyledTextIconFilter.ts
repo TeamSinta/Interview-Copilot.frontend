@@ -34,3 +34,6 @@ export const TextIconFilterIcon = styled.div`
     stroke: ${(props) => props.theme.colors.black};
   }
 `;
+export const RotateIcon = styled.div `
+transform: rotate(270deg)
+`
