@@ -23,7 +23,7 @@ const DepartmentDropDown: React.FC<IDepartmentDropDown> = ({
         label="Department"
         value=""
         optionArr={departments}
-        dropdownName="Select User Department"
+        dropdownName="Select Department"
         onChange={handleSetDepartment}
       />
     );
@@ -34,7 +34,7 @@ const DepartmentDropDown: React.FC<IDepartmentDropDown> = ({
       label="Department"
       value=""
       optionArr={departments}
-      dropdownName=""
+      dropdownName="Select Department"
       onChange={handleSetDepartment}
     />
   );
