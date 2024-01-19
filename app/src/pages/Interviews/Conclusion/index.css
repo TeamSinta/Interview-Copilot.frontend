@@ -6,6 +6,7 @@
   padding: 10px;
   margin-top: 10px !important;
   margin-left: 0;
+  overflow: hidden;
 }
 .bar p,
 .bar {
@@ -19,6 +20,7 @@
   border-radius: 10px;
   padding: 10px;
   width: 95%;
+
 }
 .content-box {
   display: flex;
@@ -42,6 +44,8 @@
   border-radius: 10px;
   padding: 10px;
   flex: 1;
+  overflow: scroll;
+    min-width: 150px;
 }
 
 .bar-decision {

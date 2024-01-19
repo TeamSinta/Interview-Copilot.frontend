@@ -6,7 +6,7 @@ import '../index.css';
 import styled from 'styled-components';
 import InterviewQNA from './InterviewQNA/InterviewQNA';
 import { ReactionButtonBox } from './reactionBox/ReactionBox';
-import image from '@/assets/svg/EndVideoImage.svg';
+import image from "@/assets/svg/'Empty Roles' Page Illustration.svg";
 import {
   getInterviewRoundFeedback,
   getInterviewRoundQuestions,
@@ -152,13 +152,19 @@ const MainScreenNoVideo: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
           lg={5}
           style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}
         >
-          <Stack direction={'column'} spacing={2}>
+          <Stack
+            direction={'column'}
+            spacing={2}
+            justifyContent={'space-between'}
+            style={{
+              height: '100%',
+            }}
+          >
             <Stack
               justifyContent={'center'}
               alignItems={'center'}
               style={{
                 width: '100%',
-
                 overflow: 'hidden',
                 marginLeft: '-20px',
                 padding: '20px',
@@ -173,7 +179,7 @@ const MainScreenNoVideo: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
 
                   maxHeight: '400px',
                   borderRadius: '8px',
-                  objectFit: 'cover',
+                  objectFit: 'contain',
                 }}
               ></img>
             </Stack>

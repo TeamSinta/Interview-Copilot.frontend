@@ -200,19 +200,7 @@ const DashBoard = () => {
 
         {/* 'lg' can be changed based on your design requirements */}
         <Grid container spacing={4} justifyContent="center">
-          <Grid
-            xs={12}
-            md={12}
-            lg={8}
-            justifyContent="center"
-            alignItems="center"
-            minWidth={'xs'}
-          >
-            <Container style={{ padding: '0px' }}>
-              <StyledImage src={dashboardImage} alt="dashboard_picture" />
-            </Container>
-          </Grid>
-          <Grid xs={12} md={12} lg={4} minWidth={'xs'}>
+          <Grid xs={12} md={12} lg={4}>
             <div
               style={{
                 display: 'flex',
@@ -224,7 +212,7 @@ const DashBoard = () => {
               }}
             >
               <Container style={{ minWidth: '320px', padding: '0px' }}>
-                <InterviewsBox style={{ padding: '36px' }}>
+                <InterviewsBox style={{ padding: '42px' }}>
                   <TextBox>
                     <WelcomeHeading>
                       Welcome back, {user.first_name}{' '}
@@ -251,7 +239,18 @@ const DashBoard = () => {
               </Container>{' '}
             </div>
           </Grid>
-
+          <Grid
+            xs={12}
+            md={12}
+            lg={8}
+            justifyContent="center"
+            alignItems="center"
+            minWidth={'xs'}
+          >
+            <Container style={{ padding: '0px' }}>
+              <StyledImage src={dashboardImage} alt="dashboard_picture" />
+            </Container>
+          </Grid>
           {newTemplates.length === 0 ? (
             <Grid xs={12}>
               <TemplateEmptyBox>
