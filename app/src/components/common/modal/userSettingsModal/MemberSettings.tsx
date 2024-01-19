@@ -7,7 +7,6 @@ import {
   H3Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import { selectSetMember } from '@/features/members/memberSlice';
 import { closeModal } from '@/features/modal/modalSlice';
@@ -29,6 +28,7 @@ import {
   MemberInformationContainer,
   ProfilePicture,
 } from './StyledMemberSettings';
+import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 
 interface UserModalProps {
   user: {
@@ -124,7 +124,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
           multi
         />
 
-        {/* Disabled checkbox for now 
+        {/* Disabled checkbox for now
         <CheckBox
           inputName="Check Box"
           label="Make Admin"
