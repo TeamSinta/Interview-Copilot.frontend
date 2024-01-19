@@ -28,12 +28,8 @@ import {
 import { H3 } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
-import {
-  BackgroundColor,
-  StatusDropdownFilter,
-} from '@/features/utils/utilEnum';
-import React, { useEffect, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import React, { useState } from 'react';
 
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { Stack } from '@mui/material';
@@ -47,11 +43,15 @@ import {
   OverviewDetailTitle,
   OverviewDetails,
 } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
-import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import {
+  useDeleteQuestionMutation,
+  useGetQuestionsQuery,
+} from '@/features/questions/questionsAPISlice';
 import Loading from '@/components/common/elements/loading/Loading';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { useDispatch } from 'react-redux';
 import { openModal } from '@/features/modal/modalSlice';
+import ReactMarkdown from 'react-markdown';
 
 interface IState {
   [key: string]: any;
@@ -82,6 +82,7 @@ const QuestionList = () => {
     isError,
     error,
   } = useGetQuestionsQuery();
+  const [deleteQuestion] = useDeleteQuestionMutation();
 
   const dispatch = useDispatch<AppDispatch>();
   const { templateId } = useParams();
@@ -144,6 +145,15 @@ const QuestionList = () => {
       if (Object.keys(inputValue).includes(key)) {
         inputValue[key] = question[key];
       }
+    }
+  };
+
+  const handleDeleteTemplateQuestion = async (questionID: number) => {
+    try {
+      console.log('Question id here: ', questionID);
+      await deleteQuestion(questionID);
+    } catch (error) {
+      console.error('Error deleting question:', error);
     }
   };
 
@@ -266,7 +276,9 @@ const QuestionList = () => {
                       <ElWrap h={32} w={32}>
                         <IconBtnM
                           disable={false}
-                          onClick={() => {}}
+                          onClick={() =>
+                            handleDeleteTemplateQuestion(question.id)
+                          }
                           icon={<BinIcon />}
                           className={BackgroundColor.WHITE}
                         />
