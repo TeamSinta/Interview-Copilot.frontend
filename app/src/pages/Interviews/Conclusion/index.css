@@ -17,7 +17,7 @@
   background-color: #f6f6fb;
   display: flex;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 10px;
   width: 95%;
 
@@ -41,7 +41,7 @@
 .bar-container {
   background-color: #f6f6fb;
   display: flex;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 10px;
   flex: 1;
   overflow: scroll;
@@ -51,12 +51,12 @@
 .bar-decision {
   background-color: #f6f6fb;
   display: flex;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 .column {
   flex: 1;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 26px;
   margin: 14px 14px !important;
   display: flex;
@@ -106,13 +106,13 @@
 
 #myProgress::-moz-progress-bar {
   background-color: #6462f1;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid #000;
 }
 
 #myProgress::-ms-fill {
   background-color: #cecdee;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .positiveSentimentIcon {
@@ -143,7 +143,7 @@
 .video-player-wrapper {
   position: relative;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
   margin-left: -20px;
 }
@@ -159,6 +159,6 @@
 .tab-content {
   background-color: #f6f6fb;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-top: 30px;
 }

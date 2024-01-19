@@ -53,7 +53,7 @@ const TopNavBar = (): JSX.Element => {
 
         <ElWrap w={460}>
           <DropDownButton
-            label="Create a Meeting"
+            label="New Meeting"
             onClick={() => {}}
             icon={<RightBracketIcon />}
             disable={false}
