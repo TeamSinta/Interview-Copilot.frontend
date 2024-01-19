@@ -17,6 +17,7 @@ import EditInterviewers from './modalContents/EditInterviewrs';
 import SelectAllQuestions from './modalContents/SelectAllQuestions';
 import VideoSettingsContent from './modalContents/videoSettingsModal/VideoSettingsContent';
 import CreateQuestionBank from './modalContents/CreateQuestionBank';
+import CoverLibrary from './modalContents/CoversLibrary';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
@@ -29,6 +30,7 @@ export enum MODAL_TYPE {
   EDIT_MEM = 'EDIT_MEM',
   VIDEO_SETTINGS = 'VIDEO_SET',
   SELECT_ALL_QUESTIONS = 'SELECT_ALL_QUESTIONS',
+  COVER_LIBRARY = 'COVER_LIBRARY',
   // ModalL = "ModalL",
 }
 
@@ -126,6 +128,7 @@ const GlobalModal = (): JSX.Element => {
           <Modal title="Member Setting">
             <MemberSettings
               user={{
+                id: '',
                 first_name: '',
                 last_name: '',
                 email: '',
@@ -135,6 +138,12 @@ const GlobalModal = (): JSX.Element => {
                 throw new Error('Function not implemented.');
               }}
             />
+          </Modal>
+        );
+      case MODAL_TYPE.COVER_LIBRARY:
+        return (
+          <Modal title="Covers Library">
+            <CoverLibrary />
           </Modal>
         );
     }
