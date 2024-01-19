@@ -38,6 +38,7 @@ import {
 import { validateTitle } from '@/utils/inputValidations';
 import { selectModal } from '@/features/modal/modalSlice';
 import { useUpdateQuestionMutation } from '@/features/questions/questionsAPISlice';
+import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 
 interface IState {
   title: string;
@@ -74,6 +75,9 @@ function CustomQuestionForm(
   );
   const [openDropdown, setOpenDropdown] = useState<string>('');
   const [updateQuestion] = useUpdateQuestionMutation();
+  const {
+    refetch, // This function can be used to manually trigger the query
+  } = useGetTemplateQuestionsQuery();
 
   const handleOpenDropdown = (label: string) => {
     setOpenDropdown(label);
@@ -97,6 +101,7 @@ function CustomQuestionForm(
     };
     try {
       await updateQuestion(requestData).unwrap();
+      await refetch();
       dispatch(closeModal());
     } catch (error) {
       console.error('Failed to update question:', error);
