@@ -124,18 +124,10 @@ export const getInterviewRoundQuestions = async (
   }
 };
 
-export const updateInterviewRound = async (
-  interviewRoundId: string,
-  url: string
-) => {
+export const updateInterviewRound = async (data: any) => {
   try {
-    const data = {
-      interview_round_id: interviewRoundId,
-      video_uri: url,
-    };
-
     const response = await instance.put(
-      `${BACKEND_URL}/interview-rounds/${interviewRoundId}/update/`,
+      `${BACKEND_URL}/interview-rounds/${data.interview_round_id}/update/`,
       data
     );
 

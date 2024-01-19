@@ -320,7 +320,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
           <br></br>
           <div style={{ display: 'flex' }}>
             {CANDIDATE_DETAILS.COMPETENCIES.map((a) => {
-              return <CompetencyStyle>{a}</CompetencyStyle>;
+              return <CompetencyStyle key={a}>{a}</CompetencyStyle>;
             })}{' '}
           </div>
         </div>
@@ -938,6 +938,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
         reactClicked={reactClicked}
         leaveCall={leaveCall}
         setStartTime={setStartTime}
+        interviewRoundId={interviewDetails.id}
       />
       {<EmojiOverlay />}
     </div>

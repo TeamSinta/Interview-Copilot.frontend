@@ -44,8 +44,18 @@ import { openModal } from '@/features/modal/modalSlice';
 import Switch from '@mui/material/Switch';
 import RecordingPrompt from './RecordingPrompt';
 import RoomService from '@/utils/dailyVideoService/videoApi';
+import { updateInterviewRound } from '@/features/interviews/interviewsAPI';
 
-function BottomNavBar(props: any) {
+interface IBottomNavBar {
+  setReactClicked: (clicked: boolean) => void;
+  reactClicked: boolean;
+  leaveCall: () => void;
+  emojiClicked: boolean;
+  setStartTime: (time: Date) => void;
+  interviewRoundId: string;
+}
+
+function BottomNavBar(props: IBottomNavBar) {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [recordSwitch, setRecordSwitch] = useState(false);
   const [isRecordingStart, setIsRecordingStart] = useState<boolean>(false);
@@ -57,6 +67,7 @@ function BottomNavBar(props: any) {
     leaveCall,
     emojiClicked,
     setStartTime,
+    interviewRoundId,
   } = props;
   const callObject = useDaily();
   const { isSharingScreen, startScreenShare, stopScreenShare } =
@@ -64,23 +75,30 @@ function BottomNavBar(props: any) {
   const { startRecording, stopRecording, isRecording, recordingId } =
     useRecording();
   const localParticipant = useLocalParticipant();
-  const localVideo = useVideoTrack(localParticipant?.session_id);
-  const localAudio = useAudioTrack(localParticipant?.session_id);
+  const localVideo = useVideoTrack(localParticipant?.session_id!);
+  const localAudio = useAudioTrack(localParticipant?.session_id!);
   const mutedVideo = localVideo.isOff;
   const mutedAudio = localAudio.isOff;
   const { width } = useWindowSize();
 
   const getMeetingURL = async (recordingId: string) => {
     const response = await RoomService.finishMeeting(recordingId);
+    if (response?.download_link) {
+      const data = {
+        interview_round_id: interviewRoundId,
+        video_uri: response.download_link,
+      };
+      await updateInterviewRound(data);
+    }
     console.log('response++++', response);
   };
 
   const toggleVideo = useCallback(() => {
-    callObject.setLocalVideo(mutedVideo);
+    callObject?.setLocalVideo(mutedVideo);
   }, [callObject, mutedVideo]);
 
   const toggleAudio = useCallback(() => {
-    callObject.setLocalAudio(mutedAudio);
+    callObject?.setLocalAudio(mutedAudio);
   }, [callObject, mutedAudio]);
 
   const toggleEmojiTray = () => {
@@ -143,6 +161,13 @@ function BottomNavBar(props: any) {
   // Function to close the settings modal
   const closeSettingsModal = () => {
     setIsSettingsModalOpen(false);
+  };
+
+  const callFinishedHandler = async () => {
+    leaveCall();
+    if (recordingId) {
+      getMeetingURL(recordingId);
+    }
   };
 
   return (
@@ -405,12 +430,7 @@ function BottomNavBar(props: any) {
             <StyledColumns style={{ paddingRight: '20px', float: 'right' }}>
               <StyledFinishBtn
                 className="accentPurple"
-                onClick={() => {
-                  leaveCall();
-                  if (recordingId) {
-                    getMeetingURL(recordingId);
-                  }
-                }}
+                onClick={callFinishedHandler}
               >
                 Finish
               </StyledFinishBtn>
