@@ -22,6 +22,7 @@ import {
 } from '@/components/common/typeScale/StyledTypeScale';
 import { H3 } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { setIsAuthenticated } from '@/features/authentication/authenticationSlice';
 import { selectInterviewDetail } from '@/features/interviewDetail/interviewDetailSlice';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
 import { openModal } from '@/features/modal/modalSlice';
@@ -74,7 +75,6 @@ const InterviewOverviewDetails = () => {
     difficulty: '',
     competency: '',
   });
-  const [editValues, setEditValues] = useState<any>({});
 
   const { templateId } = useParams();
   const templateID = templateId;
@@ -112,13 +112,16 @@ const InterviewOverviewDetails = () => {
   const filteredQuestions = newQuestions.filter((question: IQuestion) => {
     return question?.topic === selectedSection?.id;
   });
-
-  const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
+  const onClickModalOpen = (
+    modalType: MODAL_TYPE,
+    templateID: any,
+    dataForEdit?: any
+  ) => {
     dispatch(
       openModal({
         modalType: modalType,
         templateID: templateID,
-        dataForEdit: editValues.question,
+        dataForEdit,
       })
     );
   };
@@ -151,7 +154,6 @@ const InterviewOverviewDetails = () => {
       competency: question.question.competency,
       difficulty: question.question.difficulty,
     });
-    setEditValues(question);
   };
 
   const handleDeleteTemplateQuestion = async (questionID: string) => {
@@ -259,7 +261,8 @@ const InterviewOverviewDetails = () => {
                                       MODAL_TYPE.ADD_CUSTOM_QUESTION,
                                       {
                                         templateID,
-                                      }
+                                      },
+                                      question.question
                                     );
                                   }}
                                   icon={<EditIcon />}

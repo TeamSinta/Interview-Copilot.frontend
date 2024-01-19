@@ -53,7 +53,6 @@ import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { useDispatch } from 'react-redux';
 import { openModal } from '@/features/modal/modalSlice';
 
-
 interface IState {
   [key: string]: any;
   title: string;
@@ -76,7 +75,6 @@ const QuestionList = () => {
     difficulty: null,
     competency: '',
   });
-
   const {
     data: questionsResponse,
     isLoading,
@@ -84,16 +82,21 @@ const QuestionList = () => {
     isError,
     error,
   } = useGetQuestionsQuery();
-  
+
   const dispatch = useDispatch<AppDispatch>();
   const { templateId } = useParams();
   const templateID = templateId;
 
-  const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
+  const onClickModalOpen = (
+    modalType: MODAL_TYPE,
+    templateID: any,
+    dataForEdit?: any
+  ) => {
     dispatch(
       openModal({
         modalType: modalType,
         templateID: templateID,
+        dataForEdit: dataForEdit,
       })
     );
   };
@@ -225,9 +228,11 @@ const QuestionList = () => {
                       </OnverviewDetailTitle>
                     </div>
                     <div className="summary">
-                      <div className="comp" key={index}>
-                        <BodySMedium>{question.competency}</BodySMedium>
-                      </div>
+                      {question.competency !== null && (
+                        <div className="comp" key={index}>
+                          <BodySMedium>{question.competency}</BodySMedium>
+                        </div>
+                      )}
 
                       <div className="icon-div">
                         <div className="time-level">
@@ -245,11 +250,14 @@ const QuestionList = () => {
                         <IconBtnM
                           disable={false}
                           onClick={() => {
-                            editDetailHandler(
-                              question.id,
-                              edit.has(question.id)
-                            );
                             setEditDetailInputs(question);
+                            onClickModalOpen(
+                              MODAL_TYPE.ADD_CUSTOM_QUESTION,
+                              {
+                                templateID,
+                              },
+                              question
+                            );
                           }}
                           icon={<EditIcon />}
                           className={BackgroundColor.WHITE}
