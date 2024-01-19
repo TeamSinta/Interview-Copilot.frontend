@@ -139,6 +139,7 @@ function CustomQuestionForm(
         ? inputValue.difficulty
         : StatusDropdownFilter.LOW,
       guidelines: inputValue.guidelines,
+      questionBankID: modalData?.questionBankID ?? null,
     };
     if (dataForEdit) {
       await handleUpdateQuestion(newQuestion);
