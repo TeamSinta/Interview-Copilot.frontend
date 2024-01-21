@@ -13,11 +13,13 @@ import {
   useFetchCompanyDepartments,
   useFetchCompanyMembers,
 } from './useFetchAndSortMembers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DepartmentList from './DepartmentList';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useGetCompanyDepartmentsQuery } from '@/features/departments/departmentsAPI';
+import { getDepartmentDetails } from '@/features/departments/departmentSlice';
 
 const DepartmentTab = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -48,10 +50,22 @@ const DepartmentTab = () => {
     setSortCritiera(value);
   };
 
-  const departments = useFetchCompanyDepartments(
-    companyId as CompanyID,
-    sortCriteria as string
-  );
+  const {
+    data: departments,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetCompanyDepartmentsQuery({
+    company_id: companyId,
+    sort_by: sortCriteria,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(getDepartmentDetails(departments));
+    }
+  }, [isSuccess, departments, dispatch]);
 
   return (
     <>

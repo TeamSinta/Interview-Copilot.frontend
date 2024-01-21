@@ -1,5 +1,6 @@
 import { RootState } from '@/app/store';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IDepartment } from '../departments/departmentsInterface';
 
 export interface DepartmentState {
   id: string;
@@ -11,18 +12,23 @@ const initialState: DepartmentState = {
   title: '',
 };
 
-export const departmentSlice = createSlice({
+const departmentSlice = createSlice({
   name: 'department',
   initialState,
   reducers: {
-    setDepartmentInfo: (state, actions) => {
+    getDepartmentDetails: (state, actions) => {
+      state.id = actions.payload.id;
+      state.title = actions.payload.title;
+    },
+    updateDepartmentDetails: (state, actions: PayloadAction<IDepartment>) => {
       state.id = actions.payload.id;
       state.title = actions.payload.title;
     },
   },
 });
 
-export const { setDepartmentInfo } = departmentSlice.actions;
-export const selectSetDepartment = (state: RootState) => state.department;
+export const { getDepartmentDetails, updateDepartmentDetails } =
+  departmentSlice.actions;
+export const selectDepartment = (state: RootState) => state.department;
 
 export default departmentSlice.reducer;

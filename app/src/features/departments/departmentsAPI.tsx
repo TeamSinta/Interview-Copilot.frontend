@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { IDepartment } from './departmentsInterface';
+import { CompanyID } from '../settingsDetail/userSettingTypes';
 
 export const departmentsAPI = createApi({
   reducerPath: 'departmentsApi',
@@ -26,7 +28,22 @@ export const departmentsAPI = createApi({
         };
       },
     }),
+    getCompanyDepartments: builder.query<
+      IDepartment[],
+      {
+        company_id?: CompanyID;
+        sort_by: string;
+      }
+    >({
+      query: ({ company_id, sort_by }) => {
+        return {
+          url: `/company/departments?company=${company_id}&sort_by=${sort_by}`,
+          method: 'GET',
+        };
+      },
+    }),
   }),
 });
 
-export const { useUpdateDepartmentMutation } = departmentsAPI;
+export const { useUpdateDepartmentMutation, useGetCompanyDepartmentsQuery } =
+  departmentsAPI;
