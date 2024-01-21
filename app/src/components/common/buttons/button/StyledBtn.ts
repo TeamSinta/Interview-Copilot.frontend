@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export interface IBtnProps {
-  label?: string;
+  label?: string | JSX.Element;
   icon?: JSX.Element;
   disable: boolean;
   onClick: () => void;
@@ -61,6 +61,10 @@ export const StyledButton = styled.button`
     }
   }
 
+  &.customizeHeight {
+    height: 20px;
+  }
+
   &.white {
     background: ${(props) => props.theme.colors.white};
     color: ${(props) => props.theme.colors.black};
@@ -71,6 +75,31 @@ export const StyledButton = styled.button`
       display: flex;
       align-content: center;
     }
+  }
+`;
+
+export const StyledButtonCustom = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  border-radius: 8px;
+  outline:none;
+  border:none;
+  padding: 10px 16px;
+  transition: 0.3s;
+  font-size: 14px;
+  min-width: 150px;
+  padding: 10px 16px;
+  z-index:999;
+  :hover {
+    cursor: pointer;
+    background: ${(props) => props.theme.colors.lightPurple};
+  }
+
+  :active {
+    background: #eaeaf4;
   }
 `;
 

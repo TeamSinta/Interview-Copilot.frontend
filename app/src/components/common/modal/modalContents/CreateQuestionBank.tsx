@@ -11,6 +11,7 @@ import { BackgroundColor } from '@/features/utils/utilEnum';
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
+import { validateDescription, validateTitle } from '@/utils/inputValidations';
 
 const titleInputArg = {
   error: false,
@@ -94,35 +95,6 @@ const CreateQuestionBank = () => {
       ...prevInputValue,
       description: value,
     }));
-  };
-  const validateTitle = (value: string): string | null => {
-    if (!value.trim()) {
-      return (
-        <>
-          <BodySMedium
-            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
-          >
-            Title is required{' '}
-          </BodySMedium>
-        </>
-      );
-    }
-
-    return null;
-  };
-
-  const validateDescription = (value: string): string | null => {
-    if (!value.trim()) {
-      return (
-        <>
-          <BodySMedium style={{ color: 'gray', textAlign: 'end' }}>
-            Description is required{' '}
-          </BodySMedium>
-        </>
-      );
-    }
-
-    return null;
   };
 
   return (

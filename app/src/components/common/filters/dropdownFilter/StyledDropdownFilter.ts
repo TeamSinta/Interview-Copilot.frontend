@@ -98,12 +98,13 @@ export const StatusDropdownLayout = styled.div`
 export const StatusDropdownWrap = styled(DropdownWrap)`
   position: relative;
   width: 100%;
-
+  display: block;
+  cursor: pointer;
   &.hover {
-    cursor: pointer;
     box-shadow: 0px 4px 0px ${(props) => props.theme.colors.palePurple};
     transition: 0.5s;
     border-radius: 12px;
+    display: block;
   }
 `;
 
@@ -169,6 +170,16 @@ export const OptionA = styled.a`
   &:hover {
     background: rgba(255, 255, 255, 0.3);
   }
+  &.customOptionA {
+    display: flex;
+    padding: 10px 16px;
+    margin-left: 9px;
+    margin-right: 9px;
+    border-radius: 8px;
+  }
+  &.customOptionA:hover {
+    background: var(--BG, #f6f6fb);
+  }
 `;
 
 export const OptionUl = styled.ul<IDropdownOpen>`
@@ -194,6 +205,16 @@ export const OptionUl = styled.ul<IDropdownOpen>`
           overflow-x: hidden;
           overflow-y: auto;
           transform-origin: 0 0;
+
+          &.customizeUl {
+            background: ${(props) => props.theme.colors.white};
+            box-shadow: 0px 4px 32px -2px rgba(0, 0, 0, 0.25);
+            margin-top: 40px;
+            padding: 0;
+            padding-bottom: 5px;
+            width: 180px;
+            max-height: 180px;
+          }
 
           ${DropdownEl} {
             outline: 1px solid ${(props) => props.theme.colors.black};
