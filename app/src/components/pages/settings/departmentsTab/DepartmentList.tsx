@@ -3,7 +3,7 @@ import SettingsDepartmentCard from '@/components/common/cards/settingsDepartment
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import PaginationComponent from '@/components/common/pagination/PaginationComponent';
 import { getDepartmentDetails } from '@/features/departments/departmentSlice';
-import { DepartmentsList } from '@/features/settingsDetail/userSettingsInterface';
+import { IDepartment } from '@/features/departments/departmentsInterface';
 import usePagination from '@/hooks/usePagination';
 import { DepartmentListContainer } from '@/pages/Settings/StyledSettings';
 import { Stack } from '@mui/material';
@@ -12,7 +12,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 const DepartmentList: React.FC<{
-  departments: DepartmentsList[];
+  departments: IDepartment[];
   onClickModalOpen: (modalType: MODAL_TYPE) => void;
 }> = ({ departments, onClickModalOpen }) => {
   const dispatch = useDispatch<AppDispatch>();

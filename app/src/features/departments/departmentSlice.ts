@@ -3,10 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IDepartment } from '../departments/departmentsInterface';
 
 export interface DepartmentState {
-  currentDepartment: {
-    id: string;
-    title: string;
-  };
+  currentDepartment: IDepartment;
   allDepartments: IDepartment[];
 }
 
@@ -22,12 +19,11 @@ const departmentSlice = createSlice({
   name: 'department',
   initialState,
   reducers: {
-    getAllDepartments: (state, action) => {
+    getAllDepartments: (state, action: PayloadAction<IDepartment[]>) => {
       state.allDepartments = action.payload;
     },
     getDepartmentDetails: (state, action: PayloadAction<IDepartment>) => {
-      state.currentDepartment = action.payload.id;
-      state.currentDepartment = action.payload.title;
+      state.currentDepartment = action.payload;
     },
     updateDepartmentDetails: (state, action: PayloadAction<IDepartment>) => {
       state.currentDepartment = action.payload.id;
@@ -42,5 +38,8 @@ export const {
   updateDepartmentDetails,
 } = departmentSlice.actions;
 export const selectDepartment = (state: RootState) => state.department;
+
+export const selectAllDepartments = (state: RootState) =>
+  state.department.allDepartments;
 
 export default departmentSlice.reducer;

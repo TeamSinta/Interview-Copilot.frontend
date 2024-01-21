@@ -8,23 +8,25 @@ import { RootState } from '@/app/store';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 // import MemberList from './DepartmentList';
 import SortingDropdown from './SortingDropdown';
-import { useFetchCompanyMembers } from './useFetchAndSortMembers';
 import { useEffect, useState } from 'react';
 import DepartmentList from './DepartmentList';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { useGetCompanyDepartmentsQuery } from '@/features/departments/departmentsAPI';
-import { getAllDepartments } from '@/features/departments/departmentSlice';
+import {
+  getAllDepartments,
+  selectDepartment,
+} from '@/features/departments/departmentSlice';
 import { IDepartments } from '@/features/departments/departmentsInterface';
 
 const DepartmentTab = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
-  const [departments, setDepartments] = useState<IOption[]>([]);
+  const departmentState = useSelector(selectDepartment);
+  const allDepartments = departmentState.allDepartments;
   const [sortCriteria, setSortCritiera] = useState('');
-  const [departmentId, setDepartmentId] = useState('');
 
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyID = (!workspace.id
@@ -46,6 +48,7 @@ const DepartmentTab = () => {
 
   const handleSortDepartments = (value: string) => {
     setSortCritiera(value);
+    console.log(sortCriteria);
   };
 
   const {
@@ -61,15 +64,9 @@ const DepartmentTab = () => {
 
   useEffect(() => {
     if (isSuccess && departmentsData) {
-      console.log('success');
-      const departmentsList = departmentsData.map((dep) => ({
-        id: dep.id,
-        title: dep.title,
-      }));
-      setDepartments(departmentsList);
+      dispatch(getAllDepartments(departmentsData));
     }
-    console.log(departments);
-  }, [isSuccess, departmentsData]); // Dependencies: isSuccess and departmentsData
+  }, [isSuccess, dispatch, departmentsData, sortCriteria]);
 
   return (
     <>
@@ -88,7 +85,7 @@ const DepartmentTab = () => {
           </ElWrap>
         </Stack>
         <DepartmentList
-          departments={departments}
+          departments={allDepartments}
           onClickModalOpen={onClickModalOpen}
         />
       </Stack>

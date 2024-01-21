@@ -14,7 +14,7 @@ import { BodyLMedium } from '../../typeScale/StyledTypeScale';
 
 interface DepartmentCardProps {
   department: {
-    id: number;
+    id: string;
     title: string;
   };
   onClick: (department: any) => void;
