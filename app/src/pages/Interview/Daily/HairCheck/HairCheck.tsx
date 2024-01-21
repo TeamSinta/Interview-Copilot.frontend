@@ -63,6 +63,8 @@ import { Template } from '@/pages/Templates_/Templates';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useCookies } from 'react-cookie';
 import { TextBtnM } from '@/components/common/buttons/textBtn/TextBtn';
+import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
+import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -103,6 +105,7 @@ export default function HairCheck({
     ? user?.companies?.[0]?.id ?? workspace.id
     : workspace.id)! as unknown as CompanyID;
 
+  const departments = useFetchCompanyDepartments(companyId as CompanyID);
   //setQuestions
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
@@ -304,6 +307,10 @@ export default function HairCheck({
     setCameraMenuAnchorEl(null);
   };
 
+  const handleSetDepartment = () => {
+    console.log('set department');
+  };
+
   const validateTitle = (value: string): string | null => {
     if (!value.trim()) {
       return (
@@ -450,14 +457,11 @@ export default function HairCheck({
           <div
             style={{ width: '100%', marginTop: '16px', marginBottom: '34px' }}
           >
-            <DropdownFilter
-              label="Department"
-              optionArr={[
-                { name: 'Sort (A-Z)', value: 'name-asc' },
-                { name: 'Sort (Z-A)', value: 'name-desc' },
-              ]}
-              dropdownName="All templates"
-              value={''}
+            {' '}
+            <DepartmentDropDown
+              departments={departments}
+              handleSetDepartment={handleSetDepartment} // this should set the departmentid to then fetch the templates for that department only?
+              workspaceId={workspace.id}
             />
           </div>
           <div style={{ height: '100%' }}>

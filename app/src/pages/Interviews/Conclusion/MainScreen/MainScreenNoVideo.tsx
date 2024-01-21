@@ -45,7 +45,7 @@ const StyledNavButton = styled(NavButton)`
   font-size: 12px;
   width: 100%;
   height: 35px;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-right: 5px;
   margin-bottom: 5px;
 
@@ -62,7 +62,7 @@ const StyledNavButton = styled(NavButton)`
 const ContentContainer = styled.div`
   background-color: #f6f6fb;
   padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-top: 0px;
   overflow-y: auto;
   max-height: calc(100vh - 40vh);

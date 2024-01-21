@@ -344,7 +344,7 @@ const Templates = () => {
             <ElWrap w={400} h={40}>
               <TextIconBtnL
                 disable={false}
-                label="Create New Template"
+                label="New Template"
                 icon={<PlusIcon />}
                 onClick={() => {
                   onClickModalOpen(MODAL_TYPE.CREATE_INT);

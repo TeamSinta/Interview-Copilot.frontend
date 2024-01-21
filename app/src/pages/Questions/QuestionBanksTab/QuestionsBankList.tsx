@@ -129,10 +129,11 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
                     </OnverviewDetailTitle>
                   </div>
                   <div className="summary">
+                  {question.competency !== null && (
                     <div className="comp" key={index}>
                       <BodySMedium>{question.competency}</BodySMedium>
                     </div>
-
+                  )}
                     <div className="icon-div">
                       <div className="time-level">
                         <TimeIcon />
