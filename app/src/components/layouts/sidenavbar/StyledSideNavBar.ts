@@ -1,4 +1,5 @@
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import styled from 'styled-components';
 
@@ -23,17 +24,18 @@ export const LogoImage = styled.img`
 `;
 
 export const NavButton = styled(Stack)`
-  height: 44px;
-  width: 220px;
+  height: 38px;
+  width: 222px;
   color: ${(props) => props.theme.colors.black};
   gap: 8px;
-  border-radius: 8px;
-  align-items: center;
+  border-radius: 6px;
+  align-items: flex-start;
+  justify-content: center;
 
   svg {
     stroke: ${(props) => props.theme.colors.black};
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
   }
 
   &:hover {
@@ -61,7 +63,7 @@ export const NavButton = styled(Stack)`
     align-content: center;
     align-items: center;
     gap: 8px;
-    padding-left: 16px;
+    padding-left: 8px;
   }
 `;
 
@@ -84,7 +86,7 @@ export const StyledLink = styled.link`
 
 export const StyledSideNavBarTitle = styled(BodySMedium)`
   color: '#7B7B7E';
-  padding-left: 16px;
+  padding-left: 2px;
   margin-bottom: 4px;
 `;
 
@@ -98,4 +100,19 @@ export const StyledSideNavLinksWrap = styled.div`
 export const Spacer = styled.div`
   flex-grow: 0.9; // Takes up all available space
   padding-bottom: -8px;
+`;
+
+
+export const DropdownWrapButton = styled(Button)`
+  position: relative;
+  width: 100%;
+  background: ${(props) => props.theme.colors.palePurple};
+  border-radius: 12px;
+  z-index: 1;
+  color:${(props) => props.theme.colors.palePurple} ;
+  &.hover {
+    cursor: pointer;
+    box-shadow: 0px 4px 0px ${(props) => props.theme.colors.palePurple};
+    transition: 0.5s;
+  }
 `;

@@ -27,6 +27,7 @@ import CreateQuestionBank from './modalContents/CreateQuestionBank';
 import Logo from 'src/assets/svg/icon.svg';
 import Arrow from 'src/assets/svg/arrow.svg';
 import CoverLibrary from './modalContents/CoversLibrary';
+import { SetStateAction } from 'react';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
@@ -180,8 +181,14 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.COVER_LIBRARY:
         return (
-          <Modal title="Covers Library">
-            <CoverLibrary />
+          <Modal title="Gallery">
+            <CoverLibrary
+              setSelectedImg={function (
+                value: SetStateAction<string | null>
+              ): void {
+                throw new Error('Function not implemented.');
+              }}
+            />
           </Modal>
         );
     }

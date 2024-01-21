@@ -12,7 +12,7 @@ export interface IModalProps {
   icon?: React.ReactNode;
 }
 
-const updatedModals = ['Covers Library', 'New Question', 'Update Question'];
+const updatedModals = ['Gallery', 'New Question', 'Update Question'];
 const updatedModalsRadius = ['New Question', 'Update Question'];
 
 const Modal = (props: IModalProps) => {
