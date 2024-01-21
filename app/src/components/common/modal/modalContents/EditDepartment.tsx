@@ -11,7 +11,6 @@ import { useRef, useState } from 'react';
 import TextInput from '../../form/textInput/TextInput';
 import { useUpdateDepartmentMutation } from '@/features/departments/departmentsAPI';
 import { updateDepartmentDetails } from '@/features/departments/departmentSlice';
-import { useNavigate } from 'react-router-dom';
 
 const titleInputArg = {
   label: 'Title',
@@ -34,7 +33,7 @@ const EditDepartment = () => {
   const workspace = useSelector((state: RootState) => state.workspace);
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
   const [newTitle, setNewTitle] = useState('');
-  const navigate = useNavigate();
+
   const [updateDepartment] = useUpdateDepartmentMutation();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -71,7 +70,6 @@ const EditDepartment = () => {
       })?.unwrap();
       dispatch(updateDepartmentDetails(newDepartmentTitle));
       dispatch(closeModal());
-      navigate(0);
     } catch (error) {
       console.log('Failed to update Department', error);
     }

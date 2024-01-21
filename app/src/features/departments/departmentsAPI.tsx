@@ -14,7 +14,7 @@ export const departmentsAPI = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Departments'],
+  tagTypes: ['Department'],
   endpoints: (builder) => ({
     updateDepartment: builder.mutation<
       void,
@@ -27,6 +27,7 @@ export const departmentsAPI = createApi({
           body: departmentData,
         };
       },
+      invalidatesTags: ['Department'],
     }),
     getCompanyDepartments: builder.query<
       IDepartment[],
@@ -41,6 +42,7 @@ export const departmentsAPI = createApi({
           method: 'GET',
         };
       },
+      providesTags: ['Department'],
     }),
   }),
 });
