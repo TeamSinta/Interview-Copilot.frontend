@@ -76,9 +76,11 @@ export const IconButtonWrapper = styled(Box)`
 export const IconWrapper = styled.div`
   width: 24px;
   height: 24px;
+
   svg {
     width: 100%;
     height: 100%;
+    border-radius: 28px;
   }
 `;
 
