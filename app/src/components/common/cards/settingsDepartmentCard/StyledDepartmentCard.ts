@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-export const UserCardContainer = styled.div`
+export const DepartmentCardContainer = styled.div`
   width: 100%;
-  height: 64px;
+  height: 42px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,15 +17,9 @@ export const UserCardContainer = styled.div`
   }
 `;
 
-export const ProfilePicture = styled.img`
-  margin-left: 16px;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background-color: gray;
-`;
 
-export const UserDetails = styled.div`
+export const DepartmentDetails = styled.div`
+  margin-left: 16px;
   flex-direction: column;
 `;
 

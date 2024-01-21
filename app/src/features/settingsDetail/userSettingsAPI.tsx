@@ -50,11 +50,12 @@ export const userAPI = createApi({
       IDepartment[],
       {
         company_id?: CompanyID;
+        sort_by: string;
       }
     >({
-      query: ({ company_id }) => {
+      query: ({ company_id, sort_by }) => {
         return {
-          url: `/company/departments?company=${company_id}`,
+          url: `/company/departments?company=${company_id}&sort_by=${sort_by}`,
           method: 'GET',
         };
       },
