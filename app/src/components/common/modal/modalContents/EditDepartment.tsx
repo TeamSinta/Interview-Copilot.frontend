@@ -4,6 +4,7 @@ import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBt
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
+import { closeModal } from '@/features/modal/modalSlice';
 import { ModalContentWrap } from './StyledModalContents';
 import { InputLayout } from '../../form/input/StyledInput';
 import { useRef, useState } from 'react';
@@ -54,24 +55,18 @@ const EditDepartment = () => {
   };
 
   const handleSaveClick = async () => {
-    // dispatch(getMemberAsync());
-    // dispatch(postData());
-    // dispatch(closeModal());
-    // dispatch(inviteMemberSliceReset());
-
-    console.log('Hi', 'Company:', workspace.id, id);
-    const departmentData = {
-      title: newTitle || null,
-    };
-
     try {
+      const departmentData = {
+        title: newTitle || null,
+      };
       await updateDepartment({
         company_id: workspace.id,
         department_id: id,
         departmentData: departmentData,
       });
+      dispatch(closeModal());
     } catch (error) {
-      console.log(error);
+      console.log('Failed to update Department', error);
     }
   };
 
