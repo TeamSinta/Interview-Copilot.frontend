@@ -3,32 +3,44 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IDepartment } from '../departments/departmentsInterface';
 
 export interface DepartmentState {
-  id: string;
-  title: string;
+  currentDepartment: {
+    id: string;
+    title: string;
+  };
+  allDepartments: IDepartment[];
 }
 
 const initialState: DepartmentState = {
-  id: '',
-  title: '',
+  currentDepartment: {
+    id: '',
+    title: '',
+  },
+  allDepartments: [],
 };
 
 const departmentSlice = createSlice({
   name: 'department',
   initialState,
   reducers: {
-    getDepartmentDetails: (state, actions) => {
-      state.id = actions.payload.id;
-      state.title = actions.payload.title;
+    getAllDepartments: (state, action) => {
+      state.allDepartments = action.payload;
     },
-    updateDepartmentDetails: (state, actions: PayloadAction<IDepartment>) => {
-      state.id = actions.payload.id;
-      state.title = actions.payload.title;
+    getDepartmentDetails: (state, action: PayloadAction<IDepartment>) => {
+      state.currentDepartment = action.payload.id;
+      state.currentDepartment = action.payload.title;
+    },
+    updateDepartmentDetails: (state, action: PayloadAction<IDepartment>) => {
+      state.currentDepartment = action.payload.id;
+      state.currentDepartment = action.payload.title;
     },
   },
 });
 
-export const { getDepartmentDetails, updateDepartmentDetails } =
-  departmentSlice.actions;
+export const {
+  getAllDepartments,
+  getDepartmentDetails,
+  updateDepartmentDetails,
+} = departmentSlice.actions;
 export const selectDepartment = (state: RootState) => state.department;
 
 export default departmentSlice.reducer;

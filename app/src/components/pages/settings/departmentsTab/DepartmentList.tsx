@@ -24,6 +24,7 @@ const DepartmentList: React.FC<{
     pageCount,
   } = usePagination(departments, ITEMS_PER_PAGE);
 
+  console.log('This is departmentsList:', departments);
   return (
     <>
       <PaginationComponent

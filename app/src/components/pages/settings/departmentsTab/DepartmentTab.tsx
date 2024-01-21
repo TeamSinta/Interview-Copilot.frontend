@@ -3,28 +3,26 @@ import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { AppDispatch } from '@/app/store';
 import { openModal } from '@/features/modal/modalSlice';
 import Stack from '@mui/material/Stack';
-import StyledInvitationBox from '@/components/common/form/inviteBox/InviteBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
-// import MemberList from './DepartmentList';\
+// import MemberList from './DepartmentList';
 import SortingDropdown from './SortingDropdown';
-import {
-  useFetchCompanyDepartments,
-  useFetchCompanyMembers,
-} from './useFetchAndSortMembers';
+import { useFetchCompanyMembers } from './useFetchAndSortMembers';
 import { useEffect, useState } from 'react';
 import DepartmentList from './DepartmentList';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { useGetCompanyDepartmentsQuery } from '@/features/departments/departmentsAPI';
-import { getDepartmentDetails } from '@/features/departments/departmentSlice';
+import { getAllDepartments } from '@/features/departments/departmentSlice';
+import { IDepartments } from '@/features/departments/departmentsInterface';
 
 const DepartmentTab = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
+  const [departments, setDepartments] = useState<IOption[]>([]);
   const [sortCriteria, setSortCritiera] = useState('');
   const [departmentId, setDepartmentId] = useState('');
 
@@ -32,11 +30,11 @@ const DepartmentTab = () => {
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
-  const { members } = useFetchCompanyMembers({
-    company_id: companyId,
-    department_id: departmentId,
-    sortCriteria: sortCriteria,
-  });
+  // const { members } = useFetchCompanyMembers({
+  //   company_id: companyId,
+  //   department_id: departmentId,
+  //   sortCriteria: sortCriteria,
+  // });
 
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(
@@ -51,7 +49,7 @@ const DepartmentTab = () => {
   };
 
   const {
-    data: departments,
+    data: departmentsData,
     isLoading,
     isSuccess,
     isError,
@@ -62,10 +60,16 @@ const DepartmentTab = () => {
   });
 
   useEffect(() => {
-    if (isSuccess) {
-      dispatch(getDepartmentDetails(departments));
+    if (isSuccess && departmentsData) {
+      console.log('success');
+      const departmentsList = departmentsData.map((dep) => ({
+        id: dep.id,
+        title: dep.title,
+      }));
+      setDepartments(departmentsList);
     }
-  }, [isSuccess, departments, dispatch]);
+    console.log(departments);
+  }, [isSuccess, departmentsData]); // Dependencies: isSuccess and departmentsData
 
   return (
     <>
