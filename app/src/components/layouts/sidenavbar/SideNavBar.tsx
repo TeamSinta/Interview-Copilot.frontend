@@ -7,7 +7,10 @@ import {
   InfoIcon,
   ChatIcon,
 } from '@/components/common/svgIcons/Icons';
-import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
+import {
+  BodyLMedium,
+  BodyMMedium,
+} from '@/components/common/typeScale/StyledTypeScale';
 import { type ReactElement } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
@@ -25,7 +28,8 @@ import { AppDispatch, RootState } from '@/app/store';
 import { resetUserState } from '@/features/authentication/authenticationSlice';
 import { resetCurrentWorkspace } from '@/features/workspace/userWorkspaceSlice';
 import ProfileCard from './profieCard/ProfileCard';
-
+import discordImage from '@/assets/svg/Discord.svg';
+import { Divider, Stack } from '@mui/material';
 export interface INavButtonLink {
   to: string;
   icon: JSX.Element;
@@ -101,24 +105,12 @@ const SideNavBar = (): ReactElement => {
     }
   };
 
-  const redirectToRoot = () => {
-    window.location.href = '/';
-  };
-
-  const buttonStyle = {
-    background: 'none',
-    border: 'none',
-    padding: 0,
-    cursor: 'pointer',
-    // Add any additional styling as needed
-  };
-
   return (
     <StyledStack
       className="p-top-4"
       direction="column"
       alignItems="flex-start"
-      spacing={4}
+      spacing={2}
     >
       <StyledSideNavLinksWrap>
         <DropWrapper>
@@ -172,6 +164,35 @@ const SideNavBar = (): ReactElement => {
         ))}
       </StyledSideNavLinksWrap>
       <Spacer />
+      <a
+        href="https://discord.gg/u8F6SQ7V"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="link"
+      >
+        <NavButton style={{ paddingLeft: '0px' }}>
+          <Stack
+            direction={'row'}
+            alignItems={'flex-start'}
+            sx={{ textAlign: 'flex-end', marginLeft: '8px' }}
+            spacing={1}
+          >
+            <img
+              src={discordImage}
+              alt="logo"
+              style={{
+                height: '24px',
+                width: '24px',
+                borderRadius: '6px',
+                marginRight: '2px',
+                marginTop: '0px',
+              }}
+            ></img>
+            <BodyMMedium>Join Discord </BodyMMedium>
+          </Stack>
+        </NavButton>
+      </a>
+      <Divider variant="middle" style={{ marginLeft: '0px', width: '103%' }} />
       <ProfileCard />
     </StyledStack>
   );

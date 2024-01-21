@@ -1,7 +1,6 @@
 import Stack from '@mui/material/Stack';
 import { Box } from '@mui/material';
 import React from 'react';
-import SearchInput from '@/components/common/form/serchInput/SearchInput';
 import {
   CalendarIcon,
   PlusIcon,
@@ -23,10 +22,6 @@ export interface IButton {
   text: string;
 }
 
-// interface TopNavBarProps {
-//   createCall: () => Promise<string>;
-//   startHairCheck: (url: string) => void;
-// }
 
 const TopNavBarDash = (): JSX.Element => {
   const navigate = useNavigate();

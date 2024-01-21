@@ -190,13 +190,16 @@ export const OptionUl = styled.ul<IDropdownOpen>`
     props.open
       ? css`
           top: 4px;
-          padding: 46px 0 0 0;
+          padding: 46px 0 8px 0px;
           width: 100%;
           opacity: 1;
           visibility: visible;
           z-index: -1;
           position: absolute;
-          max-height: 360px;
+          max-height: 400px;
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); /* Adjust shadow here */
+
+
           /* transition: opacity 0.3s ease, visibility 0.3s ease,
             transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32); */
           /* transition: 0.2s ease-in; */
