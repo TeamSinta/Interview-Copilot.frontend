@@ -18,6 +18,7 @@ import SideNavBarDropdown from './SideNavBarDropdown';
 import {
   DropWrapper,
   NavButton,
+  NavButtonDiscord,
   Spacer,
   StyledSideNavBarTitle,
   StyledSideNavLinksWrap,
@@ -170,7 +171,7 @@ const SideNavBar = (): ReactElement => {
         rel="noopener noreferrer"
         className="link"
       >
-        <NavButton style={{ paddingLeft: '0px' }}>
+        <NavButtonDiscord style={{ paddingLeft: '0px' }}>
           <Stack
             direction={'row'}
             alignItems={'flex-start'}
@@ -190,7 +191,7 @@ const SideNavBar = (): ReactElement => {
             ></img>
             <BodyMMedium>Join Discord </BodyMMedium>
           </Stack>
-        </NavButton>
+        </NavButtonDiscord>
       </a>
       <Divider variant="middle" style={{ marginLeft: '0px', width: '103%' }} />
       <ProfileCard />

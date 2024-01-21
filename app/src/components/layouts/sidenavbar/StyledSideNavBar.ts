@@ -29,7 +29,7 @@ export const NavButton = styled(Stack)`
   color: ${(props) => props.theme.colors.black};
   gap: 8px;
   border-radius: 6px;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 
   svg {
@@ -67,6 +67,49 @@ export const NavButton = styled(Stack)`
   }
 `;
 
+export const NavButtonDiscord = styled(Stack)`
+  height: 38px;
+  width: 222px;
+  color: ${(props) => props.theme.colors.black};
+  gap: 8px;
+  border-radius: 6px;
+  align-items: flex-start;
+  justify-content: center;
+
+  svg {
+    stroke: ${(props) => props.theme.colors.black};
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: ${(props) => props.theme.colors.palePurple};
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    transform: none;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    /* border: 1px solid ${(props) => props.theme.colors.black}; */
+  }
+
+  &.active {
+    background: ${(props) => props.theme.colors.palePurple};
+    /* border: 1.2px solid ${(props) => props.theme.colors.black}; */
+    color: #625df4;
+  }
+
+  .link {
+    width: 100%;
+    height: 100;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    gap: 8px;
+    padding-left: 8px;
+  }
+`;
 export const DropWrapper = styled(Stack)`
   height: auto !important;
   width: 220px;
