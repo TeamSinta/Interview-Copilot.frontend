@@ -1,7 +1,7 @@
 import { AppDispatch } from '@/app/store';
 import SettingsUserCard from '@/components/common/cards/settingsUserCard/SettingsUserCard';
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
-import PaginationComponent from '@/components/common/pagination/pagination';
+import PaginationComponent from '@/components/common/pagination/PaginationComponent';
 import { setMemberInfo } from '@/features/members/memberSlice';
 import { MembersList } from '@/features/settingsDetail/userSettingsInterface';
 import usePagination from '@/hooks/usePagination';

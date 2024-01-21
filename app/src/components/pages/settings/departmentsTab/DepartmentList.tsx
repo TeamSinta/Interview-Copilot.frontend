@@ -1,7 +1,7 @@
 import { AppDispatch } from '@/app/store';
 import SettingsDepartmentCard from '@/components/common/cards/settingsDepartmentCard/SettingsDepartmentCard';
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
-import PaginationComponent from '@/components/common/pagination/pagination';
+import PaginationComponent from '@/components/common/pagination/PaginationComponent';
 import { setDepartmentInfo } from '@/features/departments/departmentSlice';
 import { DepartmentsList } from '@/features/settingsDetail/userSettingsInterface';
 import usePagination from '@/hooks/usePagination';
