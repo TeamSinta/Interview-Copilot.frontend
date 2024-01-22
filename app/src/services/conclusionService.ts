@@ -29,19 +29,24 @@ const ConclusionData = (interviewRoundId: string) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // commented these lines for now
-        // const response1 = await instance.get(TranscriptAPI);
-        // const response2 = await instance.get(summarizedAnswersAPI);
-        // const response3 = await instance.get(summaryInfoAPI);
-        const response4 = await instance.get(videoUrlAPI);
-        const response5 = await instance.get(emojiFeedbackApi);
+        const TranscriptAPIResponse = await instance.get(TranscriptAPI);
+        const summarizedAnswersAPIResponse = await instance.get(
+          summarizedAnswersAPI
+        );
+        const summaryInfoAPIResponse = await instance.get(summaryInfoAPI);
+        const videoUrlAPIResponse = await instance.get(videoUrlAPI);
+        const emojiFeedbackApiResponse = await instance.get(emojiFeedbackApi);
 
-        // commented these lines for now
-        // setQuestionsTranscript(response1.data);
-        // setSummarizedAnswers(response2.data);
-        // setSummaryInfo(response3.data);
-        setVideoUrl(response4.data);
-        setEmojisData(response5.data);
+        if (TranscriptAPIResponse?.status === 200)
+          setQuestionsTranscript(TranscriptAPIResponse.data);
+        if (summarizedAnswersAPIResponse?.status === 200)
+          setSummarizedAnswers(summarizedAnswersAPIResponse.data);
+        if (summaryInfoAPIResponse?.status === 200)
+          setSummaryInfo(summaryInfoAPIResponse.data);
+        if (videoUrlAPIResponse?.status === 200)
+          setVideoUrl(videoUrlAPIResponse.data);
+        if (emojiFeedbackApiResponse?.status === 200)
+          setEmojisData(emojiFeedbackApiResponse.data);
       } catch (error: any) {
         console.error('Error fetching data:', error);
         setError(error);
