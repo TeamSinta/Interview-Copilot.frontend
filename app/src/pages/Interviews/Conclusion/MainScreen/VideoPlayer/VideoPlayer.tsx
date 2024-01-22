@@ -479,21 +479,19 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
         <div style={{ display: 'flex', margin: '0px' }}>
           {interviewerData?.map((data: any, index: any) => {
             return (
-              <>
-                <div
-                  key={index}
-                  style={{
-                    width: '100%',
-                    marginRight: '0px',
-                    marginLeft: '0px',
-                    marginTop: '45px',
-                    border: '1px solid white',
+              <div
+                key={index}
+                style={{
+                  width: '100%',
+                  marginRight: '0px',
+                  marginLeft: '0px',
+                  marginTop: '45px',
+                  border: '1px solid white',
 
-                    backgroundColor: 'white',
-                    opacity: data.speaker === 'candidate' ? '0.75' : '0.5',
-                  }}
-                ></div>
-              </>
+                  backgroundColor: 'white',
+                  opacity: data.speaker === 'candidate' ? '0.75' : '0.5',
+                }}
+              ></div>
             );
           })}
         </div>

@@ -9,16 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconFilter';
 import { getInterviews } from '../../features/interviews/interviewsAPI';
 import { useCookies } from 'react-cookie';
+import { IInterviewRound } from '@/types/interview';
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: string; // Change the type to string
   value: string; // Change the type to string
-}
-
-interface IInterviewRound {
-  title: string;
-  id: string;
+  video_uri?: string[];
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -53,7 +50,6 @@ export default function BasicTabs() {
 
   const navigate = useNavigate();
 
-  console.log(interviews);
   React.useEffect(() => {
     const fetchInterviews = async () => {
       const response = await getInterviews();
@@ -113,7 +109,11 @@ export default function BasicTabs() {
             }}
           ></Box>
           {activeTab === TABS.INTERVIEWS && (
-            <CustomTabPanel value={activeTab} index={TABS.INTERVIEWS}>
+            <CustomTabPanel
+              value={activeTab}
+              index={TABS.INTERVIEWS}
+              video_uri={interviews}
+            >
               <GridContainer>
                 {interviews.map((interviewRound: IInterviewRound, index) => (
                   <div
@@ -130,6 +130,7 @@ export default function BasicTabs() {
                       disable={false}
                       name={interviewRound.title}
                       date={interviewRound.created_at}
+                      video_uri={interviewRound.video_uri}
                     />
                   </div>
                 ))}
