@@ -15,15 +15,6 @@ import {
   BlockTypeSelect,
   BoldItalicUnderlineToggles,
   ListsToggle,
-  KitchenSinkToolbar,
-  AdmonitionDirectiveDescriptor,
-  diffSourcePlugin,
-  directivesPlugin,
-  frontmatterPlugin,
-  imagePlugin,
-  linkDialogPlugin,
-  linkPlugin,
-  sandpackPlugin,
 } from '@mdxeditor/editor';
 
 import { useState } from 'react';
@@ -47,28 +38,6 @@ const TextArea = (props: ITextAreaProps) => {
     const validationError = validate ? validate(newValue) : null;
     setError(validationError);
     onChange(newValue);
-  };
-
-  const PlainTextCodeEditorDescriptor = {
-    // always use the editor, no matter the language or the meta of the code block
-    match: (language: any, meta: any) => true,
-    // You can have multiple editors with different priorities, so that there's a "catch-all" editor (with the lowest priority)
-    priority: 0,
-    // The Editor is a React component
-    Editor: (props: any) => {
-      const cb = useCodeBlockEditorContext();
-      // stops the proppagation so that the parent lexical editor does not handle certain events.
-      return (
-        <div onKeyDown={(e) => e.nativeEvent.stopImmediatePropagation()}>
-          <textarea
-            rows={3}
-            cols={20}
-            defaultValue={props.code}
-            onChange={(e) => cb.setCode(e.target.value)}
-          />
-        </div>
-      );
-    },
   };
 
   return (
