@@ -34,7 +34,7 @@ export const CardCover = styled.div<ICardCover>`
   position: relative;
   width: 100%;
   height: 132px;
-  border-radius: 12px 12px 0 0;
+  border-radius: 6px 6px 0 0;
 `;
 
 export const CardContent = styled.div`

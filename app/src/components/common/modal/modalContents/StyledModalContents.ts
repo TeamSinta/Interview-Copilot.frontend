@@ -305,7 +305,7 @@ export const SelectedQuestionListWrap = styled.div`
 
 export const SelectedQuestionList = styled.div`
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 6px;
   background: ${(props) => props.theme.colors.lightPurple};
   display: flex;
   width: 312px;
@@ -323,12 +323,14 @@ export const SelectedQuestionList = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 `;
 
 export const ImgContainer = styled.div`
-  width: 50%;
   box-sizing: border-box;
   padding: 10px;
+  display: flex;
+  align-items: center;
 `;
 
 export const BtnContainer = styled.div`
@@ -340,7 +342,7 @@ export const BtnContainer = styled.div`
 `;
 
 export const ImageStyle = styled.img`
-  border-radius: 26px;
+  border-radius: 6px;
   background: #ffe2c1;
   margin-bottom: 8px;
   width: 311px;

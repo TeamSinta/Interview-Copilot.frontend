@@ -17,7 +17,7 @@ export const authAPI = createApi({
       query: (code) => {
         const urlPath = import.meta.env.VITE_USE_MOCK_LOGIN
           ? '/auth/mocklogin/'
-          : 'auth/login/';
+          : '/auth/login/';
         return {
           url: urlPath,
           method: 'POST',
