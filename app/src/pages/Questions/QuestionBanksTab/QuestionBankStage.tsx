@@ -56,7 +56,6 @@ const QuestionBankStage = () => {
     error,
   } = useGetQuestionBankDetailQuery(questionBankId);
 
-  console.log(QuestionBank);
   useEffect(() => {
     if (isSuccess) {
       setQuestionBanks(questionBankDetails);

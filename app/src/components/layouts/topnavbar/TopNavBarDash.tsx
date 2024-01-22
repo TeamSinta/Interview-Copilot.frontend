@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 import { Box } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CalendarIcon,
   PlusIcon,
@@ -15,6 +15,8 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
 import { createCall } from '../../../utils/dailyVideoService/videoCallSlice';
 import { H2Medium } from '@/components/common/typeScale/StyledTypeScale';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 export interface IButton {
   to: string;
@@ -22,12 +24,22 @@ export interface IButton {
   text: string;
 }
 
-
 const TopNavBarDash = (): JSX.Element => {
   const navigate = useNavigate();
 
   const dispatch: AppDispatch = useDispatch();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
   const startDemo = async () => {
     try {
       // response after creating a room
@@ -35,6 +47,29 @@ const TopNavBarDash = (): JSX.Element => {
 
       navigate(`/video-call/?roomUrl=${encodeURIComponent(responseRoom.payload)}
       `);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const planMeeting = async () => {
+    try {
+      const responseRoom = await dispatch(createCall());
+      const meetingUrl = `localhost:3001/video-call/?roomUrl=${encodeURIComponent(
+        responseRoom.payload
+      )}`;
+
+      // Copy the formatted meeting URL to the clipboard
+      navigator.clipboard.writeText(meetingUrl).then(
+        () => {
+          setSnackbarMessage(
+            'Meeting URL copied to clipboard Add link to your calender'
+          );
+          setSnackbarOpen(true);
+        },
+        (err) => {
+          console.error('Could not copy text: ', err);
+        }
+      );
     } catch (error) {
       console.error(error);
     }
@@ -57,7 +92,7 @@ const TopNavBarDash = (): JSX.Element => {
           <DropDownButton
             label="New Meeting"
             onClick={() => {}}
-            icon={<RightBracketIcon />}
+            icon={<RightBracketIcon className="right-bracket-icon" />}
             disable={false}
             className={BackgroundColor.ACCENT_PURPLE}
             buttons={[
@@ -69,13 +104,28 @@ const TopNavBarDash = (): JSX.Element => {
               {
                 label: 'Plan a Meeting',
                 icon: <CalendarIcon />,
-                onClick: () => {},
+                onClick: planMeeting,
               },
               // You can add more buttons dynamically by adding more objects to this array
             ]}
           />
         </ElWrap>
       </Stack>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </StyledTopNavBar>
   );
 };

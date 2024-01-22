@@ -15,7 +15,7 @@ import {
   useAudioTrack,
 } from '@daily-co/daily-react';
 import UserMediaError from '../UserMediaError/UserMediaError';
-import { Icon, Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem } from '@mui/material';
 import {
   VideoContainer,
   ButtonWrapper,
@@ -54,14 +54,11 @@ import {
 } from '../../../../features/interviews/interviewsAPI';
 import { IMember } from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
-import DropUpBtn from '@/components/common/dropUpBtn/dropUpBtn';
 import { TemplateQuestions } from '@/features/templates/templatesInterface';
-import DropdownFilter from '../../../../components/common/filters/dropdownFilter/DropdownFilter';
 import IconButton from '@mui/material/IconButton';
 import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import { Template } from '@/pages/Templates_/Templates';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
-import { useCookies } from 'react-cookie';
 import { TextBtnM } from '@/components/common/buttons/textBtn/TextBtn';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
@@ -156,8 +153,6 @@ export default function HairCheck({
         user_id: user_id, // Assuming you have the user's ID here
       };
 
-      console.log(candidateData);
-
       const candidateResponse = await createCandidate(candidateData);
       const candidate_id = candidateResponse.id; // Replace with actual response property
 
@@ -177,6 +172,8 @@ export default function HairCheck({
         email: 'support@sintahr.com',
         name: selectedTemplate.role_title,
         candidate_id: candidate_id,
+        department: response.department, // Add department from the response
+        description: response.description, // Add description from the response
       };
 
       setInterviewRoundDetails(interviewDetails).then(() => {

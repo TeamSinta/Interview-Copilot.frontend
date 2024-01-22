@@ -1,7 +1,7 @@
 // Define your module's exports with a named default export
 const RoomService = {
-  async createRoom() {
-    const exp = Math.round(Date.now() / 1000) + 60 * 30;
+  async createRoom(duration = 120) {
+    const exp = Math.round(Date.now() / 1000) + 60 * duration;
     const options = {
       properties: {
         exp,

@@ -53,7 +53,6 @@ export default function BasicTabs() {
 
   const navigate = useNavigate();
 
-  console.log(interviews);
   React.useEffect(() => {
     const fetchInterviews = async () => {
       const response = await getInterviews();

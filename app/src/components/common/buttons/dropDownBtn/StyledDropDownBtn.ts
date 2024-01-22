@@ -100,18 +100,21 @@ export const DropdownArrowIconDiv = styled.div<IDropdownOpen>`
     stroke: ${(props) => props.theme.colors.black};
   }
 
-  ${(props) =>
-    props.open
-      ? css`
-          svg {
+
+  .right-bracket-icon {
+    transition: transform 0.2s linear;
+    svg {
+    stroke: ${(props) => props.theme.colors.black};
+  }
+
+
+    ${(props) =>
+      props.open
+        ? css`
             transform: rotate(90deg);
-            transition: all 0.2s linear;
-          }
-        `
-      : css`
-          svg {
+          `
+        : css`
             transform: rotate(0deg);
-            transition: all 0.2s linear;
-          }
-        `}
+          `}
+  }
 `;

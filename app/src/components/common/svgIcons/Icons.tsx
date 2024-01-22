@@ -143,8 +143,8 @@ export const PlusIcon = (): JSX.Element => {
   return <Plus />;
 };
 
-export const RightBracketIcon = (): JSX.Element => {
-  return <RightBracket />;
+export const RightBracketIcon = ({ className = '' }): JSX.Element => {
+  return <RightBracket className={className} />;
 };
 
 export const PaperIcon = (): JSX.Element => {

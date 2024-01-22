@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
-import { Box } from '@mui/material';
-import React from 'react';
+import { Alert, Box, Snackbar } from '@mui/material';
+import React, { useState } from 'react';
 import SearchInput from '@/components/common/form/serchInput/SearchInput';
 import {
   CalendarIcon,
@@ -31,7 +31,18 @@ const TopNavBar = (): JSX.Element => {
   const navigate = useNavigate();
 
   const dispatch: AppDispatch = useDispatch();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
   const startDemo = async () => {
     try {
       // response after creating a room
@@ -39,6 +50,29 @@ const TopNavBar = (): JSX.Element => {
 
       navigate(`/video-call/?roomUrl=${encodeURIComponent(responseRoom.payload)}
       `);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const planMeeting = async () => {
+    try {
+      const responseRoom = await dispatch(createCall());
+      const meetingUrl = `localhost:3001/video-call/?roomUrl=${encodeURIComponent(
+        responseRoom.payload
+      )}`;
+
+      // Copy the formatted meeting URL to the clipboard
+      navigator.clipboard.writeText(meetingUrl).then(
+        () => {
+          setSnackbarMessage(
+            'Meeting URL copied to clipboard Add link to your calender'
+          );
+          setSnackbarOpen(true);
+        },
+        (err) => {
+          console.error('Could not copy text: ', err);
+        }
+      );
     } catch (error) {
       console.error(error);
     }
@@ -67,13 +101,28 @@ const TopNavBar = (): JSX.Element => {
               {
                 label: 'Plan a Meeting',
                 icon: <CalendarIcon />,
-                onClick: () => {},
+                onClick: planMeeting,
               },
               // You can add more buttons dynamically by adding more objects to this array
             ]}
           />
         </ElWrap>
       </Stack>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </StyledTopNavBar>
   );
 };
