@@ -90,7 +90,7 @@ function BottomNavBar(props: IBottomNavBar) {
   const callObject = useDaily();
   const { isSharingScreen, startScreenShare, stopScreenShare } =
     useScreenShare();
-  const { startRecording, stopRecording, isRecording, recordingId } =
+  const { startRecording, stopRecording, isRecording, recordingId, local, isLocalParticipantRecorded, updateRecording } =
     useRecording();
   const localParticipant = useLocalParticipant();
   const localVideo = useVideoTrack(localParticipant?.session_id!);
@@ -108,7 +108,6 @@ function BottomNavBar(props: IBottomNavBar) {
       };
       await updateInterviewRound(data);
     }
-    console.log('response++++', response);
   };
 
   const toggleVideo = useCallback(() => {

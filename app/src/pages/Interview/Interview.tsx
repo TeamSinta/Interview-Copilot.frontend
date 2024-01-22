@@ -521,7 +521,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       <StyledTopView>
         <Grid lg={12}>
           <Grid container>
-            <Grid lg={10} md={10} sm={10} xs={10}>
+            <Grid item lg={10} md={10} sm={10} xs={10}>
               <span style={{ fontWeight: '600', fontFamily: 'ChillaxSemi' }}>
                 {interviewDetails.title}
               </span>

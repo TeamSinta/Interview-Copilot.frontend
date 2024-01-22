@@ -117,8 +117,8 @@ export const CardWrap = styled.div`
 
 export const InterviewCardCover = styled.div<ICardCover>`
   //Use when we have cover url. Right now I used jpg file.
-  background-image: url(${(props) => props.imgUrl});
-  // background-image: url(${Cover});
+  /* background-image: url(${(props) => props.imgUrl}); */
+  background-image: url(${Cover});
   background-size: cover;
   background-position: center, right bottom;
   background-repeat: no-repeat, no-repeat;
