@@ -4,13 +4,13 @@ import { instance } from '@/utils/axiosService/customAxios';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 type FeedbackData = {
-  user: string;
+  user: string | null;
   interview_round: string;
   score?: number;
   reaction?: number;
   note?: string;
   time: string;
-  template_question: string;
+  template_question?: string;
 };
 
 export const getQuestionsBank = async () => {
@@ -66,16 +66,8 @@ export const getTemplate = async (
 export const updateInterviewQuestionRating = async (
   rating: number,
   question_id: string,
-  interview_round_id: string,
-  token: string
+  interview_round_id: string
 ) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-  };
-
   const data = {
     interview_round_id: interview_round_id,
     question_id: question_id,
@@ -83,11 +75,10 @@ export const updateInterviewQuestionRating = async (
   };
   const result = await instance.post(
     `${BACKEND_URL}/interview-rounds/rateInterviewRoundQuestion/`,
-    data,
-    config
+    data
   );
 
-  // return result.data;
+  return result.data;
 };
 
 export const sendFeedback = async (data: FeedbackData) => {
@@ -163,12 +154,8 @@ export const getCandidateById = async (id: string, token: string) => {
   return result.data;
 };
 
-export const getInterviews = async (token: string) => {
-  const result = await instance.get(`${BACKEND_URL}/interview-rounds/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getInterviews = async () => {
+  const result = await instance.get(`${BACKEND_URL}/interview-rounds/`);
 
   return result.data;
 };

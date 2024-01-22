@@ -1,74 +1,68 @@
-import { Grid, Stack } from '@mui/material';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  StyledIcon,
-  StyledInfoDescription,
-  StyledInterviewContent,
-  StyledTabInfo,
-  IndexStyle,
-  CompetencyStyle,
-  WhiteIndexStyle,
-  StyledInnerWrapper,
-  StyledAnswerPoints,
-  StyledInnerDiv,
-  StyledTopView,
-  BottomQuestionButtons,
-  EmojiOverlayWrapper,
-  StyledImage,
-  GridContainer,
-  GuidelinesSection,
-  InterviewLayout,
-} from './StyledInterview';
-import { NavButton } from '@/components/layouts/sidenavbar/StyledSideNavBar';
-import { CANDIDATE_DETAILS } from './InterviewConstant';
+import { AppDispatch, RootState } from '@/app/store';
+import { StyledIconBtnM } from '@/components/common/buttons/button/StyledBtn';
 import {
   BottomArrowIcon,
-  EmailIcon,
   LeftArrowIcon,
-  LinkedinIcon,
-  MapIcon,
-  PhoneIcon,
-  ResumeIcon,
   RightArrowIcon,
-  TwoArrowIcon,
+  TwoArrowIcon
 } from '@/components/common/svgIcons/Icons';
-import InterviewStageSlider from './InterviewStageSlider';
-import { QuestionMeta } from '../Interviews/Conclusion/MainScreen/InterviewQNA/Tabs/QuestionTabQNA';
-import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import { StyledIconBtnM } from '@/components/common/buttons/button/StyledBtn';
-import { Notes } from './Notes';
-import './index.css';
-import { BottomNavBar } from './Daily/BottomNavBar';
-import { RatingComponentL } from '../Interviews/Conclusion/MainScreen/InterviewQNA/RatingComponent';
-import Call from './Daily/Call/Call';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/app/store';
-import { startCall } from '@/features/videoCall/videoCallSlice';
-import { useWindowSize } from '@/hooks/useWindowSize';
-import {
-  getTemplateQuestionsAndTopics,
-  sendFeedback,
-  updateInterviewQuestionRating,
-} from '../../features/interviews/interviewsAPI';
-import { useDaily } from '@daily-co/daily-react';
-import SintaLogo from 'src/assets/svg/Sinta_call_logo.svg';
 import {
   BodyLMedium,
   BodySBold,
   BodySMedium,
 } from '@/components/common/typeScale/StyledTypeScale';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { NavButton } from '@/components/layouts/sidenavbar/StyledSideNavBar';
 import { InputLabelDiv } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
+import { startCall } from '@/features/videoCall/videoCallSlice';
+import { useWindowSize } from '@/hooks/useWindowSize';
+import { useDaily } from '@daily-co/daily-react';
+import { Grid, Stack } from '@mui/material';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import SintaLogo from 'src/assets/svg/Sinta_call_logo.svg';
+import {
+  getTemplateQuestionsAndTopics,
+  sendFeedback,
+  updateInterviewQuestionRating,
+} from '../../features/interviews/interviewsAPI';
+import { RatingComponentL } from '../Interviews/Conclusion/MainScreen/InterviewQNA/RatingComponent';
+import { QuestionMeta } from '../Interviews/Conclusion/MainScreen/InterviewQNA/Tabs/QuestionTabQNA';
+import { BottomNavBar } from './Daily/BottomNavBar';
+import Call from './Daily/Call/Call';
+import InterviewStageSlider from './InterviewStageSlider';
+import { Notes } from './Notes';
+import {
+  BottomQuestionButtons,
+  CompetencyStyle,
+  EmojiOverlayWrapper,
+  GridContainer,
+  GuidelinesSection,
+  IndexStyle,
+  InterviewLayout,
+  StyledAnswerPoints,
+  StyledImage,
+  StyledInnerDiv,
+  StyledInnerWrapper,
+  StyledTabInfo,
+  StyledTopView,
+  WhiteIndexStyle
+} from './StyledInterview';
+import './index.css';
 
-import ReactMarkdown from 'react-markdown';
-import { H3 } from '@/components/common/typeScale/TypeScale';
 import Chat from '@/components/common/form/chatBox/ChatBox';
+import { H3 } from '@/components/common/typeScale/TypeScale';
 import { useCookies } from 'react-cookie';
+import ReactMarkdown from 'react-markdown';
+import InfoTab from './Components/InfoTab';
+import InterviewSideBar from './Components/InterviewSideBar';
+import { IReactClickedState } from './Daily/BottomNavBar/BottomNavBar';
 
 const components = {
   h3: H3,
 };
 
-const Interview = ({ leaveCall, interviewDetails }) => {
+const Interview = ({ leaveCall, interviewDetails }: any) => {
   const stage = 'Round 3';
   const stageName = 'Pair-Programming';
   const { user } = useSelector((state: RootState) => state.user);
@@ -78,7 +72,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
   const [templateQuestionsAndTopics, setTemplateQuestionsAndTopics] =
     useState(null);
   const { width } = useWindowSize();
-  const [reactClicked, setReactClicked] = useState({
+  const [reactClicked, setReactClicked] = useState<IReactClickedState>({
     clicked: 0,
     message: '',
     position: {
@@ -206,140 +200,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     );
   }, [activeTab]);
 
-  const InfoTab = () => {
-    const ImageText = (data: any) => {
-      const { icon, text } = data;
-      return (
-        <div
-          style={{
-            display: 'flex',
-            fontSize: '10px',
-            alignContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <span
-            style={{
-              marginRight: '5px',
-            }}
-          >
-            <StyledIcon>{icon}</StyledIcon>
-          </span>
-          <span>{text}</span>
-        </div>
-      );
-    };
-
-    const ImageLinkText = (data: any) => {
-      const { icon, text, link, textDecoration } = data;
-      return (
-        <div
-          style={{
-            display: 'flex',
-            fontSize: '10px',
-            alignContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <span
-            style={{
-              marginRight: '5px',
-            }}
-          >
-            <StyledIcon>{icon}</StyledIcon>
-          </span>
-          <span>
-            <a style={{ textDecoration: textDecoration }} href={link}>
-              {text}
-            </a>
-          </span>
-        </div>
-      );
-    };
-    const briefInfo = useMemo(() => {
-      return (
-        <>
-          <Grid container>
-            {' '}
-            <ImageText icon={<EmailIcon />} text={interviewDetails.email} />
-          </Grid>
-          <br></br>
-          <Grid container>
-            <Grid md={6}>
-              {' '}
-              <ImageText
-                icon={<MapIcon />}
-                text={CANDIDATE_DETAILS.LOCATION}
-              />{' '}
-              <br></br>
-              <ImageLinkText
-                icon={<ResumeIcon />}
-                text={'Resume.pdf'}
-                link={CANDIDATE_DETAILS.LINKEDIN}
-                textDecoration={'normal'}
-              />
-            </Grid>
-            <Grid md={6}>
-              {' '}
-              <ImageText
-                icon={<PhoneIcon />}
-                text={CANDIDATE_DETAILS.PHONE}
-              />{' '}
-              <br></br>
-              <ImageLinkText
-                icon={<LinkedinIcon />}
-                text={'LinkedIn '}
-                link={CANDIDATE_DETAILS.LINKEDIN}
-                textDecoration={'underline'}
-              />
-            </Grid>
-          </Grid>
-        </>
-      );
-    }, []);
-    const jobDescription = useMemo(() => {
-      return (
-        <StyledInfoDescription>
-          {CANDIDATE_DETAILS.DESCRIPTION}
-        </StyledInfoDescription>
-      );
-    }, []);
-
-    const competencies = useMemo(() => {
-      return (
-        <div style={{ fontSize: '12px' }}>
-          <p
-            style={{
-              fontWeight: '600',
-              fontSize: '12px',
-              fontFamily: 'ChillaxSemi',
-            }}
-          >
-            {'Competencies'}
-          </p>
-          <br></br>
-          <div style={{ display: 'flex' }}>
-            {CANDIDATE_DETAILS.COMPETENCIES.map((a) => {
-              return <CompetencyStyle key={a}>{a}</CompetencyStyle>;
-            })}{' '}
-          </div>
-        </div>
-      );
-    }, []);
-
-    return (
-      <>
-        {briefInfo}
-        <br></br>
-        {jobDescription} <br></br>
-        {competencies}
-      </>
-    );
-  };
-
-  interface IState {
-    notes: string;
-  }
+ 
   const InterviewQuestionTab = (info: any) => {
     const { data } = info;
     const [activeData, setActiveData] = useState(data[0]);
@@ -349,9 +210,6 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     const [questionRatings, setQuestionRatings] = useState({});
     const [prevNum, setPrevNum] = useState(0);
     const [nextNum, setNextNum] = useState(2);
-    const [inputValue] = useState<IState>({
-      notes: '',
-    });
 
     const showQuestionDetail = (questionInfo: any, index: any) => {
       setCollapseQuestion(true);
@@ -727,7 +585,9 @@ const Interview = ({ leaveCall, interviewDetails }) => {
             </>
           ) : null}
 
-          {activeTab === 1 ? <InfoTab /> : null}
+          {activeTab === 1 ? (
+            <InfoTab interviewDetails={interviewDetails} />
+          ) : null}
           {activeTab === 2 ? (
             <InterviewQuestionTab data={templateQuestionsAndTopics?.data} />
           ) : null}
@@ -744,64 +604,6 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       </StyledInnerDiv>
     </>
   );
-
-  const InterviewSideBarWaiting = () => {
-    const [opacity, setOpacity] = useState(1);
-
-    useEffect(() => {
-      // This function will toggle the opacity between 1 and 0
-      const fade = () => {
-        setOpacity((prevOpacity) => (prevOpacity === 1 ? 0 : 1));
-      };
-
-      // Start an interval to toggle the opacity
-      const intervalId = setInterval(fade, 2000); // Change opacity every 3 seconds
-
-      // Clean up the interval on component unmount
-      return () => clearInterval(intervalId);
-    }, []);
-
-    return (
-      <Grid
-        style={{
-          height: '100%', // Adjust the height as needed
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          textAlign: 'center',
-        }}
-      >
-        <span
-          style={{
-            fontWeight: '600',
-            fontFamily: 'ChillaxSemi',
-            fontSize: '1.5em',
-            width: '100%',
-            opacity: opacity, // Apply dynamic opacity value
-            transition: 'opacity 1.5s ease-in-out', // Smooth transition for opacity change
-          }}
-        >
-          Waiting for candidate...
-        </span>
-      </Grid>
-    );
-  };
-
-  function InterviewSideBar(props: any) {
-    const { reactClicked, setReactClicked } = props;
-    return (
-      <div>
-        {/* {header} */}
-        <StyledInterviewContent isCollapsed={isInterviewSideBarCollapsed}>
-          {interviewDetails.name !== '' || interviewDetails.name !== null ? (
-            interviewSideBarData
-          ) : (
-            <InterviewSideBarWaiting />
-          )}
-        </StyledInterviewContent>
-      </div>
-    );
-  }
 
   const getEmojiClickTime = () => {
     const reactClickTime = Date.now();
@@ -821,7 +623,11 @@ const Interview = ({ leaveCall, interviewDetails }) => {
     return formattedTime;
   };
 
-  const emojiClicked = (e, emoji: string, emojiNumber: number) => {
+  const emojiClicked = (
+    e: React.MouseEvent,
+    emoji: string,
+    emojiNumber: number
+  ) => {
     // send feedback
     const data = {
       interview_round: interviewDetails.id,
@@ -853,7 +659,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       template_question: activeQuestionID,
     };
 
-    sendFeedback(data, cookies.access_token);
+    sendFeedback(data);
   }
 
   function EmojiOverlay() {
@@ -868,7 +674,7 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       };
     }, []);
 
-    const handleRemoveFlyingEmoji = useCallback((node) => {
+    const handleRemoveFlyingEmoji = useCallback((node: any) => {
       if (!overlayRef.current) return;
       overlayRef.current.removeChild(node);
     }, []);
@@ -878,13 +684,13 @@ const Interview = ({ leaveCall, interviewDetails }) => {
       const position = e.detail.position;
 
       if (emoji) {
-        callObject.sendAppMessage({ message: `${emoji}` }, '*');
+        callObject?.sendAppMessage({ message: `${emoji}` }, '*');
         handleDisplayFlyingEmoji(emoji, position);
       }
     }
 
     const handleDisplayFlyingEmoji = useCallback(
-      (emoji, position) => {
+      (emoji: string, position: { left: any; top: number; }) => {
         if (!overlayRef.current) {
           return;
         }
@@ -928,6 +734,9 @@ const Interview = ({ leaveCall, interviewDetails }) => {
             <InterviewSideBar
               setReactClicked={setReactClicked}
               reactClicked={reactClicked}
+              interviewDetails={interviewDetails}
+              isInterviewSideBarCollapsed={isInterviewSideBarCollapsed}
+              interviewSideBarData={interviewSideBarData}
             />
           </div>
         </InterviewLayout>
