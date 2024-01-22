@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Grid, Stack } from "@mui/material";
-import "./index.css";
-import { TOP_BAR_INFO } from "./Constants";
+import React, { useEffect, useState } from 'react';
+import { Grid, Stack } from '@mui/material';
+import './index.css';
+import { TOP_BAR_INFO } from './Constants';
 import {
   useGetInterviewRoundQuestionsQuery,
   useGetInterviewQuery,
   useGetTemplateQuery,
 } from '../../../features/interviews/interviewsAPI';
-import { useCookies } from "react-cookie";
+import { useCookies } from 'react-cookie';
 
-import { SubmitDecision } from "./MainScreen/SubmitDecisonButton/DecisionButton";
+import { SubmitDecision } from './MainScreen/SubmitDecisonButton/DecisionButton';
 import {
   BodyLBold,
   BodyLMedium,
@@ -60,16 +60,24 @@ const TopBar = ({ interviewRoundId }) => {
   }, [cookies.access_token, interviewRoundId]);
 
   const departmentName = departmentTitle || 'General';
-  const candidateTitle = candidateName || 'Unknown Contact';
+  const candidateTitle = candidateName || 'Unknown Candidate';
   return (
     <React.Fragment>
       <Grid container spacing={1} style={{ gap: '8px' }}>
-        <Grid item className="bar-container" style={{ width: '70%' }}>
-          <Grid item={true} xs={12} md={12} lg={7} className="column">
+        <Grid item className="bar-container">
+          <Grid
+            item={true}
+            xs={8}
+            md={7}
+            lg={7}
+            minWidth={'l'}
+            className="column"
+            style={{ minWidth: '330px' }}
+          >
             <Stack
               spacing={1}
               alignContent="center"
-              style={{ marginTop: '10px' }}
+              style={{ marginTop: '10px', minWidth: '338px' }}
             >
               <BodyLBold style={{ fontSize: '20px', fontWeight: 'bold' }}>
                 {candidateTitle}
@@ -105,7 +113,7 @@ const TopBar = ({ interviewRoundId }) => {
               </p>
             </Stack>
           </Grid>
-          <Grid item={true} xs={12} md={12} lg={3} className="column">
+          <Grid item={true} xs={2} md={3} lg={3} className="column">
             <div className="content-box">
               <p>{OVERALL_SCORE.LABEL}</p>
               <div id="progressContainer">
@@ -123,7 +131,7 @@ const TopBar = ({ interviewRoundId }) => {
               </BodyLBold>
             </div>
           </Grid>
-          <Grid item={true} xs={12} md={12} lg={2} className="column">
+          <Grid item={true} xs={2} md={2} lg={2} className="column">
             <div className="content-box">
               {' '}
               <p>{SENTIMENT.LABEL}</p>

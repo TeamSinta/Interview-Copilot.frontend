@@ -7,7 +7,6 @@ import {
   H3Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import DepartmentDropDown from '@/components/pages/settings/memberTab/DepartmentDropdown';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import { selectSetMember } from '@/features/members/memberSlice';
 import { closeModal } from '@/features/modal/modalSlice';
@@ -29,10 +28,11 @@ import {
   MemberInformationContainer,
   ProfilePicture,
 } from './StyledMemberSettings';
+import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 
 interface UserModalProps {
   user: {
-    id: string;
+    id?: string;
     first_name: string;
     last_name: string;
     email: string;
@@ -42,7 +42,6 @@ interface UserModalProps {
 }
 
 const MemberSettings: React.FC<UserModalProps> = () => {
-  
   const [memberDepartments, setMemberDepartments] = useState<IOption[]>([]);
   const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user.user);
@@ -50,7 +49,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
 
   const [getMemberDepartments] = useGetUserDepartmentsMutation();
   const [createDepartmentMember, { isSuccess, data }] =
-  useCreateDepartmentMemberMutation();
+    useCreateDepartmentMemberMutation();
   const dispatch = useDispatch<AppDispatch>();
 
   const companyId: CompanyID = (!workspace.id
@@ -62,7 +61,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
   useEffect(() => {
     getMemberDepartments({
       user_id: member.id,
-      company_id: member.id,
+      company_id: companyId,
     }).then((response) => {
       if ('data' in response) {
         const data = response.data as unknown as IDepartment[];
@@ -125,7 +124,7 @@ const MemberSettings: React.FC<UserModalProps> = () => {
           multi
         />
 
-        {/* Disabled checkbox for now 
+        {/* Disabled checkbox for now
         <CheckBox
           inputName="Check Box"
           label="Make Admin"

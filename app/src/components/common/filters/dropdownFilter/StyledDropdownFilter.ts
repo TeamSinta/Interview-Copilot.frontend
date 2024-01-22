@@ -98,12 +98,13 @@ export const StatusDropdownLayout = styled.div`
 export const StatusDropdownWrap = styled(DropdownWrap)`
   position: relative;
   width: 100%;
-
+  display: block;
+  cursor: pointer;
   &.hover {
-    cursor: pointer;
     box-shadow: 0px 4px 0px ${(props) => props.theme.colors.palePurple};
     transition: 0.5s;
     border-radius: 12px;
+    display: block;
   }
 `;
 
@@ -169,6 +170,16 @@ export const OptionA = styled.a`
   &:hover {
     background: rgba(255, 255, 255, 0.3);
   }
+  &.customOptionA {
+    display: flex;
+    padding: 10px 16px;
+    margin-left: 9px;
+    margin-right: 9px;
+    border-radius: 8px;
+  }
+  &.customOptionA:hover {
+    background: var(--BG, #f6f6fb);
+  }
 `;
 
 export const OptionUl = styled.ul<IDropdownOpen>`
@@ -178,11 +189,17 @@ export const OptionUl = styled.ul<IDropdownOpen>`
   ${(props) =>
     props.open
       ? css`
-          top: 40px;
-          padding: 12px 0;
+          top: 4px;
+          padding: 46px 0 8px 0px;
           width: 100%;
           opacity: 1;
           visibility: visible;
+          z-index: -1;
+          position: absolute;
+          max-height: 400px;
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); /* Adjust shadow here */
+
+
           /* transition: opacity 0.3s ease, visibility 0.3s ease,
             transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32); */
           /* transition: 0.2s ease-in; */
@@ -191,6 +208,16 @@ export const OptionUl = styled.ul<IDropdownOpen>`
           overflow-x: hidden;
           overflow-y: auto;
           transform-origin: 0 0;
+
+          &.customizeUl {
+            background: ${(props) => props.theme.colors.white};
+            box-shadow: 0px 4px 32px -2px rgba(0, 0, 0, 0.25);
+            margin-top: 40px;
+            padding: 0;
+            padding-bottom: 5px;
+            width: 180px;
+            max-height: 180px;
+          }
 
           ${DropdownEl} {
             outline: 1px solid ${(props) => props.theme.colors.black};

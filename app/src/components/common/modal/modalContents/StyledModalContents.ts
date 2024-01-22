@@ -305,7 +305,7 @@ export const SelectedQuestionListWrap = styled.div`
 
 export const SelectedQuestionList = styled.div`
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 6px;
   background: ${(props) => props.theme.colors.lightPurple};
   display: flex;
   width: 312px;
@@ -317,4 +317,33 @@ export const SelectedQuestionList = styled.div`
     display: flex;
     align-items: center;
   }
+`;
+
+/** ==== COVER LIBRARY ====*/
+export const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+export const ImgContainer = styled.div`
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+export const BtnContainer = styled.div`
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 26%;
+`;
+
+export const ImageStyle = styled.img`
+  border-radius: 6px;
+  background: #ffe2c1;
+  margin-bottom: 8px;
+  width: 311px;
 `;

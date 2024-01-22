@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-// import { instance } from '@/utils/axiosService/customAxios';
+import { instance } from '@/utils/axiosService/customAxios';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -11,10 +11,20 @@ type FeedbackData = {
   reaction?: number;
   note?: string;
   time: string;
+  template_question: string;
 };
 
 export const interviewsApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: BACKEND_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BACKEND_URL,
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as any)?.user?.token?.access;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     getQuestionsBank: builder.query({
       query: () => 'question/question-banks/',
@@ -121,12 +131,10 @@ export const interviewsApi = createApi({
       },
       {
         interviewRoundId: string;
-        token: string;
       }
     >({
-      query: ({ interviewRoundId, token }) => ({
+      query: ({ interviewRoundId }) => ({
         url: `interview-rounds/${interviewRoundId}`,
-        headers: { Authorization: `Bearer ${token}` },
       }),
     }),
 
@@ -177,3 +185,30 @@ export const {
   useGetTemplateQuestionsAndTopicsQuery,
   useGetInterviewRoundQuestionQuery,
 } = interviewsApi;
+
+export const createCandidate = async (candidateData: {
+  name: string;
+  username: string;
+  user_id: any;
+}) => {
+  const result = await instance.post(
+    `${BACKEND_URL}/interview-rounds/candidate/`,
+    candidateData
+  );
+  return result.data;
+};
+
+export const getInterviewRoundFeedback = async (
+  interview_round_id: string,
+  token: string
+) => {
+  const result = await instance.get(
+    `${BACKEND_URL}/question_response/interviewer-feedback/${interview_round_id}/`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return result.data;
+};

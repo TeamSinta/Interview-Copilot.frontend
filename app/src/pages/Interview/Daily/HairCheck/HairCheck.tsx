@@ -11,25 +11,32 @@ import {
   useDaily,
   useDailyEvent,
   DailyVideo,
+  useVideoTrack,
+  useAudioTrack,
 } from '@daily-co/daily-react';
 import UserMediaError from '../UserMediaError/UserMediaError';
-import { MenuItem } from '@mui/material';
+import { Icon, Menu, MenuItem } from '@mui/material';
 import {
   VideoContainer,
   ButtonWrapper,
   Wrapper,
-  SelectBox,
+  IconButtonWrapper,
   HomeContainer,
+  IconWrapper,
+  DropdownButton,
+  SelectBox,
 } from './StyledHairCheck';
 import { Stack } from '@mui/material';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import {
-  CloseIcon,
+  DropUpIcon,
   RightBracketIcon,
   VideoCam,
+  VideoCamoff,
   VideoMic,
+  VideoMicOff,
   VideoSound,
 } from '@/components/common/svgIcons/Icons';
 import TextInput from '@/components/common/form/textInput/TextInput';
@@ -42,6 +49,10 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../app/store';
 import { useCreateInterviewRoundMutation } from '../../../../features/interviews/interviewsAPI';
+import {
+  createCandidate,
+  createInterviewRound,
+} from '../../../../features/interviews/interviewsAPI';
 import { IMember } from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 import DropUpBtn from '@/components/common/dropUpBtn/dropUpBtn';
@@ -51,6 +62,10 @@ import IconButton from '@mui/material/IconButton';
 import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import { Template } from '@/pages/Templates_/Templates';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { useCookies } from 'react-cookie';
+import { TextBtnM } from '@/components/common/buttons/textBtn/TextBtn';
+import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
+import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -80,7 +95,7 @@ export default function HairCheck({
   const [getUserMediaError, setGetUserMediaError] = useState(false);
   const [templates, setTemplates] = useState<Template[]>([]);
   const [newTitle, setTitle] = useState('');
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
     null
   );
 
@@ -91,9 +106,11 @@ export default function HairCheck({
     ? user?.companies?.[0]?.id ?? workspace.id
     : workspace.id)! as unknown as CompanyID;
 
+  const departments = useFetchCompanyDepartments(companyId as CompanyID);
   //setQuestions
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
+  const [createInterviewRound] = useCreateInterviewRoundMutation();
 
   // const setTemplate
 
@@ -113,29 +130,54 @@ export default function HairCheck({
     return lastSegment;
   };
 
+  const generateRandomUsername = (length = 8) => {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
+  };
+
   const startMeeting = async () => {
     if (newTitle === '') throw new Error('Empty candidate username');
-    if (selectedTemplateId === '' || !selectedTemplateId)
-      throw new Error('Empty selected template');
+    if (!selectedTemplate) throw new Error('Empty selected template');
 
     try {
       const title = newTitle;
-      const candidate_id = 1;
       const meeting_room_id = getRoomNameFromUrl(callObject?.properties.url);
-      const data= {
+      const company_id = companyId;
+      const user_id = user.id;
+
+      const candidateData = {
+        name: 'Sinta Candidate',
+        username: generateRandomUsername(),
+        user_id: user_id ?? null, // Assuming you have the user's ID here
+      };
+
+
+      const candidateResponse = await createCandidate(candidateData);
+      const candidate_id = candidateResponse.id; // Replace with actual response property
+      const data = {
         title,
-        selectedTemplateId,
+        template_id: selectedTemplate.id, // Use the selectedTemplate's id
         meeting_room_id,
-        candidate_id
-      }
-      const response = await useCreateInterviewRoundMutation(data);
+        candidate_id,
+        user_id,
+        company_id,
+      };
+
+      const response = await createInterviewRound(data);
 
       const interviewDetails = {
         id: response.id,
         title: response.title,
         template_id: response.template_id,
         email: 'support@sintahr.com',
-        name: 'Template Details',
+        name: selectedTemplate.role_title,
         candidate_id: candidate_id,
       };
 
@@ -154,13 +196,7 @@ export default function HairCheck({
     }, [])
   );
 
-  const {
-    data: templatesData,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetTemplatesQuery();
+  const { data: templatesData, isSuccess } = useGetTemplatesQuery();
 
   useEffect(() => {
     if (isSuccess) {
@@ -188,7 +224,7 @@ export default function HairCheck({
   // };
   useEffect(() => {
     callObject?.setUserName(user.first_name || '');
-  }, [localParticipant]);
+  }, [callObject, localParticipant, user.first_name]);
 
   const join = (e: FormEvent) => {
     e.preventDefault();
@@ -237,6 +273,66 @@ export default function HairCheck({
     </MenuItem>
   ));
 
+  const localVideo = useVideoTrack(localParticipant?.session_id);
+  const localAudio = useAudioTrack(localParticipant?.session_id);
+  const mutedVideo = localVideo.isOff;
+  const mutedAudio = localAudio.isOff;
+
+  const toggleVideo = useCallback(() => {
+    callObject?.setLocalVideo(mutedVideo);
+  }, [callObject, mutedVideo]);
+
+  const toggleAudio = useCallback(() => {
+    callObject?.setLocalAudio(mutedAudio);
+  }, [callObject, mutedAudio]);
+
+  const [micMenuAnchorEl, setMicMenuAnchorEl] = useState(null);
+  const [speakerMenuAnchorEl, setSpeakerMenuAnchorEl] = useState(null);
+  const [cameraMenuAnchorEl, setCameraMenuAnchorEl] = useState(null);
+
+  // Handlers for opening and closing menus
+  const handleMicMenuClick = (event) => {
+    setMicMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleSpeakerMenuClick = (event) => {
+    setSpeakerMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleCameraMenuClick = (event) => {
+    setCameraMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setMicMenuAnchorEl(null);
+    setSpeakerMenuAnchorEl(null);
+    setCameraMenuAnchorEl(null);
+  };
+
+  const handleSetDepartment = () => {
+    console.log('set department');
+  };
+
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{
+              paddingTop: '40px',
+              color: 'gray',
+              textAlign: 'center',
+            }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return getUserMediaError ? (
     <UserMediaError />
   ) : (
@@ -259,18 +355,65 @@ export default function HairCheck({
               direction="row"
               sx={{ marginTop: '4px', gap: '4px', display: 'flex' }}
             >
-              <DropUpBtn
-                mainButtonContent={<VideoMic />}
-                dropdownItems={microphoneItems}
-              />
-              <DropUpBtn
-                mainButtonContent={<VideoSound />}
-                dropdownItems={speakerItems}
-              />
-              <DropUpBtn
-                mainButtonContent={<VideoCam />}
-                dropdownItems={cameraItems}
-              />
+              <IconButtonWrapper>
+                <IconButton onClick={toggleVideo}>
+                  {mutedVideo ? <VideoCamoff /> : <VideoCam />}
+                </IconButton>
+                <DropdownButton onClick={handleCameraMenuClick}>
+                  <IconWrapper>
+                    <DropUpIcon />
+                  </IconWrapper>
+                </DropdownButton>
+              </IconButtonWrapper>
+              <Menu
+                anchorEl={cameraMenuAnchorEl}
+                keepMounted
+                open={Boolean(cameraMenuAnchorEl)}
+                onClose={handleClose}
+              >
+                {cameraItems}
+              </Menu>
+              {/* Toggle Audio Button */}
+              <IconButtonWrapper>
+                <IconButton onClick={toggleAudio}>
+                  {mutedAudio ? <VideoMicOff /> : <VideoMic />}
+                </IconButton>
+                <DropdownButton onClick={handleMicMenuClick}>
+                  <IconWrapper>
+                    <DropUpIcon />
+                  </IconWrapper>
+                </DropdownButton>
+              </IconButtonWrapper>
+
+              <Menu
+                anchorEl={micMenuAnchorEl}
+                keepMounted
+                open={Boolean(micMenuAnchorEl)}
+                onClose={handleClose}
+              >
+                {microphoneItems}
+              </Menu>
+              {/* Audio Button with Dropdown */}
+              <IconButtonWrapper>
+                <IconButton>
+                  <VideoSound />
+                </IconButton>
+                <DropdownButton onClick={handleSpeakerMenuClick}>
+                  <IconWrapper>
+                    <DropUpIcon />
+                  </IconWrapper>
+                </DropdownButton>
+              </IconButtonWrapper>
+              <Menu
+                anchorEl={speakerMenuAnchorEl}
+                keepMounted
+                open={Boolean(speakerMenuAnchorEl)}
+                onClose={handleClose}
+              >
+                {speakerItems}
+              </Menu>
+
+              {/* Microphone Button with Dropdown */}
             </Stack>
           </VideoContainer>
         )}
@@ -288,9 +431,14 @@ export default function HairCheck({
               spacing={1}
             >
               <H3Bold>Create a meeting</H3Bold>
-              <IconButton onClick={cancelCall} style={{ stroke: 'black' }}>
-                <CloseIcon />
-              </IconButton>
+              <ElWrap w={60}>
+                <TextBtnM
+                  disable={false}
+                  label="Back"
+                  onClick={cancelCall}
+                  className={BackgroundColor.WHITE}
+                />
+              </ElWrap>
             </Stack>
             <BodySMedium>Title of your meeting</BodySMedium>
             <div style={{ width: '100%' }}>
@@ -299,11 +447,11 @@ export default function HairCheck({
                   name="title"
                   disable={false}
                   placeholder={`Enter your Interview title here!`}
-                  error={false}
                   value={newTitle}
                   onChange={(e) => {
                     setTitle(e.target.value);
                   }}
+                  validate={validateTitle}
                 />
               </ElWrap>
             </div>
@@ -311,15 +459,11 @@ export default function HairCheck({
           <div
             style={{ width: '100%', marginTop: '16px', marginBottom: '34px' }}
           >
-            <DropdownFilter
-              label="Department"
-              optionArr={[
-                { name: 'Name (A-Z)', value: 'name-asc' },
-                { name: 'Name (Z-A)', value: 'name-desc' },
-                { name: 'Permission Level', value: 'permission' },
-              ]}
-              dropdownName="All templates"
-              value={''}
+            {' '}
+            <DepartmentDropDown
+              departments={departments}
+              handleSetDepartment={handleSetDepartment} // this should set the departmentid to then fetch the templates for that department only?
+              workspaceId={workspace.id}
             />
           </div>
           <div style={{ height: '100%' }}>
@@ -343,9 +487,12 @@ export default function HairCheck({
                     })
                   )}
                   onClick={(templateId) => {
-                    setSelectedTemplateId(templateId);
+                    const selected = templates.find(
+                      (template) => template.id === templateId
+                    );
+                    setSelectedTemplate(selected || null);
                   }}
-                  selected={selectedTemplateId === template.id}
+                  selected={selectedTemplate?.id === template.id}
                 />
               )}
             />
@@ -360,15 +507,6 @@ export default function HairCheck({
                 className={BackgroundColor.ACCENT_PURPLE}
               />
             </ElWrap>
-            {/* <ElWrap w={360} h={40}>
-              <TextIconBtnL
-                disable={false}
-                label="Back to Start"
-                icon={<RightBracketIcon />}
-                onClick={cancelCall}
-                className={BackgroundColor.WHITE}
-              />
-            </ElWrap> */}
           </ButtonWrapper>
         </SelectBox>
       </HomeContainer>

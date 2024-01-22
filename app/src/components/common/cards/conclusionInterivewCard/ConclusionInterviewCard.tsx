@@ -17,26 +17,8 @@ interface IConclusionInterviewCardProps {
   date: number;
 }
 
-const formatDateDifference = (creationDate: number): string => {
-  const currentDate = new Date();
-  const diffInMilliseconds = currentDate.getTime() - creationDate;
-
-  const years = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24 * 365));
-  if (years > 0) {
-    return `${years} ${years === 1 ? 'year' : 'years'} ago`;
-  }
-
-  const months = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24 * 30));
-  if (months > 0) {
-    return `${months} ${months === 1 ? 'month' : 'months'} ago`;
-  }
-
-  const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
-  if (days > 0) {
-    return `${days} ${days === 1 ? 'day' : 'days'} ago`;
-  }
-
-  return 'Today';
+const formatDateDifference = (creationDate: string) => {
+  return creationDate.split(',')[0];
 };
 
 const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {

@@ -43,6 +43,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Template } from './Templates_/Templates';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 
 const InterviewStage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -52,8 +53,6 @@ const InterviewStage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [departmentId, setDepartmentId] = useState('');
-  const [sortCriteria, setSortCritiera] = useState('');
 
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
@@ -72,15 +71,6 @@ const InterviewStage = () => {
   } = useGetTemplatesQuery();
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
-
-  const departments = useFetchCompanyDepartments(companyId as CompanyID);
-
-  const handleSetDepartment = (value: string) => {
-    setDepartmentId(value);
-  };
-  const handleSortMembers = (value: string) => {
-    setSortCritiera(value);
-  };
 
   useEffect(() => {
     if (templateId) {
@@ -220,8 +210,9 @@ const InterviewStage = () => {
       <InterviewOverviewContainer>
         <Title>
           <H2Bold>Interview Overview</H2Bold>
-          <ElWrap w={32} h={32}>
-            <IconBtnM
+          <ElWrap w={200} h={38}>
+            <TextIconBtnL
+              label="Edit Details"
               icon={<EditIcon />}
               disable={false}
               className={BackgroundColor.WHITE}

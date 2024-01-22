@@ -5,10 +5,10 @@ export const Card = styled.div`
   width: inherit;
   height: inherit;
   position: relative;
-  border-radius: 12px;
+  border-radius: 8px;
   background: ${(props) => props.theme.colors.lightPurple};
   transition: 0.3s;
-
+  z-index: 0;
   &.hover {
     cursor: pointer;
     background: ${(props) => props.theme.colors.palePurple};
@@ -34,7 +34,7 @@ export const CardCover = styled.div<ICardCover>`
   position: relative;
   width: 100%;
   height: 132px;
-  border-radius: 12px 12px 0 0;
+  border-radius: 6px 6px 0 0;
 `;
 
 export const CardContent = styled.div`

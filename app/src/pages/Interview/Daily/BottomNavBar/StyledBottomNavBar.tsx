@@ -60,7 +60,7 @@ export const StyledBottomNavButtons = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #433c53;
   padding: 10px;
   color: white;

@@ -8,9 +8,10 @@ import { closeModal } from '@/features/modal/modalSlice';
 import { addNewQuestionBank } from '@/features/questions/questionBankSlice';
 import { useAddQuestionBankMutation } from '@/features/questions/questionsAPISlice';
 import { BackgroundColor } from '@/features/utils/utilEnum';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
+import { validateDescription, validateTitle } from '@/utils/inputValidations';
 
 const titleInputArg = {
   error: false,
@@ -36,10 +37,38 @@ const CreateQuestionBank = () => {
     title: '',
     description: '',
   });
+  const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
+  const descriptionInputRef = useRef<{ triggerValidation: () => void } | null>(
+    null
+  );
   const dispatch = useDispatch<AppDispatch>();
   const [addQuestionBank] = useAddQuestionBankMutation();
 
   const handleNext = async () => {
+    let hasError = false; // Track if there's any validation error
+
+    if (!inputValue.title.trim()) {
+      if (titleInputRef.current) {
+        titleInputRef.current.triggerValidation();
+      }
+      hasError = true;
+    } else {
+      hasError = false; // Reset to false when the title is not empty
+    }
+
+    if (!inputValue.description.trim()) {
+      if (descriptionInputRef.current) {
+        descriptionInputRef.current.triggerValidation();
+      }
+      hasError = true;
+    } else {
+      hasError = false; // Reset to false when the description is not empty
+    }
+
+    if (hasError) {
+      return; // Stop if there's any validation error
+    }
+
     try {
       const requestData = {
         title: inputValue.title,
@@ -76,6 +105,7 @@ const CreateQuestionBank = () => {
           {...titleInputArg}
           onChange={inputOnChange}
           value={inputValue['title']}
+          validate={validateTitle}
         />
       </InputLayout>
       <InputLayout>
@@ -83,6 +113,7 @@ const CreateQuestionBank = () => {
         <TextArea
           {...descriptionInputArg}
           onChange={textAreaOnChange}
+          validate={validateDescription}
           value={inputValue['description']}
         />
       </InputLayout>

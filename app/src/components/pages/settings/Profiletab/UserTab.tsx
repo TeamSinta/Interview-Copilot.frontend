@@ -53,6 +53,22 @@ const UserTab = () => {
     }
   };
 
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
+          >
+            Name is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <>
       <Stack direction={{ md: 'row', xs: 'column' }} spacing={4}>
@@ -116,6 +132,7 @@ const UserTab = () => {
               <TextInput
                 disable={false}
                 placeholder={`${user.first_name}`}
+                validate={validateTitle}
                 error={false}
                 onChange={(e) => {
                   setFirstName(e.target.value);
@@ -129,6 +146,7 @@ const UserTab = () => {
               <TextInput
                 disable={false}
                 placeholder={`${user.last_name}`}
+                validate={validateTitle}
                 error={false}
                 onChange={(e) => {
                   setLastName(e.target.value);

@@ -20,6 +20,7 @@ const STATE = {
   JOINING: 'STATE_JOINING',
   JOINED: 'STATE_JOINED',
   LEAVING: 'STATE_LEAVING',
+  EXITING: 'STATE_EXITING',
   ERROR: 'STATE_ERROR',
   HAIRCHECK: 'STATE_HAIRCHECK',
 };
@@ -71,6 +72,16 @@ export default function VideoCall() {
     }
   }, [callObject, appState]);
 
+  const startExitingCall = useCallback(() => {
+    if (!callObject) return;
+    navigate('/dashboard');
+    callObject.destroy().then(() => {
+      setRoomUrl(null);
+      setCallObject(null);
+      setAppState(STATE.EXITING);
+    });
+  }, [callObject]);
+
   const startRecordingCall = useCallback(() => {
     callObject?.startRecording();
   }, [callObject]);
@@ -78,8 +89,6 @@ export default function VideoCall() {
   const stopRecordingCall = useCallback(() => {
     callObject?.stopRecording();
   }, [callObject]);
-
-  const urlRef = useRef();
 
   useEffect(() => {
     if (roomUrl) {
@@ -108,7 +117,13 @@ export default function VideoCall() {
   useEffect(() => {
     if (!callObject) return;
 
-    const events = ['joined-meeting', 'left-meeting', 'error', 'camera-error'];
+    const events = [
+      'joined-meeting',
+      'left-meeting',
+      'error',
+      'camera-error',
+      'exit',
+    ];
 
     function handleNewMeetingState() {
       switch (callObject.meetingState()) {
@@ -122,7 +137,7 @@ export default function VideoCall() {
             setRoomUrl(null);
             setCallObject(null);
             setAppState(STATE.IDLE);
-            navigate('/interviews/conclusion', {
+            navigate('/interviews/conclusion/', {
               state: { id: interviewRoundId, useTimer: true },
             });
           });
@@ -167,7 +182,7 @@ export default function VideoCall() {
         <DailyProvider callObject={callObject}>
           <HairCheck
             joinCall={joinCall}
-            cancelCall={startLeavingCall}
+            cancelCall={startExitingCall}
             setInterviewRoundDetails={setDetails}
           />
         </DailyProvider>

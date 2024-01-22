@@ -64,6 +64,13 @@ a{
   text-decoration: none;
   color: inherit;
 }
+
+/* Removes the scrollbar throughout the app */
+scrollbar-width: none;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
 `;
 
 export default GlobalStyle;

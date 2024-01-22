@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export const InterviewStageContainer = styled.div`
   display: flex;
   height: 100%;
-  gap: 31px;
+  gap: 16px;
   flex-direction: column;
 `;
 
@@ -25,8 +25,10 @@ export const InterviewOverviewContainer = styled(InterviewStageTopContainer)`
 
 export const Title = styled.div`
   display: flex;
-  gap: 16px;
+  justify-content: space-between;
+  width: 100%;
   align-items: center;
+  padding: 0px 2px 0 0;
 `;
 
 export const Subtitle = styled.div`
@@ -48,7 +50,7 @@ export const Subtitle = styled.div`
 `;
 
 export const BoderBox = styled.div`
-  border-radius: 28px;
+  border-radius: 8px;
   border: 1px solid #e0e0e0;
 `;
 

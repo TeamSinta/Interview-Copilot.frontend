@@ -7,7 +7,7 @@ export const OverviewInterviewers = styled(BoderBox)`
   width: 360px;
 
   ${Title} {
-    margin-bottom: 23px;
+    margin-bottom: 8px;
   }
 
   ${(props) => props.theme.devices.lg} {

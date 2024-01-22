@@ -36,7 +36,7 @@ export const useFetchCompanyMembers = ({
   return { members };
 };
 
-export const useFetchCompanyDepartments = (companyId: CompanyID) => {
+export const useFetchCompanyDepartments = (companyId: CompanyID, trigger?: number) => {
   const [departments, setDepartments] = useState<IOption[]>([]);
   const [getCompanyDepartments] = useGetCompanyDepartmentsMutation();
 
@@ -48,7 +48,7 @@ export const useFetchCompanyDepartments = (companyId: CompanyID) => {
             (department) => ({
               name: department.title,
               value: department.id.toString(),
-              selected: false
+              selected: false,
             })
           );
           setDepartments(transformedData);
@@ -57,7 +57,7 @@ export const useFetchCompanyDepartments = (companyId: CompanyID) => {
         }
       })
       .catch((error) => console.error('Error fetching company users:', error));
-  }, [companyId, getCompanyDepartments]);
+  }, [companyId, getCompanyDepartments, trigger]);
 
   return departments;
 };

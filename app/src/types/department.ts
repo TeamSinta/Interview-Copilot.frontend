@@ -1,7 +1,7 @@
 export interface IUserData {
   first_name: string | null;
   last_name: string | null;
-};
+}
 
 export interface IMembersList {
   id: number;
@@ -11,9 +11,9 @@ export interface IMembersList {
   email: string;
   role: string;
   profile_picture: string | null;
-};
+}
 
 export interface IDepartment {
   title: string;
   id: string;
-};
+}

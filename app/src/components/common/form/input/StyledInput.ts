@@ -6,6 +6,9 @@ export const InputLayout = styled.div`
   flex-direction: column;
   gap: 8px;
   position: relative;
+  &.customizeForQuestion {
+    margin-bottom: 15px;
+  }
 `;
 
 export const Input = styled.input`
@@ -25,19 +28,37 @@ export const Input = styled.input`
   }
 
   &.error {
-    box-shadow: 0px 2px 0px 0px ${(props) => props.theme.colors.red};
+    box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
+  }
+  &.customStyle {
+    padding: 10px 16px;
+    border-radius: 8px;
+    ::placeholder {
+      color: #979696;
+    }
   }
 `;
 
 export const InputError = styled.div`
   width: 100%;
   height: 40px;
-  background: ${(props) => props.theme.colors.red};
+
   position: absolute;
   bottom: 6px;
   border-radius: 12px;
   z-index: -999;
 `;
+
+export const TextAreaError = styled.div`
+  font-size: 12px;
+  font-family: 'Chillax';
+  position: absolute;
+  bottom: -20px;
+  right:0px;
+  border-radius: 12px;
+  z-index: 999;
+  color: gray;
+  `;
 
 export const SerchInputLayout = styled.div`
   position: relative;
@@ -64,6 +85,8 @@ export const InputIcon = styled.div`
 export const StyledTextarea = styled.textarea`
   border: none;
   line-height: 150%;
+  width: 100%;
+
   overflow: auto;
   outline: none;
   -webkit-box-shadow: none;
@@ -84,13 +107,31 @@ export const StyledTextarea = styled.textarea`
   :focus {
     outline: 1px solid ${(props) => props.theme.colors.black};
   }
+  :disabled {
+    cursor: not-allowed;
+    opacity: 0.30000001192092896;
+  }
+  &.error {
+    box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
+  }
+
+  &.customStyle {
+    border-radius: 8px;
+    ::placeholder {
+      color: #979696;
+    }
+    :focus {
+      outline: none;
+    }
+  }
 `;
 
 export const StyledTextareaDiv = styled.div`
   .prose {
-    width: max-content;
+    // width: 100%;
     height: max-content;
     top: 20px;
+    left: 20px;
     position: absolute;
 
     ::after {
@@ -100,9 +141,17 @@ export const StyledTextareaDiv = styled.div`
     &:focus {
       outline: none;
     }
+    &.customProse {
+      top: 14px;
+      left: 16px;
+      right: 16px;
+      position: absolute;
+    }
   }
 
   .mdx-textarea {
+    height: 100%;
+    width: 100%;
     border: none;
     line-height: 150%;
     overflow: auto;
@@ -112,7 +161,7 @@ export const StyledTextareaDiv = styled.div`
     box-shadow: none;
     resize: none;
     border-radius: 12px;
-    padding: 20px;
+
     min-height: 82px;
     display: flex;
     justify-content: start;
@@ -121,7 +170,10 @@ export const StyledTextareaDiv = styled.div`
     font: inherit;
     font-size: 14px;
     position: relative;
-  }
+    &.error {
+      box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
+    }
+     }
   ul {
     list-style: disc;
     font-size: 12px;

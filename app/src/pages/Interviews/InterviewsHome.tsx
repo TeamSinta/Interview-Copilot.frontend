@@ -1,14 +1,13 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import { Stack } from "@mui/material";
-import { BodySMedium } from "@/components/common/typeScale/StyledTypeScale";
-import { H1 } from "@/components/common/typeScale/StyledTypeScale";
 import ConclusionInterviewCard from "@/components/common/cards/conclusionInterivewCard/ConclusionInterviewCard";
-import { GridContainer } from "./StyledConclusions";
-import { useNavigate } from "react-router-dom";
 import TextIconFilter from "@/components/common/filters/textIconFilter/TextIconFilter";
-import { useGetInterviewsQuery } from "../../features/interviews/interviewsAPI";
+import { BodySMedium, H1 } from "@/components/common/typeScale/StyledTypeScale";
+import { Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import * as React from "react";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import { useGetInterviewsQuery } from "../../features/interviews/interviewsAPI";
+import { GridContainer } from "./StyledConclusions";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -53,6 +52,7 @@ export default function BasicTabs() {
 
   const navigate = useNavigate();
 
+  console.log(interviews);
   React.useEffect(() => {
     const fetchInterviews = async () => {
       const response = await useGetInterviewsQuery(cookies.access_token);
@@ -125,10 +125,10 @@ export default function BasicTabs() {
                   >
                     <ConclusionInterviewCard
                       key={index}
-                      title={interviewRound.title}
+                      title={interviewRound.candidate_name}
                       disable={false}
-                      name={'default name'}
-                      date={new Date().getTime() - 1000 * 60 * 60 * 24 * 15}
+                      name={interviewRound.title}
+                      date={interviewRound.created_at}
                     />
                   </div>
                 ))}

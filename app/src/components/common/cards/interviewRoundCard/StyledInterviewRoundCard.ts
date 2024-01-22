@@ -11,7 +11,7 @@ export const StyledCard = styled(Card)`
   height: 134px;
   position: relative;
   background: #f6f6fb;
-  border-radius: 12px;
+  border-radius: 6px;
   &:hover {
     background: #eaeaf4;
     transition: background-color 0.3s ease-in-out;

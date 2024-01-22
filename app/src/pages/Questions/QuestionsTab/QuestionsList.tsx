@@ -1,3 +1,6 @@
+import { AppDispatch } from '@/app/store';
+import { useParams } from 'react-router-dom';
+
 import {
   IconBtnL,
   IconBtnM,
@@ -25,12 +28,8 @@ import {
 import { H3 } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
-import {
-  BackgroundColor,
-  StatusDropdownFilter,
-} from '@/features/utils/utilEnum';
-import React, { useEffect, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import React, { useState } from 'react';
 
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { Stack } from '@mui/material';
@@ -44,16 +43,22 @@ import {
   OverviewDetailTitle,
   OverviewDetails,
 } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
-import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import {
+  useDeleteQuestionMutation,
+  useGetQuestionsQuery,
+} from '@/features/questions/questionsAPISlice';
 import Loading from '@/components/common/elements/loading/Loading';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { useDispatch } from 'react-redux';
+import { openModal } from '@/features/modal/modalSlice';
+import ReactMarkdown from 'react-markdown';
 
 interface IState {
   [key: string]: any;
   title: string;
   time: number;
-  detail: string;
+  guidelines: string;
 }
-
 const components = {
   h3: H3,
 };
@@ -64,11 +69,12 @@ const QuestionList = () => {
   const [openItems, setOpenItems] = useState(new Set());
   const [edit, setEdit] = useState(new Set());
   const [inputValue, setInputValue] = useState<IState>({
-    title: '',
+    question_text: '',
     time: 0,
-    detail: '',
+    guidelines: '',
+    difficulty: null,
+    competency: '',
   });
-
   const {
     data: questionsResponse,
     isLoading,
@@ -76,6 +82,25 @@ const QuestionList = () => {
     isError,
     error,
   } = useGetQuestionsQuery();
+  const [deleteQuestion] = useDeleteQuestionMutation();
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { templateId } = useParams();
+  const templateID = templateId;
+
+  const onClickModalOpen = (
+    modalType: MODAL_TYPE,
+    templateID: any,
+    dataForEdit?: any
+  ) => {
+    dispatch(
+      openModal({
+        modalType: modalType,
+        templateID: templateID,
+        dataForEdit: dataForEdit,
+      })
+    );
+  };
 
   React.useEffect(() => {
     if (isSuccess) {
@@ -123,6 +148,15 @@ const QuestionList = () => {
     }
   };
 
+  const handleDeleteTemplateQuestion = async (questionID: number) => {
+    try {
+      console.log('Question id here: ', questionID);
+      await deleteQuestion(questionID);
+    } catch (error) {
+      console.error('Error deleting question:', error);
+    }
+  };
+
   const inputOnChange = (
     event:
       | React.ChangeEvent<HTMLInputElement>
@@ -135,7 +169,41 @@ const QuestionList = () => {
   };
 
   const textAreaOnChange = (value: string) => {
-    inputValue['detail'] = value;
+    inputValue['guidelines'] = value;
+  };
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
+          >
+            Question is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
+  const validateTime = (value: string): string | null => {
+    // First, check if the field is empty
+    if (!value.trim()) {
+      return 'Time is required'; // Error message for empty input
+    }
+
+    // Check if the value is a number and within the range 1-60
+    const numberValue = parseInt(value, 10);
+    if (isNaN(numberValue) || numberValue < 1 || numberValue > 60) {
+      return 'Please enter a number between 1 and 60'; // Error message for invalid input
+    }
+
+    return null; // No validation errors
+  };
+
+  const handleSelectDifficulty = (difficulty: any) => {
+    setInputValue({ ...inputValue, difficulty });
   };
 
   // useEffect(() => {}, [dispatch, openItems]);
@@ -170,9 +238,11 @@ const QuestionList = () => {
                       </OnverviewDetailTitle>
                     </div>
                     <div className="summary">
-                      <div className="comp" key={index}>
-                        <BodySMedium>{question.competency}</BodySMedium>
-                      </div>
+                      {question.competency !== null && (
+                        <div className="comp" key={index}>
+                          <BodySMedium>{question.competency}</BodySMedium>
+                        </div>
+                      )}
 
                       <div className="icon-div">
                         <div className="time-level">
@@ -190,11 +260,14 @@ const QuestionList = () => {
                         <IconBtnM
                           disable={false}
                           onClick={() => {
-                            editDetailHandler(
-                              question.id,
-                              edit.has(question.id)
-                            );
                             setEditDetailInputs(question);
+                            onClickModalOpen(
+                              MODAL_TYPE.ADD_CUSTOM_QUESTION,
+                              {
+                                templateID,
+                              },
+                              question
+                            );
                           }}
                           icon={<EditIcon />}
                           className={BackgroundColor.WHITE}
@@ -203,7 +276,9 @@ const QuestionList = () => {
                       <ElWrap h={32} w={32}>
                         <IconBtnM
                           disable={false}
-                          onClick={() => {}}
+                          onClick={() =>
+                            handleDeleteTemplateQuestion(question.id)
+                          }
                           icon={<BinIcon />}
                           className={BackgroundColor.WHITE}
                         />
@@ -232,11 +307,11 @@ const QuestionList = () => {
                     <InputDiv>
                       <TextInput
                         disable={false}
-                        placeholder={'title'}
-                        error={false}
+                        placeholder={'Question'}
+                        validate={validateTitle}
                         onChange={inputOnChange}
-                        name={'title'}
-                        value={inputValue['title']}
+                        name={'question_text'}
+                        value={inputValue['question_text']}
                       />
                       <ElWrap w={40} h={40}>
                         <IconBtnL
@@ -270,23 +345,25 @@ const QuestionList = () => {
                   <div className="dropdowns">
                     <InputLabelDiv className="competencies">
                       <label>
-                        <BodySMedium>Competencies</BodySMedium>
+                        <BodySMedium>Competency</BodySMedium>
                       </label>
-                      {/* <DropdownFilter
-                            // optionArr={optionArrGenerator(
-                            //   question.competency
-                            // )}
-                            // dropdownName={"competencies"}
-                          ></DropdownFilter> */}
+                      <TextInput
+                        disable={false}
+                        placeholder={'Competency'}
+                        validate={validateTitle}
+                        onChange={inputOnChange}
+                        name={'competency'}
+                        value={inputValue['competency']}
+                      />
                     </InputLabelDiv>
                     <InputLabelDiv className="time">
                       <label>
-                        <BodySMedium>Time to reply</BodySMedium>
+                        <BodySMedium>Time to reply (mins)</BodySMedium>
                       </label>
                       <TextInput
                         disable={false}
                         placeholder={'time'}
-                        error={false}
+                        validate={validateTime}
                         onChange={inputOnChange}
                         name={'time'}
                         value={inputValue['time'].toString()}
@@ -294,11 +371,12 @@ const QuestionList = () => {
                     </InputLabelDiv>
                     <InputLabelDiv className="senioriy">
                       <label>
-                        <BodySMedium>Seniority</BodySMedium>
+                        <BodySMedium>Difficulty</BodySMedium>
                       </label>
                       <StatusFilter
-                        status={StatusDropdownFilter.WAITING}
-                      ></StatusFilter>
+                        status={inputValue.difficulty} // Pass selected difficulty as status prop
+                        onSelectStatus={handleSelectDifficulty} // Step 2: Pass the callback function
+                      />
                     </InputLabelDiv>
                   </div>
                   <InputLabelDiv>
@@ -307,11 +385,12 @@ const QuestionList = () => {
                     </label>
                     <TextArea
                       disable={false}
-                      placeholder={'detail'}
+                      placeholder={'Guidelines'}
                       error={false}
                       onChange={textAreaOnChange}
-                      name={'detail'}
-                      value={inputValue['detail']}
+                      name={'guidelines'}
+                      validate={() => null}
+                      value={inputValue['guidelines']}
                     />
                   </InputLabelDiv>
                 </OverviewDetailEdit>
@@ -327,13 +406,18 @@ const QuestionList = () => {
         >
           <TextIconBtnL
             disable={false}
-            onClick={() => {}}
+            onClick={() => {
+              onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION, {
+                templateID,
+              });
+            }}
             className={BackgroundColor.ACCENT_PURPLE}
             icon={<PlusIcon />}
             label="Add Question"
           />
         </Stack>
       </>
+      <GlobalModal></GlobalModal>
     </OverviewDetails>
   );
 };

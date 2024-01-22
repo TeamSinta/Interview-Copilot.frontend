@@ -56,7 +56,7 @@ export const WelcomeHeading = styled(H2Bold)`
   font-weight: 900;
   padding-bottom: 8px;
   width: 100%;
-  font-size: 24px;
+  font-size: 26px;
   text-align: center;
   @media (max-width: 1500px) {
     /* Adjust styles for screens with a max width of 768px */
@@ -101,7 +101,7 @@ export const InterviewsBox = styled(Box)`
   border-radius: 8px;
   border: 1px solid #e0e0e0;
   width: 100%;
-  padding: 24px 0px 24px 24px;
+  padding: 24px 24px 24px 24px;
 `;
 
 export const TemplateCardsBox = styled(Box)`

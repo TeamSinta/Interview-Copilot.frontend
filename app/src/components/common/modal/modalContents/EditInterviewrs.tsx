@@ -37,10 +37,9 @@ const EditInterviewers = () => {
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
 
-  const { data: templateData } = useGetTemplateDetailQuery({
-    company_id: companyId,
-    id: templateId,
-  });
+  const stringTemplateId = templateId?.toString();
+
+  const { data: templateData } = useGetTemplateDetailQuery(stringTemplateId);
 
   const { members } = useFetchCompanyMembers({
     company_id: companyId,
@@ -54,6 +53,8 @@ const EditInterviewers = () => {
       const interviewerIds = new Set(
         templateData.interviewers.map((i) => i.id)
       );
+
+      // console.log(members);
 
       const initializedMembers = members.map((member) => ({
         ...member,
@@ -97,7 +98,7 @@ const EditInterviewers = () => {
 
   return (
     <ModalContentWrap>
-      <BodySMedium>Members</BodySMedium>
+      <BodySMedium>Department Members</BodySMedium>
       <PhotoContainer>
         <Photos>
           {selectedMembers.map((member: any, index: number) => (
@@ -116,7 +117,7 @@ const EditInterviewers = () => {
         </Photos>
       </PhotoContainer>
 
-      <Invite />
+      {/* <Invite /> */}
       <div style={{ marginTop: '8px' }}>
         <TextBtnL
           label="Save"

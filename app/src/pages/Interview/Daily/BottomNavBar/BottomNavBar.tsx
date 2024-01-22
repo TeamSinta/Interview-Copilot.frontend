@@ -217,12 +217,6 @@ function BottomNavBar(props: any) {
                 <div style={{ paddingLeft: '16px', paddingRight: '16px' }}>
                   <NavCircle />
                 </div>
-                <StyledBottomNavButtons>
-                  <NavBookmarkIcon />
-                </StyledBottomNavButtons>
-                <StyledBottomNavButtons>
-                  <NavFlagIcon />
-                </StyledBottomNavButtons>
 
                 <StyledBottomNavButtons
                   onClick={toggleScreenShare}

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 const WebSocketComponent = ({ interviewRoundId, endLoader }) => {
   useEffect(() => {
     const socket = new WebSocket(
-      `ws://${
+      `wss://${
         import.meta.env.VITE_BACKEND_BASE_URL_SHORT
       }/ws/transcription_consumer/${interviewRoundId}/`
     );
@@ -25,6 +25,7 @@ const WebSocketComponent = ({ interviewRoundId, endLoader }) => {
     // Event listener for WebSocket close
     socket.onclose = (event) => {
       console.log('Disconnected from WebSocket:', event);
+      endLoader();
       // Handle WebSocket closure
     };
 

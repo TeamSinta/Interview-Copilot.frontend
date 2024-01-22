@@ -1,16 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { getCookieValue } from '../cookieUtils';
 
-export const instance = axios.create({
-  //Temporary suspension of service due to the current utilization of Mock API.
-  baseURL: import.meta.env.VITE_BACKEND_URL,
-});
-
-enum Env {
-  STORY = 'story',
-  MOCK = 'mock',
-  DEVELOPE = 'develope',
-}
+export const instance = axios.create({});
 
 //Temporary suspension of service due to the incomplete implementation of the login function.
 const requestHandler = async (

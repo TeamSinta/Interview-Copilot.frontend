@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from '@/app/store';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import { openModal } from '@/features/modal/modalSlice';
+import { closeModal, openModal } from '@/features/modal/modalSlice';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,8 +23,12 @@ import {
 } from './StyledModalContents';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useAddTopicMutation } from '@/features/templates/templatesAPISlice';
-import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import {
+  useGetQuestionBanksQuery,
+  useGetQuestionsQuery,
+} from '@/features/questions/questionsAPISlice';
 import Loading from '../../elements/loading/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const iconBtnMProps = {
   icon: <PlusIcon />,
@@ -41,6 +45,7 @@ const SelectValue = () => {
   const [showNewCompInput, setShowNewCompInput] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const templateID = useSelector((state: RootState) => state.modal.templateID);
+  const navigate = useNavigate();
 
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
@@ -68,6 +73,11 @@ const SelectValue = () => {
         const response = await addTopic(requestData).unwrap();
         const templateID = response.template_id;
 
+        if (!questionBanks || questionBanks?.length === 0) {
+          dispatch(closeModal());
+          navigate(`/templates/${templateID.templateID}`);
+        }
+
         if (value === selectedComp[selectedComp.length - 1]) {
           onClickModalOpen(MODAL_TYPE.SELECT_TEM, { templateID });
         }
@@ -80,8 +90,11 @@ const SelectValue = () => {
   };
 
   const onSelectComp = (value: string) => {
-    const temp = [...selectedComp, value];
-    setSelectedComp(temp);
+    if (!selectedComp.includes(value)) {
+      // Check if the value is not already in the array
+      const temp = [...selectedComp, value];
+      setSelectedComp(temp);
+    }
   };
 
   const checkActive = (value: string) => {
@@ -99,20 +112,21 @@ const SelectValue = () => {
   };
 
   const onClickNewComp = () => {
-    const exit = selectedComp.find((comp) => newComp === comp);
-    if (!exit) {
-      competencies.push(newComp);
-      onSelectComp(newComp);
+    if (newComp && !selectedComp.includes(newComp)) {
+      // Check if the newComp is not empty and not already in the array
+      const temp = [...selectedComp, newComp];
+      setSelectedComp(temp);
+      setNewComp(''); // Reset newComp to empty after adding
     }
-    setNewComp('');
   };
-
   const {
     data: questionsResponse,
     isLoading,
     isError,
     error,
   } = useGetQuestionsQuery();
+
+  const { data: questionBanks } = useGetQuestionBanksQuery();
 
   useEffect(() => {
     if (questionsResponse) {
@@ -173,12 +187,12 @@ const SelectValue = () => {
               <TextInput
                 disable={false}
                 placeholder={'New Section'}
-                error={false}
                 onChange={(e) => {
                   setNewComp(e.target.value);
                 }}
                 name={'Section'}
                 value={newComp}
+                validate={() => null}
               />
               <ElWrap w={119} h={40}>
                 <TextBtnL

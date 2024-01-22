@@ -41,11 +41,11 @@ export const SectionList = styled.button`
     flex: none;
     order: 0;
     flex-grow: 0;
-    border-radius: 12px;
+    border-radius: 8px;
   }
 
   &.active {
-    border-radius: 12px;
+    border-radius: 8px;
     background-color: ${(props) => props.theme.colors.lightPurple};
   }
 
