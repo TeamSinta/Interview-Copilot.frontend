@@ -18,6 +18,8 @@ import { templateQuestionsAPI } from '@/features/templates/templatesQuestionsAPI
 import questionsBankSliceReducer from '@/features/questions/questionBankSlice';
 import departmentReducer from '@/features/departments/departmentSlice';
 import { departmentsAPI } from '@/features/departments/departmentsAPI';
+import companyReducer from '@/features/company/companySlice';
+import { companyAPI } from '@/features/company/companyAPI';
 
 export const store = configureStore({
   reducer: {
@@ -26,9 +28,12 @@ export const store = configureStore({
     [templatesAPI.reducerPath]: templatesAPI.reducer,
     [QuestionsAPI.reducerPath]: QuestionsAPI.reducer,
     [templateQuestionsAPI.reducerPath]: templateQuestionsAPI.reducer,
+    [companyAPI.reducerPath]: companyAPI.reducer,
     [departmentsAPI.reducerPath]: departmentsAPI.reducer,
     user: userReducer,
     workspace: workSpaceReducer,
+    company: companyReducer,
+    department: departmentReducer,
     member: memberReducer,
     videoCall: videoCallReducer,
     modal: modalReducer,
@@ -38,7 +43,6 @@ export const store = configureStore({
     questionBanks: questionBanksReducer,
     interviewDetail: interviewDetailReducer,
     questionsBankSlice: questionsBankSliceReducer,
-    department: departmentReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -47,7 +51,8 @@ export const store = configureStore({
       templatesAPI.middleware,
       QuestionsAPI.middleware,
       templateQuestionsAPI.middleware,
-      departmentsAPI.middleware
+      departmentsAPI.middleware,
+      companyAPI.middleware
     ),
 });
 

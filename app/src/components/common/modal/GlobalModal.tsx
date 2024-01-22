@@ -22,7 +22,7 @@ import EditDepartment from './modalContents/EditDepartment';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
-  DEPARTMENT_SET = 'DEPARTMENT_SET',
+  SELECT_DEP = 'SELECT_DEP',
   CREATE_INT = 'CREATE_INT',
   CREATE_QUEST_BANK = 'CREATE_QUEST_BANK',
   SELECT_VAL = 'SELECT_VAL',
@@ -77,7 +77,7 @@ const GlobalModal = (): JSX.Element => {
             <CreateDepartment />
           </Modal>
         );
-      case MODAL_TYPE.DEPARTMENT_SET:
+      case MODAL_TYPE.SELECT_DEP:
         return (
           <Modal title="Department Details">
             <EditDepartment />

@@ -46,7 +46,7 @@ const CreateDepartment = () => {
     dispatch(selectedMember({ memberIdx: memberIdx }));
   };
 
-  const onCreateDepTtileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onCreateDepTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setCreateDepTitleInput({ [e.target.name]: e.target.value }));
   };
 
@@ -58,17 +58,18 @@ const CreateDepartment = () => {
     dispatch(roleSliceReset());
   };
 
+  console.log(members);
   return (
     <ModalContentWrap>
       <TextInput
         {...titleInputArg}
         onChange={(e) => {
-          onCreateDepTtileChange(e);
+          onCreateDepTitleChange(e);
         }}
         value={title}
       />
       <PhotoContainer>
-        <BodySMedium>Members</BodySMedium>
+        <BodySMedium>Members</BodySMedium>'
         <Photos>
           {members.map((member: IMember, index: number) => (
             <ElWrap w={40} h={40} key={index}>
@@ -84,6 +85,7 @@ const CreateDepartment = () => {
             </ElWrap>
           ))}
         </Photos>
+        '
       </PhotoContainer>
       <Invite />
       <TextIconBtnL {...textIconBtnArg} onClick={onCreateDepartmentClick} />

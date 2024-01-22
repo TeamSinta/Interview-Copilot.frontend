@@ -10,7 +10,7 @@ import { InputLayout } from '../../form/input/StyledInput';
 import { useRef, useState } from 'react';
 import TextInput from '../../form/textInput/TextInput';
 import { useUpdateDepartmentMutation } from '@/features/departments/departmentsAPI';
-import { updateDepartmentDetails } from '@/features/departments/departmentSlice';
+import { setDepartment } from '@/features/departments/departmentSlice';
 
 const titleInputArg = {
   label: 'Title',
@@ -68,7 +68,7 @@ const EditDepartment = () => {
         department_id: id,
         departmentData: departmentData,
       })?.unwrap();
-      dispatch(updateDepartmentDetails(newDepartmentTitle));
+      dispatch(setDepartment(newDepartmentTitle));
       dispatch(closeModal());
     } catch (error) {
       console.log('Failed to update Department', error);

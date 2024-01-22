@@ -2,7 +2,7 @@ import { AppDispatch } from '@/app/store';
 import SettingsDepartmentCard from '@/components/common/cards/settingsDepartmentCard/SettingsDepartmentCard';
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import PaginationComponent from '@/components/common/pagination/PaginationComponent';
-import { getDepartmentDetails } from '@/features/departments/departmentSlice';
+import { setDepartment } from '@/features/departments/departmentSlice';
 import { IDepartment } from '@/features/departments/departmentsInterface';
 import usePagination from '@/hooks/usePagination';
 import { DepartmentListContainer } from '@/pages/Settings/StyledSettings';
@@ -13,8 +13,8 @@ import { useDispatch } from 'react-redux';
 
 const DepartmentList: React.FC<{
   departments: IDepartment[];
-  onClickModalOpen: (modalType: MODAL_TYPE) => void;
-}> = ({ departments, onClickModalOpen }) => {
+  onClick: (modalType: MODAL_TYPE) => void;
+}> = ({ departments, onClick }) => {
   const dispatch = useDispatch<AppDispatch>();
   const ITEMS_PER_PAGE = 10;
   const {
@@ -24,7 +24,6 @@ const DepartmentList: React.FC<{
     pageCount,
   } = usePagination(departments, ITEMS_PER_PAGE);
 
-  console.log('This is departmentsList:', departments);
   return (
     <>
       <PaginationComponent
@@ -40,12 +39,12 @@ const DepartmentList: React.FC<{
               department={department}
               onClick={() => {
                 dispatch(
-                  getDepartmentDetails({
+                  setDepartment({
                     id: department.id,
                     title: department.title,
                   })
                 );
-                onClickModalOpen(MODAL_TYPE.DEPARTMENT_SET);
+                onClick(MODAL_TYPE.SELECT_DEP);
               }}
             />
           ))}

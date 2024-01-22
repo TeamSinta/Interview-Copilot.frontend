@@ -15,10 +15,15 @@ import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { useGetCompanyDepartmentsQuery } from '@/features/departments/departmentsAPI';
 import {
-  getAllDepartments,
+  setAllDepartments,
   selectDepartment,
 } from '@/features/departments/departmentSlice';
-import { IDepartments } from '@/features/departments/departmentsInterface';
+import { setCompany, setMembers } from '@/features/company/companySlice';
+import { useFetchCompanyMembers } from './useFetchAndSortMembers';
+import {
+  useGetCompanyMembersQuery,
+  useGetCompanyQuery,
+} from '@/features/company/companyAPI';
 
 const DepartmentTab = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,16 +32,8 @@ const DepartmentTab = () => {
   const departmentState = useSelector(selectDepartment);
   const allDepartments = departmentState.allDepartments;
   const [sortCriteria, setSortCritiera] = useState('');
-
-  // definitely should look over this, idk what TS is doing here om on the companyId type.
-  const companyId: CompanyID = (!workspace.id
-    ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
-  // const { members } = useFetchCompanyMembers({
-  //   company_id: companyId,
-  //   department_id: departmentId,
-  //   sortCriteria: sortCriteria,
-  // });
+  const [departmentId, setDepartmentId] = useState('');
+  // const [members, seSmembers] = useState([]);
 
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(
@@ -45,6 +42,29 @@ const DepartmentTab = () => {
       })
     );
   };
+
+  const companyId: CompanyID = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyID;
+
+  const { members } = useFetchCompanyMembers({
+    company_id: companyId,
+    department_id: departmentId,
+    sortCriteria: sortCriteria,
+  });
+
+  /// testing
+  const { data: companyData } = useGetCompanyQuery(companyId);
+  const { data: companyMembers } = useGetCompanyMembersQuery({
+    company_id: companyId,
+    department_id: departmentId,
+    sort_by: '1',
+  });
+
+  //// testing
+
+  console.log('company:', companyData);
+  console.log('members', companyMembers);
 
   const handleSortDepartments = (value: string) => {
     setSortCritiera(value);
@@ -62,9 +82,11 @@ const DepartmentTab = () => {
     sort_by: sortCriteria,
   });
 
+  const { data: company } = useGetCompanyQuery(companyId);
+
   useEffect(() => {
     if (isSuccess && departmentsData) {
-      dispatch(getAllDepartments(departmentsData));
+      dispatch(setAllDepartments(departmentsData));
     }
   }, [isSuccess, dispatch, departmentsData, sortCriteria]);
 
@@ -86,7 +108,7 @@ const DepartmentTab = () => {
         </Stack>
         <DepartmentList
           departments={allDepartments}
-          onClickModalOpen={onClickModalOpen}
+          onClick={onClickModalOpen}
         />
       </Stack>
       <ElWrap h={40} w={282}>
@@ -95,7 +117,9 @@ const DepartmentTab = () => {
           icon={<PlusIcon />}
           disable={false}
           className={BackgroundColor.ACCENT_PURPLE}
-          onClick={() => {}}
+          onClick={() => {
+            onClickModalOpen(MODAL_TYPE.CREATE_DEP);
+          }}
         />
       </ElWrap>
       <GlobalModal></GlobalModal>

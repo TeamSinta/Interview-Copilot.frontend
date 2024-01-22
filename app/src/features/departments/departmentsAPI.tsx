@@ -16,19 +16,6 @@ export const departmentsAPI = createApi({
   }),
   tagTypes: ['Department'],
   endpoints: (builder) => ({
-    updateDepartment: builder.mutation<
-      void,
-      { company_id: any; department_id: any; departmentData: any }
-    >({
-      query: ({ departmentData, company_id, department_id }) => {
-        return {
-          url: `/company/departments?company=${company_id}&department=${department_id}`,
-          method: 'PUT',
-          body: departmentData,
-        };
-      },
-      invalidatesTags: ['Department'],
-    }),
     getCompanyDepartments: builder.query<
       IDepartment[],
       {
@@ -44,8 +31,37 @@ export const departmentsAPI = createApi({
       },
       providesTags: ['Department'],
     }),
+    createDepartment: builder.mutation<
+      void,
+      { company_id: any; departmentData: any }
+    >({
+      query: ({ departmentData, company_id }) => {
+        return {
+          url: `/company/departments?company=${company_id}`,
+          method: 'POST',
+          body: departmentData,
+        };
+      },
+      invalidatesTags: ['Department'],
+    }),
+    updateDepartment: builder.mutation<
+      void,
+      { company_id: any; department_id: any; departmentData: any }
+    >({
+      query: ({ departmentData, company_id, department_id }) => {
+        return {
+          url: `/company/departments?company=${company_id}&department=${department_id}`,
+          method: 'PUT',
+          body: departmentData,
+        };
+      },
+      invalidatesTags: ['Department'],
+    }),
   }),
 });
 
-export const { useUpdateDepartmentMutation, useGetCompanyDepartmentsQuery } =
-  departmentsAPI;
+export const {
+  useGetCompanyDepartmentsQuery,
+  useCreateDepartmentMutation,
+  useUpdateDepartmentMutation,
+} = departmentsAPI;
