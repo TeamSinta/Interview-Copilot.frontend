@@ -29,18 +29,20 @@ const ConclusionData = (interviewRoundId: string) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await instance.get(TranscriptAPI);
-        const response2 = await instance.get(summarizedAnswersAPI);
-        const response3 = await instance.get(summaryInfoAPI);
+        // commented these lines for now
+        // const response1 = await instance.get(TranscriptAPI);
+        // const response2 = await instance.get(summarizedAnswersAPI);
+        // const response3 = await instance.get(summaryInfoAPI);
         const response4 = await instance.get(videoUrlAPI);
         const response5 = await instance.get(emojiFeedbackApi);
 
-        setQuestionsTranscript(response1.data);
-        setSummarizedAnswers(response2.data);
-        setSummaryInfo(response3.data);
+        // commented these lines for now
+        // setQuestionsTranscript(response1.data);
+        // setSummarizedAnswers(response2.data);
+        // setSummaryInfo(response3.data);
         setVideoUrl(response4.data);
         setEmojisData(response5.data);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching data:', error);
         setError(error);
       } finally {

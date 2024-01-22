@@ -15,6 +15,7 @@ interface TabPanelProps {
   children?: React.ReactNode;
   index: string; // Change the type to string
   value: string; // Change the type to string
+  video_uri?: string[];
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -49,7 +50,7 @@ export default function BasicTabs() {
 
   const navigate = useNavigate();
 
-  console.log(interviews);
+  console.log('interviewsData: ', interviews);
   React.useEffect(() => {
     const fetchInterviews = async () => {
       const response = await getInterviews();
@@ -109,7 +110,11 @@ export default function BasicTabs() {
             }}
           ></Box>
           {activeTab === TABS.INTERVIEWS && (
-            <CustomTabPanel value={activeTab} index={TABS.INTERVIEWS}>
+            <CustomTabPanel
+              value={activeTab}
+              index={TABS.INTERVIEWS}
+              video_uri={interviews}
+            >
               <GridContainer>
                 {interviews.map((interviewRound: IInterviewRound, index) => (
                   <div
@@ -126,7 +131,7 @@ export default function BasicTabs() {
                       disable={false}
                       name={interviewRound.title}
                       date={interviewRound.created_at}
-                      image_uri={interviewRound.video_uri}
+                      video_uri={interviewRound.video_uri}
                     />
                   </div>
                 ))}
