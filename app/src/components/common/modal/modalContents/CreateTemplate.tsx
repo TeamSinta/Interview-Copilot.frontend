@@ -231,7 +231,6 @@ const CreateInterviews = () => {
           handleSetDepartment={handleSetDepartment}
           workspaceId={workspace.id}
         />
-        <NewDepartment onDepartmentCreated={refetchDepartments} />
         <BodySMedium>Members</BodySMedium>
         <PhotoContainer>
           <Photos>

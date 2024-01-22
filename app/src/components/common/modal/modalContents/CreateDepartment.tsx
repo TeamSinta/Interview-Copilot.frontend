@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch, RootState } from '@/app/store';
 import Photo from '@/components/common/buttons/photo/Photo';
 import Photos from '@/components/common/buttons/photo/Photos';
 import { PhotoContainer } from '@/components/common/buttons/photo/StyledPhoto';
@@ -18,10 +18,15 @@ import {
   selectRole,
   selectedMember,
   setCreateDepTitleInput,
+  useFetchSelectMembers,
 } from '@/features/roles/rolesSlice';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { useEffect, useRef, useState } from 'react';
+import NewDepartment from '../../form/newDepartment/newDepartment';
+import { useCreateDepartmentMutation } from '@/features/departments/departmentsAPI';
 
 const titleInputArg = {
   label: 'Title',
@@ -39,26 +44,63 @@ const textIconBtnArg = {
 };
 
 const CreateDepartment = () => {
-  const { members, title } = useSelector(selectRole);
   const dispatch = useDispatch<AppDispatch>();
+  const [createNewDepartment, { isLoading }] = useCreateDepartmentMutation();
+  const workspace = useSelector((state: RootState) => state.workspace);
+  const user = useSelector((state: RootState) => state.user.user);
+  const [newDepartmentName, setNewDepartmentName] = useState('');
+  const [sortCriteria] = useState('');
+  const [departmentId, setDepartmentId] = useState('');
+
+  const companyId: CompanyID = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyID;
+
+  const { members } = useFetchSelectMembers({
+    company_id: companyId,
+    department_id: departmentId,
+    sortCriteria: sortCriteria,
+  });
 
   const onMemberSelectd = (memberIdx: number) => {
     dispatch(selectedMember({ memberIdx: memberIdx }));
   };
 
   const onCreateDepTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setCreateDepTitleInput({ [e.target.name]: e.target.value }));
+    setNewDepartmentName(e.target.value);
   };
 
-  const onCreateDepartmentClick = () => {
-    dispatch(getMemberAsync());
-    dispatch(postData());
-    dispatch(closeModal());
-    dispatch(inviteMemberSliceReset());
-    dispatch(roleSliceReset());
+  const CreateNewDepartment = async () => {
+    await createNewDepartment({
+      company_id: companyId,
+      departmentTitle: newDepartmentName,
+    })
+      .unwrap()
+      .then((response) => {
+        // Handle success
+        setNewDepartmentName('');
+      })
+      .catch((error: any) => {
+        console.log('Error creating department', error);
+      });
   };
 
-  console.log(members);
+  const validateTitle = (value: string): string | null => {
+    if (!value.trim()) {
+      return (
+        <>
+          <BodySMedium
+            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
+          >
+            Title is required{' '}
+          </BodySMedium>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <ModalContentWrap>
       <TextInput
@@ -66,29 +108,29 @@ const CreateDepartment = () => {
         onChange={(e) => {
           onCreateDepTitleChange(e);
         }}
-        value={title}
+        value={newDepartmentName}
+        validate={validateTitle}
+        disable={isLoading}
       />
       <PhotoContainer>
-        <BodySMedium>Members</BodySMedium>'
+        <BodySMedium>Members</BodySMedium>
         <Photos>
-          {members.map((member: IMember, index: number) => (
+          {members.map((member: any, index: number) => (
             <ElWrap w={40} h={40} key={index}>
               <Photo
-                member_idx={0}
-                member_firstName={''}
-                member_lastName={''}
-                member_url={''}
-                photoType={PhotoType.L}
-                {...member}
                 onSelect={onMemberSelectd}
+                member_idx={member.id}
+                member_firstName={member.first_name}
+                member_lastName={member.last_name}
+                photoType={PhotoType.L}
+                member_url={member.profile_picture}
+                selected={member.selected}
               />
             </ElWrap>
           ))}
         </Photos>
-        '
       </PhotoContainer>
-      <Invite />
-      <TextIconBtnL {...textIconBtnArg} onClick={onCreateDepartmentClick} />
+      <TextIconBtnL {...textIconBtnArg} onClick={CreateNewDepartment} />
     </ModalContentWrap>
   );
 };

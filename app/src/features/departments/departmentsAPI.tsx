@@ -33,13 +33,16 @@ export const departmentsAPI = createApi({
     }),
     createDepartment: builder.mutation<
       void,
-      { company_id: any; departmentData: any }
+      { company_id: any; departmentTitle: any }
     >({
-      query: ({ departmentData, company_id }) => {
+      query: ({ departmentTitle, company_id }) => {
         return {
-          url: `/company/departments?company=${company_id}`,
+          url: `/company/departments`,
           method: 'POST',
-          body: departmentData,
+          body: {
+            title: departmentTitle,
+            company_id: company_id,
+          },
         };
       },
       invalidatesTags: ['Department'],

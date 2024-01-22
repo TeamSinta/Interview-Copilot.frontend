@@ -87,8 +87,11 @@ const DepartmentTab = () => {
   useEffect(() => {
     if (isSuccess && departmentsData) {
       dispatch(setAllDepartments(departmentsData));
+      if (companyMembers) {
+        dispatch(setMembers(companyMembers));
+      }
     }
-  }, [isSuccess, dispatch, departmentsData, sortCriteria]);
+  }, [isSuccess, dispatch, companyMembers, departmentsData, sortCriteria]);
 
   return (
     <>

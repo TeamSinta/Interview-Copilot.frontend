@@ -75,23 +75,6 @@ export const userAPI = createApi({
         };
       },
     }),
-    createNewDepartment: builder.mutation<
-      void,
-      {
-        company_id: CompanyID;
-        departmentTitle: string; // Assuming the department has a title field
-      }
-    >({
-      query: ({ company_id, departmentTitle }) => ({
-        url: `/company/departments`, // Updated URL as per your API
-        method: 'POST',
-        body: {
-          title: departmentTitle,
-          company_id: company_id, // Assuming 'title' is the expected field name for the department title
-        },
-      }),
-      invalidatesTags: ['Departments'],
-    }),
     createDepartmentMember: builder.mutation({
       query: ({ company_id, department_id, user_id, body = {} }) => ({
         url: `/company/department/members?department=${department_id}&company=${company_id}&invitee=${user_id}`,
@@ -108,6 +91,5 @@ export const {
   useGetCompanyMembersQuery,
   useGetCompanyDepartmentsMutation,
   useGetUserDepartmentsMutation,
-  useCreateNewDepartmentMutation,
   useCreateDepartmentMemberMutation,
 } = userAPI;
