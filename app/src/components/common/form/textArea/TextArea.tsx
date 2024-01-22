@@ -1,90 +1,112 @@
 import {
+  InsertTable,
   MDXEditor,
-  MDXEditorMethods,
   headingsPlugin,
   listsPlugin,
   markdownShortcutPlugin,
+  quotePlugin,
+  tablePlugin,
   thematicBreakPlugin,
+  toolbarPlugin,
+  InsertCodeBlock,
+  codeBlockPlugin,
+  useCodeBlockEditorContext,
+  codeMirrorPlugin,
+  BlockTypeSelect,
+  BoldItalicUnderlineToggles,
+  ListsToggle,
+  KitchenSinkToolbar,
+  AdmonitionDirectiveDescriptor,
+  diffSourcePlugin,
+  directivesPlugin,
+  frontmatterPlugin,
+  imagePlugin,
+  linkDialogPlugin,
+  linkPlugin,
+  sandpackPlugin,
 } from '@mdxeditor/editor';
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useState,
-} from 'react';
+
+import { useState } from 'react';
 import { StyledTextareaDiv } from '../input/StyledInput';
-import { BodySMedium } from '../../typeScale/StyledTypeScale';
+import '@mdxeditor/editor/style.css';
 
 interface ITextAreaProps {
-  disable: boolean;
   placeholder: string;
-  error: boolean;
   onChange: (e: any) => void;
-  name: string;
   value: string;
   validate: (value: string) => string | null; // Validation function
 }
 
-const TextArea = forwardRef(
-  (props: ITextAreaProps, ref: React.Ref<any>): JSX.Element => {
-    const { name, value, onChange, placeholder, validate } = props;
-    const [inputValue, setInputValue] = useState<{ [key: string]: string }>({
-      [name]: value,
-    });
+const TextArea = (props: ITextAreaProps) => {
+  const { value, onChange, placeholder, validate } = props;
+  const [inputValue, setInputValue] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
-    const [error, setError] = useState<string | null>(null);
+  const handleInputChange = (newValue: string) => {
+    setInputValue(newValue);
+    const validationError = validate ? validate(newValue) : null;
+    setError(validationError);
+    onChange(newValue);
+  };
 
-    const placeholderText = (
-      <BodySMedium style={{ opacity: '.5' }}> {placeholder}</BodySMedium>
-    );
-
-    const handleInputChange = (newValue: string) => {
-      setInputValue({ [name]: newValue });
-      const validationError = validate ? validate(newValue) : null;
-      setError(validationError);
-      onChange(newValue);
-    };
-
-    const triggerValidation = () => {
-      const validationError = validate(inputValue[name]);
-      setError(validationError);
-    };
-    const inputRef = React.useRef<MDXEditorMethods>(null);
-    useEffect(() => {
-      if (ref) {
-        // @ts-ignore
-        ref.current = {
-          triggerValidation,
-        };
-      }
-    }, [ref]);
-
-    useImperativeHandle(ref, () => ({
-      triggerValidation,
-    }));
-
-    return (
-      <>
-        <StyledTextareaDiv>
-          <MDXEditor
-            ref={inputRef}
-            className={`mdx-textarea ${error ? 'error' : ''}`}
-            contentEditableClassName="prose"
-            markdown={inputValue[name]}
-            onChange={handleInputChange}
-            placeholder={placeholderText}
-            plugins={[
-              headingsPlugin(),
-              listsPlugin(),
-              thematicBreakPlugin(),
-              markdownShortcutPlugin(),
-            ]}
+  const PlainTextCodeEditorDescriptor = {
+    // always use the editor, no matter the language or the meta of the code block
+    match: (language: any, meta: any) => true,
+    // You can have multiple editors with different priorities, so that there's a "catch-all" editor (with the lowest priority)
+    priority: 0,
+    // The Editor is a React component
+    Editor: (props: any) => {
+      const cb = useCodeBlockEditorContext();
+      // stops the proppagation so that the parent lexical editor does not handle certain events.
+      return (
+        <div onKeyDown={(e) => e.nativeEvent.stopImmediatePropagation()}>
+          <textarea
+            rows={3}
+            cols={20}
+            defaultValue={props.code}
+            onChange={(e) => cb.setCode(e.target.value)}
           />
-        </StyledTextareaDiv>
-        {error && <div className="error-message">{error}</div>}
-      </>
-    );
-  }
-);
+        </div>
+      );
+    },
+  };
+
+  return (
+    <>
+      <StyledTextareaDiv className={`${error ? 'error' : ''}`}>
+        {value ? <></> : <div className="placeholder">{placeholder}</div>}
+        <MDXEditor
+          contentEditableClassName={`mdx-textarea`}
+          markdown={inputValue}
+          onChange={handleInputChange}
+          autoFocus
+          plugins={[
+            headingsPlugin(),
+            listsPlugin(),
+            quotePlugin(),
+            thematicBreakPlugin(),
+            codeBlockPlugin({ defaultCodeBlockLanguage: 'js' }),
+            codeMirrorPlugin({
+              codeBlockLanguages: { js: 'JavaScript', css: 'CSS' },
+            }),
+            tablePlugin(),
+            toolbarPlugin({
+              toolbarContents: () => (
+                <>
+                  {' '}
+                  <BoldItalicUnderlineToggles />
+                  <InsertTable />
+                  <ListsToggle />
+                </>
+              ),
+            }),
+            markdownShortcutPlugin(),
+          ]}
+        />
+      </StyledTextareaDiv>
+      {error && <div className="error-message">{error}</div>}
+    </>
+  );
+};
 
 export default TextArea;

@@ -25,7 +25,6 @@ import {
   BodySMedium,
   H3Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
-import { H3 } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { selectInterviewDetail } from '@/features/interviewDetail/interviewDetailSlice';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
@@ -35,7 +34,6 @@ import {
   StatusDropdownFilter,
 } from '@/features/utils/utilEnum';
 import React, { useEffect, useRef, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   InputDiv,
@@ -62,14 +60,11 @@ import {
   useAddTemplateQuestionMutation,
   useDeleteTemplateQuestionMutation,
   useGetTemplateQuestionsQuery,
-  useUpdateTemplateQuestionMutation,
 } from '@/features/templates/templatesQuestionsAPISlice';
 import Loading from '@/components/common/elements/loading/Loading';
-import {
-  useGetQuestionDetailQuery,
-  useUpdateQuestionMutation,
-} from '@/features/questions/questionsAPISlice';
-import { constSelector } from 'recoil';
+import { useUpdateQuestionMutation } from '@/features/questions/questionsAPISlice';
+import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
+import { ITemplateQuestion } from '@/features/templates/templatesInterface';
 
 interface IState {
   [key: string]: any;
@@ -80,10 +75,6 @@ interface IState {
   difficulty: string;
 }
 
-const components = {
-  h3: H3,
-};
-
 const InterviewOverviewDetails = () => {
   const customQuestionFormRef = useRef(null);
   const dispatch = useDispatch<AppDispatch>();
@@ -91,7 +82,9 @@ const InterviewOverviewDetails = () => {
   const [openItems, setOpenItems] = useState(new Set());
   const [showCustomQuestionForm, setShowCustomQuestionForm] = useState(false);
   const [edit, setEdit] = useState(new Set());
-  const [newQuestions, setQuestions] = useState<IQuestion[]>([]);
+  const [templateQuestions, setTemplateQuestions] = useState<
+    ITemplateQuestion[]
+  >([]);
   const [inputValue, setInputValue] = useState<IState>({
     question_text: '',
     reply_time: 0,
@@ -120,7 +113,7 @@ const InterviewOverviewDetails = () => {
   useEffect(() => {}, [dispatch, openItems]);
   useEffect(() => {
     if (isSuccess) {
-      setQuestions(questions);
+      setTemplateQuestions(questions);
     }
   }, [isSuccess, questions]);
 
@@ -136,9 +129,11 @@ const InterviewOverviewDetails = () => {
     );
   }
 
-  const filteredQuestions = newQuestions.filter((question: IQuestion) => {
-    return question?.topic === selectedSection?.id;
-  });
+  const filteredQuestions = templateQuestions.filter(
+    (templateQuestion: ITemplateQuestion) => {
+      return templateQuestion?.topic === selectedSection.id;
+    }
+  );
 
   const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
     dispatch(
@@ -171,11 +166,11 @@ const InterviewOverviewDetails = () => {
 
   const setEditDetailInputs = (question: IQuestion) => {
     setInputValue({
-      question_text: question.question.question_text,
-      guidelines: question.question.guidelines,
-      reply_time: question.question.reply_time,
-      competency: question.question.competency,
-      difficulty: question.question.difficulty,
+      question_text: question.question_text,
+      guidelines: question.guidelines,
+      reply_time: question.reply_time,
+      competency: question.competency,
+      difficulty: question.difficulty,
     });
 
     console.log(question);
@@ -211,6 +206,7 @@ const InterviewOverviewDetails = () => {
     }
   };
 
+  //Which data have to be update?
   const handleUpdateQuestion = async (templateQuestion: string) => {
     if (!templateQuestion || !templateQuestion.question) {
       console.error('Invalid template question data');
@@ -224,8 +220,6 @@ const InterviewOverviewDetails = () => {
       ...inputValue, // Other values from the form or input
     };
 
-    console.log('Updating question with data:', requestData);
-
     try {
       await updateQuestion(requestData).unwrap();
       setEdit(new Set());
@@ -237,7 +231,7 @@ const InterviewOverviewDetails = () => {
     }
   };
 
-  const handleDeleteTemplateQuestion = async (questionID: string) => {
+  const handleDeleteTemplateQuestion = async (questionID: number) => {
     try {
       await deleteQuestion(questionID);
       // Handle success, e.g., show a success message
@@ -248,8 +242,7 @@ const InterviewOverviewDetails = () => {
   };
 
   const totalReplyTime = filteredQuestions.reduce(
-    (accumulator, question) =>
-      accumulator + parseInt(question.question.reply_time, 10),
+    (accumulator, question) => accumulator + question.question.reply_time,
     0
   );
 
@@ -330,6 +323,7 @@ const InterviewOverviewDetails = () => {
                       <CustomQuestionForm
                         ref={customQuestionFormRef}
                         onQuestionCreated={handleQuestionCreated}
+                        onClose={() => {}}
                       />
                     </div>
                   </>
@@ -350,217 +344,237 @@ const InterviewOverviewDetails = () => {
                 )
               ) : (
                 <OverviewDetailBody>
-                  {/* ====== OVERVIEW LIST START ====== */}
-                  {filteredQuestions.map(
-                    (question: IQuestion, index: number) => {
-                      if (!edit.has(question.id)) {
-                        return (
-                          // ======== OVERVIEW DETAIL VIEW MODE ==========
-                          <OverviewDetailList key={index}>
-                            <div className="header">
-                              <div className="title">
-                                <div className="index">
-                                  <BodyMBold>{index + 1}</BodyMBold>
-                                </div>
-                                <OnverviewDetailTitle
-                                  onClick={() => {
-                                    openDetailHandler(
-                                      question.id,
-                                      openItems.has(question.id)
-                                    );
-                                  }}
-                                  className={
-                                    openItems.has(question.id)
-                                      ? 'open'
-                                      : 'close'
-                                  }
-                                >
-                                  <BodyMBold>
-                                    {question.question.question_text}
-                                  </BodyMBold>
-                                  <SelectArrowOpenIcon />
-                                </OnverviewDetailTitle>
-                              </div>
-                              <div className="icon-div">
-                                <ElWrap h={32} w={32}>
-                                  <IconBtnM
-                                    disable={false}
+                  <>
+                    {filteredQuestions.map(
+                      (templateQuestion: ITemplateQuestion, index: number) => {
+                        if (!edit.has(templateQuestion.id)) {
+                          return (
+                            // ======== OVERVIEW DETAIL VIEW MODE ==========
+                            <OverviewDetailList key={index}>
+                              <div className="header">
+                                <div className="title">
+                                  <div className="index">
+                                    <BodyMBold>{index + 1}</BodyMBold>
+                                  </div>
+                                  <OnverviewDetailTitle
                                     onClick={() => {
-                                      editDetailHandler(
-                                        question.id,
-                                        edit.has(question.id)
+                                      openDetailHandler(
+                                        templateQuestion.question.id,
+                                        openItems.has(
+                                          templateQuestion.question.id
+                                        )
                                       );
-                                      setEditDetailInputs(question);
                                     }}
-                                    icon={<EditIcon />}
-                                    className={BackgroundColor.WHITE}
-                                  />
-                                </ElWrap>
-                                <ElWrap h={32} w={32}>
-                                  <IconBtnM
-                                    disable={false}
-                                    onClick={() =>
-                                      handleDeleteTemplateQuestion(question.id)
+                                    className={
+                                      openItems.has(
+                                        templateQuestion.question.id
+                                      )
+                                        ? 'open'
+                                        : 'close'
                                     }
-                                    icon={<BinIcon />}
-                                    className={BackgroundColor.WHITE}
-                                  />
-                                </ElWrap>
-                                <MoveIcon />
+                                  >
+                                    <BodyMBold>
+                                      {templateQuestion.question.question_text}
+                                    </BodyMBold>
+                                    <SelectArrowOpenIcon />
+                                  </OnverviewDetailTitle>
+                                </div>
+                                <div className="icon-div">
+                                  <ElWrap h={32} w={32}>
+                                    <IconBtnM
+                                      disable={false}
+                                      onClick={() => {
+                                        editDetailHandler(
+                                          templateQuestion.question.id,
+                                          edit.has(templateQuestion.question.id)
+                                        );
+                                        setEditDetailInputs(
+                                          templateQuestion.question
+                                        );
+                                      }}
+                                      icon={<EditIcon />}
+                                      className={BackgroundColor.WHITE}
+                                    />
+                                  </ElWrap>
+                                  <ElWrap h={32} w={32}>
+                                    <IconBtnM
+                                      disable={false}
+                                      onClick={() =>
+                                        handleDeleteTemplateQuestion(
+                                          templateQuestion.question.id
+                                        )
+                                      }
+                                      icon={<BinIcon />}
+                                      className={BackgroundColor.WHITE}
+                                    />
+                                  </ElWrap>
+                                  <MoveIcon />
+                                </div>
                               </div>
-                            </div>
-                            <div className="summary">
-                              <div className="comp" key={index}>
-                                <BodySMedium>
-                                  {question.question.competency}
-                                </BodySMedium>
-                              </div>
+                              <div className="summary">
+                                <div className="comp" key={index}>
+                                  <BodySMedium>
+                                    {templateQuestion.question.competency}
+                                  </BodySMedium>
+                                </div>
 
-                              <div className="icon-div">
-                                <div className="time-level">
-                                  <TimeIcon />
-                                  <BodySMedium>
-                                    {question.question.reply_time} min
-                                  </BodySMedium>
-                                </div>
-                                <div className="time-level level">
-                                  <DocumentIcon />
-                                  <BodySMedium>
-                                    {question.question.difficulty}
-                                  </BodySMedium>
+                                <div className="icon-div">
+                                  <div className="time-level">
+                                    <TimeIcon />
+                                    <BodySMedium>
+                                      {templateQuestion.question.reply_time} min
+                                    </BodySMedium>
+                                  </div>
+                                  <div className="time-level level">
+                                    <DocumentIcon />
+                                    <BodySMedium>
+                                      {templateQuestion.question.difficulty}
+                                    </BodySMedium>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div
-                              className={`detail ${
-                                openItems.has(question.id) ? '' : 'none'
-                              }`}
-                            >
-                              <ReactMarkdown components={components}>
-                                {question.question.guidelines}
-                              </ReactMarkdown>
-                            </div>
-                          </OverviewDetailList>
-                        );
-                      } else {
-                        return (
-                          // ======== OVERVIEW DETAIL EDIT MODE ==========
-                          <OverviewDetailEdit key={index}>
-                            <InputLabelDiv>
-                              <label>
-                                <BodySMedium>Question</BodySMedium>
-                              </label>
-                              <InputDiv>
-                                <TextInput
-                                  disable={false}
-                                  placeholder={'Question'}
-                                  error={false}
-                                  onChange={inputOnChange}
-                                  name={'question_text'}
-                                  validate={validateTitle}
-                                  value={inputValue['question_text']}
-                                />
-                                <ElWrap w={40} h={40}>
-                                  <IconBtnL
+                              <div
+                                className={`detail ${
+                                  openItems.has(templateQuestion.question.id)
+                                    ? ''
+                                    : 'none'
+                                }`}
+                              >
+                                <MarkdownFromatConatiner>
+                                  {templateQuestion.question.guidelines}
+                                </MarkdownFromatConatiner>
+                              </div>
+                            </OverviewDetailList>
+                          );
+                        } else {
+                          return (
+                            // ======== OVERVIEW DETAIL EDIT MODE ==========
+                            <OverviewDetailEdit key={index}>
+                              <InputLabelDiv>
+                                <label>
+                                  <BodySMedium>Question</BodySMedium>
+                                </label>
+                                <InputDiv>
+                                  <TextInput
                                     disable={false}
-                                    onClick={() =>
-                                      handleUpdateQuestion(question)
-                                    }
-                                    className={BackgroundColor.ACCENT_PURPLE}
-                                    icon={<CheckIcon />}
+                                    placeholder={'Question'}
+                                    error={false}
+                                    onChange={inputOnChange}
+                                    name={'question_text'}
+                                    validate={validateTitle}
+                                    value={inputValue['question_text']}
                                   />
-                                </ElWrap>
-                                <ElWrap w={40} h={40}>
-                                  <IconBtnL
+                                  <ElWrap w={40} h={40}>
+                                    <IconBtnL
+                                      disable={false}
+                                      onClick={() =>
+                                        handleUpdateQuestion(templateQuestion)
+                                      }
+                                      className={BackgroundColor.ACCENT_PURPLE}
+                                      icon={<CheckIcon />}
+                                    />
+                                  </ElWrap>
+                                  <ElWrap w={40} h={40}>
+                                    <IconBtnL
+                                      disable={false}
+                                      onClick={() =>
+                                        handleDeleteTemplateQuestion(
+                                          templateQuestion.question.id
+                                        )
+                                      }
+                                      className={BackgroundColor.WHITE}
+                                      icon={<BinIcon />}
+                                    />
+                                  </ElWrap>
+                                  <ElWrap w={40} h={40}>
+                                    <IconBtnL
+                                      disable={false}
+                                      onClick={() => {
+                                        editDetailHandler(
+                                          templateQuestion.question.id,
+                                          edit.has(templateQuestion.question.id)
+                                        );
+                                      }}
+                                      className={BackgroundColor.WHITE}
+                                      icon={<CloseIcon />}
+                                    />
+                                  </ElWrap>
+                                </InputDiv>
+                              </InputLabelDiv>
+                              <div className="dropdowns">
+                                <InputLabelDiv className="competencies">
+                                  <label>
+                                    <BodySMedium>Competency</BodySMedium>
+                                  </label>
+                                  <TextInput
                                     disable={false}
-                                    onClick={() =>
-                                      handleDeleteTemplateQuestion(question.id)
-                                    }
-                                    className={BackgroundColor.WHITE}
-                                    icon={<BinIcon />}
+                                    placeholder={'Competency'}
+                                    error={false}
+                                    validate={validateTitle}
+                                    onChange={inputOnChange}
+                                    name={'competency'}
+                                    value={inputValue['competency']}
                                   />
-                                </ElWrap>
-                                <ElWrap w={40} h={40}>
-                                  <IconBtnL
+                                </InputLabelDiv>
+                                <InputLabelDiv className="time">
+                                  <label>
+                                    <BodySMedium>
+                                      Time for reply (mins)
+                                    </BodySMedium>
+                                  </label>
+                                  <TextInput
                                     disable={false}
-                                    onClick={() => {
-                                      editDetailHandler(
-                                        question.id,
-                                        edit.has(question.id)
+                                    placeholder={'time'}
+                                    error={false}
+                                    validate={validateTime}
+                                    onChange={inputOnChange}
+                                    name={'reply_time'}
+                                    value={inputValue['reply_time'].toString()}
+                                  />
+                                </InputLabelDiv>
+                                <InputLabelDiv className="senioriy">
+                                  <label>
+                                    <BodySMedium>Difficulty</BodySMedium>
+                                  </label>
+                                  <StatusFilter
+                                    status={StatusDropdownFilter.LOW}
+                                    onSelectStatus={function (
+                                      status: StatusDropdownFilter | null
+                                    ): void {
+                                      throw new Error(
+                                        'Function not implemented.'
                                       );
                                     }}
-                                    className={BackgroundColor.WHITE}
-                                    icon={<CloseIcon />}
-                                  />
-                                </ElWrap>
-                              </InputDiv>
-                            </InputLabelDiv>
-                            <div className="dropdowns">
-                              <InputLabelDiv className="competencies">
+                                  ></StatusFilter>
+                                </InputLabelDiv>
+                              </div>
+                              <InputLabelDiv>
                                 <label>
-                                  <BodySMedium>Competency</BodySMedium>
+                                  <BodySMedium>Guidelines</BodySMedium>
                                 </label>
-                                <TextInput
+                                <TextArea
                                   disable={false}
-                                  placeholder={'Competency'}
+                                  placeholder={'Guidelines'}
                                   error={false}
-                                  validate={validateTitle}
-                                  onChange={inputOnChange}
-                                  name={'competency'}
-                                  value={inputValue['competency']}
+                                  validate={() => null}
+                                  onChange={textAreaOnChange}
+                                  name={'guidelines'}
+                                  value={inputValue['guidelines']}
                                 />
                               </InputLabelDiv>
-                              <InputLabelDiv className="time">
-                                <label>
-                                  <BodySMedium>
-                                    Time for reply (mins)
-                                  </BodySMedium>
-                                </label>
-                                <TextInput
-                                  disable={false}
-                                  placeholder={'time'}
-                                  error={false}
-                                  validate={validateTime}
-                                  onChange={inputOnChange}
-                                  name={'reply_time'}
-                                  value={inputValue['reply_time'].toString()}
-                                />
-                              </InputLabelDiv>
-                              <InputLabelDiv className="senioriy">
-                                <label>
-                                  <BodySMedium>Difficulty</BodySMedium>
-                                </label>
-                                <StatusFilter
-                                  status={StatusDropdownFilter.LOW}
-                                ></StatusFilter>
-                              </InputLabelDiv>
-                            </div>
-                            <InputLabelDiv>
-                              <label>
-                                <BodySMedium>Guidelines</BodySMedium>
-                              </label>
-                              <TextArea
-                                disable={false}
-                                placeholder={'Guidelines'}
-                                error={false}
-                                validate={() => null}
-                                onChange={textAreaOnChange}
-                                name={'guidelines'}
-                                value={inputValue['guidelines']}
-                              />
-                            </InputLabelDiv>
-                          </OverviewDetailEdit>
-                        );
+                            </OverviewDetailEdit>
+                          );
+                        }
                       }
-                    }
-                  )}
-                  {showCustomQuestionForm && (
-                    <CustomQuestionForm
-                      onQuestionCreated={handleQuestionCreated}
-                      ref={customQuestionFormRef}
-                      onClose={handleClose}
-                    />
-                  )}
+                    )}
+                    {showCustomQuestionForm && (
+                      <CustomQuestionForm
+                        onQuestionCreated={handleQuestionCreated}
+                        ref={customQuestionFormRef}
+                        onClose={handleClose}
+                      />
+                    )}
+                  </>
                 </OverviewDetailBody>
               )}
 

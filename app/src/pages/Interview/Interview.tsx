@@ -59,14 +59,14 @@ import {
 } from '@/components/common/typeScale/StyledTypeScale';
 import { InputLabelDiv } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
 
-import ReactMarkdown from 'react-markdown';
-import { H3 } from '@/components/common/typeScale/TypeScale';
+// import { H3 } from '@/components/common/typeScale/TypeScale';
 import Chat from '@/components/common/form/chatBox/ChatBox';
 import { useCookies } from 'react-cookie';
+import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
 
-const components = {
-  h3: H3,
-};
+// const components = {
+//   h3: H3,
+// };
 
 const Interview = ({ leaveCall, interviewDetails }) => {
   const stage = 'Round 3';
@@ -622,9 +622,9 @@ const Interview = ({ leaveCall, interviewDetails }) => {
                         <BodySBold style={{ marginBottom: '8px' }}>
                           {'Guidelines'}
                         </BodySBold>
-                        <ReactMarkdown components={components}>
+                        <MarkdownFromatConatiner>
                           {activeQuestionInfo?.answer}
-                        </ReactMarkdown>
+                        </MarkdownFromatConatiner>
                       </StyledAnswerPoints>
                     </GuidelinesSection>
                   </div>

@@ -89,50 +89,52 @@ export const StyledTextarea = styled.textarea`
 `;
 
 export const StyledTextareaDiv = styled.div`
-  .prose {
-    width: 100%;
-    height: max-content;
-    top: 20px;
-    left: 20px;
+  background: ${(props) => props.theme.colors.lightGrey};
+  border-radius: 12px;
+  height: 200px;
+  position: relative;
+  overflow: scroll;
+  font-size: 14px;
+
+  p {
+    padding: 3px;
+  }
+
+  .selectContainer {
+    z-index: 9999;
+  }
+
+  &.error {
+    box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
+  }
+
+  .placeholder {
+    opacity: 0.5;
     position: absolute;
-
-    ::after {
-      content: '         ';
-    }
-
-    &:focus {
-      outline: none;
-    }
+    top: 85px;
+    margin-left: 12px;
   }
 
   .mdx-textarea {
-    height: 100%;
-    width: 100%;
-    border: none;
-    line-height: 150%;
-    overflow: auto;
-    outline: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    resize: none;
-    border-radius: 12px;
-
-    min-height: 82px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    background: ${(props) => props.theme.colors.lightGrey};
-    font: inherit;
-    font-size: 14px;
+    width: 95%;
+    min-height: 62px;
     position: relative;
-    &.error {
-      box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
+    overflow: auto;
+    font-family: Chillax;
+
+    :focus {
+      outline: none;
+      cursor: text;
     }
   }
+
+  svg {
+    fill: black;
+  }
+
   ul {
     list-style: disc;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 170%;
     padding: 0 20px;
   }
@@ -153,5 +155,26 @@ export const StyledTextareaDiv = styled.div`
     font-size: 20px;
     font-weight: 500;
     line-height: 125%;
+  }
+
+  ol {
+    list-style: decimal;
+    font-size: 14px;
+    line-height: 170%;
+    padding: 0 20px;
+  }
+
+  strong {
+    font-family: 'ChillaxSemi';
+  }
+
+  blockquote {
+    width: 80%;
+    font-style: italic;
+    padding: 4px 8px;
+    border-left: 5px solid ${(props) => props.theme.colors.accentPurple};
+    line-height: 1.6;
+    position: relative;
+    background: #ededed;
   }
 `;

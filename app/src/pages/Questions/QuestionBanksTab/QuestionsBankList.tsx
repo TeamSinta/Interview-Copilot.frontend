@@ -13,12 +13,11 @@ import {
   BodySMedium,
   H3Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
-import { H3 } from '@/components/common/typeScale/TypeScale';
+import { H3Component } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import React, { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
 
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { Stack } from '@mui/material';
@@ -34,6 +33,7 @@ import Loading from '@/components/common/elements/loading/Loading';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { openModal } from '@/features/modal/modalSlice';
 import { useDispatch } from 'react-redux';
+import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
 
 interface IState {
   [key: string]: any;
@@ -43,7 +43,7 @@ interface IState {
 }
 
 const components = {
-  h3: H3,
+  h3: H3Component,
 };
 
 const QuestionBanksQuestionsList = ({ questionBank }) => {
@@ -99,7 +99,6 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
     );
   };
 
-  // useEffect(() => {}, [dispatch, openItems]);
   return (
     <OverviewDetails>
       <>
@@ -157,9 +156,9 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
                 </div>
 
                 <div className={`detail ${openItems.has(index) ? '' : 'none'}`}>
-                  <ReactMarkdown components={components}>
+                  <MarkdownFromatConatiner>
                     {question.guidelines}
-                  </ReactMarkdown>
+                  </MarkdownFromatConatiner>
                 </div>
               </OverviewDetailList>
             );

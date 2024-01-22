@@ -34,12 +34,7 @@ import {
   QuestionNumber,
   QuestionValue,
 } from './StyledModalContents';
-import ReactMarkdown from 'react-markdown';
-import { H3 } from '../../typeScale/TypeScale';
-
-const components = {
-  h3: H3,
-};
+import MarkdownFromatConatiner from '../../markdownFormatContainer/MarkdownFormatContainer';
 
 const QuestionList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -161,9 +156,9 @@ const QuestionList = () => {
                     openItems.has(question.id) ? 'detail' : 'detail none'
                   }
                 >
-                  <ReactMarkdown components={components}>
+                  <MarkdownFromatConatiner>
                     {question.guidelines}
-                  </ReactMarkdown>
+                  </MarkdownFromatConatiner>
                 </div>
               </div>
             ))}
