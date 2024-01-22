@@ -54,11 +54,11 @@ export const TextAreaError = styled.div`
   font-family: 'Chillax';
   position: absolute;
   bottom: -20px;
-  right:0px;
+  right: 0px;
   border-radius: 12px;
   z-index: 999;
   color: gray;
-  `;
+`;
 
 export const SerchInputLayout = styled.div`
   position: relative;
@@ -173,7 +173,7 @@ export const StyledTextareaDiv = styled.div`
     &.error {
       box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
     }
-     }
+  }
   ul {
     list-style: disc;
     font-size: 12px;

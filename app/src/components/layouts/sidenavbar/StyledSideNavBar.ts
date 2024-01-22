@@ -145,14 +145,13 @@ export const Spacer = styled.div`
   padding-bottom: -8px;
 `;
 
-
 export const DropdownWrapButton = styled(Button)`
   position: relative;
   width: 100%;
   background: ${(props) => props.theme.colors.palePurple};
   border-radius: 12px;
   z-index: 1;
-  color:${(props) => props.theme.colors.palePurple} ;
+  color: ${(props) => props.theme.colors.palePurple};
   &.hover {
     cursor: pointer;
     box-shadow: 0px 4px 0px ${(props) => props.theme.colors.palePurple};

@@ -85,14 +85,14 @@ export const StyledButtonCustom = styled.button`
   gap: 10px;
   position: relative;
   border-radius: 8px;
-  outline:none;
-  border:none;
+  outline: none;
+  border: none;
   padding: 10px 16px;
   transition: 0.3s;
   font-size: 14px;
   min-width: 150px;
   padding: 10px 16px;
-  z-index:999;
+  z-index: 999;
   :hover {
     cursor: pointer;
     background: ${(props) => props.theme.colors.lightPurple};

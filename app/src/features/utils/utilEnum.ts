@@ -23,9 +23,9 @@ export enum StatusDropdownFilter {
   HIGH = 'High',
 }
 export enum CompetencyDropDownFilter {
-  LEADERSHIP = 'Leadership', 
+  LEADERSHIP = 'Leadership',
   TEAMWORK = 'Teamwork',
-  EMPATHY = 'Empathy'
+  EMPATHY = 'Empathy',
 }
 
 export enum TABS {

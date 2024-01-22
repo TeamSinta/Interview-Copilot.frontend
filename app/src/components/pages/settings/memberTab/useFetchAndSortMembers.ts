@@ -36,7 +36,10 @@ export const useFetchCompanyMembers = ({
   return { members };
 };
 
-export const useFetchCompanyDepartments = (companyId: CompanyID, trigger?: number) => {
+export const useFetchCompanyDepartments = (
+  companyId: CompanyID,
+  trigger?: number
+) => {
   const [departments, setDepartments] = useState<IOption[]>([]);
   const [getCompanyDepartments] = useGetCompanyDepartmentsMutation();
 

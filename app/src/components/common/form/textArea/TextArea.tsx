@@ -68,7 +68,9 @@ const TextArea = forwardRef(
           <MDXEditor
             ref={inputRef}
             className={`mdx-textarea ${error ? 'error' : ''}`}
-            contentEditableClassName={`prose ${name === 'guidelines' ? 'customProse': '' }`}
+            contentEditableClassName={`prose ${
+              name === 'guidelines' ? 'customProse' : ''
+            }`}
             markdown={inputValue[name]}
             onChange={handleInputChange}
             placeholder={placeholderText}

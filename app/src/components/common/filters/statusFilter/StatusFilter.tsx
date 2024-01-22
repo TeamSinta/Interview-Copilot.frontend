@@ -45,7 +45,7 @@ interface IStatusFilterProps {
 
 const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const [open, setOpen] = useState<string>('');
-    const [shadow, setShadow] = useState(false);
+  const [shadow, setShadow] = useState(false);
   const [isHover, setIsHover] = useState<string | null>(null);
 
   const onHover = (
@@ -91,7 +91,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         <OptionA
           className={`customOptionA ${
             props.status === value ? 'selected' : ''
-            }`}
+          }`}
           onMouseEnter={() => onHover(value)}
           onMouseLeave={onUnhover}
           onClick={() => onSelectedItem(value)}
@@ -134,23 +134,23 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
           </SelectedItemDiv>
         ) : (
           <StatusDropdownEl
-        onClick={onSelectOpen}
-        bg={props.status}
-        open={props.label === open}
-        >
+            onClick={onSelectOpen}
+            bg={props.status}
+            open={props.label === open}
+          >
             <SelectedItemDiv>
-        <BodyMMedium>
-        {props.status === null ? `------------` : props.status}
-        </BodyMMedium>
-        </SelectedItemDiv>
-        </StatusDropdownEl>
+              <BodyMMedium>
+                {props.status === null ? `------------` : props.status}
+              </BodyMMedium>
+            </SelectedItemDiv>
+          </StatusDropdownEl>
         )}
         <OptionUl
           open={props.label === props.openDropdown}
           className={props.id === 'customQuestion' ? 'customizeUl' : ''}
           onMouseLeave={() => {
             setOpen('');
-            props.onOpenDropdown('')
+            props.onOpenDropdown('');
           }}
         >
           {props.id !== 'customQuestion' ? (
@@ -164,12 +164,12 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               </OptionA>
             </OptionLi>
           ) : null}
-              <TransparentDropdownTitle>
-                <BodySMedium>Add {props.label}</BodySMedium>
-              </TransparentDropdownTitle>
-              {Object.entries(dropdownFilter()).map(([key, value]) =>
-                renderOption({ key, value })
-              )}
+          <TransparentDropdownTitle>
+            <BodySMedium>Add {props.label}</BodySMedium>
+          </TransparentDropdownTitle>
+          {Object.entries(dropdownFilter()).map(([key, value]) =>
+            renderOption({ key, value })
+          )}
         </OptionUl>
       </StatusDropdownWrap>
     </StatusDropdownLayout>

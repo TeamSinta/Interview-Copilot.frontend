@@ -7,10 +7,9 @@ export const ModalHeaderWrap = styled.div`
 
 export const ModalHeaderIconWrap = styled.div`
   display: flex;
-  height:22px;
-  margin-top:5px;
-  gap:8px
-
+  height: 22px;
+  margin-top: 5px;
+  gap: 8px;
 `;
 export const ArrowDiv = styled.div`
   svg {
