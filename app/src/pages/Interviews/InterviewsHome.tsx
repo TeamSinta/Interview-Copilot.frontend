@@ -9,16 +9,12 @@ import { useNavigate } from 'react-router-dom';
 import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconFilter';
 import { getInterviews } from '../../features/interviews/interviewsAPI';
 import { useCookies } from 'react-cookie';
+import { IInterviewRound } from '@/types/interview';
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: string; // Change the type to string
   value: string; // Change the type to string
-}
-
-interface IInterviewRound {
-  title: string;
-  id: string;
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -130,6 +126,7 @@ export default function BasicTabs() {
                       disable={false}
                       name={interviewRound.title}
                       date={interviewRound.created_at}
+                      image_uri={interviewRound.video_uri}
                     />
                   </div>
                 ))}

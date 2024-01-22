@@ -9,12 +9,12 @@ import {
   CardSubTitle,
   CardSubTitleContent,
 } from '../card/StyledCard';
-
 interface IConclusionInterviewCardProps {
   name: string;
   title: string;
   disable: boolean;
-  date: number;
+  date: number | string;
+  image_uri: string;
 }
 
 const formatDateDifference = (creationDate: string | number) => {
@@ -27,7 +27,7 @@ const formatDateDifference = (creationDate: string | number) => {
 
 const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
   const [hover, setHover] = useState(false);
-  const { name, title, disable, date } = props;
+  const { name, title, disable, date, image_uri } = props;
 
   const formattedDate = formatDateDifference(date);
 
@@ -37,7 +37,7 @@ const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
         className={(hover ? 'hover' : '').concat(disable ? ' disable' : ' ')}
         id="cardId"
       >
-        <InterviewCardCover imgUrl={''}></InterviewCardCover>
+        <InterviewCardCover imgUrl={image_uri} />
         <CardContent
           onMouseEnter={() => {
             setHover(disable ? false : true);
