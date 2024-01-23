@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledP = styled.p`
-  padding: 3px;
+  padding: 5px;
   strong {
     font-family: 'ChillaxSemi';
   }
@@ -26,7 +26,7 @@ const StyledMdxUl = styled.ul`
   list-style: disc;
   font-size: 14px;
   line-height: 170%;
-  padding: 0 20px;
+  padding: 5px 20px;
 `;
 
 const StyledMdxQuote = styled.blockquote`

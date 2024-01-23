@@ -1,6 +1,9 @@
 import {
-  InsertTable,
+  BoldItalicUnderlineToggles,
+  ListsToggle,
   MDXEditor,
+  codeBlockPlugin,
+  codeMirrorPlugin,
   headingsPlugin,
   listsPlugin,
   markdownShortcutPlugin,
@@ -8,18 +11,11 @@ import {
   tablePlugin,
   thematicBreakPlugin,
   toolbarPlugin,
-  InsertCodeBlock,
-  codeBlockPlugin,
-  useCodeBlockEditorContext,
-  codeMirrorPlugin,
-  BlockTypeSelect,
-  BoldItalicUnderlineToggles,
-  ListsToggle,
 } from '@mdxeditor/editor';
 
+import '@mdxeditor/editor/style.css';
 import { useState } from 'react';
 import { StyledTextareaDiv } from '../input/StyledInput';
-import '@mdxeditor/editor/style.css';
 
 interface ITextAreaProps {
   placeholder: string;
@@ -45,7 +41,7 @@ const TextArea = (props: ITextAreaProps) => {
       <StyledTextareaDiv className={`${error ? 'error' : ''}`}>
         {value ? <></> : <div className="placeholder">{placeholder}</div>}
         <MDXEditor
-          contentEditableClassName={`mdx-textarea`}
+          contentEditableClassName={`mdx-editor`}
           markdown={inputValue}
           onChange={handleInputChange}
           autoFocus
@@ -64,7 +60,7 @@ const TextArea = (props: ITextAreaProps) => {
                 <>
                   {' '}
                   <BoldItalicUnderlineToggles />
-                  <InsertTable />
+                  {/* <InsertTable /> */}
                   <ListsToggle />
                 </>
               ),

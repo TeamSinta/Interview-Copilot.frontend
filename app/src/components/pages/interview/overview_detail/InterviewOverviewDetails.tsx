@@ -172,8 +172,6 @@ const InterviewOverviewDetails = () => {
       competency: question.competency,
       difficulty: question.difficulty,
     });
-
-    console.log(question);
   };
 
   const inputOnChange = (
@@ -458,7 +456,6 @@ const InterviewOverviewDetails = () => {
                                   <TextInput
                                     disable={false}
                                     placeholder={'Question'}
-                                    error={false}
                                     onChange={inputOnChange}
                                     name={'question_text'}
                                     validate={validateTitle}
@@ -468,7 +465,10 @@ const InterviewOverviewDetails = () => {
                                     <IconBtnL
                                       disable={false}
                                       onClick={() =>
-                                        handleUpdateQuestion(templateQuestion)
+                                        handleUpdateQuestion(
+                                          templateQuestion.question
+                                            .question_text
+                                        )
                                       }
                                       className={BackgroundColor.ACCENT_PURPLE}
                                       icon={<CheckIcon />}
@@ -509,7 +509,6 @@ const InterviewOverviewDetails = () => {
                                   <TextInput
                                     disable={false}
                                     placeholder={'Competency'}
-                                    error={false}
                                     validate={validateTitle}
                                     onChange={inputOnChange}
                                     name={'competency'}
@@ -525,7 +524,6 @@ const InterviewOverviewDetails = () => {
                                   <TextInput
                                     disable={false}
                                     placeholder={'time'}
-                                    error={false}
                                     validate={validateTime}
                                     onChange={inputOnChange}
                                     name={'reply_time'}
@@ -553,9 +551,7 @@ const InterviewOverviewDetails = () => {
                                   <BodySMedium>Guidelines</BodySMedium>
                                 </label>
                                 <TextArea
-                                  disable={false}
                                   placeholder={'Guidelines'}
-                                  error={false}
                                   validate={() => null}
                                   onChange={textAreaOnChange}
                                   name={'guidelines'}

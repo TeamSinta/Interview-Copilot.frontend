@@ -96,6 +96,10 @@ export const StyledTextareaDiv = styled.div`
   overflow: scroll;
   font-size: 14px;
 
+  ._toolbarRoot_1g25u_137 {
+    z-index: 0;
+  }
+
   p {
     padding: 3px;
   }
@@ -113,14 +117,17 @@ export const StyledTextareaDiv = styled.div`
     position: absolute;
     top: 85px;
     margin-left: 12px;
+    padding: 3px;
   }
 
-  .mdx-textarea {
+  .mdx-editor {
     width: 95%;
     min-height: 62px;
     position: relative;
     overflow: auto;
-    font-family: Chillax;
+    font-family: 'Chillax';
+    background-color: transparent;
+    background: transparent;
 
     :focus {
       outline: none;

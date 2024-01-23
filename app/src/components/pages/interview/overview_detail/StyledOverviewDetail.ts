@@ -104,13 +104,6 @@ export const OverviewDetailList = styled.div`
     &.none {
       display: none;
     }
-
-    ul {
-      list-style: disc;
-      font-size: 12px;
-      line-height: 170%;
-      padding: 0 20px;
-    }
   }
 `;
 
