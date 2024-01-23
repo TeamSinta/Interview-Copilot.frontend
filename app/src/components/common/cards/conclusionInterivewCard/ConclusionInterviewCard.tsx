@@ -9,23 +9,46 @@ import {
   CardSubTitle,
   CardSubTitleContent,
 } from '../card/StyledCard';
-
+import image from '@/assets/svg/sinta-logo.svg';
+import ConclusionData from '@/services/conclusionService';
 interface IConclusionInterviewCardProps {
   name: string;
   title: string;
   disable: boolean;
-  date: number;
+  date: number | string;
+  video_uri?: string;
+  id: string;
 }
 
-const formatDateDifference = (creationDate: string) => {
-  return creationDate.split(',')[0];
+const formatDateDifference = (creationDate: string | number) => {
+  const dateObject =
+    typeof creationDate === 'string'
+      ? new Date(creationDate)
+      : new Date(creationDate * 1000);
+  return dateObject.toLocaleString();
 };
 
 const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
   const [hover, setHover] = useState(false);
-  const { name, title, disable, date } = props;
+  const { name, title, disable, date, video_uri, id } = props;
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [
+    summarizedAnswers,
+    questionsTranscript,
+    summarizedInterview,
+    videoUrl,
+    emojisData,
+    loading,
+    error,
+  ] = video_uri
+    ? ConclusionData(id)
+    : [null, null, null, null, null, false, false];
+  if (loading) return <div>Loading...</div>;
+  const shouldDisplayVideo = video_uri && videoUrl && !error;
 
-  const formattedDate = formatDateDifference(date);
+  const toggleVideo = () => {
+    setIsVideoPlaying(!isVideoPlaying);
+  };
 
   return (
     <ElWrap h={256}>
@@ -33,7 +56,24 @@ const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
         className={(hover ? 'hover' : '').concat(disable ? ' disable' : ' ')}
         id="cardId"
       >
-        <InterviewCardCover imgUrl={''}></InterviewCardCover>
+        {/* Display video as a thumbnail if found otherwise image */}
+        {shouldDisplayVideo ? (
+          <video
+            src={videoUrl?.url}
+            poster={''}
+            controls={false}
+            muted={true}
+            loop={true}
+            onClick={toggleVideo}
+            style={{
+              width: '100%',
+              height: 'auto',
+              borderRadius: '0px 0px 0px 0px',
+            }}
+          />
+        ) : (
+          <InterviewCardCover imgUrl={image} />
+        )}
         <CardContent
           onMouseEnter={() => {
             setHover(disable ? false : true);
@@ -46,7 +86,7 @@ const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
             <H2Bold style={{ fontSize: '14px' }}>{name} </H2Bold>
             <CardSubTitle style={{ marginTop: '2px' }}>
               {' '}
-              <BodySMedium> · {formattedDate}</BodySMedium>{' '}
+              <BodySMedium> · {date}</BodySMedium>{' '}
             </CardSubTitle>
           </CardTitleContent>
           <CardSubTitleContent>

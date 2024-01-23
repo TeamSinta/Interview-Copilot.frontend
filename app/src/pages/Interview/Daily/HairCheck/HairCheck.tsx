@@ -4,6 +4,7 @@ import React, {
   ChangeEvent,
   FormEvent,
   useEffect,
+  useRef,
 } from 'react';
 import {
   useLocalParticipant,
@@ -94,6 +95,10 @@ export default function HairCheck({
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
     null
   );
+  const [isFormValid, setFormValid] = useState(true);
+  const [isSelectedTemplate, setIsSelectedTemplate] = useState(false);
+  const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
+
 
   const workspace = useSelector((state: RootState) => state.workspace);
 
@@ -138,8 +143,21 @@ export default function HairCheck({
   };
 
   const startMeeting = async () => {
-    if (newTitle === '') throw new Error('Empty candidate username');
-    if (!selectedTemplate) throw new Error('Empty selected template');
+    if (!selectedTemplate) setIsSelectedTemplate(true)
+    let hasError = false; // Track if there's any validation error
+
+    if (!newTitle.trim()) {
+      if (titleInputRef.current) {
+        setFormValid(false)
+        titleInputRef.current.triggerValidation();
+      }
+      hasError = true;
+    } else {
+      hasError = false; // Reset to false when the title is not empty
+    }
+    if (hasError) {
+      return; // Stop if there's any validation error
+    }
 
     try {
       const title = newTitle;
@@ -223,6 +241,11 @@ export default function HairCheck({
 
   const join = (e: FormEvent) => {
     e.preventDefault();
+    if (newTitle === '' || !selectedTemplate) {
+      setFormValid(false);
+      return;
+    }
+    setFormValid(true);
     joinCall();
   };
 
@@ -436,10 +459,11 @@ export default function HairCheck({
               </ElWrap>
             </Stack>
             <BodySMedium>Title of your meeting</BodySMedium>
-            <div style={{ width: '100%' }}>
+            <div style={{ width: '100%' , marginBottom:'10px' , position:'relative' }}>
               <ElWrap>
                 <TextInput
                   name="title"
+                  ref={titleInputRef}
                   disable={false}
                   placeholder={`Enter your Interview title here!`}
                   value={newTitle}
@@ -449,6 +473,18 @@ export default function HairCheck({
                   validate={validateTitle}
                 />
               </ElWrap>
+              {newTitle === '' ? (
+                <BodySMedium
+                  style={{
+                    color: 'gray',
+                    position:'absolute',
+                    bottom: -22,
+                    right: 0
+                  }}
+                >
+                  Title is required{' '}
+                </BodySMedium>
+            ) : null}
             </div>
           </Stack>
           <div
@@ -466,6 +502,7 @@ export default function HairCheck({
               items={templates}
               renderItem={(template: Template) => (
                 <InterviewRoundCard
+                setIsSelectedTemplate={setIsSelectedTemplate}
                   key={template.id}
                   templateId={template.id}
                   imageUrl={template.image}
@@ -491,6 +528,17 @@ export default function HairCheck({
                 />
               )}
             />
+            {isSelectedTemplate ? (
+                <BodySMedium
+                  style={{
+                    color: 'red',
+                    position:'absolute',
+                    textAlign: 'center',
+                  }}
+                >
+                  Template is required{' '}
+                </BodySMedium>
+            ) : null}
           </div>
           <ButtonWrapper>
             <ElWrap>

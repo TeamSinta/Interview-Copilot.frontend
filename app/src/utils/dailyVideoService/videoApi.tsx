@@ -29,6 +29,24 @@ const RoomService = {
 
     return await response.json();
   },
+
+  async finishMeeting(recordingId: string) {
+    const VITE_DAILY_API_KEY = import.meta.env.VITE_DAILY_API_KEY;
+
+    const response = await fetch(
+      `https://api.daily.co/v1/recordings/${recordingId}/access-link`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+
+          Authorization: `Bearer ${VITE_DAILY_API_KEY}`,
+        },
+      }
+    );
+    const resp = await response.json();
+    return resp;
+  },
 };
 
 export default RoomService; // Export the named default export

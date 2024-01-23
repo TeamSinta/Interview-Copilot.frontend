@@ -1,29 +1,38 @@
-import React, { useCallback, useState } from 'react';
 import {
-  useDaily,
-  useScreenShare,
-  useLocalParticipant,
-  useVideoTrack,
   useAudioTrack,
+  useDaily,
   useDailyEvent,
+  useLocalParticipant,
   useRecording,
+  useScreenShare,
+  useVideoTrack,
 } from '@daily-co/daily-react';
+import React, { useCallback, useState } from 'react';
 
 import {
-  NavBookmarkIcon,
+  CamHideIcon,
+  ChatIcon,
+  EmojiIcon,
+  MicMuteIcon,
   NavCamIcon,
   NavCircle,
-  NavFlagIcon,
   NavFullScreenIcon,
   NavMicIcon,
   NavScreenShareIcon,
-  CamHideIcon,
-  MicMuteIcon,
-  EmojiIcon,
-  ChatIcon,
   SettingIcon,
 } from '@/components/common/svgIcons/Icons';
 
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { updateInterviewRound } from '@/features/interviews/interviewsAPI';
+import { openModal } from '@/features/modal/modalSlice';
+import { useWindowSize } from '@/hooks/useWindowSize';
+import RoomService from '@/utils/dailyVideoService/videoApi';
+import { Grid } from '@mui/material';
+import Switch from '@mui/material/Switch';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../../app/store';
+import Chat from '../Chat/Chat';
+import RecordingPrompt from './RecordingPrompt';
 import {
   BottomBarColumnsContainer,
   EmojiTray,
@@ -33,17 +42,41 @@ import {
   StyledColumns,
   StyledFinishBtn,
 } from './StyledBottomNavBar';
-import { Grid } from '@mui/material';
 import './index.css';
-import { useWindowSize } from '@/hooks/useWindowSize';
-import { AppDispatch } from '../../../../app/store';
-import { useDispatch } from 'react-redux';
-import Chat from '../Chat/Chat';
-import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
-import { openModal } from '@/features/modal/modalSlice';
 
-function BottomNavBar(props: any) {
+export interface IReactClickedState {
+  clicked: number;
+  message: string;
+  position?: {
+    left: number;
+    top: number;
+  };
+}
+
+interface IBottomNavBar {
+  setReactClicked: (values: IReactClickedState) => void;
+  reactClicked: IReactClickedState;
+  leaveCall: () => void;
+  emojiClicked: (
+    e: React.MouseEvent,
+    emoji: string,
+    emojiNumber: number
+  ) => void;
+  setStartTime: (time: Date) => void;
+  interviewRoundId: string;
+}
+const emojis = {
+  '👍': 2,
+  '👎': 3,
+  '🔥': 1,
+  '😂': 5,
+  '❤️': 4,
+};
+
+function BottomNavBar(props: IBottomNavBar) {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [recordSwitch, setRecordSwitch] = useState(false);
+  const [isRecordingStart, setIsRecordingStart] = useState<boolean>(false);
 
   const [isEmojiTrayOpened, setIsEmojiTrayOpened] = useState<boolean>(false);
   const {
@@ -52,24 +85,37 @@ function BottomNavBar(props: any) {
     leaveCall,
     emojiClicked,
     setStartTime,
+    interviewRoundId,
   } = props;
   const callObject = useDaily();
   const { isSharingScreen, startScreenShare, stopScreenShare } =
     useScreenShare();
-  const { startRecording, stopRecording, isRecording, type } = useRecording();
+  const { startRecording, stopRecording, isRecording, recordingId, local, isLocalParticipantRecorded, updateRecording } =
+    useRecording();
   const localParticipant = useLocalParticipant();
-  const localVideo = useVideoTrack(localParticipant?.session_id);
-  const localAudio = useAudioTrack(localParticipant?.session_id);
+  const localVideo = useVideoTrack(localParticipant?.session_id!);
+  const localAudio = useAudioTrack(localParticipant?.session_id!);
   const mutedVideo = localVideo.isOff;
   const mutedAudio = localAudio.isOff;
   const { width } = useWindowSize();
 
+  const getMeetingURL = async (recordingId: string) => {
+    const response = await RoomService.finishMeeting(recordingId);
+    if (response?.download_link) {
+      const data = {
+        interview_round_id: interviewRoundId,
+        video_uri: response.download_link,
+      };
+      await updateInterviewRound(data);
+    }
+  };
+
   const toggleVideo = useCallback(() => {
-    callObject.setLocalVideo(mutedVideo);
+    callObject?.setLocalVideo(mutedVideo);
   }, [callObject, mutedVideo]);
 
   const toggleAudio = useCallback(() => {
-    callObject.setLocalAudio(mutedAudio);
+    callObject?.setLocalAudio(mutedAudio);
   }, [callObject, mutedAudio]);
 
   const toggleEmojiTray = () => {
@@ -77,6 +123,16 @@ function BottomNavBar(props: any) {
   };
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(openModal({ modalType }));
+  };
+
+  const handleRecordingToggle = () => {
+    if (recordSwitch) {
+      stopRecording();
+    } else {
+      startRecording();
+    }
+    setRecordSwitch(!recordSwitch);
+    setIsRecordingStart(!isRecording);
   };
 
   const [showChat, setShowChat] = useState(false);
@@ -100,7 +156,7 @@ function BottomNavBar(props: any) {
   const toggleScreenRecord = async () => {
     const shouldUpload = isRecording;
     isRecording ? stopRecording() : startRecording();
-    const room = await callObject?.room();
+    await callObject?.room();
     if (!shouldUpload) {
       setStartTime(new Date());
     }
@@ -120,13 +176,25 @@ function BottomNavBar(props: any) {
   };
 
   // Function to close the settings modal
-  const closeSettingsModal = () => {
-    setIsSettingsModalOpen(false);
+  // const closeSettingsModal = () => {
+  //   setIsSettingsModalOpen(false);
+  // };
+
+  const callFinishedHandler = async () => {
+    leaveCall();
+    if (recordingId) {
+      getMeetingURL(recordingId);
+    }
   };
 
   return (
     <>
-      {' '}
+      {isRecording && (
+        <RecordingPrompt
+          isOpen={isRecordingStart}
+          isRecording={isRecordingStart}
+        />
+      )}{' '}
       <StyledBottomBar>
         <BottomBarColumnsContainer>
           {width && width > 1120 && (
@@ -145,7 +213,11 @@ function BottomNavBar(props: any) {
                       {isRecording ? 'Stop ' : 'Start '} Recording
                     </span>{' '}
                     <span className="icon" style={{ marginLeft: '5px' }}>
-                      <NavFullScreenIcon />
+                      <Switch
+                        checked={recordSwitch}
+                        onChange={handleRecordingToggle}
+                        color="default"
+                      />
                     </span>
                   </div>
                 </StyledBottomNavButtons>
@@ -178,42 +250,22 @@ function BottomNavBar(props: any) {
 
                 {/* Your custom emoji buttons */}
 
-                <StyledBottomNavButtons
-                  onClick={(e) => {
-                    emojiClicked(e, '👍', 2);
-                  }}
-                >
-                  👍
-                </StyledBottomNavButtons>
-                <StyledBottomNavButtons
-                  onClick={(e) => {
-                    emojiClicked(e, '👎', 3);
-                  }}
-                >
-                  👎
-                </StyledBottomNavButtons>
-                <StyledBottomNavButtons
-                  onClick={(e) => {
-                    emojiClicked(e, '🔥', 1);
-                  }}
-                >
-                  🔥
-                </StyledBottomNavButtons>
-
-                <StyledBottomNavButtons
-                  onClick={(e) => {
-                    emojiClicked(e, '😂', 5);
-                  }}
-                >
-                  😂
-                </StyledBottomNavButtons>
-                <StyledBottomNavButtons
-                  onClick={(e) => {
-                    emojiClicked(e, '❤️', 4);
-                  }}
-                >
-                  <i className="fa fa-heart" style={{ color: '#FF3D2F' }}></i>
-                </StyledBottomNavButtons>
+                {Object.entries(emojis).map(([emoji, number]) => (
+                  <StyledBottomNavButtons
+                    onClick={(e) => {
+                      emojiClicked(e, emoji, number);
+                    }}
+                  >
+                    {emoji === '❤️' ? (
+                      <i
+                        className="fa fa-heart"
+                        style={{ color: '#FF3D2F' }}
+                      ></i>
+                    ) : (
+                      emoji
+                    )}
+                  </StyledBottomNavButtons>
+                ))}
                 <div style={{ paddingLeft: '16px', paddingRight: '16px' }}>
                   <NavCircle />
                 </div>
@@ -310,59 +362,25 @@ function BottomNavBar(props: any) {
                   >
                     {isEmojiTrayOpened && (
                       <EmojiTray>
-                        <StyledBottomNavButtons
-                          onClick={() => {
-                            setReactClicked({
-                              clicked: reactClicked?.clicked + 1,
-                              message: '🔥',
-                            });
-                          }}
-                        >
-                          🔥
-                        </StyledBottomNavButtons>
-                        <StyledBottomNavButtons
-                          onClick={() => {
-                            setReactClicked({
-                              clicked: reactClicked?.clicked + 1,
-                              message: '👎',
-                            });
-                          }}
-                        >
-                          👎
-                        </StyledBottomNavButtons>
-                        <StyledBottomNavButtons
-                          onClick={() => {
-                            setReactClicked({
-                              clicked: reactClicked?.clicked + 1,
-                              message: '👍',
-                            });
-                          }}
-                        >
-                          👍
-                        </StyledBottomNavButtons>
-                        <StyledBottomNavButtons
-                          onClick={() => {
-                            setReactClicked({
-                              clicked: reactClicked?.clicked + 1,
-                              message: '😂',
-                            });
-                          }}
-                        >
-                          😂
-                        </StyledBottomNavButtons>
-                        <StyledBottomNavButtons
-                          onClick={() => {
-                            setReactClicked({
-                              clicked: reactClicked?.clicked + 1,
-                              message: '❤️',
-                            });
-                          }}
-                        >
-                          <i
-                            className="fa fa-heart"
-                            style={{ color: '#FF3D2F' }}
-                          ></i>
-                        </StyledBottomNavButtons>
+                        {Object.entries(emojis).map(([emoji, number]) => (
+                          <StyledBottomNavButtons
+                            onClick={() => {
+                              setReactClicked({
+                                clicked: reactClicked?.clicked + 1,
+                                message: emoji,
+                              });
+                            }}
+                          >
+                            {emoji === '❤️' ? (
+                              <i
+                                className="fa fa-heart"
+                                style={{ color: '#FF3D2F' }}
+                              ></i>
+                            ) : (
+                              emoji
+                            )}
+                          </StyledBottomNavButtons>
+                        ))}
                       </EmojiTray>
                     )}
 
@@ -373,14 +391,17 @@ function BottomNavBar(props: any) {
             )}
             <Chat showChat={showChat} toggleChat={toggleChat} />
             <StyledColumns style={{ paddingRight: '20px', float: 'right' }}>
-              <StyledFinishBtn className="accentPurple" onClick={leaveCall}>
+              <StyledFinishBtn
+                className="accentPurple"
+                onClick={callFinishedHandler}
+              >
                 Finish
               </StyledFinishBtn>
             </StyledColumns>
           </FinishButtonContainer>
         </BottomBarColumnsContainer>
       </StyledBottomBar>
-      <GlobalModal></GlobalModal>
+      <GlobalModal />
     </>
   );
 }

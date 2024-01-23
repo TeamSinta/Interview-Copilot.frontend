@@ -14,6 +14,7 @@ import {
   StyledSummaryTab,
   AIGeneratedImageContainer,
 } from './StyledSummaryTab';
+import { summaryInfo } from './SummaryConstants';
 
 const AIGeneratedImage = () => (
   <AIGeneratedImageContainer>
@@ -36,21 +37,23 @@ const AIGeneratedImage = () => (
     </svg>
   </AIGeneratedImageContainer>
 );
-
 const SummaryTab = ({ summaryInfo }) => {
   return (
     <StyledSummaryTab>
       <Grid container spacing={1}>
         <Grid item xs={12} md={12}>
           <Stack direction={'row'} spacing={2}>
-            <BodyLBold>{summaryInfo.title}</BodyLBold>
+            <BodyLBold>{summaryInfo?.title ?? ''}</BodyLBold>
             <AIGeneratedImage />
           </Stack>
           <StyledSummaryDescription>
-            <BodyMMedium>{summaryInfo.description}</BodyMMedium>
+            <BodyMMedium>{summaryInfo?.description ?? ''}</BodyMMedium>
           </StyledSummaryDescription>
           <StyledRoundBox>
-            <InterviewQNA propData={summaryInfo.faq} screen={'summary'} />
+            <InterviewQNA
+              propData={summaryInfo?.faq ?? ''}
+              screen={'summary'}
+            />
           </StyledRoundBox>
         </Grid>
       </Grid>
