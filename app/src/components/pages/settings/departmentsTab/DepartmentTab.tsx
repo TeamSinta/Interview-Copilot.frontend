@@ -33,7 +33,6 @@ const DepartmentTab = () => {
   const allDepartments = departmentState.allDepartments;
   const [sortCriteria, setSortCritiera] = useState('');
   const [departmentId, setDepartmentId] = useState('');
-  // const [members, seSmembers] = useState([]);
 
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(

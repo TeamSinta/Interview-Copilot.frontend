@@ -48,6 +48,7 @@ const CreateDepartment = () => {
   const [createNewDepartment, { isLoading }] = useCreateDepartmentMutation();
   const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user.user);
+  const [validationError, setValidationError] = useState('');
   const [newDepartmentName, setNewDepartmentName] = useState('');
   const [sortCriteria] = useState('');
   const [departmentId, setDepartmentId] = useState('');
@@ -71,18 +72,24 @@ const CreateDepartment = () => {
   };
 
   const CreateNewDepartment = async () => {
-    await createNewDepartment({
-      company_id: companyId,
-      departmentTitle: newDepartmentName,
-    })
-      .unwrap()
-      .then((response) => {
-        // Handle success
-        setNewDepartmentName('');
-      })
-      .catch((error: any) => {
-        console.log('Error creating department', error);
-      });
+    const trimmedDepartmentName = newDepartmentName.trim();
+    if (!trimmedDepartmentName) {
+      setValidationError('Title is required.');
+      return;
+    }
+
+    try {
+      await createNewDepartment({
+        company_id: companyId,
+        departmentTitle: trimmedDepartmentName,
+      }).unwrap();
+
+      // Handle success
+      setNewDepartmentName('');
+      setValidationError('');
+    } catch (error: any) {
+      setValidationError('Error creating department: ' + error.message);
+    }
   };
 
   const validateTitle = (value: string): string | null => {

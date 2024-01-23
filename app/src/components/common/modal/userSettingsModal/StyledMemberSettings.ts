@@ -21,16 +21,6 @@ export const ProfilePicture = styled.img`
   background-color: gray;
 `;
 
-export const DeleteBox = styled.div`
-  margin-top: 16px;
-  border-radius: 16px;
-  background: var(--bg, #f6f6fb);
-  height: 54px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const MemberActionContainer = styled.div`
   display: flex;
   flex-direction: column;

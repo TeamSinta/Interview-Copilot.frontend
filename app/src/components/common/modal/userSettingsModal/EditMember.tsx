@@ -22,15 +22,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from '../modalContents/StyledModalContents';
 import {
-  DeleteBox,
   MemberActionContainer,
   MemberDetailsContainer,
   MemberInformationContainer,
   ProfilePicture,
 } from './StyledMemberSettings';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
+import StyledDeleteBox from '../../form/deleteBox/deleteBox';
 
-interface UserModalProps {
+interface MemberModalProps {
   user: {
     id: string;
     first_name: string;
@@ -41,7 +41,7 @@ interface UserModalProps {
   onClose: () => void;
 }
 
-const MemberSettings: React.FC<UserModalProps> = () => {
+const EditMember: React.FC<MemberModalProps> = () => {
   const [memberDepartments, setMemberDepartments] = useState<IOption[]>([]);
   const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user.user);
@@ -123,31 +123,10 @@ const MemberSettings: React.FC<UserModalProps> = () => {
           workspaceId={workspace.id}
           multi
         />
-
-        {/* Disabled checkbox for now
-        <CheckBox
-          inputName="Check Box"
-          label="Make Admin"
-          onChange={() => {}}
-          checked={false}
-          disabled={true}
+        <StyledDeleteBox
+          deleteItemText="member"
+          deleteFromText="all your companies"
         />
-        */}
-        <DeleteBox>
-          <BodyMMedium style={{ opacity: 0.5 }}>You can </BodyMMedium>
-          <ElWrap w={50} h={10}>
-            <TextBtnS
-              label="delete"
-              onClick={() => {}}
-              disable={true} // Temporarily disabled
-              className=""
-            />
-          </ElWrap>
-          <BodyMMedium style={{ opacity: 0.5 }}>
-            {' '}
-            your team members from all workspaces.
-          </BodyMMedium>
-        </DeleteBox>
       </MemberActionContainer>
 
       <ElWrap>
@@ -162,4 +141,4 @@ const MemberSettings: React.FC<UserModalProps> = () => {
   );
 };
 
-export default MemberSettings;
+export default EditMember;

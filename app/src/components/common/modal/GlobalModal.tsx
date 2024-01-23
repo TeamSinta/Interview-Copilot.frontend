@@ -5,13 +5,12 @@ import { CloseIcon } from '../svgIcons/Icons';
 import { H2Bold } from '../typeScale/StyledTypeScale';
 import Modal from './Modal';
 import { CloseDiv, ModalHeaderWrap } from './StyledModal';
-
 import CreateTemplate from '@/components/common/modal/modalContents/CreateTemplate';
 import CreateDepartment from './modalContents/CreateDepartment';
 import SelectValue from './modalContents/SelectValues';
 import ModalL from './ModalL';
 import SelectTemplate from './modalContents/SelectTemplate';
-import MemberSettings from './userSettingsModal/MemberSettings';
+import EditMember from './userSettingsModal/EditMember';
 import EditInterviews from './modalContents/EditInterview';
 import EditInterviewers from './modalContents/EditInterviewrs';
 import SelectAllQuestions from './modalContents/SelectAllQuestions';
@@ -19,6 +18,7 @@ import VideoSettingsContent from './modalContents/videoSettingsModal/VideoSettin
 import CreateQuestionBank from './modalContents/CreateQuestionBank';
 import CoverLibrary from './modalContents/CoversLibrary';
 import EditDepartment from './modalContents/EditDepartment';
+import DeleteConfirm from './modalContents/DeleteConfirm';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
@@ -33,7 +33,7 @@ export enum MODAL_TYPE {
   VIDEO_SETTINGS = 'VIDEO_SET',
   SELECT_ALL_QUESTIONS = 'SELECT_ALL_QUESTIONS',
   COVER_LIBRARY = 'COVER_LIBRARY',
-  // ModalL = "ModalL",
+  DEL_CONFIRM = 'DEL_CONFIRM',
 }
 
 interface IModalHeader {
@@ -67,7 +67,8 @@ const ModalPortal = ({ children }: IModalPortal) => {
 };
 
 const GlobalModal = (): JSX.Element => {
-  const { modalType, isOpen } = useSelector(selectModal);
+  const { modalType, isOpen, entityId, entityType, additionalId } =
+    useSelector(selectModal);
 
   const renderModal = () => {
     switch (modalType) {
@@ -134,24 +135,23 @@ const GlobalModal = (): JSX.Element => {
       case MODAL_TYPE.MEMBER_SET:
         return (
           <Modal title="Member Setting">
-            <MemberSettings
-              user={{
-                id: '',
-                first_name: '',
-                last_name: '',
-                email: '',
-                role: '',
-              }}
-              onClose={function (): void {
-                throw new Error('Function not implemented.');
-              }}
-            />
+            <EditMember />
           </Modal>
         );
       case MODAL_TYPE.COVER_LIBRARY:
         return (
           <Modal title="Covers Library">
             <CoverLibrary />
+          </Modal>
+        );
+      case MODAL_TYPE.DEL_CONFIRM:
+        return (
+          <Modal title="Confirmation">
+            <DeleteConfirm
+              entityId={entityId}
+              entityType={entityType}
+              additionalId={additionalId}
+            />
           </Modal>
         );
     }

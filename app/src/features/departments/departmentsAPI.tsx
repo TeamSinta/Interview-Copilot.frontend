@@ -60,6 +60,18 @@ export const departmentsAPI = createApi({
       },
       invalidatesTags: ['Department'],
     }),
+    deleteDepartment: builder.mutation<
+      void,
+      { company_id: any; department_id: any }
+    >({
+      query: ({ company_id, department_id }) => {
+        return {
+          url: `/company/departments?company=${company_id}&department=${department_id}`,
+          method: 'PUT',
+        };
+      },
+      invalidatesTags: ['Department'],
+    }),
   }),
 });
 
@@ -67,4 +79,5 @@ export const {
   useGetCompanyDepartmentsQuery,
   useCreateDepartmentMutation,
   useUpdateDepartmentMutation,
+  useDeleteDepartmentMutation,
 } = departmentsAPI;

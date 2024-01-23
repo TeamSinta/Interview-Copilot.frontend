@@ -11,6 +11,7 @@ import { useRef, useState } from 'react';
 import TextInput from '../../form/textInput/TextInput';
 import { useUpdateDepartmentMutation } from '@/features/departments/departmentsAPI';
 import { setDepartment } from '@/features/departments/departmentSlice';
+import StyledDeleteBox from '../../form/deleteBox/deleteBox';
 
 const titleInputArg = {
   label: 'Title',
@@ -30,13 +31,15 @@ const EditDepartment = () => {
   const { title, id } = useSelector(
     (state: RootState) => state.department.currentDepartment
   );
+  const dispatch = useDispatch<AppDispatch>();
   const workspace = useSelector((state: RootState) => state.workspace);
+  const { entityId, entityType, additionalId } = useSelector(
+    (state: RootState) => state.modal
+  );
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
   const [newTitle, setNewTitle] = useState('');
 
   const [updateDepartment] = useUpdateDepartmentMutation();
-
-  const dispatch = useDispatch<AppDispatch>();
 
   const validateTitle = (value: string): string | null => {
     if (!value.trim()) {
@@ -56,6 +59,10 @@ const EditDepartment = () => {
 
   const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewTitle(event.target.value);
+  };
+
+  const handleOnDeleteClick = () => {
+    dispatch();
   };
 
   const handleSaveClick = async () => {
@@ -92,6 +99,11 @@ const EditDepartment = () => {
         </PhotoContainer>
       </InputLayout>
       <TextIconBtnL {...textIconBtnArg} onClick={handleSaveClick} />
+      <StyledDeleteBox
+        deleteItemText="department"
+        deleteFromText="this company"
+        disabled={false}
+      />
     </ModalContentWrap>
   );
 };

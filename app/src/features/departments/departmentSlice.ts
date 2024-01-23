@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IDepartment } from '../departments/departmentsInterface';
 
 export interface DepartmentState {
-  currentDepartment: IDepartment | string;
+  currentDepartment: IDepartment;
   allDepartments: IDepartment[];
 }
 
