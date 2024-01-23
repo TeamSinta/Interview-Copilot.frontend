@@ -18,7 +18,7 @@ import VideoSettingsContent from './modalContents/videoSettingsModal/VideoSettin
 import CreateQuestionBank from './modalContents/CreateQuestionBank';
 import CoverLibrary from './modalContents/CoversLibrary';
 import EditDepartment from './modalContents/EditDepartment';
-import DeleteConfirm from './modalContents/DeleteConfirm';
+import DeleteDepartment from './modalContents/DeleteDepartment';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
@@ -33,7 +33,7 @@ export enum MODAL_TYPE {
   VIDEO_SETTINGS = 'VIDEO_SET',
   SELECT_ALL_QUESTIONS = 'SELECT_ALL_QUESTIONS',
   COVER_LIBRARY = 'COVER_LIBRARY',
-  DEL_CONFIRM = 'DEL_CONFIRM',
+  DEL_DEP = 'DEL_DEP',
 }
 
 interface IModalHeader {
@@ -67,8 +67,7 @@ const ModalPortal = ({ children }: IModalPortal) => {
 };
 
 const GlobalModal = (): JSX.Element => {
-  const { modalType, isOpen, entityId, entityType, additionalId } =
-    useSelector(selectModal);
+  const { modalType, isOpen } = useSelector(selectModal);
 
   const renderModal = () => {
     switch (modalType) {
@@ -144,14 +143,10 @@ const GlobalModal = (): JSX.Element => {
             <CoverLibrary />
           </Modal>
         );
-      case MODAL_TYPE.DEL_CONFIRM:
+      case MODAL_TYPE.DEL_DEP:
         return (
           <Modal title="Confirmation">
-            <DeleteConfirm
-              entityId={entityId}
-              entityType={entityType}
-              additionalId={additionalId}
-            />
+            <DeleteDepartment />
           </Modal>
         );
     }

@@ -67,7 +67,7 @@ export const departmentsAPI = createApi({
       query: ({ company_id, department_id }) => {
         return {
           url: `/company/departments?company=${company_id}&department=${department_id}`,
-          method: 'PUT',
+          method: 'DELETE',
         };
       },
       invalidatesTags: ['Department'],

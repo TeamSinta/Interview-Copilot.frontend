@@ -2,7 +2,7 @@ import { AppDispatch, RootState } from '@/app/store';
 import { PhotoContainer } from '@/components/common/buttons/photo/StyledPhoto';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
-import { BackgroundColor } from '@/features/utils/utilEnum';
+import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '@/features/modal/modalSlice';
 import { ModalContentWrap } from './StyledModalContents';
@@ -10,8 +10,16 @@ import { InputLayout } from '../../form/input/StyledInput';
 import { useRef, useState } from 'react';
 import TextInput from '../../form/textInput/TextInput';
 import { useUpdateDepartmentMutation } from '@/features/departments/departmentsAPI';
-import { setDepartment } from '@/features/departments/departmentSlice';
+import { setCurrentDepartment } from '@/features/departments/departmentSlice';
 import StyledDeleteBox from '../../form/deleteBox/deleteBox';
+import {
+  selectedMember,
+  useFetchSelectMembers,
+} from '@/features/roles/rolesSlice';
+import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import Photos from '../../buttons/photo/Photos';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import Photo from '../../buttons/photo/Photo';
 
 const titleInputArg = {
   label: 'Title',
@@ -33,13 +41,23 @@ const EditDepartment = () => {
   );
   const dispatch = useDispatch<AppDispatch>();
   const workspace = useSelector((state: RootState) => state.workspace);
-  const { entityId, entityType, additionalId } = useSelector(
-    (state: RootState) => state.modal
+  const user = useSelector((state: RootState) => state.user.user);
+  const currentDepartment = useSelector(
+    (state: RootState) => state.department.currentDepartment
   );
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
   const [newTitle, setNewTitle] = useState('');
-
   const [updateDepartment] = useUpdateDepartmentMutation();
+
+  const companyId: CompanyID = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyID;
+
+  const { members } = useFetchSelectMembers({
+    company_id: companyId,
+    department_id: currentDepartment.id,
+    sortCriteria: '',
+  });
 
   const validateTitle = (value: string): string | null => {
     if (!value.trim()) {
@@ -61,8 +79,8 @@ const EditDepartment = () => {
     setNewTitle(event.target.value);
   };
 
-  const handleOnDeleteClick = () => {
-    dispatch();
+  const onMemberSelectd = (memberIdx: number) => {
+    dispatch(selectedMember({ memberIdx: memberIdx }));
   };
 
   const handleSaveClick = async () => {
@@ -75,7 +93,7 @@ const EditDepartment = () => {
         department_id: id,
         departmentData: departmentData,
       })?.unwrap();
-      dispatch(setDepartment(newDepartmentTitle));
+      dispatch(setCurrentDepartment(newDepartmentTitle));
       dispatch(closeModal());
     } catch (error) {
       console.log('Failed to update Department', error);
@@ -96,6 +114,21 @@ const EditDepartment = () => {
         />
         <PhotoContainer>
           <BodySMedium>Members</BodySMedium>
+          <Photos>
+            {members.map((member: any, index: number) => (
+              <ElWrap w={40} h={40} key={index}>
+                <Photo
+                  onSelect={onMemberSelectd}
+                  member_idx={member.id}
+                  member_firstName={member.first_name}
+                  member_lastName={member.last_name}
+                  photoType={PhotoType.L}
+                  member_url={member.profile_picture}
+                  selected={member.selected}
+                />
+              </ElWrap>
+            ))}
+          </Photos>
         </PhotoContainer>
       </InputLayout>
       <TextIconBtnL {...textIconBtnArg} onClick={handleSaveClick} />

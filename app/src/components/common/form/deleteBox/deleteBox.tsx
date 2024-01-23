@@ -21,19 +21,21 @@ interface IStyledDeleteBoxProps {
   deleteItemText: string | null;
   deleteFromText?: string | null;
   disabled: boolean;
+  targetModalType: MODAL_TYPE;
 }
 
 const StyledDeleteBox: React.FC<IStyledDeleteBoxProps> = ({
   deleteItemText,
   deleteFromText,
   disabled,
+  targetModalType,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const onClickModalOpen = (modalType: MODAL_TYPE) => {
+  const onClickModalOpen = (targetModalType: MODAL_TYPE) => {
     dispatch(
       openModal({
-        modalType: modalType,
+        modalType: targetModalType,
       })
     );
   };
@@ -44,7 +46,7 @@ const StyledDeleteBox: React.FC<IStyledDeleteBoxProps> = ({
       <ElWrap w={50} h={10}>
         <TextBtnS
           label="delete"
-          onClick={() => onClickModalOpen(MODAL_TYPE.DEL_CONFIRM)}
+          onClick={() => onClickModalOpen(MODAL_TYPE.DEL_DEP)}
           disable={disabled} // Temporarily disabled
           className=""
         />

@@ -3,29 +3,19 @@ import Photo from '@/components/common/buttons/photo/Photo';
 import Photos from '@/components/common/buttons/photo/Photos';
 import { PhotoContainer } from '@/components/common/buttons/photo/StyledPhoto';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
-import Invite from '@/components/common/form/invite/Invite';
 import TextInput from '@/components/common/form/textInput/TextInput';
 import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import { inviteMemberSliceReset } from '@/features/inviteMember/inviteMemberSlice';
-import { closeModal } from '@/features/modal/modalSlice';
-import { IMember } from '@/features/roles/rolesInterface';
 import {
-  getMemberAsync,
-  postData,
-  roleSliceReset,
-  selectRole,
   selectedMember,
-  setCreateDepTitleInput,
   useFetchSelectMembers,
 } from '@/features/roles/rolesSlice';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
-import { useEffect, useRef, useState } from 'react';
-import NewDepartment from '../../form/newDepartment/newDepartment';
+import { useState } from 'react';
 import { useCreateDepartmentMutation } from '@/features/departments/departmentsAPI';
 
 const titleInputArg = {

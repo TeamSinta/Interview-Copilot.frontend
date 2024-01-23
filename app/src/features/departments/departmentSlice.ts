@@ -23,13 +23,20 @@ const departmentSlice = createSlice({
     setAllDepartments: (state, action: PayloadAction<IDepartment[]>) => {
       state.allDepartments = action.payload;
     },
-    setDepartment: (state, action: PayloadAction<IDepartment>) => {
+    setCurrentDepartment: (state, action: PayloadAction<IDepartment>) => {
       state.currentDepartment = action.payload;
+    },
+    resetCurrentDepartment: (state) => {
+      state.currentDepartment = initialState.currentDepartment;
     },
   },
 });
 
-export const { setAllDepartments, setDepartment } = departmentSlice.actions;
+export const {
+  setAllDepartments,
+  setCurrentDepartment,
+  resetCurrentDepartment,
+} = departmentSlice.actions;
 export const selectDepartment = (state: RootState) => state.department;
 
 export const selectAllDepartments = (state: RootState) =>

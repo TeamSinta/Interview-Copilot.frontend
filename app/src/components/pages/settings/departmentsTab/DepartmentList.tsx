@@ -2,7 +2,7 @@ import { AppDispatch } from '@/app/store';
 import SettingsDepartmentCard from '@/components/common/cards/settingsDepartmentCard/SettingsDepartmentCard';
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import PaginationComponent from '@/components/common/pagination/PaginationComponent';
-import { setDepartment } from '@/features/departments/departmentSlice';
+import { setCurrentDepartment } from '@/features/departments/departmentSlice';
 import { IDepartment } from '@/features/departments/departmentsInterface';
 import usePagination from '@/hooks/usePagination';
 import { DepartmentListContainer } from '@/pages/Settings/StyledSettings';
@@ -39,7 +39,7 @@ const DepartmentList: React.FC<{
               department={department}
               onClick={() => {
                 dispatch(
-                  setDepartment({
+                  setCurrentDepartment({
                     id: department.id,
                     title: department.title,
                   })
