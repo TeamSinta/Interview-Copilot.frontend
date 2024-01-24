@@ -97,6 +97,8 @@ export default function HairCheck({
   );
   const [isFormValid, setFormValid] = useState(true);
   const [isSelectedTemplate, setIsSelectedTemplate] = useState(false);
+  const [isTitlePresent, setIsTitlePresent] = useState(false);
+
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
 
 
@@ -150,6 +152,7 @@ export default function HairCheck({
       if (titleInputRef.current) {
         setFormValid(false)
         titleInputRef.current.triggerValidation();
+        setIsTitlePresent(true)
       }
       hasError = true;
     } else {
@@ -469,11 +472,12 @@ export default function HairCheck({
                   value={newTitle}
                   onChange={(e) => {
                     setTitle(e.target.value);
+                    setIsTitlePresent(false)
                   }}
                   validate={validateTitle}
                 />
               </ElWrap>
-              {newTitle === '' ? (
+              {isTitlePresent ? (
                 <BodySMedium
                   style={{
                     color: 'gray',

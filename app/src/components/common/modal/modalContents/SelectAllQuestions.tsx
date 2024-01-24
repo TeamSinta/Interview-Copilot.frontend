@@ -10,7 +10,7 @@ import { closeModal } from '@/features/modal/modalSlice';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { IconBtnM } from '../../buttons/iconBtn/IconBtn';
 import { TextIconBtnL } from '../../buttons/textIconBtn/TextIconBtn';
 
@@ -32,7 +32,7 @@ import {
   TemplateLayout,
 } from './StyledModalContents';
 import AllQuestionsList from './AllQuestionsList';
-import { useUpdateQuestionBankMutation } from '@/features/questions/questionsAPISlice';
+import { useGetQuestionBankDetailQuery, useUpdateQuestionBankMutation } from '@/features/questions/questionsAPISlice';
 
 const SelectAllQuestions = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -43,7 +43,10 @@ const SelectAllQuestions = () => {
   );
   const navigate = useNavigate();
   const [upadateQuestionBanks] = useUpdateQuestionBankMutation();
-
+  const { questionBankId } = useParams(); // Replace 'questionBankId' with your actual parameter name
+  const {
+  refetch
+  } = useGetQuestionBankDetailQuery(questionBankId);
   const addQuestionsToQuestionBank = async () => {
     try {
       const payload = {
@@ -55,7 +58,7 @@ const SelectAllQuestions = () => {
         dispatch(resetQuestionBank());
         dispatch(closeModal());
         navigate(`/questionbank/${response.id}`);
-        navigate(0);
+        await refetch()
       } else {
         // Handle unsuccessful response here
         console.error('Failed to add questions to the Question Bank.');
