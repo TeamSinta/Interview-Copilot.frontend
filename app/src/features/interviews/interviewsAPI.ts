@@ -5,13 +5,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 type FeedbackData = {
-  user: string;
+  user: string | null;
   interview_round: string;
   score?: number;
   reaction?: number;
   note?: string;
   time: string;
-  template_question: string;
+  template_question?: string;
 };
 
 export const interviewsApi = createApi({

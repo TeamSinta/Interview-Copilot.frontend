@@ -1,3 +1,15 @@
+interface IFAQItem {
+  question: string;
+  answer: string;
+  competency: string;
+}
+
+export interface ISummary {
+  title: string;
+  description: string;
+  faq: IFAQItem[];
+}
+
 const summaryInfo = {
   title: 'Summary',
   description:
