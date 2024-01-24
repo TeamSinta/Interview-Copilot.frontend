@@ -29,6 +29,7 @@ import Arrow from 'src/assets/svg/arrow.svg';
 import CoverLibrary from './modalContents/CoversLibrary';
 import EditDepartment from './modalContents/EditDepartment';
 import DeleteDepartment from './modalContents/DeleteDepartment';
+import { SetStateAction } from 'react';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
