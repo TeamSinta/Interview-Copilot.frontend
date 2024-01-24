@@ -121,9 +121,9 @@ function CustomQuestionForm(
     }
 
     if (!inputValue.guidelines.trim()) {
+      setError('Description is required');
       if (descriptionInputRef.current) {
         descriptionInputRef.current.triggerValidation();
-        setError('Description is required');
       }
       hasError = true;
     } else {
