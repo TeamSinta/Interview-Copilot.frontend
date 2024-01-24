@@ -16,10 +16,10 @@ import {
   selectedMember,
   useFetchSelectMembers,
 } from '@/features/roles/rolesSlice';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import Photos from '../../buttons/photo/Photos';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import Photo from '../../buttons/photo/Photo';
+import { CompanyId } from '@/types/company';
 
 const titleInputArg = {
   label: 'Title',
@@ -49,9 +49,9 @@ const EditDepartment = () => {
   const [newTitle, setNewTitle] = useState('');
   const [updateDepartment] = useUpdateDepartmentMutation();
 
-  const companyId: CompanyID = (!workspace.id
+  const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
+    : workspace.id)! as unknown as CompanyId;
 
   const { members } = useFetchSelectMembers({
     company_id: companyId,

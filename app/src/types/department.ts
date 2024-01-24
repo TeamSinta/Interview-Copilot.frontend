@@ -1,19 +1,36 @@
-export interface IUserData {
-  first_name: string | null;
-  last_name: string | null;
-}
-
-export interface IMembersList {
-  id: number;
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  role: string;
-  profile_picture: string | null;
-}
+import { IOption } from './common';
 
 export interface IDepartment {
   title: string;
   id: string;
 }
+
+export type DepartmentsList = {
+  id: string;
+  title: string;
+};
+
+export interface IUserData {
+  first_name: string | null;
+  last_name: string | null;
+}
+
+export interface IDepartmentDropDown {
+  departments: IOption[];
+  handleSetDepartment: (value: DepartmentId) => void;
+  workspaceId: string | null;
+  multi?: boolean;
+}
+
+export interface IDepartmentListProps {
+  onChange: (data: IOption) => void;
+  data: IOption;
+}
+
+export interface IDepartmentState {
+  currentDepartment: IDepartment;
+  allDepartments: IDepartment[];
+}
+
+export type DepartmentId = string;
+export type DepartmentTitle = string;

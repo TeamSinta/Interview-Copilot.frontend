@@ -6,7 +6,9 @@ import {
   useGetCompanyDepartmentsMutation,
   useGetCompanyMembersQuery,
 } from '@/features/settingsDetail/userSettingsAPI';
-import { MembersList } from '@/features/settingsDetail/userSettingsInterface';
+import { IMembersList, SortBy } from '@/types/common';
+import { CompanyId } from '@/types/company';
+import { DepartmentId } from '@/types/department';
 import { useEffect, useState } from 'react';
 
 interface IOption {
@@ -20,15 +22,15 @@ export const useFetchCompanyMembers = ({
   department_id,
   sortCriteria,
 }: {
-  company_id: CompanyID;
-  department_id: DepartmentID;
-  sortCriteria: string;
+  company_id: CompanyId;
+  department_id: DepartmentId;
+  sortCriteria: SortBy;
 }) => {
-  const [members, setMembers] = useState<MembersList[]>([]);
+  const [members, setMembers] = useState<IMembersList[]>([]);
 
   const { data, isSuccess } = useGetCompanyMembersQuery({
-    company_id,
-    department_id,
+    company_id: company_id,
+    department_id: department_id,
     sort_by: sortCriteria,
   });
 
@@ -42,8 +44,8 @@ export const useFetchCompanyMembers = ({
 };
 
 export const useFetchCompanyDepartments = (
-  companyId: CompanyID,
-  sort_by: string,
+  companyId: CompanyId,
+  sort_by: SortBy,
   trigger?: number
 ) => {
   const [departments, setDepartments] = useState<IOption[]>([]);

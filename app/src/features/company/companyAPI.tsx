@@ -1,10 +1,7 @@
+import { IMembersList, SortBy } from '@/types/common';
+import { CompanyId, ICompany } from '@/types/company';
+import { DepartmentId } from '@/types/department';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { MembersList } from '../settingsDetail/userSettingsInterface';
-import { DepartmentID, CompanyID } from '../settingsDetail/userSettingTypes';
-
-interface ICompany {
-  id: string;
-}
 
 export const companyAPI = createApi({
   reducerPath: 'companyApi',
@@ -21,11 +18,11 @@ export const companyAPI = createApi({
   tagTypes: ['Company', 'Members'],
   endpoints: (builder) => ({
     getCompanyMembers: builder.query<
-      MembersList[],
+      IMembersList[],
       {
-        company_id: CompanyID;
-        department_id: DepartmentID;
-        sort_by: string;
+        company_id: CompanyId;
+        department_id: DepartmentId;
+        sort_by: SortBy;
       }
     >({
       query: ({ company_id, department_id, sort_by }) => ({
@@ -33,7 +30,7 @@ export const companyAPI = createApi({
         method: 'GET',
       }),
     }),
-    getCompany: builder.query<ICompany, CompanyID>({
+    getCompany: builder.query<ICompany, CompanyId>({
       query: (company_id) => ({
         url: `/company/?company=${company_id}`,
         method: 'GET',

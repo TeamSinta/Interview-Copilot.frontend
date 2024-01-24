@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IDepartment, MembersList, UserData } from './userSettingsInterface';
-import { CompanyID, DepartmentID, UserID } from './userSettingTypes';
+import { DepartmentId, IDepartment, IUserData } from '@/types/department';
+import { IMembersList, SortBy } from '@/types/common';
+import { CompanyId } from '@/types/company';
+import { UserId } from '@/types/user';
 
 export const userAPI = createApi({
   reducerPath: 'userApi',
@@ -16,7 +18,7 @@ export const userAPI = createApi({
   }),
   tagTypes: ['Departments'],
   endpoints: (builder) => ({
-    updateUser: builder.mutation<void, { userData: UserData }>({
+    updateUser: builder.mutation<void, { userData: IUserData }>({
       query: ({ userData }) => {
         return {
           url: '/user/userdetails/',
@@ -34,11 +36,11 @@ export const userAPI = createApi({
       },
     }),
     getCompanyMembers: builder.query<
-      MembersList[],
+      IMembersList[],
       {
-        company_id: CompanyID;
-        department_id: DepartmentID;
-        sort_by: string;
+        company_id: CompanyId;
+        department_id: DepartmentId;
+        sort_by: SortBy;
       }
     >({
       query: ({ company_id, department_id, sort_by }) => ({
@@ -49,8 +51,8 @@ export const userAPI = createApi({
     getCompanyDepartments: builder.mutation<
       IDepartment[],
       {
-        company_id?: CompanyID;
-        sort_by: string;
+        company_id: CompanyId;
+        sort_by: SortBy;
       }
     >({
       query: ({ company_id, sort_by }) => {
@@ -64,8 +66,8 @@ export const userAPI = createApi({
     getUserDepartments: builder.mutation<
       void,
       {
-        user_id: UserID;
-        company_id: CompanyID;
+        user_id: UserId;
+        company_id: CompanyId;
       }
     >({
       query: ({ user_id, company_id }) => {

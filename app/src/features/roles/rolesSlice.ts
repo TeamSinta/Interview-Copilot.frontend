@@ -4,9 +4,21 @@ import { DataLoading } from '../utils/utilEnum';
 import { fetchMembers } from './rolesAPI';
 import { IMember, IMockMembers, RolesCreateSlice } from './rolesInterface';
 import { useGetCompanyMembersQuery } from '../settingsDetail/userSettingsAPI';
-import { CompanyID, DepartmentID } from '../settingsDetail/userSettingTypes';
 import { useEffect, useState } from 'react';
+import { CompanyId } from '@/types/company';
+import { DepartmentId } from '@/types/department';
 
+/*
+
+I think this entire slice is great, but it needs to be refactored / renamed for
+clarification as our entire project has changed along the way. It's not a
+"role" slice anymore.
+
+I've currently used it for the new Department Creation too.
+
+- mattias
+
+*/
 export const initialState: RolesCreateSlice = {
   title: '',
   all_members: [
@@ -26,8 +38,8 @@ export const useFetchSelectMembers = ({
   department_id,
   sortCriteria,
 }: {
-  company_id: CompanyID;
-  department_id: DepartmentID;
+  company_id: CompanyId;
+  department_id: DepartmentId;
   sortCriteria: string;
 }) => {
   const [members, setMembers] = useState<IMockMembers[]>([]);
@@ -51,6 +63,7 @@ export const useFetchSelectMembers = ({
   return { members };
 };
 
+// is this used at all? or only for mock?
 export const getMemberAsync = createAsyncThunk(
   'roles/fetchMember',
   async () => {

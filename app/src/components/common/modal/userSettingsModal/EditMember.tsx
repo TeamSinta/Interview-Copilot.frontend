@@ -1,21 +1,17 @@
 import { AppDispatch, RootState } from '@/app/store';
-import { TextBtnS } from '@/components/common/buttons/textBtn/TextBtn';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import {
   BodyLMedium,
-  BodyMMedium,
   H3Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import { selectSetMember } from '@/features/members/memberSlice';
 import { closeModal } from '@/features/modal/modalSlice';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import {
   useCreateDepartmentMemberMutation,
   useGetUserDepartmentsMutation,
 } from '@/features/settingsDetail/userSettingsAPI';
-import { IDepartment } from '@/features/settingsDetail/userSettingsInterface';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { IOption } from '@/types/common';
 import React, { useEffect, useState } from 'react';
@@ -29,6 +25,8 @@ import {
 } from './StyledMemberSettings';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 import StyledDeleteBox from '../../form/deleteBox/deleteBox';
+import { CompanyId } from '@/types/company';
+import { IDepartment } from '@/types/department';
 
 interface MemberModalProps {
   user: {
@@ -46,17 +44,18 @@ const EditMember: React.FC<MemberModalProps> = () => {
   const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user.user);
   const member = useSelector(selectSetMember);
+  const [sortCriteria, setSortCritiera] = useState(null);
 
   const [getMemberDepartments] = useGetUserDepartmentsMutation();
   const [createDepartmentMember, { isSuccess, data }] =
     useCreateDepartmentMemberMutation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const companyId: CompanyID = (!workspace.id
+  const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
+    : workspace.id)! as unknown as CompanyId;
 
-  const departments = useFetchCompanyDepartments(companyId);
+  const departments = useFetchCompanyDepartments(companyId, sortCriteria);
 
   useEffect(() => {
     getMemberDepartments({
@@ -75,7 +74,7 @@ const EditMember: React.FC<MemberModalProps> = () => {
         setMemberDepartments(transformedData);
       }
     });
-  }, [getMemberDepartments, member, departments]);
+  }, [getMemberDepartments, companyId, member, departments]);
 
   const handleSetDepartment = (data: IOption) => {
     const updatedDepartments = memberDepartments.map((department) => {

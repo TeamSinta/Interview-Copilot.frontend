@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IDepartment } from './departmentsInterface';
-import { CompanyID } from '../settingsDetail/userSettingTypes';
+
+import { CompanyId } from '@/types/company';
+import { DepartmentTitle, IDepartment } from '@/types/department';
+import { SortBy } from '@/types/common';
 
 export const departmentsAPI = createApi({
   reducerPath: 'departmentsApi',
@@ -19,8 +21,8 @@ export const departmentsAPI = createApi({
     getCompanyDepartments: builder.query<
       IDepartment[],
       {
-        company_id?: CompanyID;
-        sort_by: string;
+        company_id?: CompanyId;
+        sort_by: SortBy;
       }
     >({
       query: ({ company_id, sort_by }) => {
@@ -33,7 +35,7 @@ export const departmentsAPI = createApi({
     }),
     createDepartment: builder.mutation<
       void,
-      { company_id: any; departmentTitle: any }
+      { company_id: CompanyId; departmentTitle: DepartmentTitle }
     >({
       query: ({ departmentTitle, company_id }) => {
         return {
@@ -42,6 +44,22 @@ export const departmentsAPI = createApi({
           body: {
             title: departmentTitle,
             company_id: company_id,
+          },
+        };
+      },
+      invalidatesTags: ['Department'],
+    }),
+    addDepartmentMembers: builder.mutation<
+      void,
+      { department_id: any; memberIdList: any }
+    >({
+      query: ({ department_id, memberIdList }) => {
+        console.log('Add Department Members: ', memberIdList);
+        return {
+          url: `/company/department?=${department_id}`,
+          method: 'POST',
+          body: {
+            invitees: memberIdList,
           },
         };
       },
@@ -78,6 +96,7 @@ export const departmentsAPI = createApi({
 export const {
   useGetCompanyDepartmentsQuery,
   useCreateDepartmentMutation,
+  useAddDepartmentMembersMutation,
   useUpdateDepartmentMutation,
   useDeleteDepartmentMutation,
 } = departmentsAPI;

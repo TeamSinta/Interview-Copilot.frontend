@@ -6,27 +6,29 @@ import Stack from '@mui/material/Stack';
 import StyledInvitationBox from '@/components/common/form/inviteBox/InviteBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import MemberList from './MemberList';
 import SortingDropdown from './SortingDropdown';
-import {
-  useFetchCompanyDepartments,
-  useFetchCompanyMembers,
-} from './useFetchAndSortMembers';
+import { useFetchCompanyDepartments } from './useFetchAndSortMembers';
 import { useState } from 'react';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
+import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
+import { IOption, SortBy } from '@/types/common';
+import { CompanyId } from '@/types/company';
+import { DepartmentId } from '@/types/department';
 
 const MemberTab = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
-  const [sortCriteria, setSortCritiera] = useState('');
-  const [departmentId, setDepartmentId] = useState('');
+  const [sortCriteria, setSortCritiera] = useState<SortBy>(null);
+  const [departmentId, setDepartmentId] = useState<DepartmentId>(null);
 
   // definitely should look over this, idk what TS is doing here om on the companyId type.
-  const companyId: CompanyID = (!workspace.id
+  const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
+    : workspace.id)! as unknown as CompanyId;
+
+  console.log(companyId);
   const { members } = useFetchCompanyMembers({
     company_id: companyId,
     department_id: departmentId,
@@ -41,13 +43,13 @@ const MemberTab = () => {
     );
   };
 
-  const handleSortMembers = (value: string) => {
+  const handleSortMembers = (value: SortBy) => {
     setSortCritiera(value);
   };
 
-  const departments = useFetchCompanyDepartments(companyId as CompanyID);
+  const departments = useFetchCompanyDepartments(companyId, sortCriteria);
 
-  const handleSetDepartment = (value: string) => {
+  const handleSetDepartment = (value: DepartmentId) => {
     setDepartmentId(value);
   };
 

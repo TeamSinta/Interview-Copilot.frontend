@@ -7,16 +7,17 @@ import TextInput from '@/components/common/form/textInput/TextInput';
 import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import {
-  selectedMember,
-  useFetchSelectMembers,
-} from '@/features/roles/rolesSlice';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useState } from 'react';
 import { useCreateDepartmentMutation } from '@/features/departments/departmentsAPI';
+import { closeModal } from '@/features/modal/modalSlice';
+import {
+  resetMemberSelection,
+  selectedMember,
+} from '@/features/company/companySlice';
+import { CompanyId } from '@/types/company';
 
 const titleInputArg = {
   label: 'Title',
@@ -38,20 +39,16 @@ const CreateDepartment = () => {
   const [createNewDepartment, { isLoading }] = useCreateDepartmentMutation();
   const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user.user);
-  const [validationError, setValidationError] = useState('');
+  const companyMembers = useSelector(
+    (state: RootState) => state.company.members
+  );
+
+  const [, setValidationError] = useState('');
   const [newDepartmentName, setNewDepartmentName] = useState('');
-  const [sortCriteria] = useState('');
-  const [departmentId, setDepartmentId] = useState('');
 
-  const companyId: CompanyID = (!workspace.id
+  const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
-
-  const { members } = useFetchSelectMembers({
-    company_id: companyId,
-    department_id: departmentId,
-    sortCriteria: sortCriteria,
-  });
+    : workspace.id)! as unknown as CompanyId;
 
   const onMemberSelectd = (memberIdx: number) => {
     dispatch(selectedMember({ memberIdx: memberIdx }));
@@ -68,15 +65,28 @@ const CreateDepartment = () => {
       return;
     }
 
-    try {
-      await createNewDepartment({
-        company_id: companyId,
-        departmentTitle: trimmedDepartmentName,
-      }).unwrap();
+    const selectedMemberIds = companyMembers
+      .filter((member) => member.selected)
+      .map((member) => member.id);
 
-      // Handle success
+    const createDepartmentData = {
+      company_id: companyId,
+      departmentTitle: trimmedDepartmentName,
+    };
+
+    // THIS IS WHERE YOU GOT STUCK. FIX THE SEQUENCE OF GETTING THE ID FOR ADD DEP MEMBER
+    try {
+      const newDepartment =
+        await createNewDepartment(createDepartmentData).unwrap();
+      await addDepartmentMember({
+        invitees: selectedMemberIds,
+        department_id: newDepartment.id,
+      }).unwrap();
       setNewDepartmentName('');
       setValidationError('');
+      console.log('Department Data: ', createDepartmentData);
+      dispatch(resetMemberSelection());
+      dispatch(closeModal);
     } catch (error: any) {
       setValidationError('Error creating department: ' + error.message);
     }
@@ -112,7 +122,7 @@ const CreateDepartment = () => {
       <PhotoContainer>
         <BodySMedium>Members</BodySMedium>
         <Photos>
-          {members.map((member: any, index: number) => (
+          {companyMembers.map((member: any, index: number) => (
             <ElWrap w={40} h={40} key={index}>
               <Photo
                 onSelect={onMemberSelectd}
@@ -133,3 +143,6 @@ const CreateDepartment = () => {
 };
 
 export default CreateDepartment;
+function addDepartmentMember(selectedMemberId: any) {
+  throw new Error('Function not implemented.');
+}

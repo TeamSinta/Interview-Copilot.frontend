@@ -6,6 +6,7 @@ import { openModal } from '@/features/modal/modalSlice';
 import { MODAL_TYPE } from '../../modal/GlobalModal';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store';
+import { IStyledDeleteBoxProps } from '@/types/deleteBox';
 
 export const DeleteBoxContainer = styled.div`
   margin-top: 16px;
@@ -16,13 +17,6 @@ export const DeleteBoxContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-interface IStyledDeleteBoxProps {
-  deleteItemText: string | null;
-  deleteFromText?: string | null;
-  disabled: boolean;
-  targetModalType: MODAL_TYPE;
-}
 
 const StyledDeleteBox: React.FC<IStyledDeleteBoxProps> = ({
   deleteItemText,

@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
 
-import { useFetchCompanyMembers } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
+import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import {
   useGetTemplateDetailQuery,
@@ -22,6 +22,7 @@ import {
 } from '@/features/templates/templatesAPISlice';
 import { useParams } from 'react-router-dom';
 import { IMember } from '../../cards/teamplateHomeCard/TemplateHomeCard';
+import { CompanyId } from '@/types/company';
 
 const EditInterviewers = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,9 +34,9 @@ const EditInterviewers = () => {
 
   const { templateId } = useParams();
 
-  const companyId: CompanyID = (!workspace.id
+  const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
+    : workspace.id)! as unknown as CompanyId;
 
   const stringTemplateId = templateId?.toString();
 

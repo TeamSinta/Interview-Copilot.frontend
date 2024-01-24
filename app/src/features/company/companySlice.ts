@@ -1,14 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-// setCompany -- new workspace
-// setMembers
-// selectMember
 import { RootState } from '@/app/store';
-import { ICompany, IMember } from './companyInterface';
+import { ICompany, IMember } from '@/types/company';
 
 export interface CompanyState {
   currentCompany: ICompany | null;
-  members?: IMember[];
+  members: IMember[];
 }
 
 const initialState: CompanyState = {
@@ -24,12 +20,33 @@ const companySlice = createSlice({
       state.currentCompany = action.payload;
     },
     setMembers: (state, action: PayloadAction<IMember[]>) => {
-      state.members = action.payload;
+      state.members = action.payload.map((member) => ({
+        ...member,
+        selected: member.selected ?? false,
+      }));
+    },
+    selectedMember: (state, actions) => {
+      const { memberIdx } = actions.payload;
+      const selectedMember = state.members.find(
+        (member: IMember) => member.id === memberIdx
+      );
+      if (selectedMember) {
+        selectedMember.selected
+          ? (selectedMember.selected = false)
+          : (selectedMember.selected = true);
+      }
+    },
+    resetMemberSelection: (state) => {
+      state.members.map((member) => ({
+        ...member,
+        selected: false,
+      }));
     },
   },
 });
 
-export const { setCompany, setMembers } = companySlice.actions;
+export const { setCompany, setMembers, selectedMember, resetMemberSelection } =
+  companySlice.actions;
 export const selectCompany = (state: RootState) => state.company;
 
 export default companySlice.reducer;

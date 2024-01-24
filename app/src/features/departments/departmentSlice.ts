@@ -1,13 +1,8 @@
 import { RootState } from '@/app/store';
+import { IDepartment, IDepartmentState } from '@/types/department';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IDepartment } from '../departments/departmentsInterface';
 
-export interface DepartmentState {
-  currentDepartment: IDepartment;
-  allDepartments: IDepartment[];
-}
-
-const initialState: DepartmentState = {
+const initialState: IDepartmentState = {
   currentDepartment: {
     id: '',
     title: '',

@@ -3,16 +3,16 @@ import SettingsUserCard from '@/components/common/cards/settingsUserCard/Setting
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import PaginationComponent from '@/components/common/pagination/PaginationComponent';
 import { setMemberInfo } from '@/features/members/memberSlice';
-import { MembersList } from '@/features/settingsDetail/userSettingsInterface';
 import usePagination from '@/hooks/usePagination';
 import { UserListContainer } from '@/pages/Settings/StyledSettings';
+import { IMembersList } from '@/types/common';
 import { Stack } from '@mui/material';
 
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
 const MemberList: React.FC<{
-  members: MembersList[];
+  members: IMembersList[];
   onClickModalOpen: (modalType: MODAL_TYPE) => void;
 }> = ({ members, onClickModalOpen }) => {
   const dispatch = useDispatch<AppDispatch>();

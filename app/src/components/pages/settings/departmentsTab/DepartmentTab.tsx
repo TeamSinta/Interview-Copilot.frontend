@@ -5,7 +5,6 @@ import { openModal } from '@/features/modal/modalSlice';
 import Stack from '@mui/material/Stack';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 // import MemberList from './DepartmentList';
 import SortingDropdown from './SortingDropdown';
 import { useEffect, useState } from 'react';
@@ -19,11 +18,12 @@ import {
   selectDepartment,
 } from '@/features/departments/departmentSlice';
 import { setCompany, setMembers } from '@/features/company/companySlice';
-import { useFetchCompanyMembers } from './useFetchAndSortMembers';
 import {
   useGetCompanyMembersQuery,
   useGetCompanyQuery,
 } from '@/features/company/companyAPI';
+import { CompanyId } from '@/types/company';
+import { SortBy } from '@/types/common';
 
 const DepartmentTab = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,7 +32,7 @@ const DepartmentTab = () => {
   const departmentState = useSelector(selectDepartment);
   const allDepartments = departmentState.allDepartments;
   const [sortCriteria, setSortCritiera] = useState('');
-  const [departmentId, setDepartmentId] = useState('');
+  const [departmentId, ,] = useState('');
 
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(
@@ -42,32 +42,23 @@ const DepartmentTab = () => {
     );
   };
 
-  const companyId: CompanyID = (!workspace.id
+  const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
-
-  const { members } = useFetchCompanyMembers({
-    company_id: companyId,
-    department_id: departmentId,
-    sortCriteria: sortCriteria,
-  });
+    : workspace.id)! as unknown as CompanyId;
 
   /// testing
-  const { data: companyData } = useGetCompanyQuery(companyId);
+
+  // const { data: companyData } = useGetCompanyQuery(companyId);
   const { data: companyMembers } = useGetCompanyMembersQuery({
     company_id: companyId,
     department_id: departmentId,
-    sort_by: '1',
+    sort_by: null,
   });
 
   //// testing
 
-  console.log('company:', companyData);
-  console.log('members', companyMembers);
-
-  const handleSortDepartments = (value: string) => {
+  const handleSortDepartments = (value: SortBy) => {
     setSortCritiera(value);
-    console.log(sortCriteria);
   };
 
   const {
@@ -81,7 +72,7 @@ const DepartmentTab = () => {
     sort_by: sortCriteria,
   });
 
-  const { data: company } = useGetCompanyQuery(companyId);
+  // const { data: company } = useGetCompanyQuery(companyId);
 
   useEffect(() => {
     if (isSuccess && departmentsData) {
