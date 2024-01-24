@@ -96,8 +96,6 @@ export default function HairCheck({
     null
   );
   const [isFormValid, setFormValid] = useState(true);
-  const [isSelectedTemplate, setIsSelectedTemplate] = useState(false);
-  const [isTitlePresent, setIsTitlePresent] = useState(false);
 
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
 
@@ -145,14 +143,12 @@ export default function HairCheck({
   };
 
   const startMeeting = async () => {
-    if (!selectedTemplate) setIsSelectedTemplate(true)
+    if (!selectedTemplate) setFormValid(false)
     let hasError = false; // Track if there's any validation error
-
     if (!newTitle.trim()) {
       if (titleInputRef.current) {
         setFormValid(false)
         titleInputRef.current.triggerValidation();
-        setIsTitlePresent(true)
       }
       hasError = true;
     } else {
@@ -177,7 +173,7 @@ export default function HairCheck({
       console.log(candidateData);
 
       const candidateResponse = await createCandidate(candidateData);
-      const candidate_id = candidateResponse.id; // Replace with actual response property
+      const candidate_id = candidateResponse.id;
 
       const response = await createInterviewRound(
         title,
@@ -472,12 +468,11 @@ export default function HairCheck({
                   value={newTitle}
                   onChange={(e) => {
                     setTitle(e.target.value);
-                    setIsTitlePresent(false)
                   }}
                   validate={validateTitle}
                 />
               </ElWrap>
-              {isTitlePresent ? (
+              {!isFormValid && newTitle === '' ? (
                 <BodySMedium
                   style={{
                     color: 'gray',
@@ -506,7 +501,6 @@ export default function HairCheck({
               items={templates}
               renderItem={(template: Template) => (
                 <InterviewRoundCard
-                setIsSelectedTemplate={setIsSelectedTemplate}
                   key={template.id}
                   templateId={template.id}
                   imageUrl={template.image}
@@ -532,7 +526,7 @@ export default function HairCheck({
                 />
               )}
             />
-            {isSelectedTemplate ? (
+            {!isFormValid && !selectedTemplate ? (
                 <BodySMedium
                   style={{
                     color: 'red',

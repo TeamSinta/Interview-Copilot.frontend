@@ -43,7 +43,7 @@ const SelectAllQuestions = () => {
   );
   const navigate = useNavigate();
   const [upadateQuestionBanks] = useUpdateQuestionBankMutation();
-  const { questionBankId } = useParams(); // Replace 'questionBankId' with your actual parameter name
+  const { questionBankId } = useParams();
   const {
   refetch
   } = useGetQuestionBankDetailQuery(questionBankId);
