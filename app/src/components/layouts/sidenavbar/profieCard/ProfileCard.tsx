@@ -14,7 +14,7 @@ const ProfileCardContainer = styled('div')({
   position: `relative`,
   isolation: `isolate`,
   flexDirection: `row`,
-  width: `220px`,
+  width: `103%`,
   height: `79px`,
   justifyContent: `flex-start`,
   alignItems: `flex-start`,

@@ -44,7 +44,7 @@ export const ButtonContainer = styled.div`
 
 export const StyledRoundBox = styled.div`
    {
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: white;
     padding: 10px;
     padding-bottom: 0px;
@@ -78,7 +78,7 @@ export const StyledDecisionButton = styled.div`
     position: relative;
     outline: 1px solid ${(props) => props.theme.colors.black};
     outline-offset: -1px;
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: 0px 2px 0px #121212;
     height: 200%;
     width: 100%;

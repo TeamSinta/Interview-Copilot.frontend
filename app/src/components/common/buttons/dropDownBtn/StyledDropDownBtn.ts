@@ -18,6 +18,14 @@ export const CustomButton = styled.div`
   gap: 6px;
   position: relative;
   width: 100%;
+  &.customQuestionButton {
+    background: ${(props) => props.theme.colors.white};
+    display:flex;
+    justify:left;
+    align-items:left;
+    padding: 10px 16px;
+    gap:25
+  }
 
   svg {
     stroke: ${(props) => props.theme.colors.black} !important;
@@ -37,6 +45,10 @@ export const CustomButton = styled.div`
     order: 0;
     flex-grow: 0;
   }
+  &.customQuestionButton:hover  {
+    background: ${(props) => props.theme.colors.whisperGrey};
+    border-radius: 8px;
+  }
 `;
 
 export const ButtonWrap = styled.div`
@@ -54,7 +66,27 @@ export const ButtonWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &.customDropDown{
+    margin-top: 230px;
+    border:none;
+    border-radius:8px;
+    padding:8px;
+    background : ${(props) => props.theme.colors.white};
+    box-shadow: 0px 4px 32px -2px rgba(0, 0, 0, 0.25);
+  }
 `;
+export const TransparentDropdownTitle = styled.div `
+  width:100%;
+  padding-top:10px;
+  display:flex;
+  padding-left:17px;
+  padding-bottom:10px;
+  border-bottom:1px solid #C7C7C7;
+  margin-bottom:5px;
+  color: rgba(32, 14, 50, 0.58);
+  font-size:13px
+`
 
 export const DropdownArrowIconDiv = styled.div<IDropdownOpen>`
   right: 16px;

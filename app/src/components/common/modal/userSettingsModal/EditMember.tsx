@@ -30,7 +30,7 @@ import { IDepartment } from '@/types/department';
 
 interface MemberModalProps {
   user: {
-    id: string;
+    id?: string;
     first_name: string;
     last_name: string;
     email: string;

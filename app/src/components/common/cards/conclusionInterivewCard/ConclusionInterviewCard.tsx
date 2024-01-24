@@ -9,23 +9,32 @@ import {
   CardSubTitle,
   CardSubTitleContent,
 } from '../card/StyledCard';
-
 interface IConclusionInterviewCardProps {
   name: string;
   title: string;
   disable: boolean;
-  date: number;
+  date: number | string;
+  video_uri?: string;
 }
 
-const formatDateDifference = (creationDate: string) => {
-  return creationDate.split(',')[0];
+const formatDateDifference = (creationDate: string | number) => {
+  const dateObject =
+    typeof creationDate === 'string'
+      ? new Date(creationDate)
+      : new Date(creationDate * 1000);
+  return dateObject.toLocaleString();
 };
 
 const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
   const [hover, setHover] = useState(false);
-  const { name, title, disable, date } = props;
+  const { name, title, disable, date, video_uri } = props;
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const formattedDate = formatDateDifference(date);
+
+  const toggleVideo = () => {
+    setIsVideoPlaying(!isVideoPlaying);
+  };
 
   return (
     <ElWrap h={256}>
@@ -33,7 +42,20 @@ const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
         className={(hover ? 'hover' : '').concat(disable ? ' disable' : ' ')}
         id="cardId"
       >
-        <InterviewCardCover imgUrl={''}></InterviewCardCover>
+        {/* Display video as a thumbnail if found otherwise image */}
+        {video_uri === '' ? (
+          <InterviewCardCover imgUrl={''} />
+        ) : (
+          <video
+            src={video_uri}
+            poster={''}
+            controls={false}
+            muted={true}
+            loop={true}
+            onClick={toggleVideo}
+            style={{ width: '100%', height: 'auto' }}
+          />
+        )}
         <CardContent
           onMouseEnter={() => {
             setHover(disable ? false : true);

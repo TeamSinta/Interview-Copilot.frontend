@@ -80,7 +80,11 @@ const CoverLibrary: React.FC<CoverLibraryProps> = () => {
       <Stack
         direction="row"
         justifyContent="space-between"
-        sx={{ alignItems: 'center' }}
+        sx={{
+          alignItems: 'self-start',
+          maxHeight: '450px',
+          overflow: 'scroll',
+        }}
       >
         <Container>
           {preSelectedCovers.map((img) => (

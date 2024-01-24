@@ -103,7 +103,7 @@ export default function VideoCall() {
     if (url) {
       startHairCheck(url);
     }
-  }, []);
+  }, [startHairCheck]);
 
   useEffect(() => {
     if (roomUrl !== null) {
@@ -126,14 +126,14 @@ export default function VideoCall() {
     ];
 
     function handleNewMeetingState() {
-      switch (callObject.meetingState()) {
+      switch (callObject?.meetingState?.()) {
         case 'joined-meeting':
           setAppState(STATE.JOINED);
           break;
         case 'left-meeting':
           const interviewRoundId = localStorage.getItem('interviewRoundId');
           localStorage.clear();
-          callObject.destroy().then(() => {
+          callObject?.destroy?.().then(() => {
             setRoomUrl(null);
             setCallObject(null);
             setAppState(STATE.IDLE);
@@ -152,12 +152,12 @@ export default function VideoCall() {
 
     handleNewMeetingState();
 
-    events.forEach((event) => callObject.on(event, handleNewMeetingState));
+    events.forEach((event) => callObject?.on(event, handleNewMeetingState));
 
     return () => {
-      events.forEach((event) => callObject.off(event, handleNewMeetingState));
+      events.forEach((event) => callObject?.off(event, handleNewMeetingState));
     };
-  }, [callObject]);
+  }, [callObject, navigate]);
 
   const showCall =
     !apiError && [STATE.JOINING, STATE.JOINED, STATE.ERROR].includes(appState);

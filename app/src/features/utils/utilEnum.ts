@@ -22,6 +22,11 @@ export enum StatusDropdownFilter {
   MEDIUM = 'Medium',
   HIGH = 'High',
 }
+export enum CompetencyDropDownFilter {
+  LEADERSHIP = 'Leadership',
+  TEAMWORK = 'Teamwork',
+  EMPATHY = 'Empathy',
+}
 
 export enum TABS {
   PROFILE = 'profile',

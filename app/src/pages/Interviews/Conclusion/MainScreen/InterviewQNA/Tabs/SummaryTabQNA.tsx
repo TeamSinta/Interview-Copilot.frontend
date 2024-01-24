@@ -13,7 +13,7 @@ export const SummaryTabQNA: React.FC<any> = ({
 }) => {
   return (
     <div className="interview-qna">
-      {data?.map((question: any, index: number) => (
+      {data?.map?.((question: any, index: number) => (
         <InterviewContainerStyle key={index}>
           <Grid
             container

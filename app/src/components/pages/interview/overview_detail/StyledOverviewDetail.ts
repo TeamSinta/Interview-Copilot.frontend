@@ -228,3 +228,19 @@ export const EmptySectionContainer = styled.div`
   flex-direction: column;
   text-align: center;
 `;
+
+export const CustomQuestionFilterDiv = styled.div `
+margin-top: 15px;
+display: flex;
+gap: 16px;
+margin-bottom: 21px;
+`;
+export const CustomQuestionModalLine = styled.div `
+border-top: 1px solid #C7C7C7;
+margin: 0px -30px;
+`;
+export const CustomQuestionModalBottomDiv = styled.div `
+padding-top: 10px;
+display: flex;
+justify-content: right;
+`

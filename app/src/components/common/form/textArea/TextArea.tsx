@@ -12,8 +12,8 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react';
-import { StyledTextareaDiv } from '../input/StyledInput';
-import { BodySMedium } from '../../typeScale/StyledTypeScale';
+import { StyledTextareaDiv } from '@/components/common/form/input/StyledInput';
+import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 
 interface ITextAreaProps {
   disable: boolean;
@@ -62,14 +62,13 @@ const TextArea = forwardRef(
     useImperativeHandle(ref, () => ({
       triggerValidation,
     }));
-
     return (
       <>
         <StyledTextareaDiv>
           <MDXEditor
             ref={inputRef}
             className={`mdx-textarea ${error ? 'error' : ''}`}
-            contentEditableClassName="prose"
+            contentEditableClassName={`prose ${name === 'guidelines' ? 'customProse': '' }`}
             markdown={inputValue[name]}
             onChange={handleInputChange}
             placeholder={placeholderText}
