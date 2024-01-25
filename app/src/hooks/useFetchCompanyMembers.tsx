@@ -6,6 +6,7 @@ import { DepartmentId } from '@/types/department';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setMembers } from '@/features/company/companySlice';
+
 export const useFetchCompanyMembers = ({
   company_id,
   department_id,

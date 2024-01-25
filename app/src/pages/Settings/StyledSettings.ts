@@ -71,7 +71,7 @@ export const PageContainer = styled.div`
 
 export const UserListContainer = styled.div`
   max-height: calc(100vh - 650px);
-
+  min-height: 370px;
   overflow-x: hidden;
 
   &::-webkit-scrollbar {
