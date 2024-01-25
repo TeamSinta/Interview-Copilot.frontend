@@ -23,15 +23,8 @@ import { setMemberInfo } from '@/features/members/memberSlice';
 import { IOption } from '@/types/common';
 import EditDepartmentMembersCard from '../../cards/editDepartmentMembersCard/editDepartmentMembersCard';
 
-const textIconBtnArg = {
-  label: 'Delete',
-  icon: <BinIcon />,
-  disable: false,
-  className: BackgroundColor.WHITE,
-};
-
 const textBtnArg = {
-  label: 'No, leave them',
+  label: 'Close',
   disable: false,
   className: BackgroundColor.ACCENT_PURPLE,
 };
