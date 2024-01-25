@@ -18,10 +18,37 @@ import {
 import { Stack } from '@mui/material';
 import LoginPageImage from 'src/assets/svg/LogInPageIllustration.svg';
 import LogoImage from 'src/assets/images/SintaLogo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useGoogleLoginMutation } from '@/features/authentication/authenticationAPI';
+import { useCookies } from 'react-cookie';
 
 const LoginScreen = () => {
+  const [googleLogin] = useGoogleLoginMutation();
+  const [, setCookies] = useCookies(['refresh_token', 'access_token']);
+  const navigate = useNavigate();
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get('code');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (code && code?.length) {
+        try {
+          const result = await googleLogin({ code }).unwrap();
+          if (result) {
+            setCookies('access_token', result['access'], { path: '/' });
+            setCookies('refresh_token', result['refresh'], { path: '/' });
+            navigate('/dashboard');
+          }
+        } catch (error) {
+          console.log('Failed to login: ', error);
+          const urlWithoutCode = window.location.href.split('?')[0];
+          window.history.replaceState({}, document.title, urlWithoutCode);
+        }
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <>
       <Stack
