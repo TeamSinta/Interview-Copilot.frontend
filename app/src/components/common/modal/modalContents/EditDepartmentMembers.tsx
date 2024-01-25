@@ -16,6 +16,7 @@ import EditDepartmentMembersCard from '../../cards/editDepartmentMembersCard/edi
 import { useEffect, useState } from 'react';
 import MembersFilterDropdown from '../../dropDown/MembersFilterDropdown';
 import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
+import { current } from '@reduxjs/toolkit';
 
 const textBtnArg = {
   label: 'Close',
@@ -33,7 +34,9 @@ const EditDepartmentMembers = () => {
     (state: RootState) => state.company.members
   );
   const [searchTerm, setSearchTerm] = useState('');
-  const [departmentId, setDepartmentId] = useState<DepartmentId>('');
+  const [departmentId, setDepartmentId] = useState<DepartmentId>(
+    currentDepartment.id
+  );
   const [filteredMembers, setFilteredMembers] = useState(allCompanyMembers);
 
   const { companyMembers } = useFetchCompanyMembers({
@@ -57,7 +60,7 @@ const EditDepartmentMembers = () => {
   };
 
   const memberDropdownOptions: IOption[] = [
-    { name: 'All', value: '' },
+    { name: 'All Company Members', value: '' },
     { name: currentDepartment.title, value: currentDepartment.id },
   ];
 
