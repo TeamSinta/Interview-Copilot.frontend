@@ -1,3 +1,9 @@
+/*
+
+Not used. Should be deleted.
+
+
+
 import {
   CompanyID,
   DepartmentID,
@@ -73,3 +79,4 @@ export const useFetchCompanyDepartments = (
 
   return departments;
 };
+*/

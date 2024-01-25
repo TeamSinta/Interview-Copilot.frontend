@@ -28,7 +28,7 @@ const MemberTab = () => {
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyId;
 
-  const { members } = useFetchCompanyMembers({
+  const { companyMembers } = useFetchCompanyMembers({
     company_id: companyId,
     department_id: departmentId,
     sortCriteria: sortCriteria,
@@ -75,7 +75,10 @@ const MemberTab = () => {
             />
           </ElWrap>
         </Stack>
-        <MemberList members={members} onClickModalOpen={onClickModalOpen} />
+        <MemberList
+          members={companyMembers}
+          onClickModalOpen={onClickModalOpen}
+        />
       </Stack>
       <StyledInvitationBox />
       <GlobalModal></GlobalModal>

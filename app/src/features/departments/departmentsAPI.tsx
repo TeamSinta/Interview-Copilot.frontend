@@ -1,7 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { CompanyId } from '@/types/company';
-import { DepartmentId, DepartmentTitle, IDepartment } from '@/types/department';
+import {
+  CreateDepartmentResponse,
+  DepartmentId,
+  DepartmentTitle,
+  IDepartment,
+} from '@/types/department';
 import { SortBy } from '@/types/common';
 
 export const departmentsAPI = createApi({
@@ -34,7 +39,7 @@ export const departmentsAPI = createApi({
       providesTags: ['Department'],
     }),
     createDepartment: builder.mutation<
-      void,
+      CreateDepartmentResponse,
       { company_id: CompanyId; departmentTitle: DepartmentTitle }
     >({
       query: ({ departmentTitle, company_id }) => {
@@ -51,15 +56,15 @@ export const departmentsAPI = createApi({
     }),
     addDepartmentMembers: builder.mutation<
       void,
-      { department_id: any; memberIdList: any }
+      { department_id: any; invitees: any }
     >({
-      query: ({ department_id, memberIdList }) => {
-        console.log('Add Department Members: ', memberIdList);
+      query: ({ department_id, invitees }) => {
+        console.log('Add Department Members: ', invitees);
         return {
-          url: `/company/department?=${department_id}`,
+          url: `/company/department/members?department=${department_id}`,
           method: 'POST',
           body: {
-            invitees: memberIdList,
+            invitees: invitees,
           },
         };
       },

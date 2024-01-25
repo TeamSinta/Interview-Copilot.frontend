@@ -1,9 +1,11 @@
+import { AppDispatch } from '@/app/store';
 import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
 import { IMembersList, SortBy } from '@/types/common';
 import { CompanyId } from '@/types/company';
 import { DepartmentId } from '@/types/department';
 import { useEffect, useState } from 'react';
-
+import { useDispatch } from 'react-redux';
+import { setMembers } from '@/features/company/companySlice';
 export const useFetchCompanyMembers = ({
   company_id,
   department_id,
@@ -13,7 +15,8 @@ export const useFetchCompanyMembers = ({
   department_id: DepartmentId;
   sortCriteria: SortBy;
 }) => {
-  const [members, setMembers] = useState<IMembersList[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const [companyMembers, setCompanyMembers] = useState<IMembersList[]>([]);
 
   const { data, isSuccess } = useGetCompanyMembersQuery({
     company_id: company_id,
@@ -23,9 +26,10 @@ export const useFetchCompanyMembers = ({
 
   useEffect(() => {
     if (isSuccess) {
-      setMembers(data);
+      dispatch(setMembers(data));
+      setCompanyMembers(data);
     }
-  }, [isSuccess, data]);
+  }, [isSuccess, data, dispatch]);
 
-  return { members };
+  return { companyMembers };
 };

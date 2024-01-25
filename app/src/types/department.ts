@@ -32,5 +32,9 @@ export interface IDepartmentState {
   allDepartments: IDepartment[];
 }
 
+export interface CreateDepartmentResponse {
+  detail: string;
+  id: number;
+}
 export type DepartmentId = string;
 export type DepartmentTitle = string;

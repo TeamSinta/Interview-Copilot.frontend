@@ -11,7 +11,10 @@ import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
 import { useState } from 'react';
-import { useCreateDepartmentMutation } from '@/features/departments/departmentsAPI';
+import {
+  useAddDepartmentMembersMutation,
+  useCreateDepartmentMutation,
+} from '@/features/departments/departmentsAPI';
 import { closeModal } from '@/features/modal/modalSlice';
 import {
   resetMemberSelection,
@@ -37,12 +40,12 @@ const textIconBtnArg = {
 const CreateDepartment = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [createNewDepartment, { isLoading }] = useCreateDepartmentMutation();
+  const [addDepartmentMembers] = useAddDepartmentMembersMutation();
   const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user.user);
   const companyMembers = useSelector(
     (state: RootState) => state.company.members
   );
-
   const [validationError, setValidationError] = useState('');
   const [newDepartmentName, setNewDepartmentName] = useState('');
 
@@ -78,10 +81,15 @@ const CreateDepartment = () => {
     try {
       const newDepartment =
         await createNewDepartment(createDepartmentData).unwrap();
-      await addDepartmentMember({
-        invitees: selectedMemberIds,
-        department_id: newDepartment.id,
-      }).unwrap();
+      if (newDepartment && newDepartment.id) {
+        console.log('New Dep ID: ', newDepartment.id);
+        const newMembers = await addDepartmentMembers({
+          invitees: selectedMemberIds,
+          department_id: newDepartment.id,
+        }).unwrap();
+        console.log(newMembers);
+      }
+
       setNewDepartmentName('');
       setValidationError('');
       console.log('Department Data: ', createDepartmentData);
@@ -143,6 +151,3 @@ const CreateDepartment = () => {
 };
 
 export default CreateDepartment;
-function addDepartmentMember(selectedMemberId: any) {
-  throw new Error('Function not implemented.');
-}
