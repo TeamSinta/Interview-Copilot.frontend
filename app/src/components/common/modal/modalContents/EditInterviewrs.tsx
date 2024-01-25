@@ -7,15 +7,12 @@ import Invite from '@/components/common/form/invite/Invite';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { closeModal } from '@/features/modal/modalSlice';
-// import { selectedMember } from "@/features/roles/rolesSlice";
 import { RootState } from '@/app/store';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
-
 import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import {
   useGetTemplateDetailQuery,
   useUpdateTemplateMutation,

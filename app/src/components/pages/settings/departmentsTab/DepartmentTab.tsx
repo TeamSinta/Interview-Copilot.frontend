@@ -5,25 +5,19 @@ import { openModal } from '@/features/modal/modalSlice';
 import Stack from '@mui/material/Stack';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
-// import MemberList from './DepartmentList';
 import SortingDropdown from './SortingDropdown';
 import { useEffect, useState } from 'react';
 import DepartmentList from './DepartmentList';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { BackgroundColor } from '@/features/utils/utilEnum';
-import { useGetCompanyDepartmentsQuery } from '@/features/departments/departmentsAPI';
-import {
-  setAllDepartments,
-  selectDepartment,
-} from '@/features/departments/departmentSlice';
-import { setCompany, setMembers } from '@/features/company/companySlice';
-import {
-  useGetCompanyMembersQuery,
-  useGetCompanyQuery,
-} from '@/features/company/companyAPI';
+import { selectDepartment } from '@/features/departments/departmentSlice';
+import { setMembers } from '@/features/company/companySlice';
+import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
 import { CompanyId } from '@/types/company';
 import { SortBy } from '@/types/common';
+import { useFetchAndSetCompanyDepartments } from '@/hooks/useFetchCompanyDepartments';
+import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
 
 const DepartmentTab = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -34,6 +28,24 @@ const DepartmentTab = () => {
   const [sortCriteria, setSortCritiera] = useState('');
   const [departmentId, ,] = useState('');
 
+  const companyId: CompanyId = (!workspace.id
+    ? user.companies[0].id
+    : workspace.id)! as unknown as CompanyId;
+
+  // const { data: companyMembers } = useGetCompanyMembersQuery({
+  //   company_id: companyId,
+  //   department_id: departmentId,
+  //   sort_by: '',
+  // });
+
+  // const { NCompanyMembers, isSuccess } = useFetchCompanyMembers(
+  //   companyId,
+  //   sortCriteria
+  // );
+
+  // useFetchCompanyMembers(companyId, departmentId, sortCriteria);
+  useFetchAndSetCompanyDepartments(companyId, sortCriteria);
+
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(
       openModal({
@@ -42,46 +54,9 @@ const DepartmentTab = () => {
     );
   };
 
-  const companyId: CompanyId = (!workspace.id
-    ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyId;
-
-  /// testing
-
-  // const { data: companyData } = useGetCompanyQuery(companyId);
-  const { data: companyMembers } = useGetCompanyMembersQuery({
-    company_id: companyId,
-    department_id: departmentId,
-    sort_by: '',
-  });
-
-  //// testing
-
   const handleSortDepartments = (value: SortBy) => {
     setSortCritiera(value);
   };
-
-  const {
-    data: departmentsData,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetCompanyDepartmentsQuery({
-    company_id: companyId,
-    sort_by: sortCriteria,
-  });
-
-  // const { data: company } = useGetCompanyQuery(companyId);
-
-  useEffect(() => {
-    if (isSuccess && departmentsData) {
-      dispatch(setAllDepartments(departmentsData));
-      if (companyMembers) {
-        dispatch(setMembers(companyMembers));
-      }
-    }
-  }, [isSuccess, dispatch, companyMembers, departmentsData, sortCriteria]);
 
   return (
     <>

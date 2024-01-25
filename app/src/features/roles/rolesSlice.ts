@@ -3,10 +3,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { DataLoading } from '../utils/utilEnum';
 import { fetchMembers } from './rolesAPI';
 import { IMember, IMockMembers, RolesCreateSlice } from './rolesInterface';
-import { useGetCompanyMembersQuery } from '../settingsDetail/userSettingsAPI';
 import { useEffect, useState } from 'react';
 import { CompanyId } from '@/types/company';
 import { DepartmentId } from '@/types/department';
+import { useGetCompanyMembersQuery } from '../company/companyAPI';
 
 /*
 
@@ -23,9 +23,11 @@ export const initialState: RolesCreateSlice = {
   title: '',
   all_members: [
     {
+      id: '',
       member_idx: 0,
-      member_name: '',
-      member_url: '',
+      first_name: '',
+      last_name: '',
+      profile_picture: '',
       member_type: '',
       selected: false,
     },

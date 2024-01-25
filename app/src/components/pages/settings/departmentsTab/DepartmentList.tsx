@@ -3,9 +3,9 @@ import SettingsDepartmentCard from '@/components/common/cards/settingsDepartment
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import PaginationComponent from '@/components/common/pagination/PaginationComponent';
 import { setCurrentDepartment } from '@/features/departments/departmentSlice';
-import { IDepartment } from '@/features/departments/departmentsInterface';
 import usePagination from '@/hooks/usePagination';
 import { DepartmentListContainer } from '@/pages/Settings/StyledSettings';
+import { IDepartment } from '@/types/department';
 import { Stack } from '@mui/material';
 
 import React from 'react';

@@ -16,7 +16,7 @@ export const userAPI = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Departments'],
+  tagTypes: ['User'],
   endpoints: (builder) => ({
     updateUser: builder.mutation<void, { userData: IUserData }>({
       query: ({ userData }) => {
@@ -35,19 +35,19 @@ export const userAPI = createApi({
         };
       },
     }),
-    getCompanyMembers: builder.query<
-      IMembersList[],
-      {
-        company_id: CompanyId;
-        department_id: DepartmentId;
-        sort_by: SortBy;
-      }
-    >({
-      query: ({ company_id, department_id, sort_by }) => ({
-        url: `/company/members?company=${company_id}&department=${department_id}&sort_by=${sort_by}`,
-        method: 'GET',
-      }),
-    }),
+    // getCompanyMembers: builder.query<
+    //   IMembersList[],
+    //   {
+    //     company_id: CompanyId;
+    //     department_id: DepartmentId;
+    //     sort_by: SortBy;
+    //   }
+    // >({
+    //   query: ({ company_id, department_id, sort_by }) => ({
+    //     url: `/company/members?company=${company_id}&department=${department_id}&sort_by=${sort_by}`,
+    //     method: 'GET',
+    //   }),
+    // }),
     getCompanyDepartments: builder.mutation<
       IDepartment[],
       {
