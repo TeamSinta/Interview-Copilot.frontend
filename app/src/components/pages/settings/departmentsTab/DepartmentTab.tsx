@@ -52,7 +52,7 @@ const DepartmentTab = () => {
   const { data: companyMembers } = useGetCompanyMembersQuery({
     company_id: companyId,
     department_id: departmentId,
-    sort_by: null,
+    sort_by: '',
   });
 
   //// testing

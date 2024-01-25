@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface WorkSpace {
-  id: number | null;
+  id: string | null;
   name: string | null;
 }
 
 const initialState = {
-  id: null,
+  id: '',
   name: '',
 };
 

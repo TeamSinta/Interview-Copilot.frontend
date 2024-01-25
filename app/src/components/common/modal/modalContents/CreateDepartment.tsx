@@ -43,7 +43,7 @@ const CreateDepartment = () => {
     (state: RootState) => state.company.members
   );
 
-  const [, setValidationError] = useState('');
+  const [validationError, setValidationError] = useState('');
   const [newDepartmentName, setNewDepartmentName] = useState('');
 
   const companyId: CompanyId = (!workspace.id

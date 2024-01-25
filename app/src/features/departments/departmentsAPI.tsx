@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { CompanyId } from '@/types/company';
-import { DepartmentTitle, IDepartment } from '@/types/department';
+import { DepartmentId, DepartmentTitle, IDepartment } from '@/types/department';
 import { SortBy } from '@/types/common';
 
 export const departmentsAPI = createApi({
@@ -67,7 +67,11 @@ export const departmentsAPI = createApi({
     }),
     updateDepartment: builder.mutation<
       void,
-      { company_id: any; department_id: any; departmentData: any }
+      {
+        company_id: CompanyId;
+        department_id: DepartmentId;
+        departmentData: any;
+      }
     >({
       query: ({ departmentData, company_id, department_id }) => {
         return {

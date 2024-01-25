@@ -1,5 +1,5 @@
 export interface Company {
-  id: number | null;
+  id: string | null;
   name: string | null;
 }
 export interface Token {

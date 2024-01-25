@@ -41,8 +41,8 @@ const UserTab = () => {
 
   const handleSaveClick = async () => {
     const userData = {
-      first_name: firstName || null,
-      last_name: lastName || null,
+      first_name: firstName || '',
+      last_name: lastName || '',
     };
 
     try {

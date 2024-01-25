@@ -44,7 +44,7 @@ const EditMember: React.FC<MemberModalProps> = () => {
   const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user.user);
   const member = useSelector(selectSetMember);
-  const [sortCriteria, setSortCritiera] = useState(null);
+  const [sortCriteria, setSortCritiera] = useState('');
 
   const [getMemberDepartments] = useGetUserDepartmentsMutation();
   const [createDepartmentMember, { isSuccess, data }] =

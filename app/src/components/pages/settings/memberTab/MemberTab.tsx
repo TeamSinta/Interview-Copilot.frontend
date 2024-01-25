@@ -20,15 +20,14 @@ const MemberTab = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
-  const [sortCriteria, setSortCritiera] = useState<SortBy>(null);
-  const [departmentId, setDepartmentId] = useState<DepartmentId>(null);
+  const [sortCriteria, setSortCritiera] = useState<SortBy>('');
+  const [departmentId, setDepartmentId] = useState<DepartmentId>('');
 
   // definitely should look over this, idk what TS is doing here om on the companyId type.
   const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyId;
 
-  console.log(companyId);
   const { members } = useFetchCompanyMembers({
     company_id: companyId,
     department_id: departmentId,
