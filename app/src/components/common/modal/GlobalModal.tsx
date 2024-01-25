@@ -30,6 +30,7 @@ import CoverLibrary from './modalContents/CoversLibrary';
 import EditDepartment from './modalContents/EditDepartment';
 import DeleteDepartment from './modalContents/DeleteDepartment';
 import { SetStateAction } from 'react';
+import EditDepartmentMembers from './modalContents/EditDepartmentMembers';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
@@ -46,6 +47,7 @@ export enum MODAL_TYPE {
   SELECT_ALL_QUESTIONS = 'SELECT_ALL_QUESTIONS',
   COVER_LIBRARY = 'COVER_LIBRARY',
   DEL_DEP = 'DEL_DEP',
+  EDIT_DEP_MEM = 'EDIT_DEP_MEM',
 }
 
 interface IModalHeader {
@@ -112,6 +114,12 @@ const GlobalModal = (): JSX.Element => {
             <EditDepartment />
           </Modal>
         );
+      case MODAL_TYPE.EDIT_DEP_MEM:
+        return (
+          <Modal title="Department Members">
+            <EditDepartmentMembers />
+          </Modal>
+        );
       case MODAL_TYPE.SELECT_ALL_QUESTIONS:
         return (
           <ModalL title="All Questions Library">
@@ -173,7 +181,7 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.MEMBER_SET:
         return (
-          <Modal title="Member Setting">
+          <Modal title="Member Settings">
             <EditMember />
           </Modal>
         );

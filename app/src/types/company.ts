@@ -9,6 +9,9 @@ export interface IMember {
   first_name: string;
   last_name: string;
   profile_picture: string;
+  email: string;
+  username: string;
+  role: string;
   member_type: string;
   selected?: boolean;
 }

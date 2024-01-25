@@ -1,5 +1,6 @@
 export interface IOption {
-  name: string;
+  title?: string;
+  name?: string;
   value: string;
   selected?: boolean;
 }

@@ -1,11 +1,14 @@
 import { AppDispatch, RootState } from '@/app/store';
 import { PhotoContainer } from '@/components/common/buttons/photo/StyledPhoto';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
-import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
+import {
+  BodySBold,
+  BodySMedium,
+} from '@/components/common/typeScale/StyledTypeScale';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal } from '@/features/modal/modalSlice';
-import { ModalContentWrap } from './StyledModalContents';
+import { closeModal, openModal } from '@/features/modal/modalSlice';
+import { MemberPhotosContainer, ModalContentWrap } from './StyledModalContents';
 import { InputLayout } from '../../form/input/StyledInput';
 import { useRef, useState } from 'react';
 import TextInput from '../../form/textInput/TextInput';
@@ -16,13 +19,15 @@ import {
   selectedMember,
   useFetchSelectMembers,
 } from '@/features/roles/rolesSlice';
-import Photos from '../../buttons/photo/Photos';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import Photo from '../../buttons/photo/Photo';
 import { CompanyId } from '@/types/company';
 import { IconBtnS } from '../../buttons/iconBtn/IconBtn';
 import { EditIcon } from '../../svgIcons/Icons';
 import Stack from '@mui/material/Stack';
+import { NumberIcon } from '../../cards/card/StyledCard';
+import Box from '@mui/material/Box';
+import { MODAL_TYPE } from '../GlobalModal';
 
 const titleInputArg = {
   label: 'Title',
@@ -79,6 +84,14 @@ const EditDepartment = () => {
     return null;
   };
 
+  const onClickModalOpen = (targetModalType: MODAL_TYPE) => {
+    dispatch(
+      openModal({
+        modalType: targetModalType,
+      })
+    );
+  };
+
   const inputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewTitle(event.target.value);
   };
@@ -87,9 +100,10 @@ const EditDepartment = () => {
     dispatch(selectedMember({ memberIdx: memberIdx }));
   };
 
-  const handleEditClick = () => {
+  const handleEditTitleClick = () => {
     setDisableEdit(!disableEdit);
   };
+
   const handleSaveClick = async () => {
     try {
       const departmentData = {
@@ -123,7 +137,7 @@ const EditDepartment = () => {
           <ElWrap h={32} w={32}>
             <IconBtnS
               icon={<EditIcon />}
-              onClick={handleEditClick}
+              onClick={handleEditTitleClick}
               disable={false}
               className={'BackgroundColor.ACCENT_PURPLE'}
             />
@@ -131,26 +145,48 @@ const EditDepartment = () => {
         </Stack>
         <PhotoContainer>
           <BodySMedium>Members</BodySMedium>
-
-          <Photos>
-            {members.map((member: any, index: number) => (
-              <ElWrap w={40} h={40} key={index}>
-                <Photo
-                  onSelect={onMemberSelectd}
-                  member_idx={member.id}
-                  member_firstName={member.first_name}
-                  member_lastName={member.last_name}
-                  photoType={PhotoType.L}
-                  member_url={member.profile_picture}
-                  selected={member.selected}
+          <Stack direction="row" spacing={1} justifyItems="space-between">
+            <MemberPhotosContainer>
+              <Box sx={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                {members
+                  ?.slice(0, members.length > 4 ? 3 : 4)
+                  .map((member: any, index: number) => (
+                    <ElWrap w={40} h={40} key={index}>
+                      <Photo
+                        onSelect={onMemberSelectd}
+                        member_idx={member.id}
+                        member_firstName={member.first_name}
+                        member_lastName={member.last_name}
+                        photoType={PhotoType.L}
+                        member_url={member.profile_picture}
+                        selected={member.selected}
+                      />
+                    </ElWrap>
+                  ))}
+                <>
+                  {members?.length && members.length > 4 ? (
+                    <NumberIcon imgUrl="">
+                      <BodySBold>+{members.length - 3}</BodySBold>
+                    </NumberIcon>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              </Box>
+              <ElWrap w={150}>
+                <TextIconBtnL
+                  label="Edit Members"
+                  className={BackgroundColor.WHITE}
+                  disable={false}
+                  icon={<EditIcon />}
+                  onClick={() => onClickModalOpen(MODAL_TYPE.EDIT_DEP_MEM)}
                 />
               </ElWrap>
-            ))}
-          </Photos>
+            </MemberPhotosContainer>
+          </Stack>
         </PhotoContainer>
       </InputLayout>
       <TextIconBtnL {...textIconBtnArg} onClick={handleSaveClick} />
-
       <StyledDeleteBox
         deleteItemText="department"
         deleteFromText="this company"

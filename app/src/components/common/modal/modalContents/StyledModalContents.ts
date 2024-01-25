@@ -347,3 +347,28 @@ export const ImageStyle = styled.img`
   margin-bottom: 8px;
   width: 311px;
 `;
+
+export const MemberPhotosContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+export const EditDepMembersContainer = styled.div`
+  max-height: calc(100vh - 650px);
+
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 0.01rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+`;
