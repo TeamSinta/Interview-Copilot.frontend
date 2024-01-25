@@ -20,6 +20,9 @@ import Photos from '../../buttons/photo/Photos';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import Photo from '../../buttons/photo/Photo';
 import { CompanyId } from '@/types/company';
+import { IconBtnS } from '../../buttons/iconBtn/IconBtn';
+import { EditIcon } from '../../svgIcons/Icons';
+import Stack from '@mui/material/Stack';
 
 const titleInputArg = {
   label: 'Title',
@@ -30,7 +33,7 @@ const titleInputArg = {
 };
 
 const textIconBtnArg = {
-  label: 'Save Changes',
+  label: 'Close and Save Changes',
   disable: false,
   className: BackgroundColor.ACCENT_PURPLE,
 };
@@ -46,6 +49,7 @@ const EditDepartment = () => {
     (state: RootState) => state.department.currentDepartment
   );
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
+  const [disableEdit, setDisableEdit] = useState(true);
   const [newTitle, setNewTitle] = useState('');
   const [updateDepartment] = useUpdateDepartmentMutation();
 
@@ -83,6 +87,9 @@ const EditDepartment = () => {
     dispatch(selectedMember({ memberIdx: memberIdx }));
   };
 
+  const handleEditClick = () => {
+    setDisableEdit(!disableEdit);
+  };
   const handleSaveClick = async () => {
     try {
       const departmentData = {
@@ -104,16 +111,27 @@ const EditDepartment = () => {
     <ModalContentWrap>
       <InputLayout>
         <BodySMedium> Title</BodySMedium>
-        <TextInput
-          {...titleInputArg}
-          placeholder={`${title}`}
-          onChange={inputOnChange}
-          value={newTitle || ''}
-          validate={validateTitle}
-          ref={titleInputRef}
-        />
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <TextInput
+            {...titleInputArg}
+            onChange={inputOnChange}
+            value={newTitle || ''}
+            validate={validateTitle}
+            ref={titleInputRef}
+            disable={disableEdit}
+          />
+          <ElWrap h={32} w={32}>
+            <IconBtnS
+              icon={<EditIcon />}
+              onClick={handleEditClick}
+              disable={false}
+              className={'BackgroundColor.ACCENT_PURPLE'}
+            />
+          </ElWrap>
+        </Stack>
         <PhotoContainer>
           <BodySMedium>Members</BodySMedium>
+
           <Photos>
             {members.map((member: any, index: number) => (
               <ElWrap w={40} h={40} key={index}>
@@ -132,6 +150,7 @@ const EditDepartment = () => {
         </PhotoContainer>
       </InputLayout>
       <TextIconBtnL {...textIconBtnArg} onClick={handleSaveClick} />
+
       <StyledDeleteBox
         deleteItemText="department"
         deleteFromText="this company"
