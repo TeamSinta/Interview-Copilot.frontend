@@ -105,9 +105,9 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
       })
     );
   };
-  const deleteQuestionFromList = async (question : any) => {
+  const deleteQuestionFromList = async (id : string) => {
     const questionData = {
-      question_ids : [question],
+      question_ids : [id],
       id : questionBankID
     };
    await deleteQuestion(questionData)
