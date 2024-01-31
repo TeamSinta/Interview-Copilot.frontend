@@ -24,15 +24,22 @@ interface UserCardProps {
     role: string;
     profile_picture: string | null;
   };
+  onSelect: (memberIdx: string) => void;
   onClick: (user: any) => void;
+  selected?: boolean;
 }
 
 const editDepartmentMembersCard: React.FC<UserCardProps> = ({
   user,
   onClick,
+  onSelect,
+  selected,
 }) => {
   return (
-    <MemberCardContainer onClick={() => onClick(user)}>
+    <MemberCardContainer
+      onClick={() => onSelect(user.id)}
+      style={{ background: selected ? '#CECDEE' : '' }}
+    >
       <Stack
         direction="row"
         alignItems={'center'}

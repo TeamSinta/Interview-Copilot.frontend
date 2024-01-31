@@ -1,7 +1,6 @@
 export interface ICompany {
   id: string;
   name: string | null;
-  members: IMember[];
 }
 
 export interface IMember {

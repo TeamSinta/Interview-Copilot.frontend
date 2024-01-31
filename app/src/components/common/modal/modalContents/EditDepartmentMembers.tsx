@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import MembersFilterDropdown from '../../dropDown/MembersFilterDropdown';
 import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
 import { current } from '@reduxjs/toolkit';
+import { selectedMember } from '@/features/company/companySlice';
 
 const textBtnArg = {
   label: 'Close',
@@ -68,6 +69,14 @@ const EditDepartmentMembers = () => {
     setDepartmentId(selectedOption);
   };
 
+  const onMemberSelected = (memberIdx: string) => {
+    dispatch(selectedMember({ memberIdx }));
+  };
+
+  const selectedMemberIds = filteredMembers
+    .filter((member) => member.selected)
+    .map((member) => member.id);
+
   useEffect(() => {
     let filteredMembers = companyMembers;
 
@@ -100,19 +109,11 @@ const EditDepartmentMembers = () => {
         <Stack direction="column" spacing={0.5}>
           {filteredMembers.map((member) => (
             <EditDepartmentMembersCard
+              onSelect={() => onMemberSelected(member.id)}
               key={member.id}
               user={member}
-              onClick={() => {
-                dispatch(
-                  setMemberInfo({
-                    id: member.id,
-                    firstName: member.first_name,
-                    lastName: member.last_name,
-                    email: member.email,
-                    pictureUrl: member.profile_picture,
-                  })
-                );
-              }}
+              onClick={() => {}}
+              selected={member.selected}
             />
           ))}
         </Stack>

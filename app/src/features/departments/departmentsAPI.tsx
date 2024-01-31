@@ -59,7 +59,6 @@ export const departmentsAPI = createApi({
       { department_id: any; invitees: any }
     >({
       query: ({ department_id, invitees }) => {
-        console.log('Add Department Members: ', invitees);
         return {
           url: `/company/department/members?department=${department_id}`,
           method: 'POST',

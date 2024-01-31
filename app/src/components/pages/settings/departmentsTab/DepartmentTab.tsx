@@ -12,8 +12,7 @@ import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBt
 import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { selectDepartment } from '@/features/departments/departmentSlice';
-// import { setMembers } from '@/features/company/companySlice';
-import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
+// import { setMembers } from '@/features/company/companySlice';;
 import { CompanyId } from '@/types/company';
 import { SortBy } from '@/types/common';
 import { useFetchAndSetCompanyDepartments } from '@/hooks/useFetchCompanyDepartments';
@@ -27,26 +26,18 @@ const DepartmentTab = () => {
   const departmentState = useSelector(selectDepartment);
   const allDepartments = departmentState.allDepartments;
   const [sortCriteria, setSortCritiera] = useState<SortBy>('');
-  const [departmentId, setDepartmentId] = useState<DepartmentId>('');
+  const [departmentId, ,] = useState<DepartmentId>('');
 
   const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyId;
 
-  // const { data: companyMembers } = useGetCompanyMembersQuery({
-  //   company_id: companyId,
-  //   department_id: departmentId,
-  //   sort_by: '',
-  // });
   const { companyMembers } = useFetchCompanyMembers({
     company_id: companyId,
     department_id: departmentId,
     sortCriteria: sortCriteria,
   });
 
-  console.log(companyMembers);
-
-  // useFetchCompanyMembers(companyId, departmentId, sortCriteria);
   useFetchAndSetCompanyDepartments(companyId, sortCriteria);
 
   const onClickModalOpen = (modalType: MODAL_TYPE) => {

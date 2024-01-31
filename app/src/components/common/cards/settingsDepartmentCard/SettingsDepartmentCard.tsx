@@ -10,7 +10,7 @@ import {
   DepartmentDetails,
   PermissionLevel,
 } from './StyledDepartmentCard'; // Adjust the import path to match your file structure
-import { BodyLMedium } from '../../typeScale/StyledTypeScale';
+import { BodyLMedium, BodyMMedium } from '../../typeScale/StyledTypeScale';
 
 interface DepartmentCardProps {
   department: {
@@ -28,7 +28,7 @@ const SettingsDepartmentCard: React.FC<DepartmentCardProps> = ({
     <DepartmentCardContainer onClick={() => onClick(department)}>
       <Stack direction="row" gap="16px" sx={{ width: '316px' }}>
         <DepartmentDetails>
-          <BodyLMedium>{TruncateText(department.title, 40)}</BodyLMedium>
+          <BodyMMedium>{TruncateText(department.title, 35)}</BodyMMedium>
         </DepartmentDetails>
       </Stack>
       <PermissionLevel>
@@ -40,7 +40,7 @@ const SettingsDepartmentCard: React.FC<DepartmentCardProps> = ({
             padding: '7px 21px',
           }}
         >
-          Dep. Role
+          Dep. role...
         </div>
       </PermissionLevel>
 

@@ -14,6 +14,8 @@ const initialState: AuthState = {
     id: null,
     companies: [],
   },
+  currentCompany: null,
+  currentDepartment: null,
   token: {
     access: null,
     refresh: null,

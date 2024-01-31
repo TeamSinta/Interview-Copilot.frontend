@@ -1,3 +1,6 @@
+import { ICompany } from '@/types/company';
+import { IDepartment } from '@/types/department';
+
 export interface Company {
   id: string | null;
   name: string | null;
@@ -28,6 +31,8 @@ export interface AuthState {
     companies: Company[];
     id: string | null;
   };
+  currentCompany: ICompany;
+  currentDepartment: IDepartment;
   token: Token;
 }
 

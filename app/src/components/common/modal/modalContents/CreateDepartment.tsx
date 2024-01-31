@@ -77,22 +77,18 @@ const CreateDepartment = () => {
       departmentTitle: trimmedDepartmentName,
     };
 
-    // THIS IS WHERE YOU GOT STUCK. FIX THE SEQUENCE OF GETTING THE ID FOR ADD DEP MEMBER
     try {
       const newDepartment =
         await createNewDepartment(createDepartmentData).unwrap();
       if (newDepartment && newDepartment.id) {
-        console.log('New Dep ID: ', newDepartment.id);
-        const newMembers = await addDepartmentMembers({
+        await addDepartmentMembers({
           invitees: selectedMemberIds,
           department_id: newDepartment.id,
         }).unwrap();
-        console.log(newMembers);
       }
 
       setNewDepartmentName('');
       setValidationError('');
-      console.log('Department Data: ', createDepartmentData);
       dispatch(resetMemberSelection());
       dispatch(closeModal);
     } catch (error: any) {
