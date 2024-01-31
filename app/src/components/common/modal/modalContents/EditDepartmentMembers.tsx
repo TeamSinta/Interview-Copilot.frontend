@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '@/features/modal/modalSlice';
 import { ModalContentWrap } from './StyledModalContents';
 import { TextBtnL } from '../../buttons/textBtn/TextBtn';
-import { BinIcon } from '../../svgIcons/Icons';
 import { AppDispatch, RootState } from '@/app/store';
 import { resetCurrentDepartment } from '@/features/departments/departmentSlice';
 import SearchInput from '../../form/serchInput/SearchInput';
@@ -14,9 +13,9 @@ import { IOption } from '@/types/common';
 import EditDepartmentMembersCard from '../../cards/editDepartmentMembersCard/editDepartmentMembersCard';
 import { useEffect, useState } from 'react';
 import MembersFilterDropdown from '../../dropDown/MembersFilterDropdown';
-import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
-import { current } from '@reduxjs/toolkit';
 import { selectedMember } from '@/features/company/companySlice';
+import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
+import { useGetDepartmentMembersQuery } from '@/features/departments/departmentsAPI';
 
 const textBtnArg = {
   label: 'Close',
@@ -30,20 +29,24 @@ const EditDepartmentMembers = () => {
   const currentDepartment = useSelector(
     (state: RootState) => state.department.currentDepartment
   );
-  const allCompanyMembers = useSelector(
-    (state: RootState) => state.company.members
-  );
+
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentId, setDepartmentId] = useState<DepartmentId>(
     currentDepartment.id
   );
-  const [filteredMembers, setFilteredMembers] = useState(allCompanyMembers);
 
-  const { companyMembers } = useFetchCompanyMembers({
+  const { data: companyMembers } = useGetCompanyMembersQuery({
     company_id: workspace.id,
-    department_id: departmentId,
-    sortCriteria: '',
+    sort_by: '',
   });
+
+  const { data: departmentMembers } = useGetDepartmentMembersQuery({
+    department_id: departmentId,
+    sort_by: '',
+  });
+  const membersToShow = departmentId ? departmentMembers : companyMembers;
+
+  const [filteredMembers, setFilteredMembers] = useState(membersToShow);
 
   const handleCancelClick = () => {
     dispatch(closeModal());
@@ -77,19 +80,19 @@ const EditDepartmentMembers = () => {
     .map((member) => member.id);
 
   useEffect(() => {
-    let filteredMembers = companyMembers;
+    let filteredMembers = membersToShow;
 
     if (searchTerm) {
       filteredMembers = filteredMembers.filter(
         (member) =>
-          member.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          member.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          member.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          member.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
           member.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     setFilteredMembers(filteredMembers);
-  }, [searchTerm, companyMembers]);
+  }, [searchTerm, membersToShow]);
 
   return (
     <ModalContentWrap>

@@ -10,7 +10,7 @@ import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   useAddDepartmentMembersMutation,
   useCreateDepartmentMutation,
@@ -21,6 +21,11 @@ import {
   selectedMember,
 } from '@/features/company/companySlice';
 import { CompanyId } from '@/types/company';
+import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
+import {
+  setCurrentMembers,
+  toggleMemberSelected,
+} from '@/features/members/memberSlice';
 
 const titleInputArg = {
   label: 'Title',
@@ -41,10 +46,10 @@ const CreateDepartment = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [createNewDepartment, { isLoading }] = useCreateDepartmentMutation();
   const [addDepartmentMembers] = useAddDepartmentMembersMutation();
-  const workspace = useSelector((state: RootState) => state.workspace);
   const user = useSelector((state: RootState) => state.user.user);
-  const companyMembers = useSelector(
-    (state: RootState) => state.company.members
+  const workspace = useSelector((state: RootState) => state.workspace);
+  const currentMembers = useSelector(
+    (state: RootState) => state.member.currentMembers
   );
   const [validationError, setValidationError] = useState('');
   const [newDepartmentName, setNewDepartmentName] = useState('');
@@ -53,8 +58,13 @@ const CreateDepartment = () => {
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyId;
 
-  const onMemberSelectd = (memberIdx: number) => {
-    dispatch(selectedMember({ memberIdx: memberIdx }));
+  const { data: companyMembers } = useGetCompanyMembersQuery({
+    company_id: companyId,
+    sort_by: '',
+  });
+
+  const onMemberSelectd = (memberId: string) => {
+    dispatch(toggleMemberSelected(memberId));
   };
 
   const onCreateDepTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +78,7 @@ const CreateDepartment = () => {
       return;
     }
 
-    const selectedMemberIds = companyMembers
+    const selectedMemberIds = currentMembers
       .filter((member) => member.selected)
       .map((member) => member.id);
 
@@ -112,6 +122,12 @@ const CreateDepartment = () => {
     return null;
   };
 
+  useEffect(() => {
+    if (companyMembers) {
+      dispatch(setCurrentMembers(companyMembers));
+    }
+  }, [companyMembers, dispatch]);
+
   return (
     <ModalContentWrap>
       <TextInput
@@ -130,11 +146,11 @@ const CreateDepartment = () => {
             <ElWrap w={40} h={40} key={index}>
               <Photo
                 onSelect={onMemberSelectd}
-                member_idx={member.id}
-                member_firstName={member.first_name}
-                member_lastName={member.last_name}
+                id={member.id}
+                firstName={member.firstName}
+                lastName={member.lastName}
                 photoType={PhotoType.L}
-                member_url={member.profile_picture}
+                profilePicture={member.profilePicture}
                 selected={member.selected}
               />
             </ElWrap>

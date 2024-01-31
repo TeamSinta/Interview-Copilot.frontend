@@ -41,12 +41,12 @@ const editDepartmentMembersCard: React.FC<UserCardProps> = ({
       >
         <ProfilePicture
           alt={`${user.username}'s Photo`}
-          src={user.profile_picture || ''}
+          src={user.profilePicture || ''}
         />
         <ElWrap w={200}>
           <UserDetails>
             <BodyMMedium>
-              {TruncateText(user.first_name + ' ' + user.last_name, 25)}
+              {TruncateText(user.firstName + ' ' + user.lastName, 25)}
             </BodyMMedium>
             <BodySMedium style={{ opacity: 0.5 }}>
               {TruncateText(user.email, 25)}

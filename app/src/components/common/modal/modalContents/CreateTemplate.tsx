@@ -22,6 +22,7 @@ import { useAddTemplateMutation } from '@/features/templates/templatesAPISlice';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import NewDepartment from '../../form/newDepartment/newDepartment';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
+import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
 
 const titleInputArg = {
   error: false,
@@ -55,15 +56,20 @@ const CreateInterviews = () => {
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
 
-  const { members } = useFetchSelectMembers({
+  // const { members } = useFetchSelectMembers({
+  //   company_id: companyId,
+  //   department_id: departmentId,
+  //   sortCriteria: sortCriteria,
+  // });
+
+  const { data: companyMembers } = useGetCompanyMembersQuery({
     company_id: companyId,
-    department_id: departmentId,
-    sortCriteria: sortCriteria,
+    sort_by: sortCriteria,
   });
 
   useEffect(() => {
-    if (members && members.length > 0) {
-      const initializedMembers = members.map((member) => ({
+    if (companyMembers && companyMembers.length > 0) {
+      const initializedMembers = companyMembers.map((member) => ({
         ...member,
         member_idx: member.id,
         selected: !!selectedMembers.find((m) => m.id === member.id)?.selected,
@@ -73,7 +79,7 @@ const CreateInterviews = () => {
       // Handle the case where there are no members
       setSelectedMembers([]);
     }
-  }, [members]);
+  }, [companyMembers]);
 
   const onMemberSelected = (memberId: number) => {
     const updatedMembers = selectedMembers.map((member) =>
@@ -239,10 +245,10 @@ const CreateInterviews = () => {
                 <Photo
                   photoType={PhotoType.L}
                   onSelect={() => onMemberSelected(member.id)}
-                  member_idx={member.id}
-                  member_firstName={member.first_name}
-                  member_lastName={member.last_name}
-                  member_url={member.profile_picture}
+                  id={member.id}
+                  firstName={member.firstName}
+                  lastName={member.lastName}
+                  profilePicture={member.profilePicture}
                   selected={member.selected}
                 />
               </ElWrap>

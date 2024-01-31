@@ -6,6 +6,7 @@ export interface MemberState {
   member: IMember;
   companyMembers: IMember[];
   departmentMembers: IMember[];
+  currentMembers: IMember[];
 }
 
 const initialState: MemberState = {
@@ -20,6 +21,7 @@ const initialState: MemberState = {
   },
   companyMembers: [],
   departmentMembers: [],
+  currentMembers: [],
 };
 
 export const memberSlice = createSlice({
@@ -46,11 +48,34 @@ export const memberSlice = createSlice({
         selected: member.selected ?? false,
       }));
     },
+    setCurrentMembers: (state, action: PayloadAction<IMember[]>) => {
+      state.currentMembers = action.payload.map((member) => ({
+        ...member,
+        selected: member.selected ?? false,
+      }));
+    },
+    toggleMemberSelected: (state, action: PayloadAction<string>) => {
+      const memberId = action.payload;
+      const memberIndex = state.currentMembers.findIndex(
+        (member) => member.id === memberId
+      );
+      if (memberIndex !== -1) {
+        state.currentMembers[memberIndex].selected =
+          !state.currentMembers[memberIndex].selected;
+      }
+    },
   },
 });
 
-export const { setMemberInfo, setDepartmentMembers, setCompanyMembers } =
-  memberSlice.actions;
+export const {
+  setMemberInfo,
+  setDepartmentMembers,
+  setCompanyMembers,
+  setCurrentMembers,
+  toggleMemberSelected,
+} = memberSlice.actions;
 export const selectSetMember = (state: RootState) => state.member.member;
+export const selectCurrentMembers = (state: RootState) =>
+  state.member.currentMembers;
 
 export default memberSlice.reducer;

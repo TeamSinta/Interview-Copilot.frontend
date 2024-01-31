@@ -12,7 +12,7 @@ import { useFetchCompanyDepartments } from './useFetchAndSortMembers';
 import { useState } from 'react';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 import { SortBy } from '@/types/common';
-import { CompanyId, IMember } from '@/types/company';
+import { CompanyId } from '@/types/company';
 import { DepartmentId } from '@/types/department';
 import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
 import { useGetDepartmentMembersQuery } from '@/features/departments/departmentsAPI';
