@@ -1,6 +1,5 @@
-import { IMembersList, SortBy } from '@/types/common';
-import { CompanyId, ICompany } from '@/types/company';
-import { DepartmentId } from '@/types/department';
+import { IMembersListResponse, SortBy } from '@/types/common';
+import { CompanyId, ICompany, IMember } from '@/types/company';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const companyAPI = createApi({
@@ -18,17 +17,28 @@ export const companyAPI = createApi({
   tagTypes: ['Company', 'Members'],
   endpoints: (builder) => ({
     getCompanyMembers: builder.query<
-      IMembersList[],
+      IMember[],
       {
         company_id: CompanyId;
-        department_id: DepartmentId;
         sort_by: SortBy;
       }
     >({
-      query: ({ company_id, department_id, sort_by }) => ({
-        url: `/company/members?company=${company_id}&department=${department_id}&sort_by=${sort_by}`,
+      query: ({ company_id, sort_by }) => ({
+        url: `/company/members?company=${company_id}&sort_by=${sort_by}`,
         method: 'GET',
       }),
+      transformResponse: (response: IMembersListResponse[]): IMember[] => {
+        return response.map((member) => ({
+          id: member.id,
+          firstName: member.first_name,
+          lastName: member.last_name,
+          email: member.email,
+          profilePicture: member.profile_picture,
+          username: member.username,
+          role: member.role,
+        }));
+      },
+      providesTags: ['Members'],
     }),
     getCompany: builder.query<ICompany, CompanyId>({
       query: (company_id) => ({

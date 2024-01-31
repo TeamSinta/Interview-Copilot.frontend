@@ -8,9 +8,8 @@ import { AppDispatch, RootState } from '@/app/store';
 import { resetCurrentDepartment } from '@/features/departments/departmentSlice';
 import SearchInput from '../../form/serchInput/SearchInput';
 import { DepartmentId } from '@/types/department';
-import { UserListContainer } from '@/pages/Settings/StyledSettings';
+import { MemberListContainer } from '@/pages/Settings/StyledSettings';
 import Stack from '@mui/material/Stack';
-import { setMemberInfo } from '@/features/members/memberSlice';
 import { IOption } from '@/types/common';
 import EditDepartmentMembersCard from '../../cards/editDepartmentMembersCard/editDepartmentMembersCard';
 import { useEffect, useState } from 'react';
@@ -105,7 +104,7 @@ const EditDepartmentMembers = () => {
         handleSetDepartment={handleDepartmentChange}
         workspaceId={workspace.id}
       />
-      <UserListContainer>
+      <MemberListContainer>
         <Stack direction="column" spacing={0.5}>
           {filteredMembers.map((member) => (
             <EditDepartmentMembersCard
@@ -117,7 +116,7 @@ const EditDepartmentMembers = () => {
             />
           ))}
         </Stack>
-      </UserListContainer>
+      </MemberListContainer>
       <TextBtnL {...textBtnArg} onClick={handleCancelClick} />
     </ModalContentWrap>
   );

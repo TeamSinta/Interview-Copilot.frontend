@@ -26,23 +26,11 @@ const SettingsDepartmentCard: React.FC<DepartmentCardProps> = ({
 }) => {
   return (
     <DepartmentCardContainer onClick={() => onClick(department)}>
-      <Stack direction="row" gap="16px" sx={{ width: '316px' }}>
+      <Stack direction="row" gap="16px" sx={{ width: '455px' }}>
         <DepartmentDetails>
-          <BodyMMedium>{TruncateText(department.title, 35)}</BodyMMedium>
+          <BodyMMedium>{TruncateText(department.title, 57)}</BodyMMedium>
         </DepartmentDetails>
       </Stack>
-      <PermissionLevel>
-        <div
-          style={{
-            background: 'white',
-            borderRadius: '11px',
-            border: '1.5px #121212 solid',
-            padding: '7px 21px',
-          }}
-        >
-          Dep. role...
-        </div>
-      </PermissionLevel>
 
       <EditButton2>
         <Tooltip title="Edit">

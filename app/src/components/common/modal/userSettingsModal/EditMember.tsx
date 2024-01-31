@@ -31,9 +31,10 @@ import { IDepartment } from '@/types/department';
 interface MemberModalProps {
   user: {
     id?: string;
-    first_name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
     email: string;
+    profilePicture: string;
     role: string;
   };
   onClose: () => void;
@@ -107,7 +108,7 @@ const EditMember: React.FC<MemberModalProps> = () => {
   return (
     <ModalContentWrap>
       <MemberInformationContainer>
-        <ProfilePicture src={member.pictureUrl} />
+        <ProfilePicture src={member.profilePicture} />
         <MemberDetailsContainer>
           <H3Bold>
             {member.firstName} {member.lastName}

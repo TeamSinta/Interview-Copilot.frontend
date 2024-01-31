@@ -12,7 +12,10 @@ import { MemberPhotosContainer, ModalContentWrap } from './StyledModalContents';
 import { InputLayout } from '../../form/input/StyledInput';
 import { useRef, useState } from 'react';
 import TextInput from '../../form/textInput/TextInput';
-import { useUpdateDepartmentMutation } from '@/features/departments/departmentsAPI';
+import {
+  useGetDepartmentMembersQuery,
+  useUpdateDepartmentMutation,
+} from '@/features/departments/departmentsAPI';
 import { setCurrentDepartment } from '@/features/departments/departmentSlice';
 import StyledDeleteBox from '../../form/deleteBox/deleteBox';
 import {
@@ -58,14 +61,19 @@ const EditDepartment = () => {
   const [newTitle, setNewTitle] = useState('');
   const [updateDepartment] = useUpdateDepartmentMutation();
 
-  const companyId: CompanyId = (!workspace.id
-    ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyId;
+  // const companyId: CompanyId = (!workspace.id
+  //   ? user.companies[0].id
+  //   : workspace.id)! as unknown as CompanyId;
 
-  const { members } = useFetchSelectMembers({
-    company_id: companyId,
+  // const { members } = useFetchSelectMembers({
+  //   company_id: companyId,
+  //   department_id: currentDepartment.id,
+  //   sortCriteria: '',
+  // });
+
+  const { data: departmentMembers } = useGetDepartmentMembersQuery({
     department_id: currentDepartment.id,
-    sortCriteria: '',
+    sort_by: '',
   });
 
   const validateTitle = (value: string): string | null => {
@@ -148,8 +156,8 @@ const EditDepartment = () => {
           <Stack direction="row" spacing={1} justifyItems="space-between">
             <MemberPhotosContainer>
               <Box sx={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                {members
-                  ?.slice(0, members.length > 4 ? 3 : 4)
+                {departmentMembers
+                  ?.slice(0, departmentMembers.length > 4 ? 3 : 4)
                   .map((member: any, index: number) => (
                     <ElWrap w={40} h={40} key={index}>
                       <Photo
@@ -164,9 +172,9 @@ const EditDepartment = () => {
                     </ElWrap>
                   ))}
                 <>
-                  {members?.length && members.length > 4 ? (
+                  {departmentMembers?.length && departmentMembers.length > 4 ? (
                     <NumberIcon imgUrl="">
-                      <BodySBold>+{members.length - 3}</BodySBold>
+                      <BodySBold>+{departmentMembers.length - 3}</BodySBold>
                     </NumberIcon>
                   ) : (
                     <></>

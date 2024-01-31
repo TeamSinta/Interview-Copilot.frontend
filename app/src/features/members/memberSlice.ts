@@ -1,22 +1,25 @@
 import { RootState } from '@/app/store';
-import { createSlice } from '@reduxjs/toolkit';
+import { IMember } from '@/types/company';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface MemberState {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  // departments list
-  pictureUrl: string;
+  member: IMember;
+  companyMembers: IMember[];
+  departmentMembers: IMember[];
 }
 
 const initialState: MemberState = {
-  id: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  // departments list
-  pictureUrl: '',
+  member: {
+    id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    profilePicture: '',
+    username: '',
+    role: '',
+  },
+  companyMembers: [],
+  departmentMembers: [],
 };
 
 export const memberSlice = createSlice({
@@ -24,16 +27,30 @@ export const memberSlice = createSlice({
   initialState,
   reducers: {
     setMemberInfo: (state, actions) => {
-      state.id = actions.payload.id;
-      state.firstName = actions.payload.firstName;
-      state.lastName = actions.payload.lastName;
-      state.email = actions.payload.email;
-      state.pictureUrl = actions.payload.pictureUrl;
+      state.member.id = actions.payload.id;
+      state.member.firstName = actions.payload.firstName;
+      state.member.lastName = actions.payload.lastName;
+      state.member.email = actions.payload.email;
+      state.member.profilePicture = actions.payload.profilePicture;
+      state.member.role = actions.payload.role;
+    },
+    setDepartmentMembers: (state, action: PayloadAction<IMember[]>) => {
+      state.departmentMembers = action.payload.map((member) => ({
+        ...member,
+        selected: member.selected ?? false,
+      }));
+    },
+    setCompanyMembers: (state, action: PayloadAction<IMember[]>) => {
+      state.departmentMembers = action.payload.map((member) => ({
+        ...member,
+        selected: member.selected ?? false,
+      }));
     },
   },
 });
 
-export const { setMemberInfo } = memberSlice.actions;
-export const selectSetMember = (state: RootState) => state.member;
+export const { setMemberInfo, setDepartmentMembers, setCompanyMembers } =
+  memberSlice.actions;
+export const selectSetMember = (state: RootState) => state.member.member;
 
 export default memberSlice.reducer;

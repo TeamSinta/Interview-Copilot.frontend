@@ -11,10 +11,11 @@ import SortingDropdown from './SortingDropdown';
 import { useFetchCompanyDepartments } from './useFetchAndSortMembers';
 import { useState } from 'react';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
-import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
-import { IOption, SortBy } from '@/types/common';
-import { CompanyId } from '@/types/company';
+import { SortBy } from '@/types/common';
+import { CompanyId, IMember } from '@/types/company';
 import { DepartmentId } from '@/types/department';
+import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
+import { useGetDepartmentMembersQuery } from '@/features/departments/departmentsAPI';
 
 const MemberTab = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,11 +29,17 @@ const MemberTab = () => {
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyId;
 
-  const { companyMembers } = useFetchCompanyMembers({
+  const { data: companyMembers } = useGetCompanyMembersQuery({
     company_id: companyId,
-    department_id: departmentId,
-    sortCriteria: sortCriteria,
+    sort_by: sortCriteria,
   });
+
+  const { data: departmentMembers } = useGetDepartmentMembersQuery({
+    department_id: departmentId,
+    sort_by: sortCriteria,
+  });
+
+  const membersToShow = departmentId ? departmentMembers : companyMembers;
 
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(
@@ -76,7 +83,7 @@ const MemberTab = () => {
           </ElWrap>
         </Stack>
         <MemberList
-          members={companyMembers}
+          members={membersToShow}
           onClickModalOpen={onClickModalOpen}
         />
       </Stack>

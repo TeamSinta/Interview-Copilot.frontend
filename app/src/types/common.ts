@@ -4,7 +4,7 @@ export interface IOption {
   value: string;
   selected?: boolean;
 }
-export interface IMembersList {
+export interface IMembersListResponse {
   id: string;
   username: string;
   first_name: string;

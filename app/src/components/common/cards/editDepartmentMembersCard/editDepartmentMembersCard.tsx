@@ -13,17 +13,10 @@ import {
 import { BodyMMedium, BodySMedium } from '../../typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { TruncateText } from '@/utils/Utils';
+import { IMember } from '@/types/company';
 
 interface UserCardProps {
-  user: {
-    id: string;
-    first_name: string;
-    last_name: string;
-    username: string;
-    email: string;
-    role: string;
-    profile_picture: string | null;
-  };
+  user: IMember;
   onSelect: (memberIdx: string) => void;
   onClick: (user: any) => void;
   selected?: boolean;

@@ -1,20 +1,25 @@
 import { AppDispatch } from '@/app/store';
-import SettingsUserCard from '@/components/common/cards/settingsUserCard/SettingsUserCard';
+import SettingsMemberCard from '@/components/common/cards/settingsMemberCard/SettingsMemberCard';
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import PaginationComponent from '@/components/common/pagination/PaginationComponent';
 import { setMemberInfo } from '@/features/members/memberSlice';
 import usePagination from '@/hooks/usePagination';
-import { UserListContainer } from '@/pages/Settings/StyledSettings';
-import { IMembersList } from '@/types/common';
-import { Stack } from '@mui/material';
+import { MemberListContainer } from '@/pages/Settings/StyledSettings';
+import { IMember } from '@/types/company';
+import { ModalTypeMap, Stack } from '@mui/material';
 
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-const MemberList: React.FC<{
-  members: IMembersList[];
-  onClickModalOpen: (modalType: MODAL_TYPE) => void;
-}> = ({ members, onClickModalOpen }) => {
+type MemberListProps = {
+  members: IMember[] | undefined;
+  onClickModalOpen: (ModalType: MODAL_TYPE) => void;
+};
+
+const MemberList: React.FC<MemberListProps> = ({
+  members,
+  onClickModalOpen,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const ITEMS_PER_PAGE = 5;
 
@@ -23,7 +28,7 @@ const MemberList: React.FC<{
     handlePageChange,
     currentPage,
     pageCount,
-  } = usePagination(members, ITEMS_PER_PAGE);
+  } = usePagination(members ?? [], ITEMS_PER_PAGE);
 
   return (
     <>
@@ -32,20 +37,22 @@ const MemberList: React.FC<{
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
-      <UserListContainer>
+      <MemberListContainer>
         <Stack direction="column" spacing={1}>
           {currentMembers.map((member) => (
-            <SettingsUserCard
+            <SettingsMemberCard
               key={member.id}
               user={member}
               onClick={() => {
                 dispatch(
                   setMemberInfo({
                     id: member.id,
-                    firstName: member.first_name,
-                    lastName: member.last_name,
+                    firstName: member.firstName,
+                    lastName: member.lastName,
                     email: member.email,
-                    pictureUrl: member.profile_picture,
+                    username: member.username,
+                    profilePicture: member.profilePicture,
+                    role: member.role,
                   })
                 );
                 onClickModalOpen(MODAL_TYPE.MEMBER_SET);
@@ -53,7 +60,7 @@ const MemberList: React.FC<{
             />
           ))}
         </Stack>
-      </UserListContainer>
+      </MemberListContainer>
     </>
   );
 };

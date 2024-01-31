@@ -5,13 +5,12 @@ export interface ICompany {
 
 export interface IMember {
   id: string;
-  first_name: string;
-  last_name: string;
-  profile_picture: string;
+  firstName: string;
+  lastName: string;
+  profilePicture: string;
   email: string;
   username: string;
   role: string;
-  member_type: string;
   selected?: boolean;
 }
 
