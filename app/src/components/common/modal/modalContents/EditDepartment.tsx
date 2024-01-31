@@ -162,11 +162,11 @@ const EditDepartment = () => {
                     <ElWrap w={40} h={40} key={index}>
                       <Photo
                         onSelect={onMemberSelectd}
-                        member_idx={member.id}
-                        member_firstName={member.first_name}
-                        member_lastName={member.last_name}
+                        id={member.id}
+                        firstName={member.firstName}
+                        lastName={member.lastName}
+                        profilePicture={member.profilePicture}
                         photoType={PhotoType.L}
-                        member_url={member.profile_picture}
                         selected={member.selected}
                       />
                     </ElWrap>
