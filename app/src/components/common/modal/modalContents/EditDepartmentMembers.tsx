@@ -11,19 +11,21 @@ import { MemberListContainer } from '@/pages/Settings/StyledSettings';
 import Stack from '@mui/material/Stack';
 import { IOption } from '@/types/common';
 import EditDepartmentMembersCard from '../../cards/editDepartmentMembersCard/editDepartmentMembersCard';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import MembersFilterDropdown from '../../dropDown/MembersFilterDropdown';
 import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
-import { useGetDepartmentMembersQuery } from '@/features/departments/departmentsAPI';
+import {
+  useAddDepartmentMembersMutation,
+  useGetDepartmentMembersQuery,
+} from '@/features/departments/departmentsAPI';
 import {
   selectCurrentMembers,
-  setCurrentMembers,
   toggleMemberSelected,
 } from '@/features/members/memberSlice';
-import { IMember } from '@/types/company';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { Box } from '@mui/material';
 import { BodySMedium } from '../../typeScale/StyledTypeScale';
+import { selectedMember } from '@/features/roles/rolesSlice';
 
 const txtBtnCloseArg = {
   label: 'Close',
@@ -37,10 +39,15 @@ const textBtnAddArg = {
   className: BackgroundColor.ACCENT_PURPLE,
 };
 
+export interface IMemberId {
+  id: [];
+}
+
 const EditDepartmentMembers = () => {
   const dispatch = useDispatch<AppDispatch>();
   const workspace = useSelector((state: RootState) => state.workspace);
   const currentMembers = useSelector(selectCurrentMembers);
+  const [addDepartmentMembers] = useAddDepartmentMembersMutation();
   const currentDepartment = useSelector(
     (state: RootState) => state.department.currentDepartment
   );
@@ -96,6 +103,21 @@ const EditDepartmentMembers = () => {
     dispatch(toggleMemberSelected(memberId));
   };
 
+  const handleAddSelectedMembers = async () => {
+    const selectedMembersIds = currentMembers
+      .filter((member) => member.selected)
+      .map((member) => member.id);
+
+    try {
+      await addDepartmentMembers({
+        invitees: selectedMembersIds,
+        department_id: currentDepartment.id,
+      }).unwrap();
+    } catch (error: any) {
+      console.log('Error inviting members', error);
+    }
+  };
+
   const filteredMembers = useMemo(() => {
     return combinedMembers.filter(
       (member) =>
@@ -128,7 +150,7 @@ const EditDepartmentMembers = () => {
           />
         </Box>
         <ElWrap w={160}>
-          <TextBtnL {...textBtnAddArg} onClick={() => {}} />
+          <TextBtnL {...textBtnAddArg} onClick={handleAddSelectedMembers} />
         </ElWrap>
       </Stack>
       <MembersFilterDropdown
