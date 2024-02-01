@@ -138,10 +138,11 @@ const QuestionList = () => {
                   </DetailOpenIcon>
                 </div>
                 <div className="body">
-                  <QuestionValue>
-                    <BodySMedium>{question.competency}</BodySMedium>
-                  </QuestionValue>
-
+                  {question.competency !== null && (
+                     <QuestionValue>
+                     <BodySMedium>{question.competency}</BodySMedium>
+                   </QuestionValue>
+                  )}
                   <div className="iconDiv">
                     <TimeIcon />
                     <BodySMedium>{question.reply_time}min</BodySMedium>

@@ -78,7 +78,7 @@ export const NotesTabQNA: React.FC<TranscriptionTabQNAProps> = ({
         direction="column"
         spacing={5}
         alignItems={'flex-start'}
-        divider={<Divider orientation="row" flexItem />}
+        divider={<Divider orientation="horizontal" flexItem />}
       >
         {orderedCategories.map((category, categoryIndex) => (
           <div

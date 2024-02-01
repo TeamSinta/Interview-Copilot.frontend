@@ -39,7 +39,7 @@ const fadeIn = keyframes`
 
 export const CompetencesWrap = styled.div`
   padding-top: 22px;
-  border-radius: 12px;
+  border-radius: 8px;
   height: 500px;
   display: flex;
   gap: 8px;

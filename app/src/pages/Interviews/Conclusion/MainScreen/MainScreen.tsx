@@ -138,9 +138,10 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // Need to handle this properly later
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   return (
     <>

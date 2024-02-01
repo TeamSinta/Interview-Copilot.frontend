@@ -15,7 +15,7 @@ import {
 
 import '@mdxeditor/editor/style.css';
 import { useState } from 'react';
-import { StyledTextareaDiv } from '../input/StyledInput';
+import { StyledTextareaDiv } from '@/components/common/form/input/StyledInput';
 
 interface ITextAreaProps {
   placeholder: string;

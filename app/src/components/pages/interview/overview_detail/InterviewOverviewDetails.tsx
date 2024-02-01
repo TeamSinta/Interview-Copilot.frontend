@@ -82,9 +82,7 @@ const InterviewOverviewDetails = () => {
   const [openItems, setOpenItems] = useState(new Set());
   const [showCustomQuestionForm, setShowCustomQuestionForm] = useState(false);
   const [edit, setEdit] = useState(new Set());
-  const [templateQuestions, setTemplateQuestions] = useState<
-    ITemplateQuestion[]
-  >([]);
+  const [newQuestions, setQuestions] = useState<ITemplateQuestion[]>([]);
   const [inputValue, setInputValue] = useState<IState>({
     question_text: '',
     reply_time: 0,
@@ -96,9 +94,7 @@ const InterviewOverviewDetails = () => {
   const { templateId } = useParams();
   const templateID = templateId;
 
-  const [newQuestion] = useAddTemplateQuestionMutation();
   const [deleteQuestion] = useDeleteTemplateQuestionMutation();
-  const [updateQuestion] = useUpdateQuestionMutation();
 
   const {
     data: questions,
@@ -113,7 +109,7 @@ const InterviewOverviewDetails = () => {
   useEffect(() => {}, [dispatch, openItems]);
   useEffect(() => {
     if (isSuccess) {
-      setTemplateQuestions(questions);
+      setQuestions(questions);
     }
   }, [isSuccess, questions]);
 
@@ -129,17 +125,22 @@ const InterviewOverviewDetails = () => {
     );
   }
 
-  const filteredQuestions = templateQuestions.filter(
-    (templateQuestion: ITemplateQuestion) => {
-      return templateQuestion?.topic === selectedSection.id;
+  const filteredQuestions = newQuestions.filter(
+    (question: ITemplateQuestion) => {
+      return question?.topic === selectedSection?.id;
     }
   );
 
-  const onClickModalOpen = (modalType: MODAL_TYPE, templateID: any) => {
+  const onClickModalOpen = (
+    modalType: MODAL_TYPE,
+    templateID: any,
+    dataForEdit?: any
+  ) => {
     dispatch(
       openModal({
         modalType: modalType,
         templateID: templateID,
+        dataForEdit,
       })
     );
   };
@@ -174,62 +175,7 @@ const InterviewOverviewDetails = () => {
     });
   };
 
-  const inputOnChange = (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setInputValue({
-      ...inputValue,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const textAreaOnChange = (value: string) => {
-    inputValue['detail'] = value;
-  };
-
-  const handleQuestionCreated = async (question: {}) => {
-    const requestData = {
-      template_id: templateID,
-      topic: String(selectedSection.id),
-      question: question,
-    };
-    try {
-      await newQuestion(requestData).unwrap();
-      setShowCustomQuestionForm(false);
-    } catch (error) {
-      // Handle error, e.g., display a notification
-      console.error('Failed to add question:', error);
-    }
-  };
-
-  //Which data have to be update?
-  const handleUpdateQuestion = async (templateQuestion: string) => {
-    if (!templateQuestion || !templateQuestion.question) {
-      console.error('Invalid template question data');
-      return;
-    }
-
-    const requestData = {
-      id: templateQuestion.question.id, // Get the question ID
-      template_id: templateID, // Assuming templateID is available in scope
-      topic: String(selectedSection.id), // Assuming selectedSection is available in scope
-      ...inputValue, // Other values from the form or input
-    };
-
-    try {
-      await updateQuestion(requestData).unwrap();
-      setEdit(new Set());
-      openDetailHandler(templateQuestion.id, false);
-      refetch();
-    } catch (error) {
-      console.error('Failed to update question:', error);
-      // Handle error, e.g., display a notification
-    }
-  };
-
-  const handleDeleteTemplateQuestion = async (questionID: number) => {
+  const handleDeleteTemplateQuestion = async (questionID: string) => {
     try {
       await deleteQuestion(questionID);
       // Handle success, e.g., show a success message
@@ -243,41 +189,6 @@ const InterviewOverviewDetails = () => {
     (accumulator, question) => accumulator + question.question.reply_time,
     0
   );
-
-  const validateTitle = (value: string): string | null => {
-    if (!value.trim()) {
-      return (
-        <>
-          <BodySMedium
-            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
-          >
-            Title is required{' '}
-          </BodySMedium>
-        </>
-      );
-    }
-
-    return null;
-  };
-
-  const handleClose = () => {
-    setShowCustomQuestionForm(false);
-  };
-
-  const validateTime = (value: string): string | null => {
-    // First, check if the field is empty
-    if (!value.trim()) {
-      return 'Time is required'; // Error message for empty input
-    }
-
-    // Check if the value is a number and within the range 1-60
-    const numberValue = parseInt(value, 10);
-    if (isNaN(numberValue) || numberValue < 1 || numberValue > 60) {
-      return 'Please enter a number between 1 and 60'; // Error message for invalid input
-    }
-
-    return null; // No validation errors
-  };
 
   return (
     <OverviewDetails>
@@ -315,269 +226,125 @@ const InterviewOverviewDetails = () => {
               {/* ====== OVERVIEW TITLE END ====== */}
 
               {filteredQuestions.length === 0 ? (
-                showCustomQuestionForm ? (
-                  <>
-                    <div style={{ paddingTop: '16px', paddingBottom: '166px' }}>
-                      <CustomQuestionForm
-                        ref={customQuestionFormRef}
-                        onQuestionCreated={handleQuestionCreated}
-                        onClose={() => {}}
-                      />
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <EmptySectionContainer>
-                      <StyledImage
-                        src={EmptyQuestionsImage}
-                        alt="dashboard_picture"
-                      />
-                      <BodyLMedium style={{ maxWidth: '450px' }}>
-                        {' '}
-                        Add Questions from the library or create your own custom
-                        question
-                      </BodyLMedium>
-                    </EmptySectionContainer>
-                  </>
-                )
+                <EmptySectionContainer>
+                  <StyledImage
+                    src={EmptyQuestionsImage}
+                    alt="dashboard_picture"
+                  />
+                  <BodyLMedium style={{ maxWidth: '450px' }}>
+                    {' '}
+                    Add Questions from the library or create your own custom
+                    question
+                  </BodyLMedium>
+                </EmptySectionContainer>
               ) : (
                 <OverviewDetailBody>
-                  <>
-                    {filteredQuestions.map(
-                      (templateQuestion: ITemplateQuestion, index: number) => {
-                        if (!edit.has(templateQuestion.id)) {
-                          return (
-                            // ======== OVERVIEW DETAIL VIEW MODE ==========
-                            <OverviewDetailList key={index}>
-                              <div className="header">
-                                <div className="title">
-                                  <div className="index">
-                                    <BodyMBold>{index + 1}</BodyMBold>
-                                  </div>
-                                  <OnverviewDetailTitle
-                                    onClick={() => {
-                                      openDetailHandler(
-                                        templateQuestion.question.id,
-                                        openItems.has(
-                                          templateQuestion.question.id
-                                        )
-                                      );
-                                    }}
-                                    className={
-                                      openItems.has(
-                                        templateQuestion.question.id
-                                      )
-                                        ? 'open'
-                                        : 'close'
-                                    }
-                                  >
-                                    <BodyMBold>
-                                      {templateQuestion.question.question_text}
-                                    </BodyMBold>
-                                    <SelectArrowOpenIcon />
-                                  </OnverviewDetailTitle>
-                                </div>
-                                <div className="icon-div">
-                                  <ElWrap h={32} w={32}>
-                                    <IconBtnM
-                                      disable={false}
-                                      onClick={() => {
-                                        editDetailHandler(
-                                          templateQuestion.question.id,
-                                          edit.has(templateQuestion.question.id)
-                                        );
-                                        setEditDetailInputs(
-                                          templateQuestion.question
-                                        );
-                                      }}
-                                      icon={<EditIcon />}
-                                      className={BackgroundColor.WHITE}
-                                    />
-                                  </ElWrap>
-                                  <ElWrap h={32} w={32}>
-                                    <IconBtnM
-                                      disable={false}
-                                      onClick={() =>
-                                        handleDeleteTemplateQuestion(
-                                          templateQuestion.question.id
-                                        )
-                                      }
-                                      icon={<BinIcon />}
-                                      className={BackgroundColor.WHITE}
-                                    />
-                                  </ElWrap>
-                                  <MoveIcon />
-                                </div>
+                  {/* ====== OVERVIEW LIST START ====== */}
+                  {filteredQuestions.map(
+                    (question: ITemplateQuestion, index: number) => {
+                      return (
+                        // ======== OVERVIEW DETAIL VIEW MODE ==========
+                        <OverviewDetailList key={index}>
+                          <div className="header">
+                            <div className="title">
+                              <div className="index">
+                                <BodyMBold>{index + 1}</BodyMBold>
                               </div>
-                              <div className="summary">
+                              <OnverviewDetailTitle
+                                onClick={() => {
+                                  openDetailHandler(
+                                    question.id,
+                                    openItems.has(question.id)
+                                  );
+                                }}
+                                className={
+                                  openItems.has(question.id) ? 'open' : 'close'
+                                }
+                              >
+                                <BodyMBold>
+                                  {question.question.question_text}
+                                </BodyMBold>
+                                <SelectArrowOpenIcon />
+                              </OnverviewDetailTitle>
+                            </div>
+                            <div className="icon-div">
+                              <ElWrap h={32} w={32}>
+                                <IconBtnM
+                                  disable={false}
+                                  onClick={() => {
+                                    editDetailHandler(
+                                      question.id,
+                                      edit.has(question.id)
+                                    );
+                                    setEditDetailInputs(question.question);
+                                    onClickModalOpen(
+                                      MODAL_TYPE.ADD_CUSTOM_QUESTION,
+                                      {
+                                        templateID,
+                                      },
+                                      question.question
+                                    );
+                                  }}
+                                  icon={<EditIcon />}
+                                  className={BackgroundColor.WHITE}
+                                />
+                              </ElWrap>
+                              <ElWrap h={32} w={32}>
+                                <IconBtnM
+                                  disable={false}
+                                  onClick={() =>
+                                    handleDeleteTemplateQuestion(question.id)
+                                  }
+                                  icon={<BinIcon />}
+                                  className={BackgroundColor.WHITE}
+                                />
+                              </ElWrap>
+                              <MoveIcon />
+                            </div>
+                          </div>
+                          <div className="summary">
+                            <>
+                              {question.question.competency !== null && (
                                 <div className="comp" key={index}>
                                   <BodySMedium>
-                                    {templateQuestion.question.competency}
+                                    {question.question.competency}
                                   </BodySMedium>
                                 </div>
+                              )}
+                            </>
 
-                                <div className="icon-div">
-                                  <div className="time-level">
-                                    <TimeIcon />
-                                    <BodySMedium>
-                                      {templateQuestion.question.reply_time} min
-                                    </BodySMedium>
-                                  </div>
-                                  <div className="time-level level">
-                                    <DocumentIcon />
-                                    <BodySMedium>
-                                      {templateQuestion.question.difficulty}
-                                    </BodySMedium>
-                                  </div>
-                                </div>
+                            <div className="icon-div">
+                              <div className="time-level">
+                                <TimeIcon />
+                                <BodySMedium>
+                                  {question.question.reply_time} min
+                                </BodySMedium>
                               </div>
-                              <div
-                                className={`detail ${
-                                  openItems.has(templateQuestion.question.id)
-                                    ? ''
-                                    : 'none'
-                                }`}
-                              >
-                                <MarkdownFromatConatiner>
-                                  {templateQuestion.question.guidelines}
-                                </MarkdownFromatConatiner>
+                              <div className="time-level level">
+                                <DocumentIcon />
+                                <BodySMedium>
+                                  {question.question.difficulty}
+                                </BodySMedium>
                               </div>
-                            </OverviewDetailList>
-                          );
-                        } else {
-                          return (
-                            // ======== OVERVIEW DETAIL EDIT MODE ==========
-                            <OverviewDetailEdit key={index}>
-                              <InputLabelDiv>
-                                <label>
-                                  <BodySMedium>Question</BodySMedium>
-                                </label>
-                                <InputDiv>
-                                  <TextInput
-                                    disable={false}
-                                    placeholder={'Question'}
-                                    onChange={inputOnChange}
-                                    name={'question_text'}
-                                    validate={validateTitle}
-                                    value={inputValue['question_text']}
-                                  />
-                                  <ElWrap w={40} h={40}>
-                                    <IconBtnL
-                                      disable={false}
-                                      onClick={() =>
-                                        handleUpdateQuestion(
-                                          templateQuestion.question
-                                            .question_text
-                                        )
-                                      }
-                                      className={BackgroundColor.ACCENT_PURPLE}
-                                      icon={<CheckIcon />}
-                                    />
-                                  </ElWrap>
-                                  <ElWrap w={40} h={40}>
-                                    <IconBtnL
-                                      disable={false}
-                                      onClick={() =>
-                                        handleDeleteTemplateQuestion(
-                                          templateQuestion.question.id
-                                        )
-                                      }
-                                      className={BackgroundColor.WHITE}
-                                      icon={<BinIcon />}
-                                    />
-                                  </ElWrap>
-                                  <ElWrap w={40} h={40}>
-                                    <IconBtnL
-                                      disable={false}
-                                      onClick={() => {
-                                        editDetailHandler(
-                                          templateQuestion.question.id,
-                                          edit.has(templateQuestion.question.id)
-                                        );
-                                      }}
-                                      className={BackgroundColor.WHITE}
-                                      icon={<CloseIcon />}
-                                    />
-                                  </ElWrap>
-                                </InputDiv>
-                              </InputLabelDiv>
-                              <div className="dropdowns">
-                                <InputLabelDiv className="competencies">
-                                  <label>
-                                    <BodySMedium>Competency</BodySMedium>
-                                  </label>
-                                  <TextInput
-                                    disable={false}
-                                    placeholder={'Competency'}
-                                    validate={validateTitle}
-                                    onChange={inputOnChange}
-                                    name={'competency'}
-                                    value={inputValue['competency']}
-                                  />
-                                </InputLabelDiv>
-                                <InputLabelDiv className="time">
-                                  <label>
-                                    <BodySMedium>
-                                      Time for reply (mins)
-                                    </BodySMedium>
-                                  </label>
-                                  <TextInput
-                                    disable={false}
-                                    placeholder={'time'}
-                                    validate={validateTime}
-                                    onChange={inputOnChange}
-                                    name={'reply_time'}
-                                    value={inputValue['reply_time'].toString()}
-                                  />
-                                </InputLabelDiv>
-                                <InputLabelDiv className="senioriy">
-                                  <label>
-                                    <BodySMedium>Difficulty</BodySMedium>
-                                  </label>
-                                  <StatusFilter
-                                    status={StatusDropdownFilter.LOW}
-                                    onSelectStatus={function (
-                                      status: StatusDropdownFilter | null
-                                    ): void {
-                                      throw new Error(
-                                        'Function not implemented.'
-                                      );
-                                    }}
-                                  ></StatusFilter>
-                                </InputLabelDiv>
-                              </div>
-                              <InputLabelDiv>
-                                <label>
-                                  <BodySMedium>Guidelines</BodySMedium>
-                                </label>
-                                <TextArea
-                                  placeholder={'Guidelines'}
-                                  validate={() => null}
-                                  onChange={textAreaOnChange}
-                                  name={'guidelines'}
-                                  value={inputValue['guidelines']}
-                                />
-                              </InputLabelDiv>
-                            </OverviewDetailEdit>
-                          );
-                        }
-                      }
-                    )}
-                    {showCustomQuestionForm && (
-                      <CustomQuestionForm
-                        onQuestionCreated={handleQuestionCreated}
-                        ref={customQuestionFormRef}
-                        onClose={handleClose}
-                      />
-                    )}
-                  </>
+                            </div>
+                          </div>
+                          <div
+                            className={`detail ${
+                              openItems.has(question.id) ? '' : 'none'
+                            }`}
+                          >
+                            <MarkdownFromatConatiner>
+                              {question.question.guidelines}
+                            </MarkdownFromatConatiner>
+                          </div>
+                        </OverviewDetailList>
+                      );
+                    }
+                  )}
                 </OverviewDetailBody>
               )}
-
               {/* ====== OVERVIEW LIST END ====== */}
-              {!selectedSection ? (
-                <></>
-              ) : (
+              {selectedSection ? (
                 <Stack
                   direction="row"
                   spacing={1.5}
@@ -595,26 +362,19 @@ const InterviewOverviewDetails = () => {
                   <TextIconBtnL
                     disable={false}
                     onClick={() => {
-                      setShowCustomQuestionForm(!showCustomQuestionForm);
-                      // Scroll to the CustomQuestionForm when it's opened
-                      if (
-                        !showCustomQuestionForm &&
-                        customQuestionFormRef.current
-                      ) {
-                        customQuestionFormRef.current.scrollIntoView({
-                          behavior: 'smooth',
-                          block: 'start',
-                          inline: 'start',
-                        });
-                      }
+                      onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION, {
+                        templateID,
+                      });
                     }}
                     className={BackgroundColor.ACCENT_PURPLE}
                     icon={<Star1Icon />}
                     label="Add Custom Question"
                   />
                 </Stack>
+              ) : (
+                <></>
               )}
-              <GlobalModal></GlobalModal>
+              <GlobalModal />
             </>
           ) : (
             <></>

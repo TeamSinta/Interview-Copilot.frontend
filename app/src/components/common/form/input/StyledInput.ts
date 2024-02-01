@@ -6,6 +6,9 @@ export const InputLayout = styled.div`
   flex-direction: column;
   gap: 8px;
   position: relative;
+  &.customizeForQuestion {
+    margin-bottom: 15px;
+  }
 `;
 
 export const Input = styled.input`
@@ -27,6 +30,13 @@ export const Input = styled.input`
   &.error {
     box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
   }
+  &.customStyle {
+    padding: 10px 16px;
+    border-radius: 8px;
+    ::placeholder {
+      color: #979696;
+    }
+  }
 `;
 
 export const InputError = styled.div`
@@ -37,6 +47,17 @@ export const InputError = styled.div`
   bottom: 6px;
   border-radius: 12px;
   z-index: -999;
+`;
+
+export const TextAreaError = styled.div`
+  font-size: 12px;
+  font-family: 'Chillax';
+  position: absolute;
+  bottom: -20px;
+  right: 0px;
+  border-radius: 12px;
+  z-index: 999;
+  color: gray;
 `;
 
 export const SerchInputLayout = styled.div`
@@ -85,6 +106,23 @@ export const StyledTextarea = styled.textarea`
 
   :focus {
     outline: 1px solid ${(props) => props.theme.colors.black};
+  }
+  :disabled {
+    cursor: not-allowed;
+    opacity: 0.30000001192092896;
+  }
+  &.error {
+    box-shadow: 0px 6px 0px 0px ${(props) => props.theme.colors.red};
+  }
+
+  &.customStyle {
+    border-radius: 8px;
+    ::placeholder {
+      color: #979696;
+    }
+    :focus {
+      outline: none;
+    }
   }
 `;
 

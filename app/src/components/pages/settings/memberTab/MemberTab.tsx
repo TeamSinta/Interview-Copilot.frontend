@@ -9,12 +9,12 @@ import { RootState } from '@/app/store';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import MemberList from './MemberList';
 import SortingDropdown from './SortingDropdown';
-import DepartmentDropDown from './DepartmentDropdown';
 import {
   useFetchCompanyDepartments,
   useFetchCompanyMembers,
 } from './useFetchAndSortMembers';
 import { useState } from 'react';
+import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 
 const MemberTab = () => {
   const dispatch = useDispatch<AppDispatch>();
