@@ -76,11 +76,9 @@ interface IState {
 }
 
 const InterviewOverviewDetails = () => {
-  const customQuestionFormRef = useRef(null);
   const dispatch = useDispatch<AppDispatch>();
   const { selectedSection, status } = useSelector(selectInterviewDetail);
   const [openItems, setOpenItems] = useState(new Set());
-  const [showCustomQuestionForm, setShowCustomQuestionForm] = useState(false);
   const [edit, setEdit] = useState(new Set());
   const [newQuestions, setQuestions] = useState<ITemplateQuestion[]>([]);
   const [inputValue, setInputValue] = useState<IState>({
