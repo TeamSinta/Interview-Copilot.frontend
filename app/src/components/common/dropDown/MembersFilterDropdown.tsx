@@ -16,7 +16,7 @@ const MembersFilterDropdown: React.FC<IDepartmentDropDown> = ({
         label="Manage Members"
         value=""
         optionArr={departments}
-        dropdownName="Members"
+        dropdownName=""
         onChange={handleSetDepartment}
       />
     );
@@ -27,7 +27,7 @@ const MembersFilterDropdown: React.FC<IDepartmentDropDown> = ({
       label="Manage Members"
       value=""
       optionArr={departments}
-      dropdownName="Members"
+      dropdownName="All Company Members"
       onChange={handleSetDepartment}
     />
   );

@@ -19,13 +19,13 @@ import {
   useGetDepartmentMembersQuery,
 } from '@/features/departments/departmentsAPI';
 import {
+  resetMemberSelection,
   selectCurrentMembers,
   toggleMemberSelected,
 } from '@/features/members/memberSlice';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { Box } from '@mui/material';
 import { BodySMedium } from '../../typeScale/StyledTypeScale';
-import { selectedMember } from '@/features/roles/rolesSlice';
 
 const txtBtnCloseArg = {
   label: 'Close',
@@ -81,13 +81,12 @@ const EditDepartmentMembers = () => {
     dispatch(resetCurrentDepartment());
   };
 
+  const handleDeleteClick = () => {
+    console.log('Deleted user: ', member.id);
+  };
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    if (inputValue.length > 1) {
-      setSearchTerm(inputValue);
-    } else {
-      setSearchTerm('');
-    }
+    setSearchTerm(event.target.value);
   };
 
   const memberDropdownOptions: IOption[] = [
@@ -113,6 +112,9 @@ const EditDepartmentMembers = () => {
         invitees: selectedMembersIds,
         department_id: currentDepartment.id,
       }).unwrap();
+      dispatch(resetMemberSelection());
+      setSearchTerm('');
+      setDepartmentId(currentDepartment.id);
     } catch (error: any) {
       console.log('Error inviting members', error);
     }
@@ -130,7 +132,7 @@ const EditDepartmentMembers = () => {
   return (
     <ModalContentWrap>
       <BodySMedium>
-        Manage who is a member of the {currentDepartment.title}
+        Manage who is a member of {currentDepartment.title}
       </BodySMedium>
       <Box
         sx={{
@@ -146,6 +148,7 @@ const EditDepartmentMembers = () => {
             disable={false}
             onChange={handleSearchChange}
             placeholder={'Search by email or name'}
+            value={searchTerm}
             error={false}
           />
         </Box>

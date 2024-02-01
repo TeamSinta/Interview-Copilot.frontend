@@ -49,11 +49,21 @@ export const memberSlice = createSlice({
           !state.currentMembers[memberIndex].selected;
       }
     },
+    resetMemberSelection: (state) => {
+      state.currentMembers = state.currentMembers.map((members) => ({
+        ...members,
+        selected: false,
+      }));
+    },
   },
 });
 
-export const { setMemberInfo, setCurrentMembers, toggleMemberSelected } =
-  memberSlice.actions;
+export const {
+  setMemberInfo,
+  setCurrentMembers,
+  toggleMemberSelected,
+  resetMemberSelection,
+} = memberSlice.actions;
 export const selectSetMember = (state: RootState) => state.member.member;
 export const selectCurrentMembers = (state: RootState) =>
   state.member.currentMembers;

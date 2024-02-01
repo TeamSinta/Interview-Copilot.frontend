@@ -124,6 +124,21 @@ export const departmentsAPI = createApi({
       },
       invalidatesTags: ['Department', 'Members'],
     }),
+    DeleteDepartmentMember: builder.mutation<
+      void,
+      { department_id: any; invitees: any }
+    >({
+      query: ({ department_id, invitees }) => {
+        return {
+          url: `/company/department/members?department=${department_id}`,
+          method: 'POST',
+          body: {
+            invitees: invitees,
+          },
+        };
+      },
+      invalidatesTags: ['Department', 'Members'],
+    }),
   }),
 });
 

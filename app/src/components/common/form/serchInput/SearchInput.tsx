@@ -9,11 +9,12 @@ interface ISearchInput {
   disable: boolean;
   placeholder: string;
   error: boolean;
+  value: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const SearchInput = (props: ISearchInput): JSX.Element => {
-  const { disable, placeholder, error, onChange } = props;
+  const { disable, placeholder, value, error, onChange } = props;
   return (
     <SerchInputLayout>
       <InputIcon>
@@ -23,6 +24,7 @@ const SearchInput = (props: ISearchInput): JSX.Element => {
         className={error ? 'error' : ''}
         disabled={disable}
         placeholder={placeholder}
+        value={value}
         onChange={onChange}
       />
     </SerchInputLayout>
