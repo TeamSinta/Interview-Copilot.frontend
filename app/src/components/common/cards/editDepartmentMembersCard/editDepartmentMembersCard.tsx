@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MoreVertIcon } from '../../svgIcons/Icons';
 import { Stack, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -19,14 +19,14 @@ interface UserCardProps {
   user: IMember;
   onSelect: (memberIdx: string) => void;
   onClick: (user: any) => void;
-  selected?: boolean;
+  selected: boolean;
 }
 
 const editDepartmentMembersCard: React.FC<UserCardProps> = ({
   user,
   onClick,
-  onSelect,
   selected,
+  onSelect,
 }) => {
   return (
     <MemberCardContainer

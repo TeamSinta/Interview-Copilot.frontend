@@ -61,16 +61,6 @@ const EditDepartment = () => {
   const [newTitle, setNewTitle] = useState('');
   const [updateDepartment] = useUpdateDepartmentMutation();
 
-  // const companyId: CompanyId = (!workspace.id
-  //   ? user.companies[0].id
-  //   : workspace.id)! as unknown as CompanyId;
-
-  // const { members } = useFetchSelectMembers({
-  //   company_id: companyId,
-  //   department_id: currentDepartment.id,
-  //   sortCriteria: '',
-  // });
-
   const { data: departmentMembers } = useGetDepartmentMembersQuery({
     department_id: currentDepartment.id,
     sort_by: '',

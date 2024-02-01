@@ -95,7 +95,6 @@ export const departmentsAPI = createApi({
         method: 'GET',
       }),
       transformResponse: (response: IMembersListResponse[]): IMember[] => {
-        console.log('Raw API Response:', response);
         const transformedMembers = response.map((member) => ({
           id: member.id,
           firstName: member.first_name,
@@ -106,7 +105,6 @@ export const departmentsAPI = createApi({
           role: member.role,
         }));
 
-        console.log('Transformed Members:', transformedMembers);
         return transformedMembers;
       },
       providesTags: ['Members'],

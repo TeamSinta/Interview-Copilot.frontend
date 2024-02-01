@@ -13,7 +13,7 @@ const MembersFilterDropdown: React.FC<IDepartmentDropDown> = ({
     return (
       <DepartmentDropdownFilter
         key={workspaceId}
-        label="Department Members"
+        label="Manage Members"
         value=""
         optionArr={departments}
         dropdownName="Members"
@@ -24,7 +24,7 @@ const MembersFilterDropdown: React.FC<IDepartmentDropDown> = ({
   return (
     <DropdownFilter
       key={workspaceId}
-      label="Department Members"
+      label="Manage Members"
       value=""
       optionArr={departments}
       dropdownName="Members"

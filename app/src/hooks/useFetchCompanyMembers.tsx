@@ -1,10 +1,10 @@
 import { AppDispatch } from '@/app/store';
 import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
+import { setCurrentMembers } from '@/features/members/memberSlice';
 import { SortBy } from '@/types/common';
 import { CompanyId, IMember } from '@/types/company';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setCompanyMembers } from '@/features/members/memberSlice';
 
 export const useFetchCompanyMembers = ({
   company_id,
@@ -23,7 +23,7 @@ export const useFetchCompanyMembers = ({
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setCompanyMembers(data));
+      dispatch(setCurrentMembers(data));
       setMembers(data);
     }
   }, [isSuccess, data, dispatch]);

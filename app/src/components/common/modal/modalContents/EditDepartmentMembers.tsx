@@ -11,14 +11,28 @@ import { MemberListContainer } from '@/pages/Settings/StyledSettings';
 import Stack from '@mui/material/Stack';
 import { IOption } from '@/types/common';
 import EditDepartmentMembersCard from '../../cards/editDepartmentMembersCard/editDepartmentMembersCard';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import MembersFilterDropdown from '../../dropDown/MembersFilterDropdown';
-import { selectedMember } from '@/features/company/companySlice';
 import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
 import { useGetDepartmentMembersQuery } from '@/features/departments/departmentsAPI';
+import {
+  selectCurrentMembers,
+  setCurrentMembers,
+  toggleMemberSelected,
+} from '@/features/members/memberSlice';
+import { IMember } from '@/types/company';
+import ElWrap from '@/components/layouts/elWrap/ElWrap';
+import { Box } from '@mui/material';
+import { BodySMedium } from '../../typeScale/StyledTypeScale';
 
-const textBtnArg = {
+const txtBtnCloseArg = {
   label: 'Close',
+  disable: false,
+  className: BackgroundColor.ACCENT_PURPLE,
+};
+
+const textBtnAddArg = {
+  label: 'Add Members',
   disable: false,
   className: BackgroundColor.ACCENT_PURPLE,
 };
@@ -26,10 +40,10 @@ const textBtnArg = {
 const EditDepartmentMembers = () => {
   const dispatch = useDispatch<AppDispatch>();
   const workspace = useSelector((state: RootState) => state.workspace);
+  const currentMembers = useSelector(selectCurrentMembers);
   const currentDepartment = useSelector(
     (state: RootState) => state.department.currentDepartment
   );
-
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentId, setDepartmentId] = useState<DepartmentId>(
     currentDepartment.id
@@ -44,9 +58,16 @@ const EditDepartmentMembers = () => {
     department_id: departmentId,
     sort_by: '',
   });
-  const membersToShow = departmentId ? departmentMembers : companyMembers;
 
-  const [filteredMembers, setFilteredMembers] = useState(membersToShow);
+  const combinedMembers = useMemo(() => {
+    const members = departmentId ? departmentMembers : companyMembers;
+    return (
+      members?.map((member) => ({
+        ...member,
+        selected: currentMembers.some((m) => m.id === member.id && m.selected),
+      })) || []
+    );
+  }, [departmentMembers, companyMembers, currentMembers, departmentId]);
 
   const handleCancelClick = () => {
     dispatch(closeModal());
@@ -71,45 +92,56 @@ const EditDepartmentMembers = () => {
     setDepartmentId(selectedOption);
   };
 
-  const onMemberSelected = (memberIdx: string) => {
-    dispatch(selectedMember({ memberIdx }));
+  const onMemberSelected = (memberId: string) => {
+    dispatch(toggleMemberSelected(memberId));
   };
 
-  const selectedMemberIds = filteredMembers
-    .filter((member) => member.selected)
-    .map((member) => member.id);
-
-  useEffect(() => {
-    let filteredMembers = membersToShow;
-
-    if (searchTerm) {
-      filteredMembers = filteredMembers.filter(
-        (member) =>
-          member.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          member.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          member.email.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    setFilteredMembers(filteredMembers);
-  }, [searchTerm, membersToShow]);
+  const filteredMembers = useMemo(() => {
+    return combinedMembers.filter(
+      (member) =>
+        member.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        member.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        member.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm, combinedMembers]);
 
   return (
     <ModalContentWrap>
-      <SearchInput
-        disable={false}
-        onChange={handleSearchChange}
-        placeholder={'Search by email or name'}
-        error={false}
-      />
+      <BodySMedium>
+        Manage who is a member of the {currentDepartment.title}
+      </BodySMedium>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: 'divider',
+          padding: '2px ',
+          display: 'flex',
+        }}
+      ></Box>
+      <Stack direction={'row'} gap={1.5}>
+        <Box sx={{ width: '100%' }}>
+          <SearchInput
+            disable={false}
+            onChange={handleSearchChange}
+            placeholder={'Search by email or name'}
+            error={false}
+          />
+        </Box>
+        <ElWrap w={160}>
+          <TextBtnL {...textBtnAddArg} onClick={() => {}} />
+        </ElWrap>
+      </Stack>
       <MembersFilterDropdown
         departments={memberDropdownOptions}
         handleSetDepartment={handleDepartmentChange}
         workspaceId={workspace.id}
       />
       <MemberListContainer>
-        <Stack direction="column" spacing={0.5}>
-          {filteredMembers.map((member) => (
+        <Box sx={{ marginBottom: '8px' }}>
+          <BodySMedium>{filteredMembers.length} Members</BodySMedium>
+        </Box>
+        <Stack direction="column" gap={0.5}>
+          {filteredMembers?.map((member) => (
             <EditDepartmentMembersCard
               onSelect={() => onMemberSelected(member.id)}
               key={member.id}
@@ -120,7 +152,7 @@ const EditDepartmentMembers = () => {
           ))}
         </Stack>
       </MemberListContainer>
-      <TextBtnL {...textBtnArg} onClick={handleCancelClick} />
+      <TextBtnL {...txtBtnCloseArg} onClick={handleCancelClick} />
     </ModalContentWrap>
   );
 };
