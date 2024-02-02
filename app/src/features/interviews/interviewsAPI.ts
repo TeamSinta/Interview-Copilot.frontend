@@ -1,10 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-import { instance } from '@/utils/axiosService/customAxios';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-type FeedbackData = {
+export type FeedbackData = {
   user: string | null;
   interview_round: string;
   score?: number;
@@ -13,9 +12,27 @@ type FeedbackData = {
   time: string;
   template_question?: string;
 };
+export type interviewType = {
+  id: number,
+  title: string
+  candidate_id: number,
+  candidate_name: string,
+  interviewer?: {
+      id: number,
+      username: string,
+      first_name: string,
+      last_name: string,
+      email: string,
+      profile_picture: string
+  },
+  template_id: number,
+  created_at: string,
+  room_id: string,
+  video_uri: string
+}
 
 export const interviewsApi = createApi({
-  baseQuery: fetchBaseQuery({
+    baseQuery: fetchBaseQuery({
     baseUrl: BACKEND_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as any)?.user?.token?.access;
@@ -25,6 +42,8 @@ export const interviewsApi = createApi({
       return headers;
     },
   }),
+  reducerPath: 'interviewsAPI',
+  tagTypes: ['Interviews'],
   endpoints: (builder) => ({
     getQuestionsBank: builder.query({
       query: () => 'question/question-banks/',
@@ -36,18 +55,23 @@ export const interviewsApi = createApi({
         body: data,
       }),
     }),
+    createCandidate: builder.mutation({
+      query: (candidateData) => ({
+        url: '/interview-rounds/candidate/',
+        method: 'POST',
+        body: candidateData,
+      }),
+    }),
     getTemplate: builder.query<
       {
-        data: FeedbackData;
+        data: interviewType;
       },
       {
-        template_id: string | null;
-        token: string;
+        template_id: number ;
       }
     >({
-      query: ({ template_id, token }) => ({
-        url: `templates/${template_id}/`,
-        headers: { Authorization: `Bearer ${token}` },
+      query: (template_id) => ({
+        url: `templates/${template_id}/`
       }),
     }),
 
@@ -65,19 +89,22 @@ export const interviewsApi = createApi({
         body: data,
       }),
     }),
+    getInterviewRoundFeedback: builder.query({
+      query: (interviewRoundId: string) => ({
+        url: `question_response/interviewer-feedback/${interviewRoundId}/`,
+      }),
+    }),
     getInterviewRoundQuestions: builder.query<
       {
         data: FeedbackData[];
       },
       {
         interviewRoundId: string;
-        token: string;
       }
     >({
-      query: ({ interviewRoundId, token }) => ({
+      query: ({ interviewRoundId }) => ({
         url: 'interview-rounds/interviewroundquestions/',
         params: { interviewRound: interviewRoundId },
-        headers: { Authorization: `Bearer ${token}` },
       }),
     }),
 
@@ -111,45 +138,37 @@ export const interviewsApi = createApi({
       }),
     }),
 
-    getInterviews: builder.query<
-      {
-        data: FeedbackData[];
-      },
-      {
-        token: string;
-      }
-    >({
-      query: ({ token }) => ({
-        url: 'interview-rounds/',
-        headers: { Authorization: `Bearer ${token}` },
-      }),
+    getInterviews: builder.query<object, void>({
+      query: () => 'interview-rounds/',
+      transformResponse: (res) =>
+        res.sort((a: string[], b: string[]) => b.id - a.id),
+      providesTags: ['Interviews'],
     }),
 
-    getInterview: builder.query<
+
+     getInterview: builder.query<
       {
-        data: FeedbackData;
+        data: interviewType;
       },
       {
-        interviewRoundId: string;
+        interviewRoundId: number;
       }
     >({
-      query: ({ interviewRoundId }) => ({
+      query: (interviewRoundId ) => ({
         url: `interview-rounds/${interviewRoundId}`,
       }),
     }),
-
+        
     getTemplateQuestionsAndTopics: builder.query<
       {
         data: FeedbackData;
       },
       {
         template_id: number;
-        token: string;
       }
     >({
-      query: ({ template_id, token }) => ({
+      query: (template_id ) => ({
         url: `templates/${template_id}/questions/`,
-        headers: { Authorization: `Bearer ${token}` },
       }),
     }),
 
@@ -168,15 +187,24 @@ export const interviewsApi = createApi({
         headers: { Authorization: `Bearer ${token}` },
       }),
     }),
+    updateInterviewRound: builder.mutation({
+      query: (data: any) => ({
+        url: `/interview-rounds/${data.interview_round_id}/update/`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
 export const {
   useGetQuestionsBankQuery,
   useCreateInterviewRoundMutation,
+  useCreateCandidateMutation,
   useGetTemplateQuery,
   useUpdateInterviewQuestionRatingMutation,
   useSendFeedbackMutation,
+  useGetInterviewRoundFeedbackQuery,
   useGetInterviewRoundQuestionsQuery,
   useGetCandidateByUsernameQuery,
   useGetCandidateByIdQuery,
@@ -184,31 +212,5 @@ export const {
   useGetInterviewQuery,
   useGetTemplateQuestionsAndTopicsQuery,
   useGetInterviewRoundQuestionQuery,
+  useUpdateInterviewRoundMutation,
 } = interviewsApi;
-
-export const createCandidate = async (candidateData: {
-  name: string;
-  username: string;
-  user_id: any;
-}) => {
-  const result = await instance.post(
-    `${BACKEND_URL}/interview-rounds/candidate/`,
-    candidateData
-  );
-  return result.data;
-};
-
-export const getInterviewRoundFeedback = async (
-  interview_round_id: string,
-  token: string
-) => {
-  const result = await instance.get(
-    `${BACKEND_URL}/question_response/interviewer-feedback/${interview_round_id}/`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return result.data;
-};

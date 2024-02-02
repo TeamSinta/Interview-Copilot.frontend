@@ -8,20 +8,22 @@ import {
   TemplateListWrap,
 } from './StyledModalContents';
 import TemplateInterviewCard from '../../cards/templateInterviewCard/TemplateInterviewCard';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   getQuestionsBanksAsync,
-  selectInterview,
   selectQuestionBank,
 } from '@/features/interviews/interviewsSlice';
 import { IQuestionsBanks } from '@/features/interviews/interviewsInterface';
-import { DataLoading } from '@/features/utils/utilEnum';
+import { useGetQuestionsBankQuery } from '@/features/interviews/interviewsAPI';
+import { useParams } from 'react-router-dom';
 
 const TemplateList = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { questionBanks, status } = useSelector(selectInterview);
+  const [questionBanks , setQuestionBanks] = useState([])
+  const {templateId : template_id} = useParams()
+  const { data: questionBanksData, isSuccess } = useGetQuestionsBankQuery(template_id);
 
   const onSelectQuestionBank = (bank: IQuestionsBanks) => {
     dispatch(selectQuestionBank({ questionBank: bank }));
@@ -31,6 +33,11 @@ const TemplateList = () => {
     dispatch(getQuestionsBanksAsync());
   }, [dispatch]);
 
+  useEffect(() => {
+    if(isSuccess){
+      setQuestionBanks(questionBanksData)
+    }
+  },[isSuccess , questionBanksData ])
   return (
     <TemplateListWrap>
       <TemplateListInputWrap>
@@ -51,7 +58,7 @@ const TemplateList = () => {
         </div> */}
       </TemplateListInputWrap>
       <TemplateListContentWrap>
-        {status === DataLoading.FULFILLED ? (
+        {isSuccess ? (
           questionBanks.map((bank: IQuestionsBanks) => (
             <TemplateInterviewCard
               {...bank}

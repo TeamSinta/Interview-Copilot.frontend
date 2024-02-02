@@ -1,30 +1,32 @@
-// import { AppDispatch } from "@/app/store";
 import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn';
 import Photo from '@/components/common/buttons/photo/Photo';
 import Photos from '@/components/common/buttons/photo/Photos';
-import { EditIcon, PlusIcon } from '@/components/common/svgIcons/Icons';
+import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { H3Bold } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import {
-  // getInterviewDetailAsync,
-  selectInterviewDetail,
-} from '@/features/interviewDetail/interviewDetailSlice';
 import { IMockMembers } from '@/features/roles/rolesInterface';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
-// import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Title } from '../StyledInterview';
 import { OverviewInterviewers } from './StyledOverviewInterviewer';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { openModal } from '@/features/modal/modalSlice';
+import { useGetInterviewTemplateQuery } from '@/features/interviewDetail/interviewDetailAPI';
+import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import React from 'react';
 
 const InterviewOverviewInterviewer = () => {
-  const { template } = useSelector(selectInterviewDetail); // Use the correct selector to access interviewers
+  const { templateId } = useParams();
+  const {data : template , isSuccess} = useGetInterviewTemplateQuery(templateId)
+  const [interviewer , setInterviewer] = useState([])
 
   const dispatch = useDispatch();
-
-  const interviewer = template.interviewers; // Access interviewers from the template
-
+  React.useEffect(() => {
+    if(isSuccess){
+      setInterviewer(template.interviewers)
+    }
+  },[template])
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(openModal({ modalType }));
   };

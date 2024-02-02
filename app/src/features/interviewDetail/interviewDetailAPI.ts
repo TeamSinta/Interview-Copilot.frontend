@@ -13,6 +13,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 /*  TODO: Update APIS with interface stastify TS */
 
 export const InterviewDetailAPI = createApi({
+  reducerPath: 'interviewDetailsAPI',
   baseQuery: fetchBaseQuery({
     baseUrl: BACKEND_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -23,6 +24,7 @@ export const InterviewDetailAPI = createApi({
       return headers;
     },
   }),
+  tagTypes: ['InterviewDetail'],
   endpoints: (builder) => ({
     getInterviewTemplate: builder.query({
       query: (templateId) => `templates/templates/${templateId}/`,

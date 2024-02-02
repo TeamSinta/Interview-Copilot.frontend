@@ -29,9 +29,22 @@ export const templatesAPI = createApi({
       }),
       invalidatesTags: ['Templates'],
     }),
+    addTemplateQuestions: builder.mutation({
+      query: (obj) => ({
+        url: `templates/${obj.templateID}/questions/add/`,
+        method: 'POST',
+        body: obj.template,
+      }),
+      invalidatesTags: ['Templates'],
+    }),
     getTemplateDetail: builder.query({
       query: (id) => ({
         url: `/templates/templates/${id}/`,
+      }),
+    }),
+    getTemplateTopics: builder.query({
+      query: (templateID) => ({
+        url: `templates/${templateID.templateID}/topics/`,
       }),
     }),
 
@@ -81,7 +94,9 @@ export const templatesAPI = createApi({
 export const {
   useGetTemplatesQuery,
   useGetTemplateDetailQuery,
+  useGetTemplateTopicsQuery,
   useAddTemplateMutation,
+  useAddTemplateQuestionsMutation,
   useDeleteTemplateMutation,
   useUpdateTemplateMutation,
   useAddTopicMutation,

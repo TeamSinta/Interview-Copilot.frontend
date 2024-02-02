@@ -23,7 +23,7 @@ import {
 } from '@/components/common/svgIcons/Icons';
 
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
-import { updateInterviewRound } from '@/features/interviews/interviewsAPI';
+import { useUpdateInterviewRoundMutation } from '@/features/interviews/interviewsAPI';
 import { openModal } from '@/features/modal/modalSlice';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import RoomService from '@/utils/dailyVideoService/videoApi';
@@ -77,6 +77,7 @@ function BottomNavBar(props: IBottomNavBar) {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [recordSwitch, setRecordSwitch] = useState(false);
   const [isRecordingStart, setIsRecordingStart] = useState<boolean>(false);
+  const [updateInterviewRound] = useUpdateInterviewRoundMutation();
 
   const [isEmojiTrayOpened, setIsEmojiTrayOpened] = useState<boolean>(false);
   const {

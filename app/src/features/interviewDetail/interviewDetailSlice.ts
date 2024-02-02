@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import { IMockMembers } from "../roles/rolesInterface";
-// import { InterviewDetailResponse } from "./inverviewDetailInterface";
 import { RootState } from '@/app/store';
 import { DataLoading } from '../utils/utilEnum';
 import { InterviewDetailAPI } from '../interviewDetail/interviewDetailAPI';
@@ -21,15 +19,21 @@ export const initialState = {
 
 export const getInterviewDetailAsync = createAsyncThunk(
   'interviews/interviewDetail',
-  async (templateId: string) => {
-    const { data: template } =
-      await InterviewDetailAPI.useGetInterviewTemplateQuery(templateId);
-    const { data: sections } =
-      await InterviewDetailAPI.useGetInterviewSectionsQuery(templateId);
-    const { data: questions } =
-      await InterviewDetailAPI.useGetInterviewDetailQuery(templateId);
+  async (templateId: string, { dispatch }) => {
+    try {
+      const templateResult = await dispatch(InterviewDetailAPI.endpoints.getInterviewTemplate.initiate(templateId));
+      const sectionsResult = await dispatch(InterviewDetailAPI.endpoints.getInterviewSections.initiate(templateId));
+      const questionsResult = await dispatch(InterviewDetailAPI.endpoints.getInterviewDetail.initiate(templateId));
+      
+      const template = templateResult.data;
+      const sections = sectionsResult.data;
+      const questions = questionsResult.data;
 
-    return { template, sections, questions };
+      return { template, sections, questions };
+    } catch (error) {
+      console.error('Error fetching interview detail:', error);
+      throw error;
+    }
   }
 );
 
@@ -45,15 +49,17 @@ export const interviewDetailSlice = createSlice({
       state.status = DataLoading.FULFILLED;
       state.selectedSection = sections[0]; // Initialize as needed
     });
+    builder.addCase(getInterviewDetailAsync.rejected, (state) => {
+      state.status = DataLoading.REJECTED;
+    });
   },
   reducers: {
     setSelectedSection: (state, action) => {
       state.selectedSection = action.payload;
-    },
+          },
   },
 });
 
 export const { setSelectedSection } = interviewDetailSlice.actions;
-export const selectInterviewDetail = (state: RootState) =>
-  state.interviewDetail;
+export const selectInterviewDetail = (state: RootState) => state.interviewDetail;
 export default interviewDetailSlice.reducer;

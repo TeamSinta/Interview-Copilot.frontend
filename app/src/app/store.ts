@@ -16,14 +16,18 @@ import { templatesAPI } from '@/features/templates/templatesAPISlice';
 import { QuestionsAPI } from '@/features/questions/questionsAPISlice';
 import { templateQuestionsAPI } from '@/features/templates/templatesQuestionsAPISlice';
 import questionsBankSliceReducer from '@/features/questions/questionBankSlice';
+import { interviewsApi } from '@/features/interviews/interviewsAPI';
+import InterviewDetailAPI from '@/features/interviewDetail/interviewDetailAPI';
 
 export const store = configureStore({
   reducer: {
     [authAPI.reducerPath]: authAPI.reducer,
     [userAPI.reducerPath]: userAPI.reducer,
     [templatesAPI.reducerPath]: templatesAPI.reducer,
+    [interviewsApi.reducerPath]: interviewsApi.reducer,
     [QuestionsAPI.reducerPath]: QuestionsAPI.reducer,
     [templateQuestionsAPI.reducerPath]: templateQuestionsAPI.reducer,
+    [InterviewDetailAPI.reducerPath]: InterviewDetailAPI.reducer,
     user: userReducer,
     workspace: workSpaceReducer,
     member: memberReducer,
@@ -42,7 +46,9 @@ export const store = configureStore({
       userAPI.middleware,
       templatesAPI.middleware,
       QuestionsAPI.middleware,
-      templateQuestionsAPI.middleware
+      templateQuestionsAPI.middleware,
+      interviewsApi.middleware,
+      InterviewDetailAPI.middleware
     ),
 });
 

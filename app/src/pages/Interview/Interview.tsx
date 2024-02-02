@@ -4,7 +4,7 @@ import {
   BottomArrowIcon,
   LeftArrowIcon,
   RightArrowIcon,
-  TwoArrowIcon
+  TwoArrowIcon,
 } from '@/components/common/svgIcons/Icons';
 import {
   BodyLMedium,
@@ -22,6 +22,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SintaLogo from 'src/assets/svg/Sinta_call_logo.svg';
 import {
+  FeedbackData,
   useGetTemplateQuestionsAndTopicsQuery,
   useSendFeedbackMutation,
   useUpdateInterviewQuestionRatingMutation,
@@ -46,7 +47,7 @@ import {
   StyledInnerWrapper,
   StyledTabInfo,
   StyledTopView,
-  WhiteIndexStyle
+  WhiteIndexStyle,
 } from './StyledInterview';
 import './index.css';
 
@@ -70,7 +71,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
   const [activeTab, setActiveTab] = useState(1);
   const [initTime, setInitTime] = useState('');
   const [templateQuestionsAndTopics, setTemplateQuestionsAndTopics] =
-    useState(null);
+    useState<FeedbackData | null>(null);
   const { width } = useWindowSize();
   const [reactClicked, setReactClicked] = useState<IReactClickedState>({
     clicked: 0,
@@ -127,18 +128,18 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       setIsInterviewSideBarCollapsed(true);
     }
   }, [width]);
-
+  const { data: QuestionsAndTopics, isSuccess } =
+    useGetTemplateQuestionsAndTopicsQuery(interviewDetails.template_id);
   useEffect(() => {
     const fetchQuestionsAndTopics = async () => {
-      // get the template questions
-      const response = await useGetTemplateQuestionsAndTopicsQuery(
-        interviewDetails.template_id
-      );
-      setTemplateQuestionsAndTopics(response);
+      if (isSuccess) {
+        // get the template questions
+        const feedbackData: FeedbackData = QuestionsAndTopics.data;
+        setTemplateQuestionsAndTopics(feedbackData);
+      }
     };
-
     fetchQuestionsAndTopics();
-  }, [interviewDetails]);
+  }, [isSuccess, QuestionsAndTopics]);
 
   const sidebarTabs = useMemo(() => {
     return (
@@ -200,7 +201,6 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
     );
   }, [activeTab]);
 
- 
   const InterviewQuestionTab = (info: any) => {
     const { data } = info;
     const [activeData, setActiveData] = useState(data[0]);
@@ -222,6 +222,8 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       setPrevNum(prevNumber);
       setNextNum(nextNumber);
     };
+    const [updateInterviewQuestionRating] =
+      useUpdateInterviewQuestionRatingMutation();
     const handleRating = (rating: number, question: string) => {
       // update interview round question rating to new rating
       const data = {
@@ -229,7 +231,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
         question,
         interview_round_id: interviewDetails.id,
       };
-      useUpdateInterviewQuestionRatingMutation(data);
+      updateInterviewQuestionRating(data);
     };
 
     useEffect(() => {
@@ -589,7 +591,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
             <InfoTab interviewDetails={interviewDetails} />
           ) : null}
           {activeTab === 2 ? (
-            <InterviewQuestionTab data={templateQuestionsAndTopics?.data} />
+            <InterviewQuestionTab data={templateQuestionsAndTopics} />
           ) : null}
           {activeTab === 3 ? (
             <Notes
@@ -690,7 +692,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
     }
 
     const handleDisplayFlyingEmoji = useCallback(
-      (emoji: string, position: { left: any; top: number; }) => {
+      (emoji: string, position: { left: any; top: number }) => {
         if (!overlayRef.current) {
           return;
         }

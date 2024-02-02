@@ -4,16 +4,14 @@ import { BodySMedium, H1 } from "@/components/common/typeScale/StyledTypeScale";
 import { Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import * as React from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { useGetInterviewsQuery } from "../../features/interviews/interviewsAPI";
+import { interviewType, useGetInterviewsQuery } from "../../features/interviews/interviewsAPI";
 import { GridContainer } from "./StyledConclusions";
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: string; // Change the type to string
   value: string; // Change the type to string
-  video_uri?: string[];
+  video_uri?: string[] | interviewType[];
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -43,24 +41,23 @@ const TABS = {
 
 export default function BasicTabs() {
   const [activeTab, setActiveTab] = React.useState(TABS.INTERVIEWS);
-  const [interviews, setInterviews] = React.useState([]);
-  const [cookies, ,] = useCookies(['access_token']);
+  const [interviews, setInterviews] = React.useState<interviewType[]>([]);
 
   const navigate = useNavigate();
+  const {
+    data: interview,
+    isSuccess,
+  } = useGetInterviewsQuery();
 
   React.useEffect(() => {
-    const fetchInterviews = async () => {
-      const response = await useGetInterviewsQuery(cookies.access_token);
-      setInterviews(response);
-    };
-
-    fetchInterviews();
-  }, [cookies.access_token]);
+    if (isSuccess) {
+      setInterviews(interview as interviewType[]);
+    }
+  }, [isSuccess, interview]);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
-
   return (
     <>
       <Stack spacing={3}>
@@ -113,7 +110,7 @@ export default function BasicTabs() {
               video_uri={interviews}
             >
               <GridContainer>
-                {interviews.map((interviewRound: IInterviewRound, index) => (
+                {interviews.map((interviewRound: interviewType, index : number) => (
                   <div
                     onClick={() => {
                       navigate('/interviews/conclusion/', {

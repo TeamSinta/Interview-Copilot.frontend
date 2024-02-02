@@ -11,7 +11,7 @@ import {
 } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { InputLabelDiv } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
-import { updateInterviewQuestionRating } from '@/features/interviews/interviewsAPI';
+import { useUpdateInterviewQuestionRatingMutation } from '@/features/interviews/interviewsAPI';
 import { RatingComponentL } from '@/pages/Interviews/Conclusion/MainScreen/InterviewQNA/RatingComponent';
 import { QuestionMeta } from '@/pages/Interviews/Conclusion/MainScreen/InterviewQNA/Tabs/QuestionTabQNA';
 import { Stack } from '@mui/system';
@@ -55,16 +55,21 @@ const InterviewQuestionTab: React.FC<Info> = (info) => {
     setPrevNum(prevNumber);
     setNextNum(nextNumber);
   };
+  const [updateInterviewQuestionRating] =
+    useUpdateInterviewQuestionRatingMutation();
   const handleRating = (rating: number, question: any) => {
     // update interview round question rating to new rating
     setQuestionRatings((prevRatings) => ({
       ...prevRatings,
       [question.id]: rating,
     }));
-
-    updateInterviewQuestionRating(rating, question.id, interviewDetails.id);
+    const data = {
+      rating,
+      question: question.id,
+      interview_round_id: interviewDetails.id,
+    };
+    updateInterviewQuestionRating(data);
   };
-
   useEffect(() => {
     setCollapseQuestion(false);
   }, [activeData]);

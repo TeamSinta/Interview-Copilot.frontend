@@ -2,7 +2,7 @@ import {
   BodyMMedium,
   H1,
 } from '@/components/common/typeScale/StyledTypeScale.js';
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import TopBar from './TopBar.js';
 import MainScreen from './MainScreen/MainScreen.js';
 import {
@@ -14,16 +14,14 @@ import styled from 'styled-components';
 
 import { useNavigate, useLocation } from 'react-router-dom'; // <-- Import useNavigate
 import SummarizerLoader from '@/components/common/elements/longLoading/LongLoading.js';
-import { Divider, Grid, Stack } from '@mui/material';
-import { useGetInterviewQuery } from '@/features/interviews/interviewsAPI.js';
-import { useCookies } from 'react-cookie';
+import { Container, Divider, Grid, Stack } from '@mui/material';
+import { useGetInterviewQuery } from '@/features/interviews/interviewsAPI';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn.js';
 import { BackgroundColor } from '@/features/utils/utilEnum.js';
 import ElWrap from '@/components/layouts/elWrap/ElWrap.js';
 import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn.js';
 import WebSockComp from '../../../components/common/socket/websock';
 import MainScreenNoVideo from './MainScreen/MainScreenNoVideo.js';
-import { LoadingCircle } from '@/components/common/elements/longLoading/LoadLoading.js';
 import Loading from '@/components/common/elements/loading/Loading.js';
 
 const HeaderWrapper = styled.div`
@@ -62,28 +60,26 @@ const Conclusion: React.FC = () => {
   const navigate = useNavigate(); // <-- Get the navigate function
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(true);
-  const [cookies, ,] = useCookies(['access_token']);
   const [interviewTitle, setInterviewTitle] = useState('');
   const [interviewerName, setInterviewerName] = useState('');
   const [interviewerPicture, setInterviewerPicture] = useState('');
   const [interviewRound, setInterviewRound] = useState<any>(null);
 
   const [isVideoEmpty, setIsVideoEmpty] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const fetchRatings = async () => {
-      const interviewRound = await useGetInterviewQuery(location.state.id);
-      setInterviewRound(interviewData); // Store interview data in the state
+  const { data: interviewData, isSuccess } = useGetInterviewQuery(
+    location.state.id
+  );
+  React.useEffect(() => {
+    if (isSuccess) {
+      setInterviewRound(interviewData);
       setInterviewTitle(interviewData.title);
       setInterviewerPicture(interviewData.interviewer.profile_picture);
       setInterviewerName(
         `${interviewData.interviewer.first_name} ${interviewData.interviewer.last_name}`
       );
       setIsVideoEmpty(!interviewData || !interviewData.video_uri);
-    };
-
-    fetchRatings();
-  }, [cookies.access_token, location.state.id]);
+    }
+  }, [isSuccess, interviewData]);
 
   const endLoader = () => {
     setShowLoader(false);

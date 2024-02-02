@@ -8,8 +8,8 @@ import InterviewQNA from './InterviewQNA/InterviewQNA';
 import { ReactionButtonBox } from './reactionBox/ReactionBox';
 import image from "@/assets/svg/'Empty Roles' Page Illustration.svg";
 import {
-  getInterviewRoundFeedback,
-  getInterviewRoundQuestions,
+  useGetInterviewRoundFeedbackQuery,
+  useGetInterviewRoundQuestionsQuery,
 } from '@/features/interviews/interviewsAPI';
 import { useCookies } from 'react-cookie';
 
@@ -96,29 +96,19 @@ const MainScreenNoVideo: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     useState<any>(null); // Initialize with null
   const [interviewRoundFeedback, setInterviewRoundFeedback] =
     useState<any>(null); // Initialize with null
+  const { data: getInterviewRoundQuestions } =
+    useGetInterviewRoundQuestionsQuery({
+      interviewRoundId,
+    });
+  const { data: getInterviewRoundFeedback } =
+    useGetInterviewRoundFeedbackQuery(interviewRoundId);
+  useEffect(() => {
+    setInterviewRoundQuestions(getInterviewRoundQuestions);
+  }, [getInterviewRoundQuestions]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getInterviewRoundQuestions(
-          interviewRoundId,
-          cookies.access_token
-        );
-        const feedback = await getInterviewRoundFeedback(
-          interviewRoundId,
-          cookies.access_token
-        );
-        setInterviewRoundFeedback(feedback);
-        setInterviewRoundQuestions(response);
-      } catch (error) {
-        console.error('Error fetching interview round questions:', error);
-        // Handle the error as needed (e.g., show an error message)
-      }
-    };
-
-    fetchData();
-  }, [interviewRoundId, cookies.access_token]);
-
+    setInterviewRoundFeedback(getInterviewRoundFeedback);
+  }, [getInterviewRoundFeedback]);
   const infoTabs = useMemo(
     () => (
       <TabContainer>

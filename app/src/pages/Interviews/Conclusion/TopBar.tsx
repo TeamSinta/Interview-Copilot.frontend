@@ -14,7 +14,10 @@ import {
   BodyLBold,
   BodyLMedium,
 } from '@/components/common/typeScale/StyledTypeScale';
-const TopBar = ({ interviewRoundId }) => {
+interface TopBarProps {
+  interviewRoundId: number;
+}
+const TopBar: React.FC<TopBarProps> = ({ interviewRoundId }) => {
   const { OVERALL_SCORE, SENTIMENT } = TOP_BAR_INFO;
   const [average, setAverage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,37 +30,47 @@ const TopBar = ({ interviewRoundId }) => {
 
   const [cookies, ,] = useCookies(['access_token']);
 
+  const { data: questions, isSuccess: questionsSuccess } =
+    useGetInterviewRoundQuestionsQuery(interviewRoundId);
+
+  const { data: interviewData, isSuccess } =
+    useGetInterviewQuery(interviewRoundId);
+
+  const { data: template } = useGetTemplateQuery(interviewData?.template_id);
+
   useEffect(() => {
     const fetchRatings = async () => {
       setIsLoading(true);
-      const questions = await useGetInterviewRoundQuestionsQuery(interviewRoundId);
+      if (isSuccess && questionsSuccess && template) {
+        setCandidateName(interviewData.candidate_name);
+        setTemplateTitle(template.role_title);
+        setDepartmentTitle(template.department_name);
+        setInterviewRoundDate(interviewData.created_at);
 
-      const interviewRound = await useGetInterviewQuery(
-        interviewRoundId,
-        cookies.access_token
-      );
-      const template = await useGetTemplateQuery(
-        interviewRound.template_id,
-        cookies.access_token
-      );
-      setCandidateName(interviewRound.candidate_name);
-      setTemplateTitle(template.role_title);
-      setDepartmentTitle(template.department_name);
-      setInterviewRoundDate(interviewRound.created_at);
-      let ratingTotal = 0;
-      questions.map((question) => {
-        ratingTotal += question.rating;
-      });
-      const ratingAverage = ratingTotal / questions.length;
-      const ratingOverallScore = ratingAverage * 20;
+        let ratingTotal = 0;
+        questions.forEach((question) => {
+          ratingTotal += question.rating;
+        });
+        const ratingAverage = ratingTotal / questions.length;
+        const ratingOverallScore = ratingAverage * 20;
 
-      setAverage(ratingAverage);
-      setOverallScore(ratingOverallScore);
+        setAverage(ratingAverage);
+        setOverallScore(ratingOverallScore);
+      }
       setIsLoading(false);
     };
 
-    fetchRatings();
-  }, [cookies.access_token, interviewRoundId]);
+    if (template) {
+      fetchRatings();
+    }
+  }, [
+    cookies.access_token,
+    interviewRoundId,
+    isSuccess,
+    questionsSuccess,
+    template,
+    interviewData,
+  ]);
 
   const departmentName = departmentTitle || 'General';
   const candidateTitle = candidateName || 'Unknown Candidate';

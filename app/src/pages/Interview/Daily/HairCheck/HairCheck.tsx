@@ -49,10 +49,9 @@ import {
 } from '@/components/common/typeScale/StyledTypeScale';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../app/store';
-import { useCreateInterviewRoundMutation } from '../../../../features/interviews/interviewsAPI';
 import {
-  createCandidate,
-  createInterviewRound,
+  useCreateInterviewRoundMutation,
+  useCreateCandidateMutation,
 } from '../../../../features/interviews/interviewsAPI';
 import { IMember } from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
@@ -99,7 +98,7 @@ export default function HairCheck({
   const [isFormValid, setFormValid] = useState(true);
   const [isSelectedTemplate, setIsSelectedTemplate] = useState(false);
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
-
+  const [createCandidate] = useCreateCandidateMutation();
 
   const workspace = useSelector((state: RootState) => state.workspace);
 
@@ -145,12 +144,12 @@ export default function HairCheck({
   };
 
   const startMeeting = async () => {
-    if (!selectedTemplate) setIsSelectedTemplate(true)
+    if (!selectedTemplate) setIsSelectedTemplate(true);
     let hasError = false; // Track if there's any validation error
 
     if (!newTitle.trim()) {
       if (titleInputRef.current) {
-        setFormValid(false)
+        setFormValid(false);
         titleInputRef.current.triggerValidation();
       }
       hasError = true;
@@ -175,10 +174,10 @@ export default function HairCheck({
 
 
       const candidateResponse = await createCandidate(candidateData);
-      const candidate_id = candidateResponse.id; // Replace with actual response property
+      const candidate_id = candidateResponse?.id;
       const data = {
         title,
-        template_id: selectedTemplate.id, // Use the selectedTemplate's id
+        template_id: selectedTemplate?.id, // Use the selectedTemplate's id
         meeting_room_id,
         candidate_id,
         user_id,
@@ -188,9 +187,9 @@ export default function HairCheck({
       const response = await createInterviewRound(data);
 
       const interviewDetails = {
-        id: response.id,
-        title: response.title,
-        template_id: response.template_id,
+        id: response.data.id,
+        title: response.data.title,
+        template_id: response.data.template_id,
         email: 'support@sintahr.com',
         name: selectedTemplate.role_title,
         candidate_id: candidate_id,
@@ -215,7 +214,7 @@ export default function HairCheck({
 
   useEffect(() => {
     if (isSuccess) {
-      setTemplates(templatesData);
+      setTemplates(templatesData as Template[]);
     }
   }, [isSuccess, templatesData]);
 
@@ -311,15 +310,21 @@ export default function HairCheck({
   const [cameraMenuAnchorEl, setCameraMenuAnchorEl] = useState(null);
 
   // Handlers for opening and closing menus
-  const handleMicMenuClick = (event) => {
+  const handleMicMenuClick = (event: {
+    currentTarget: React.SetStateAction<null>;
+  }) => {
     setMicMenuAnchorEl(event.currentTarget);
   };
 
-  const handleSpeakerMenuClick = (event) => {
+  const handleSpeakerMenuClick = (event: {
+    currentTarget: React.SetStateAction<null>;
+  }) => {
     setSpeakerMenuAnchorEl(event.currentTarget);
   };
 
-  const handleCameraMenuClick = (event) => {
+  const handleCameraMenuClick = (event: {
+    currentTarget: React.SetStateAction<null>;
+  }) => {
     setCameraMenuAnchorEl(event.currentTarget);
   };
 
@@ -486,7 +491,7 @@ export default function HairCheck({
                 >
                   Title is required{' '}
                 </BodySMedium>
-            ) : null}
+              ) : null}
             </div>
           </Stack>
           <div
@@ -504,7 +509,7 @@ export default function HairCheck({
               items={templates}
               renderItem={(template: Template) => (
                 <InterviewRoundCard
-                setIsSelectedTemplate={setIsSelectedTemplate}
+                  setIsSelectedTemplate={setIsSelectedTemplate}
                   key={template.id}
                   templateId={template.id}
                   imageUrl={template.image}
@@ -531,15 +536,15 @@ export default function HairCheck({
               )}
             />
             {isSelectedTemplate ? (
-                <BodySMedium
-                  style={{
-                    color: 'red',
-                    position:'absolute',
-                    textAlign: 'center',
-                  }}
-                >
-                  Template is required{' '}
-                </BodySMedium>
+              <BodySMedium
+                style={{
+                  color: 'red',
+                  position:'absolute',
+                  textAlign: 'center',
+                }}
+              >
+                Template is required{' '}
+              </BodySMedium>
             ) : null}
           </div>
           <ButtonWrapper>

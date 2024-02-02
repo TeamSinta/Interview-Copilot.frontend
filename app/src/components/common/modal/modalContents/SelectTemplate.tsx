@@ -34,7 +34,10 @@ import {
 } from './StyledModalContents';
 import TemplateList from './TemplateList';
 import QuestionList from './QuestionList';
-import { instance } from '@/utils/axiosService/customAxios';
+import {
+  useAddTemplateQuestionsMutation,
+  useGetTemplateTopicsQuery,
+} from '@/features/templates/templatesAPISlice';
 
 const SelectTemplate = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -44,31 +47,25 @@ const SelectTemplate = () => {
   const templateID = useSelector((state: RootState) => state.modal.templateID);
   const [templateTopics, setTemplateTopics] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState(null);
-
+  const { data: templateTopicList, isSuccess: isSuccessTemplate } =
+    useGetTemplateTopicsQuery(templateID);
+  const [addTemplateQuestions] = useAddTemplateQuestionsMutation();
   const addQuestionsToTemplate = async () => {
     try {
       // Mapping selected questions to the required payload format
       const payload = selectedQuestion.map((question: IQuestion) => ({
-        template_topic_id: selectedTopic.id,
+        template_topic_id: selectedTopic?.id,
         question_id: question.id, // Assuming the question object has an 'id' property
       }));
-
-      const response = await instance.post(
-        `${import.meta.env.VITE_BACKEND_URL}/templates/${
-          templateID.templateID
-        }/questions/add/`,
-        payload
-      );
-
-      if (response.status === 201 || response.status === 200) {
-        dispatch(resetQuestionBank());
-        dispatch(closeModal());
-        navigate(`/templates/${templateID.templateID}`);
-        navigate(0);
-      } else {
-        // Handle unsuccessful response here
-        console.error('Failed to add questions to the template.');
-      }
+      const topicQuestion = {
+        template: payload,
+        templateID: templateID.templateID,
+      };
+      addTemplateQuestions(topicQuestion);
+      dispatch(resetQuestionBank());
+      dispatch(closeModal());
+      navigate(`/templates/${templateID.templateID}`);
+      navigate(0);
     } catch (error) {
       // Handle the error here
       console.error('Error making API request:', error);
@@ -79,16 +76,9 @@ const SelectTemplate = () => {
     // Fetch the template topics from the API when the component mounts.
     const fetchTemplateTopics = async () => {
       try {
-        const response = await instance.get(
-          `${import.meta.env.VITE_BACKEND_URL}/templates/${
-            templateID.templateID
-          }/topics/`
-        );
-        setTemplateTopics(response.data);
-
-        // By default, set the first topic as the selected one.
-        if (response.data.length > 0) {
-          setSelectedTopic(response.data[0]);
+        if (isSuccessTemplate) {
+          setTemplateTopics(templateTopicList);
+          setSelectedTopic(templateTopicList[0]);
         }
       } catch (error) {
         console.error('Error fetching template topics:', error);
@@ -124,14 +114,15 @@ const SelectTemplate = () => {
             <QuestionListWrap>
               <QuestionsFilterWrap>
                 <div className="lists">
-                  {templateTopics.map((topic) => (
-                    <Competencies
-                      label={topic.topics_text} // assuming each topic has a name property
-                      selected={selectedTopic?.id === topic.id}
-                      onClick={() => setSelectedTopic(topic)}
-                      key={topic.id}
-                    />
-                  ))}
+                  {templateTopics.length &&
+                    templateTopics.map((topic) => (
+                      <Competencies
+                        label={topic.topics_text} // assuming each topic has a name property
+                        selected={selectedTopic?.id === topic.id}
+                        onClick={() => setSelectedTopic(topic)}
+                        key={topic.id}
+                      />
+                    ))}
                 </div>
               </QuestionsFilterWrap>
               <SelectedQuestionListWrap>
