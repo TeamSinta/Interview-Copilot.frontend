@@ -41,8 +41,14 @@ export const userSlice = createSlice({
     setCurrentCompany: (state, action: PayloadAction<ICompany>) => {
       state.currentCompany = action.payload;
     },
+    resetCurrentCompany: (state) => {
+      state.currentCompany = initialState.currentCompany;
+    },
     setCurrentDepartment: (state, action: PayloadAction<IDepartment>) => {
       state.currentDepartment = action.payload;
+    },
+    resetCurrentDepartment: (state) => {
+      state.currentDepartment = initialState.currentDepartment;
     },
     setTokens: (state, action) => {
       state.token = action.payload;
@@ -110,7 +116,9 @@ export const {
   resetUserState,
   setIsAuthenticated,
   setCurrentCompany,
+  resetCurrentCompany,
   setCurrentDepartment,
+  resetCurrentDepartment,
   setTokens,
 } = userSlice.actions;
 export default userSlice.reducer;

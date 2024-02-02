@@ -16,15 +16,11 @@ import {
   useGetDepartmentMembersQuery,
   useUpdateDepartmentMutation,
 } from '@/features/departments/departmentsAPI';
-import { setCurrentDepartment } from '@/features/departments/departmentSlice';
+import { setCurrentDepartment } from '@/features/authentication/authenticationSlice';
 import StyledDeleteBox from '../../form/deleteBox/deleteBox';
-import {
-  selectedMember,
-  useFetchSelectMembers,
-} from '@/features/roles/rolesSlice';
+import { selectedMember } from '@/features/roles/rolesSlice';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import Photo from '../../buttons/photo/Photo';
-import { CompanyId } from '@/types/company';
 import { IconBtnS } from '../../buttons/iconBtn/IconBtn';
 import { EditIcon } from '../../svgIcons/Icons';
 import Stack from '@mui/material/Stack';
@@ -47,14 +43,13 @@ const textIconBtnArg = {
 };
 
 const EditDepartment = () => {
-  const { title, id } = useSelector(
-    (state: RootState) => state.department.currentDepartment
+  const { id } = useSelector(
+    (state: RootState) => state.user.currentDepartment
   );
   const dispatch = useDispatch<AppDispatch>();
   const workspace = useSelector((state: RootState) => state.workspace);
-  const user = useSelector((state: RootState) => state.user.user);
   const currentDepartment = useSelector(
-    (state: RootState) => state.department.currentDepartment
+    (state: RootState) => state.user.currentDepartment
   );
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
   const [disableEdit, setDisableEdit] = useState(true);
@@ -111,7 +106,10 @@ const EditDepartment = () => {
         company_id: workspace.id,
         department_id: id,
         departmentData: departmentData,
-      })?.unwrap();
+      }).unwrap();
+
+      // TODO: To fix this first TS need to fix the api endpoint, to actually return
+      // an IDepartment format
       dispatch(setCurrentDepartment(newDepartmentTitle));
       dispatch(closeModal());
     } catch (error) {

@@ -15,6 +15,8 @@ import { selectDepartment } from '@/features/departments/departmentSlice';
 import { CompanyId } from '@/types/company';
 import { SortBy } from '@/types/common';
 import { useFetchAndSetCompanyDepartments } from '@/hooks/useFetchCompanyDepartments';
+import { DepartmentId } from '@/types/department';
+import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
 
 const DepartmentTab = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,6 +29,11 @@ const DepartmentTab = () => {
   const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyId;
+
+  const { companyMembers } = useFetchCompanyMembers({
+    company_id: companyId,
+    sortCriteria: sortCriteria,
+  });
 
   useFetchAndSetCompanyDepartments(companyId, sortCriteria);
 

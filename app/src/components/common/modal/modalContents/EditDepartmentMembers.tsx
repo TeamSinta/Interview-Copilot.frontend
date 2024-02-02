@@ -4,7 +4,7 @@ import { closeModal } from '@/features/modal/modalSlice';
 import { ModalContentWrap } from './StyledModalContents';
 import { TextBtnL } from '../../buttons/textBtn/TextBtn';
 import { AppDispatch, RootState } from '@/app/store';
-import { resetCurrentDepartment } from '@/features/departments/departmentSlice';
+import { resetCurrentDepartment } from '@/features/authentication/authenticationSlice';
 import SearchInput from '../../form/serchInput/SearchInput';
 import { DepartmentId } from '@/types/department';
 import { MemberListContainer } from '@/pages/Settings/StyledSettings';
@@ -49,7 +49,7 @@ const EditDepartmentMembers = () => {
   const currentMembers = useSelector(selectCurrentMembers);
   const [addDepartmentMembers] = useAddDepartmentMembersMutation();
   const currentDepartment = useSelector(
-    (state: RootState) => state.department.currentDepartment
+    (state: RootState) => state.user.currentDepartment
   );
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentId, setDepartmentId] = useState<DepartmentId>(
