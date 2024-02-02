@@ -16,15 +16,12 @@ import {
   useCreateDepartmentMutation,
 } from '@/features/departments/departmentsAPI';
 import { closeModal } from '@/features/modal/modalSlice';
-import {
-  resetMemberSelection,
-  selectedMember,
-} from '@/features/company/companySlice';
 import { CompanyId } from '@/types/company';
 import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
 import {
   setCurrentMembers,
   toggleMemberSelected,
+  resetMemberSelection,
 } from '@/features/members/memberSlice';
 
 const titleInputArg = {
@@ -142,7 +139,7 @@ const CreateDepartment = () => {
       <PhotoContainer>
         <BodySMedium>Members</BodySMedium>
         <Photos>
-          {companyMembers.map((member: any, index: number) => (
+          {currentMembers.map((member: any, index: number) => (
             <ElWrap w={40} h={40} key={index}>
               <Photo
                 onSelect={onMemberSelectd}

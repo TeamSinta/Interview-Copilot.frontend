@@ -81,10 +81,6 @@ const EditDepartmentMembers = () => {
     dispatch(resetCurrentDepartment());
   };
 
-  const handleDeleteClick = () => {
-    console.log('Deleted user: ', member.id);
-  };
-
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };

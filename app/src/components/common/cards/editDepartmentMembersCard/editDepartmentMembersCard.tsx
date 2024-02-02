@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
-import { MoreVertIcon } from '../../svgIcons/Icons';
-import { Stack, Tooltip } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import { BinIcon } from '../../svgIcons/Icons';
+import { Stack } from '@mui/material';
 
 import {
   MemberCardContainer,
-  EditButton2,
   ProfilePicture,
   UserDetails,
   PermissionLevel,
@@ -14,6 +11,13 @@ import { BodyMMedium, BodySMedium } from '../../typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { TruncateText } from '@/utils/Utils';
 import { IMember } from '@/types/company';
+import { IconBtnM } from '../../buttons/iconBtn/IconBtn';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { useDeleteDepartmentMemberMutation } from '@/features/departments/departmentsAPI';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/app/store';
+import { resetMemberSelection } from '@/features/members/memberSlice';
 
 interface UserCardProps {
   user: IMember;
@@ -22,12 +26,29 @@ interface UserCardProps {
   selected: boolean;
 }
 
-const editDepartmentMembersCard: React.FC<UserCardProps> = ({
+const EditDepartmentMembersCard: React.FC<UserCardProps> = ({
   user,
   onClick,
   selected,
   onSelect,
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const [removeDepartmentMembers] = useDeleteDepartmentMemberMutation();
+  const currentDepartment = useSelector(
+    (state: RootState) => state.department.currentDepartment
+  );
+  const handleOnRemoveMember = async () => {
+    try {
+      await removeDepartmentMembers({
+        department_id: currentDepartment.id,
+        members: [user.id],
+      });
+      dispatch(resetMemberSelection);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <MemberCardContainer
       onClick={() => onSelect(user.id)}
@@ -66,24 +87,16 @@ const editDepartmentMembersCard: React.FC<UserCardProps> = ({
           <BodySMedium>{user.role}</BodySMedium>
         </div>
       </PermissionLevel>
-
-      <EditButton2>
-        <Tooltip title="Edit">
-          <IconButton
-            component="div"
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '8px',
-              padding: '8.5px 0px',
-            }}
-          >
-            <MoreVertIcon />
-          </IconButton>
-        </Tooltip>
-      </EditButton2>
+      <ElWrap h={32} w={32}>
+        <IconBtnM
+          disable={false}
+          onClick={handleOnRemoveMember}
+          icon={<BinIcon />}
+          className={BackgroundColor.WHITE}
+        />
+      </ElWrap>
     </MemberCardContainer>
   );
 };
 
-export default editDepartmentMembersCard;
+export default EditDepartmentMembersCard;
