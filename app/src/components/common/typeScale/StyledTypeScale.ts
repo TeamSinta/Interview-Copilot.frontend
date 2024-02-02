@@ -60,6 +60,9 @@ export const BodyMSemiBold = styled(BodyLBold)`
 export const BodyMMedium = styled(BodyLMedium)`
   font-size: 14px;
   width: fit-content;
+  &.customStyleCompetenctText {
+    overflow:hidden;
+  }
 `;
 
 export const BodySBold = styled(BodyLBold)`
