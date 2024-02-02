@@ -4,7 +4,7 @@ import {
   BottomArrowIcon,
   LeftArrowIcon,
   RightArrowIcon,
-  TwoArrowIcon
+  TwoArrowIcon,
 } from '@/components/common/svgIcons/Icons';
 import {
   BodyLMedium,
@@ -46,21 +46,20 @@ import {
   StyledInnerWrapper,
   StyledTabInfo,
   StyledTopView,
-  WhiteIndexStyle
+  WhiteIndexStyle,
 } from './StyledInterview';
 import './index.css';
 
 import Chat from '@/components/common/form/chatBox/ChatBox';
-import { H3 } from '@/components/common/typeScale/TypeScale';
 import { useCookies } from 'react-cookie';
-import ReactMarkdown from 'react-markdown';
+import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
 import InfoTab from './Components/InfoTab';
 import InterviewSideBar from './Components/InterviewSideBar';
 import { IReactClickedState } from './Daily/BottomNavBar/BottomNavBar';
 
-const components = {
-  h3: H3,
-};
+// const components = {
+//   h3: H3,
+// };
 
 const Interview = ({ leaveCall, interviewDetails }: any) => {
   const stage = 'Round 3';
@@ -200,7 +199,6 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
     );
   }, [activeTab]);
 
- 
   const InterviewQuestionTab = (info: any) => {
     const { data } = info;
     const [activeData, setActiveData] = useState(data[0]);
@@ -480,9 +478,9 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
                         <BodySBold style={{ marginBottom: '8px' }}>
                           {'Guidelines'}
                         </BodySBold>
-                        <ReactMarkdown components={components}>
+                        <MarkdownFromatConatiner>
                           {activeQuestionInfo?.answer}
-                        </ReactMarkdown>
+                        </MarkdownFromatConatiner>
                       </StyledAnswerPoints>
                     </GuidelinesSection>
                   </div>
@@ -690,7 +688,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
     }
 
     const handleDisplayFlyingEmoji = useCallback(
-      (emoji: string, position: { left: any; top: number; }) => {
+      (emoji: string, position: { left: any; top: number }) => {
         if (!overlayRef.current) {
           return;
         }

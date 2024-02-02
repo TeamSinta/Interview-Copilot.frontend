@@ -1,10 +1,15 @@
 import { AppDispatch } from '@/app/store';
-import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn';
-import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
-import Loading from '@/components/common/elements/loading/Loading';
-import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import {
+  IconBtnL,
+  IconBtnM,
+} from '@/components/common/buttons/iconBtn/IconBtn';
+import StatusFilter from '@/components/common/filters/statusFilter/StatusFilter';
+import TextArea from '@/components/common/form/textArea/TextArea';
+import TextInput from '@/components/common/form/textInput/TextInput';
 import {
   BinIcon,
+  CheckIcon,
+  CloseIcon,
   DocumentIcon,
   EditIcon,
   MoveIcon,
@@ -20,34 +25,46 @@ import {
   BodySMedium,
   H3Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
-import { H3 } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import { setIsAuthenticated } from '@/features/authentication/authenticationSlice';
 import { selectInterviewDetail } from '@/features/interviewDetail/interviewDetailSlice';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
-import { openModal } from '@/features/modal/modalSlice';
 import {
-  useDeleteTemplateQuestionMutation,
-  useGetTemplateQuestionsQuery,
-} from '@/features/templates/templatesQuestionsAPISlice';
-import { BackgroundColor, DataLoading } from '@/features/utils/utilEnum';
-import { Stack } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
+  BackgroundColor,
+  DataLoading,
+  StatusDropdownFilter,
+} from '@/features/utils/utilEnum';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
-import EmptyQuestionsImage from 'src/assets/svg/Empty Questions Illustration.svg';
 import {
-  EmptySectionContainer,
+  InputDiv,
+  InputLabelDiv,
   OnverviewDetailTitle,
   OverviewDetailBody,
+  OverviewDetailEdit,
   OverviewDetailList,
   OverviewDetailTitle,
   OverviewDetails,
   StyledImage,
   TimeQuestionDiv,
+  EmptySectionContainer,
 } from './StyledOverviewDetail';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import { Stack } from '@mui/material';
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { openModal } from '@/features/modal/modalSlice';
+import { useParams } from 'react-router-dom';
+import EmptyQuestionsImage from 'src/assets/svg/Empty Questions Illustration.svg';
+import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
+import CustomQuestionForm from './CustomQuestionForm';
+import {
+  useAddTemplateQuestionMutation,
+  useDeleteTemplateQuestionMutation,
+  useGetTemplateQuestionsQuery,
+} from '@/features/templates/templatesQuestionsAPISlice';
+import Loading from '@/components/common/elements/loading/Loading';
+import { useUpdateQuestionMutation } from '@/features/questions/questionsAPISlice';
+import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
+import { ITemplateQuestion } from '@/features/templates/templatesInterface';
 
 interface IState {
   [key: string]: any;
@@ -58,16 +75,12 @@ interface IState {
   difficulty: string;
 }
 
-const components = {
-  h3: H3,
-};
-
 const InterviewOverviewDetails = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedSection, status } = useSelector(selectInterviewDetail);
   const [openItems, setOpenItems] = useState(new Set());
   const [edit, setEdit] = useState(new Set());
-  const [newQuestions, setQuestions] = useState<IQuestion[]>([]);
+  const [newQuestions, setQuestions] = useState<ITemplateQuestion[]>([]);
   const [inputValue, setInputValue] = useState<IState>({
     question_text: '',
     reply_time: 0,
@@ -87,6 +100,7 @@ const InterviewOverviewDetails = () => {
     isSuccess,
     isError,
     error,
+    refetch,
   } = useGetTemplateQuestionsQuery();
 
   // Move the useEffect hook to the top level
@@ -109,9 +123,12 @@ const InterviewOverviewDetails = () => {
     );
   }
 
-  const filteredQuestions = newQuestions.filter((question: IQuestion) => {
-    return question?.topic === selectedSection?.id;
-  });
+  const filteredQuestions = newQuestions.filter(
+    (question: ITemplateQuestion) => {
+      return question?.topic === selectedSection?.id;
+    }
+  );
+
   const onClickModalOpen = (
     modalType: MODAL_TYPE,
     templateID: any,
@@ -148,11 +165,11 @@ const InterviewOverviewDetails = () => {
 
   const setEditDetailInputs = (question: IQuestion) => {
     setInputValue({
-      question_text: question.question.question_text,
-      guidelines: question.question.guidelines,
-      reply_time: question.question.reply_time,
-      competency: question.question.competency,
-      difficulty: question.question.difficulty,
+      question_text: question.question_text,
+      guidelines: question.guidelines,
+      reply_time: question.reply_time,
+      competency: question.competency,
+      difficulty: question.difficulty,
     });
   };
 
@@ -167,22 +184,23 @@ const InterviewOverviewDetails = () => {
   };
 
   const totalReplyTime = filteredQuestions.reduce(
-    (accumulator, question) =>
-      accumulator + parseInt(question.question.reply_time, 10),
+    (accumulator, question) => accumulator + question.question.reply_time,
     0
   );
 
   return (
     <OverviewDetails>
       {!selectedSection ? (
-        <EmptySectionContainer>
-          {' '}
-          <StyledImage
-            style={{ marginTop: '86px' }}
-            src={EmptySectionsImage}
-            alt="dashboard_picture"
-          />
-        </EmptySectionContainer>
+        <>
+          <EmptySectionContainer>
+            {' '}
+            <StyledImage
+              style={{ marginTop: '86px' }}
+              src={EmptySectionsImage}
+              alt="dashboard_picture"
+            />
+          </EmptySectionContainer>
+        </>
       ) : (
         <>
           {status === DataLoading.FULFILLED ? (
@@ -221,7 +239,7 @@ const InterviewOverviewDetails = () => {
                 <OverviewDetailBody>
                   {/* ====== OVERVIEW LIST START ====== */}
                   {filteredQuestions.map(
-                    (question: IQuestion, index: number) => {
+                    (question: ITemplateQuestion, index: number) => {
                       return (
                         // ======== OVERVIEW DETAIL VIEW MODE ==========
                         <OverviewDetailList key={index}>
@@ -256,7 +274,7 @@ const InterviewOverviewDetails = () => {
                                       question.id,
                                       edit.has(question.id)
                                     );
-                                    setEditDetailInputs(question);
+                                    setEditDetailInputs(question.question);
                                     onClickModalOpen(
                                       MODAL_TYPE.ADD_CUSTOM_QUESTION,
                                       {
@@ -283,13 +301,15 @@ const InterviewOverviewDetails = () => {
                             </div>
                           </div>
                           <div className="summary">
-                            {question.question.competency !== null && (
-                              <div className="comp" key={index}>
-                                <BodySMedium>
-                                  {question.question.competency}
-                                </BodySMedium>
-                              </div>
-                            )}
+                            <>
+                              {question.question.competency !== null && (
+                                <div className="comp" key={index}>
+                                  <BodySMedium>
+                                    {question.question.competency}
+                                  </BodySMedium>
+                                </div>
+                              )}
+                            </>
 
                             <div className="icon-div">
                               <div className="time-level">
@@ -311,9 +331,9 @@ const InterviewOverviewDetails = () => {
                               openItems.has(question.id) ? '' : 'none'
                             }`}
                           >
-                            <ReactMarkdown components={components}>
+                            <MarkdownFromatConatiner>
                               {question.question.guidelines}
-                            </ReactMarkdown>
+                            </MarkdownFromatConatiner>
                           </div>
                         </OverviewDetailList>
                       );
@@ -321,7 +341,6 @@ const InterviewOverviewDetails = () => {
                   )}
                 </OverviewDetailBody>
               )}
-
               {/* ====== OVERVIEW LIST END ====== */}
               {selectedSection ? (
                 <Stack

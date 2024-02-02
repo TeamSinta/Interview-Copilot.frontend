@@ -13,12 +13,10 @@ import {
   BodySMedium,
   H3Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
-import { H3 } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import React, { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
 
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { Stack } from '@mui/material';
@@ -34,18 +32,9 @@ import Loading from '@/components/common/elements/loading/Loading';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { openModal } from '@/features/modal/modalSlice';
 import { useDispatch } from 'react-redux';
+import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
 import { useParams } from 'react-router-dom';
 
-interface IState {
-  [key: string]: any;
-  title: string;
-  time: number;
-  detail: string;
-}
-
-const components = {
-  h3: H3,
-};
 
 const QuestionBanksQuestionsList = ({ questionBank }) => {
   const [allQuestions, setQuestions] = React.useState<string[]>([]);
@@ -174,9 +163,9 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
                 </div>
 
                 <div className={`detail ${openItems.has(index) ? '' : 'none'}`}>
-                  <ReactMarkdown components={components}>
+                  <MarkdownFromatConatiner>
                     {question.guidelines}
-                  </ReactMarkdown>
+                  </MarkdownFromatConatiner>
                 </div>
               </OverviewDetailList>
             );
