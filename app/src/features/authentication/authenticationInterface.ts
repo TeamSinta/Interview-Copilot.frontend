@@ -31,8 +31,8 @@ export interface AuthState {
     companies: Company[];
     id: string | null;
   };
-  currentCompany: ICompany;
-  currentDepartment: IDepartment;
+  currentCompany: ICompany | null;
+  currentDepartment: IDepartment | null;
   token: Token;
 }
 
