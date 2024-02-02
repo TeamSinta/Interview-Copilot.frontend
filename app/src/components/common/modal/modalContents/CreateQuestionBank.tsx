@@ -103,6 +103,7 @@ const CreateQuestionBank = () => {
         <BodySMedium>Title</BodySMedium>
         <TextInput
           {...titleInputArg}
+          ref={titleInputRef}
           onChange={inputOnChange}
           value={inputValue['title']}
           validate={validateTitle}
@@ -112,6 +113,7 @@ const CreateQuestionBank = () => {
         <BodySMedium>Description</BodySMedium>
         <TextArea
           {...descriptionInputArg}
+          ref={descriptionInputRef}
           onChange={textAreaOnChange}
           validate={validateDescription}
           value={inputValue['description']}

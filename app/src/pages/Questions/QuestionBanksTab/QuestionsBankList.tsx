@@ -13,7 +13,6 @@ import {
   BodySMedium,
   H3Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
-import { H3Component } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
 import { BackgroundColor } from '@/features/utils/utilEnum';
@@ -28,23 +27,14 @@ import {
   OverviewDetailTitle,
   OverviewDetails,
 } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
-import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import {useDeleteQuestionFromQuestionBankMutation, useGetQuestionBankDetailQuery, useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
 import Loading from '@/components/common/elements/loading/Loading';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { openModal } from '@/features/modal/modalSlice';
 import { useDispatch } from 'react-redux';
 import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
+import { useParams } from 'react-router-dom';
 
-interface IState {
-  [key: string]: any;
-  title: string;
-  time: number;
-  detail: string;
-}
-
-const components = {
-  h3: H3Component,
-};
 
 const QuestionBanksQuestionsList = ({ questionBank }) => {
   const [allQuestions, setQuestions] = React.useState<string[]>([]);
@@ -61,6 +51,12 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
     isError,
     error,
   } = useGetQuestionsQuery();
+
+  const [ deleteQuestion ] = useDeleteQuestionFromQuestionBankMutation()
+  const { questionBankId } = useParams(); // Replace 'questionBankId' with your actual parameter name
+  const {
+    refetch
+    } = useGetQuestionBankDetailQuery(questionBankId);
 
   React.useEffect(() => {
     if (isSuccess) {
@@ -98,7 +94,15 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
       })
     );
   };
-
+  const deleteQuestionFromList = async (id : string) => {
+    const questionData = {
+      question_ids : [id],
+      id : questionBankID
+    };
+   await deleteQuestion(questionData)
+   await refetch()
+  }
+  // useEffect(() => {}, [dispatch, openItems]);
   return (
     <OverviewDetails>
       <>
@@ -148,7 +152,9 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
                     <ElWrap h={32} w={32}>
                       <IconBtnM
                         disable={false}
-                        onClick={() => {}}
+                        onClick={() => {
+                          deleteQuestionFromList(question.id)
+                        }}
                         icon={<CloseIcon />}
                         className={BackgroundColor.WHITE}
                       />
