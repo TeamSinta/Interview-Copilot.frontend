@@ -83,6 +83,14 @@ export const QuestionsAPI = createApi({
       }),
       invalidatesTags: ['QuestionBanks'],
     }),
+    deleteQuestionFromQuestionBank: builder.mutation({
+      query: (obj) => ({
+        url: `/question/question-banks/${obj.id}/delete/`,
+        method: 'POST',
+        body: obj,
+      }),
+      invalidatesTags: ['QuestionBanks'],
+    }),
   }),
 });
 
@@ -97,4 +105,5 @@ export const {
   useGetQuestionBankDetailQuery,
   useDeleteQuestionBankMutation,
   useUpdateQuestionBankMutation,
+  useDeleteQuestionFromQuestionBankMutation,
 } = QuestionsAPI;
