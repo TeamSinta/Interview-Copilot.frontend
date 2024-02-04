@@ -26,7 +26,6 @@ const EditInterviewers = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
   const [sortCriteria] = useState('');
-  const [departmentId] = useState('');
   const [selectedMembers, setSelectedMembers] = useState<IMember[]>([]);
 
   const { templateId } = useParams();
@@ -41,7 +40,6 @@ const EditInterviewers = () => {
 
   const { members } = useFetchCompanyMembers({
     company_id: companyId,
-    department_id: departmentId,
     sortCriteria: sortCriteria,
   });
 
@@ -52,18 +50,16 @@ const EditInterviewers = () => {
         templateData.interviewers.map((i) => i.id)
       );
 
-      // console.log(members);
-
       const initializedMembers = members.map((member) => ({
         ...member,
-        member_idx: member.id, // map id to member_idx
+        id: member.id, // map id to member_idx
         selected: interviewerIds.has(member.id),
       }));
       setSelectedMembers(initializedMembers);
     }
   }, [members, templateData]); // Depend on templateData as well
 
-  const onMemberSelected = (memberId: number) => {
+  const onMemberSelected = (memberId: string) => {
     const updatedMembers = selectedMembers.map((member) =>
       member.id === memberId
         ? { ...member, selected: !member.selected }
@@ -104,10 +100,10 @@ const EditInterviewers = () => {
               <Photo
                 photoType={PhotoType.L}
                 onSelect={() => onMemberSelected(member.id)}
-                member_idx={member.id}
-                member_firstName={member.first_name}
-                member_lastName={member.last_name}
-                member_url={member.profile_picture}
+                id={member.id}
+                firstName={member.firstName}
+                lastName={member.lastName}
+                profilePicture={member.profilePicture}
                 selected={member.selected}
               />
             </ElWrap>

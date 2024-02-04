@@ -24,10 +24,11 @@ import { InitialsGenerator } from '@/utils/Utils';
 import TempCover from '@/assets/images/cover_1.jpg';
 
 export interface IMember {
-  id: number;
-  profile_picture: string;
-  first_name: string;
-  last_name: string;
+  id: string;
+  profilePicture: string;
+  firstName: string;
+  lastName: string;
+  selected?: boolean;
 }
 
 interface ITemplateHomeCard {

@@ -29,7 +29,7 @@ export interface InterviewRoundCardProps {
   }>;
   selected?: boolean;
   imageUrl: string;
-  setIsSelectedTemplate?: React.Dispatch<React.SetStateAction<boolean>>
+  setIsSelectedTemplate?: React.Dispatch<React.SetStateAction<boolean>>;
   onClick?: (templateId: string) => void;
 }
 
@@ -49,11 +49,11 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
 
   const handleClick = () => {
     if (onClick && templateId) {
-      onClick(templateId)
-      if(setIsSelectedTemplate){
-        setIsSelectedTemplate(false)
+      onClick(templateId);
+      if (setIsSelectedTemplate) {
+        setIsSelectedTemplate(false);
       }
-    };
+    }
   };
 
   return (

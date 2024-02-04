@@ -7,6 +7,7 @@ export const ModalContentWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  width: 100%;
 `;
 
 export const SelectContentWrap = styled(ModalContentWrap)`
