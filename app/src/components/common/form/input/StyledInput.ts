@@ -22,7 +22,6 @@ export const Input = styled.input`
   height: 40px;
   width: inherit;
   font-size: 14px;
-
   :disabled {
     cursor: not-allowed;
     opacity: 0.30000001192092896;
@@ -38,6 +37,17 @@ export const Input = styled.input`
       color: #979696;
     }
   }
+  &.customStyleForCompetency {
+    padding: 0px 0px;
+    border-radius: 0px;
+    width:144px;
+    background: ${(props) => props.theme.colors.white};
+    height: 21px;
+    font-size: 12px;
+    ::placeholder {
+      color: #979696;
+  }
+}
 `;
 
 export const InputError = styled.div`
