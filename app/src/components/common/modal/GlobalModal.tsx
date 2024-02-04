@@ -31,6 +31,7 @@ import EditDepartment from './modalContents/EditDepartment';
 import DeleteDepartment from './modalContents/DeleteDepartment';
 import { SetStateAction } from 'react';
 import EditDepartmentMembers from './modalContents/EditDepartmentMembers';
+import ModalM from './ModalM';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
@@ -116,9 +117,9 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.EDIT_DEP_MEM:
         return (
-          <Modal title="Department Members">
+          <ModalM title="Department Members">
             <EditDepartmentMembers />
-          </Modal>
+          </ModalM>
         );
       case MODAL_TYPE.SELECT_ALL_QUESTIONS:
         return (

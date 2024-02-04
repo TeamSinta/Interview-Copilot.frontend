@@ -7,10 +7,9 @@ export const ModalHeaderWrap = styled.div`
 
 export const ModalHeaderIconWrap = styled.div`
   display: flex;
-  height:22px;
-  margin-top:5px;
-  gap:8px
-
+  height: 22px;
+  margin-top: 5px;
+  gap: 8px;
 `;
 export const ArrowDiv = styled.div`
   svg {
@@ -69,6 +68,13 @@ export const ModalContainer = styled.div`
   flex-direction: column;
   z-index: 999;
   position: relative;
+`;
+
+export const ModalContainerM = styled(ModalContainer)`
+  width: 784px;
+  height: 715px;
+  gap: 30px;
+  flex-direction: row;
 `;
 
 export const ModalContainerL = styled(ModalContainer)`
