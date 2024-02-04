@@ -18,13 +18,9 @@ import {
 } from '@/features/departments/departmentsAPI';
 import { setCurrentDepartment } from '@/features/departments/departmentSlice';
 import StyledDeleteBox from '../../form/deleteBox/deleteBox';
-import {
-  selectedMember,
-  useFetchSelectMembers,
-} from '@/features/roles/rolesSlice';
+import { selectedMember } from '@/features/roles/rolesSlice';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import Photo from '../../buttons/photo/Photo';
-import { CompanyId } from '@/types/company';
 import { IconBtnS } from '../../buttons/iconBtn/IconBtn';
 import { EditIcon } from '../../svgIcons/Icons';
 import Stack from '@mui/material/Stack';
@@ -47,12 +43,11 @@ const textIconBtnArg = {
 };
 
 const EditDepartment = () => {
-  const { title, id } = useSelector(
+  const { id } = useSelector(
     (state: RootState) => state.department.currentDepartment
   );
   const dispatch = useDispatch<AppDispatch>();
   const workspace = useSelector((state: RootState) => state.workspace);
-  const user = useSelector((state: RootState) => state.user.user);
   const currentDepartment = useSelector(
     (state: RootState) => state.department.currentDepartment
   );
