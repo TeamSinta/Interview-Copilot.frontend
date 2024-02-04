@@ -1,5 +1,4 @@
 import { FormControlLabel } from '@mui/material';
-import Switch from '@mui/material/Switch';
 import React, { useEffect, useRef, useState } from 'react';
 
 import {
@@ -19,6 +18,7 @@ import StatusFilter, {
 } from '@/components/common/filters/statusFilter/StatusFilter';
 import { RotateIcon } from '@/components/common/filters/textIconFilter/StyledTextIconFilter';
 import {
+  CustomSwitch,
   InputLayout,
   StyledTextarea,
   TextAreaError,
@@ -111,7 +111,6 @@ function CustomQuestionForm(
   const handleSubmit = async () => {
     // Validate input and perform any necessary checks
     let hasError = false; // Track if there's any validation error
-
     if (!inputValue.title.trim()) {
       if (titleInputRef.current) {
         titleInputRef.current.triggerValidation();
@@ -122,6 +121,7 @@ function CustomQuestionForm(
     }
 
     if (!inputValue.guidelines.trim()) {
+      setError('Description is required');
       if (descriptionInputRef.current) {
         descriptionInputRef.current.triggerValidation();
       }
@@ -195,6 +195,7 @@ function CustomQuestionForm(
       <InputLayout className="customizeForQuestion">
         <BodySMedium>Question</BodySMedium>
         <TextInput
+          ref={titleInputRef}
           disable={false}
           placeholder={'e.g. What are your strengths?'}
           validate={validateTitle}
@@ -266,7 +267,7 @@ function CustomQuestionForm(
         {!dataForEdit ? (
           <FormControlLabel
             control={
-              <Switch checked={addMoreQuestion} onChange={handleSwitchChange} />
+              <CustomSwitch checked={addMoreQuestion} onChange={handleSwitchChange} />
             }
             label={<BodySMedium>Create More</BodySMedium>}
           />

@@ -1,3 +1,4 @@
+import { Switch, alpha , styled as styling } from '@mui/material';
 import styled from 'styled-components';
 
 export const InputLayout = styled.div`
@@ -199,3 +200,14 @@ export const StyledTextareaDiv = styled.div`
     line-height: 125%;
   }
 `;
+export const CustomSwitch = styling(Switch)(({ theme }) => ({
+  '& .MuiSwitch-switchBase.Mui-checked': {
+    color: '#6462F1', 
+    '&:hover': {
+      backgroundColor: alpha('#6462F1', theme.palette.action.hoverOpacity),
+    },
+  },
+  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+    backgroundColor: '#6462F1',
+  },
+}));
