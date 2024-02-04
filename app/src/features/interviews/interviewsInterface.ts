@@ -1,11 +1,19 @@
 export interface IQuestion {
-  [key: string]: number | string | string[];
+  [key: string]: number | string | string[] | unknown;
   title: string;
   competency: string;
   time: number;
   level: string;
   detail: string;
   id: number;
+  guidelines: string;
+  company: number;
+  embedding: unknown;
+  question_text: string;
+  reply_time: number;
+  review: unknown;
+  user: number;
+  difficulty: string;
 }
 
 export interface ITemplates {

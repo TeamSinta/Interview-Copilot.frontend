@@ -24,6 +24,7 @@ import { TextBtnM } from '@/components/common/buttons/textBtn/TextBtn';
 import QuestionBanksQuestionsList from './QuestionsBankList';
 import Loading from '@/components/common/elements/loading/Loading';
 import { useGetQuestionBankDetailQuery } from '@/features/questions/questionsAPISlice';
+import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -46,7 +47,7 @@ const QuestionBankStage = () => {
   const [QuestionBank, setQuestionBanks] = useState<{
     title?: string;
     questions?: any[];
-    description?: string;
+    description: string;
   }>({});
   const {
     data: questionBankDetails,
@@ -74,6 +75,8 @@ const QuestionBankStage = () => {
       </div>
     );
   }
+
+  const onClickModalOpen = (modalType: MODAL_TYPE) => {};
 
   return (
     <>
@@ -105,7 +108,9 @@ const QuestionBankStage = () => {
               gap: '16px',
             }}
           >
-            <BodyMMedium>{QuestionBank.description}</BodyMMedium>
+            <MarkdownFromatConatiner>
+              {QuestionBank.description}
+            </MarkdownFromatConatiner>
             <ElWrap w={100}>
               <TextBtnM
                 label={'Edit'}
