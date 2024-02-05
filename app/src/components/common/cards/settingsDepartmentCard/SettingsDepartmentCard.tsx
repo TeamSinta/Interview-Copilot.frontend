@@ -8,9 +8,8 @@ import {
   DepartmentCardContainer,
   EditButton2,
   DepartmentDetails,
-  PermissionLevel,
 } from './StyledDepartmentCard'; // Adjust the import path to match your file structure
-import { BodyLMedium, BodyMMedium } from '../../typeScale/StyledTypeScale';
+import { BodyMMedium } from '../../typeScale/StyledTypeScale';
 
 interface DepartmentCardProps {
   department: {

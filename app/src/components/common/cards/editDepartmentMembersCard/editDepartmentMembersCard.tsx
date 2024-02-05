@@ -35,7 +35,7 @@ const EditDepartmentMembersCard: React.FC<UserCardProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const [removeDepartmentMembers] = useDeleteDepartmentMemberMutation();
   const currentDepartment = useSelector(
-    (state: RootState) => state.department.currentDepartment
+    (state: RootState) => state.user.currentDepartment
   );
   const handleOnRemoveMember = async () => {
     try {

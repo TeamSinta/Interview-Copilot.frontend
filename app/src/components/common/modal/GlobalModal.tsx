@@ -117,9 +117,9 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.EDIT_DEP_MEM:
         return (
-          <ModalM title="Department Members">
+          <Modal title="Department Members">
             <EditDepartmentMembers />
-          </ModalM>
+          </Modal>
         );
       case MODAL_TYPE.SELECT_ALL_QUESTIONS:
         return (

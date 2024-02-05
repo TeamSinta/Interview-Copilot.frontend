@@ -12,7 +12,7 @@ services:
       - ./app:/app
       - /app/node_modules
     env_file:
-      - app/.env.dev
+      - app/.env
     environment:
       - CHOKIDAR_USEPOLLING=true
     networks:

@@ -23,12 +23,12 @@
 .env.production.local
 .env
 .process.env
-#.env.staging
+.env.staging
 .env.development
-#.env.dev
+.env.dev
 # Ignore environment-specific files
-#*/.env.dev
-#*/.env.staging
+*/.env.dev
+*/.env.staging
 
 npm-debug.log*
 yarn-debug.log*

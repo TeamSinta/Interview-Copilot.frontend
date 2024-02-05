@@ -25,7 +25,7 @@ import {
 } from '@/features/members/memberSlice';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { Box } from '@mui/material';
-import { BodySMedium } from '../../typeScale/StyledTypeScale';
+import { BodyMMedium, BodySMedium } from '../../typeScale/StyledTypeScale';
 
 const txtBtnCloseArg = {
   label: 'Close',
