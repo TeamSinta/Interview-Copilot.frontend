@@ -88,6 +88,7 @@ const CreateDepartment = () => {
       const newDepartment =
         await createNewDepartment(createDepartmentData).unwrap();
       if (newDepartment && newDepartment.id) {
+        console.log(selectedMemberIds);
         await addDepartmentMembers({
           invitees: selectedMemberIds,
           department_id: newDepartment.id,
@@ -96,8 +97,8 @@ const CreateDepartment = () => {
 
       setNewDepartmentName('');
       setValidationError('');
+      dispatch(closeModal());
       dispatch(resetMemberSelection());
-      dispatch(closeModal);
     } catch (error: any) {
       setValidationError('Error creating department: ' + error.message);
     }
@@ -142,7 +143,7 @@ const CreateDepartment = () => {
           {currentMembers.map((member: any, index: number) => (
             <ElWrap w={40} h={40} key={index}>
               <Photo
-                onSelect={() => {}}
+                onSelect={onMemberSelectd}
                 id={member.id}
                 firstName={member.firstName}
                 lastName={member.lastName}
