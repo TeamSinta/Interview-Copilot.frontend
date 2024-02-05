@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ITemplateQuestion } from './templatesInterface';
 
 export const templateQuestionsAPI = createApi({
   reducerPath: 'templateQuestionsAPI',
@@ -14,7 +15,7 @@ export const templateQuestionsAPI = createApi({
   }),
   tagTypes: ['Questions'],
   endpoints: (builder) => ({
-    getTemplateQuestions: builder.query<object, void>({
+    getTemplateQuestions: builder.query<ITemplateQuestion[], void>({
       query: () => 'template_questions/',
       providesTags: ['Questions'],
     }),

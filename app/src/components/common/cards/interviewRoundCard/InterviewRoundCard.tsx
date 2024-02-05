@@ -41,7 +41,6 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
     numberOfQuestions,
     members,
     selected,
-    setIsSelectedTemplate,
     onClick,
   } = props;
 
@@ -50,9 +49,6 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
   const handleClick = () => {
     if (onClick && templateId) {
       onClick(templateId);
-      if (setIsSelectedTemplate) {
-        setIsSelectedTemplate(false);
-      }
     }
   };
 
