@@ -20,8 +20,6 @@ import { RotateIcon } from '@/components/common/filters/textIconFilter/StyledTex
 import {
   CustomSwitch,
   InputLayout,
-  StyledTextarea,
-  TextAreaError,
 } from '@/components/common/form/input/StyledInput';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { closeModal } from '@/features/modal/modalSlice';
@@ -35,10 +33,11 @@ import {
   CustomQuestionModalBottomDiv,
   CustomQuestionModalLine,
 } from './StyledOverviewDetail';
-import { validateTitle } from '@/utils/inputValidations';
+import { validateDescription, validateTitle } from '@/utils/inputValidations';
 import { selectModal } from '@/features/modal/modalSlice';
 import { useUpdateQuestionMutation } from '@/features/questions/questionsAPISlice';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
+import TextArea from '@/components/common/form/textArea/TextArea';
 
 interface IState {
   title: string;
@@ -68,7 +67,6 @@ function CustomQuestionForm(
   const [inputValue, setInputValue] = useState<IState>(initialState);
   const dispatch = useDispatch<AppDispatch>();
   const [addMoreQuestion, setAddMoreQuestion] = React.useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
   const descriptionInputRef = useRef<{ triggerValidation: () => void } | null>(
     null
@@ -116,18 +114,12 @@ function CustomQuestionForm(
         titleInputRef.current.triggerValidation();
       }
       hasError = true;
-    } else {
-      hasError = false; // Reset to false when the title is not empty
     }
-
     if (!inputValue.guidelines.trim()) {
-      setError('Description is required');
       if (descriptionInputRef.current) {
         descriptionInputRef.current.triggerValidation();
       }
       hasError = true;
-    } else {
-      hasError = false; // Reset to false when the description is not empty
     }
 
     if (hasError) {
@@ -160,7 +152,12 @@ function CustomQuestionForm(
       setAddMoreQuestion(false);
     }
   };
-
+  const textAreaOnChange = (value: string) => {
+    setInputValue((prevValue) => ({
+      ...prevValue,
+      guidelines: value,
+    }));
+  };
   const inputOnChange = (
     event:
       | React.ChangeEvent<HTMLInputElement>
@@ -170,11 +167,6 @@ function CustomQuestionForm(
       ...inputValue,
       [event.target.name]: event.target.value,
     });
-    if (event.target.name === 'guidelines' && !event.target.value.trim()) {
-      setError('Description is required');
-    } else {
-      setError('');
-    }
   };
   useEffect(() => {
     if (dataForEdit) {
@@ -207,21 +199,21 @@ function CustomQuestionForm(
       </InputLayout>
       <InputLayout>
         <BodySMedium>Guidelines</BodySMedium>
-        <StyledTextarea
+        <TextArea
           disabled={false}
-          className={`customStyle ${error ? 'error' : ''}`}
           placeholder={
-            'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'
+          'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'
+        }
+          name="guidelines"
+          onChange={textAreaOnChange}
+          value={
+            dataForEdit?.guidelines.trim()
+              ? dataForEdit?.guidelines
+              : inputValue.guidelines
           }
-          onChange={inputOnChange}
-          name={'guidelines'}
-          value={inputValue.guidelines}
+          validate={validateDescription}
+          ref={descriptionInputRef}
         />
-        {error ? (
-          <TextAreaError className="customizeForTextArea">
-            {error}
-          </TextAreaError>
-        ) : null}
       </InputLayout>
       <CustomQuestionFilterDiv>
         <StatusFilter
