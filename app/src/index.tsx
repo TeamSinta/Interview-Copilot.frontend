@@ -14,7 +14,11 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 
 root.render(
-  <React.StrictMode>
+  // uncomment stric mode while deployment 
+  // it is causing issue in sign in process as because of this 
+  // useEffect is running twice which is causing workos authentication failure
+  // it will work fine in production
+  // <React.StrictMode>
     <Provider store={store}>
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
         <ThemeProvider theme={DefaultTheme}>
@@ -26,5 +30,5 @@ root.render(
         </ThemeProvider>
       </GoogleOAuthProvider>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
