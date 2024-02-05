@@ -11,7 +11,7 @@ import { TextBtnL } from '../../buttons/textBtn/TextBtn';
 import { BinIcon } from '../../svgIcons/Icons';
 import { useDeleteDepartmentMutation } from '@/features/departments/departmentsAPI';
 import { AppDispatch, RootState } from '@/app/store';
-import { resetCurrentDepartment } from '@/features/departments/departmentSlice';
+import { resetCurrentDepartment } from '@/features/authentication/authenticationSlice';
 
 const textIconBtnArg = {
   label: 'Delete',
@@ -30,7 +30,7 @@ const DeleteDepartment = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [deleteDepartment] = useDeleteDepartmentMutation();
   const currentDepartment = useSelector(
-    (state: RootState) => state.department.currentDepartment
+    (state: RootState) => state.user.currentDepartment
   );
   const workspace = useSelector((state: RootState) => state.workspace);
 

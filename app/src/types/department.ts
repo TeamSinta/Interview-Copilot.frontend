@@ -28,7 +28,6 @@ export interface IDepartmentListProps {
 }
 
 export interface IDepartmentState {
-  currentDepartment: IDepartment;
   allDepartments: IDepartment[];
 }
 

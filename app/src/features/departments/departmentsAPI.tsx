@@ -54,6 +54,8 @@ export const departmentsAPI = createApi({
       },
       invalidatesTags: ['Department'],
     }),
+    // wouldnt this be better to just send the department as a value in the body
+    // instead of usign a query-ish string in the url?
     updateDepartment: builder.mutation<
       void,
       {

@@ -16,7 +16,7 @@ import {
   useGetDepartmentMembersQuery,
   useUpdateDepartmentMutation,
 } from '@/features/departments/departmentsAPI';
-import { setCurrentDepartment } from '@/features/departments/departmentSlice';
+import { setCurrentDepartment } from '@/features/authentication/authenticationSlice';
 import StyledDeleteBox from '../../form/deleteBox/deleteBox';
 import { selectedMember } from '@/features/roles/rolesSlice';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
@@ -44,12 +44,12 @@ const textIconBtnArg = {
 
 const EditDepartment = () => {
   const { id } = useSelector(
-    (state: RootState) => state.department.currentDepartment
+    (state: RootState) => state.user.currentDepartment
   );
   const dispatch = useDispatch<AppDispatch>();
   const workspace = useSelector((state: RootState) => state.workspace);
   const currentDepartment = useSelector(
-    (state: RootState) => state.department.currentDepartment
+    (state: RootState) => state.user.currentDepartment
   );
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
   const [disableEdit, setDisableEdit] = useState(true);
@@ -106,7 +106,10 @@ const EditDepartment = () => {
         company_id: workspace.id,
         department_id: id,
         departmentData: departmentData,
-      })?.unwrap();
+      }).unwrap();
+
+      // TODO: To fix this first TS need to fix the api endpoint, to actually return
+      // an IDepartment format
       dispatch(setCurrentDepartment(newDepartmentTitle));
       dispatch(closeModal());
     } catch (error) {

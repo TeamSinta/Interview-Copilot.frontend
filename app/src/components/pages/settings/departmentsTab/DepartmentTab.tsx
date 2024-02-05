@@ -6,18 +6,17 @@ import Stack from '@mui/material/Stack';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 import SortingDropdown from './SortingDropdown';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DepartmentList from './DepartmentList';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { selectDepartment } from '@/features/departments/departmentSlice';
-// import { setMembers } from '@/features/company/companySlice';;
 import { CompanyId } from '@/types/company';
 import { SortBy } from '@/types/common';
 import { useFetchAndSetCompanyDepartments } from '@/hooks/useFetchCompanyDepartments';
-import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
 import { DepartmentId } from '@/types/department';
+import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
 
 const DepartmentTab = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,7 +25,6 @@ const DepartmentTab = () => {
   const departmentState = useSelector(selectDepartment);
   const allDepartments = departmentState.allDepartments;
   const [sortCriteria, setSortCritiera] = useState<SortBy>('');
-  const [departmentId, ,] = useState<DepartmentId>('');
 
   const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
@@ -34,7 +32,6 @@ const DepartmentTab = () => {
 
   const { companyMembers } = useFetchCompanyMembers({
     company_id: companyId,
-    department_id: departmentId,
     sortCriteria: sortCriteria,
   });
 

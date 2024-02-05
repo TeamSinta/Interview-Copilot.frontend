@@ -1,6 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AuthState } from './authenticationInterface';
 import { authAPI } from './authenticationAPI';
+import { ICompany } from '@/types/company';
+import { IDepartment } from '@/types/department';
 
 const initialState: AuthState = {
   status: 'IDLE',
@@ -35,6 +37,18 @@ export const userSlice = createSlice({
     resetUserState: () => initialState,
     setIsAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
+    },
+    setCurrentCompany: (state, action: PayloadAction<ICompany>) => {
+      state.currentCompany = action.payload;
+    },
+    resetCurrentCompany: (state) => {
+      state.currentCompany = initialState.currentCompany;
+    },
+    setCurrentDepartment: (state, action: PayloadAction<IDepartment>) => {
+      state.currentDepartment = action.payload;
+    },
+    resetCurrentDepartment: (state) => {
+      state.currentDepartment = initialState.currentDepartment;
     },
     setTokens: (state, action) => {
       state.token = action.payload;
@@ -97,6 +111,14 @@ export const checkUserAuthentication = createAsyncThunk(
   }
 );
 
-export const { setStatus, resetUserState, setIsAuthenticated, setTokens } =
-  userSlice.actions;
+export const {
+  setStatus,
+  resetUserState,
+  setIsAuthenticated,
+  setCurrentCompany,
+  resetCurrentCompany,
+  setCurrentDepartment,
+  resetCurrentDepartment,
+  setTokens,
+} = userSlice.actions;
 export default userSlice.reducer;
