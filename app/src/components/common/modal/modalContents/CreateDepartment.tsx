@@ -88,7 +88,6 @@ const CreateDepartment = () => {
       const newDepartment =
         await createNewDepartment(createDepartmentData).unwrap();
       if (newDepartment && newDepartment.id) {
-        console.log(selectedMemberIds);
         await addDepartmentMembers({
           invitees: selectedMemberIds,
           department_id: newDepartment.id,

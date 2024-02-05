@@ -56,8 +56,6 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
     }
   };
 
-  console.log(members);
-
   return (
     <StyledCard
       sx={{ boxShadow: 0 }}
