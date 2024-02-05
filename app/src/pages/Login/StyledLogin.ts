@@ -1,9 +1,8 @@
-import styled from 'styled-components';
 import {
-  BodyLMedium,
-  BodyMMedium,
+  BodyLMedium
 } from '@/components/common/typeScale/StyledTypeScale';
 import { Box } from '@mui/material';
+import styled from 'styled-components';
 
 export const Container = styled(Box)`
   max-width: 480px;
@@ -13,13 +12,6 @@ export const Container = styled(Box)`
   flex-direction: column;
   justify-content: center;
   gap: 32px;
-`;
-
-export const TextBox = styled(Box)`
-  max-width: 500px;
-  margin-bottom: 30px;
-  display: flex;
-  gap: 4px;
 `;
 
 export const StyledImage = styled.img`
@@ -47,10 +39,6 @@ export const TextRow = styled.div`
 `;
 
 export const GrayBodyLMedium = styled(BodyLMedium)`
-  color: rgba(18, 18, 18, 0.5);
-`;
-
-export const GrayBodyMMedium = styled(BodyMMedium)`
   color: rgba(18, 18, 18, 0.5);
 `;
 

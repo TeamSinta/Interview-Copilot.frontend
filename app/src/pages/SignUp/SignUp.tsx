@@ -1,25 +1,23 @@
 import {
-  H2Bold,
   BodyLMedium,
   BodyLSemiBold,
-  BodyMSemiBold,
+  H2Bold
 } from '@/components/common/typeScale/StyledTypeScale';
+import Terms from '@/components/pages/login/Terms/Terms';
 import GoogleLoginButton from '@/components/pages/login/googleLoginBtn/GoogleLoginButton';
+import { Stack } from '@mui/material';
+import { Link } from 'react-router-dom';
+import LogoImage from 'src/assets/images/SintaLogo.png';
+import LoginPageImage from "src/assets/svg/'Sign Up' Page Illustration.svg";
 import {
   Container,
   GrayBodyLMedium,
-  GrayBodyMMedium,
   MainContainer,
   StyledImage,
   StyledLogo,
   SuperContainer,
-  TextBox,
-  TextRow,
+  TextRow
 } from './StyledSignUp';
-import { Stack } from '@mui/material';
-import LoginPageImage from "src/assets/svg/'Sign Up' Page Illustration.svg";
-import LogoImage from 'src/assets/images/SintaLogo.png';
-import { Link } from 'react-router-dom';
 
 const SignUpScreen = () => {
   return (
@@ -45,16 +43,7 @@ const SignUpScreen = () => {
               </Link>
             </TextRow>
           </Container>
-          <TextBox>
-            <GrayBodyMMedium>By signing in you agree to our</GrayBodyMMedium>
-            <a href="https://teamsinta.com/terms">
-              <BodyMSemiBold>Terms of Use</BodyMSemiBold>
-            </a>
-            <GrayBodyMMedium>and </GrayBodyMMedium>
-            <a href="https://teamsinta.com/privacy-policy">
-              <BodyMSemiBold>Privacy Policy</BodyMSemiBold>
-            </a>
-          </TextBox>
+          <Terms />
         </MainContainer>
         <StyledImage src={LoginPageImage} alt="loginpage_picture" />
       </SuperContainer>
