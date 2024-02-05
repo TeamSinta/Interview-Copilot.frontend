@@ -188,9 +188,9 @@ const InterviewStage = () => {
                 onClick={() => handleCardClick(template.id)}
                 selected={Number(template.id) === numericTemplateId}
                 members={template.interviewers?.map((interviewer: IMember) => ({
-                  first_name: interviewer.first_name,
-                  last_name: interviewer.last_name, // Assuming interviewer has a name property
-                  profile_picture: interviewer.profile_picture, // You mentioned it's stored in profileURL
+                  firstName: interviewer.firstName,
+                  lastName: interviewer.lastName, // Assuming interviewer has a name property
+                  profilePicture: interviewer.profilePicture, // You mentioned it's stored in profileURL
                 }))}
               />
             ))}

@@ -8,17 +8,6 @@ import { CompanyId } from '@/types/company';
 import { DepartmentId } from '@/types/department';
 import { useGetCompanyMembersQuery } from '../company/companyAPI';
 
-/*
-
-I think this entire slice is great, but it needs to be refactored / renamed for
-clarification as our entire project has changed along the way. It's not a
-"role" slice anymore.
-
-I've currently used it for the new Department Creation too.
-
-- mattias
-
-*/
 export const initialState: RolesCreateSlice = {
   title: '',
   all_members: [

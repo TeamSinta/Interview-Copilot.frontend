@@ -23,9 +23,9 @@ export interface InterviewRoundCardProps {
   title?: string;
   numberOfQuestions?: string;
   members?: Array<{
-    first_name: string;
-    last_name: string;
-    profile_picture: string;
+    firstName: string;
+    lastName: string;
+    profilePicture: string;
   }>;
   selected?: boolean;
   imageUrl: string;
@@ -55,6 +55,8 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
       }
     }
   };
+
+  console.log(members);
 
   return (
     <StyledCard
@@ -103,13 +105,10 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
                 ?.slice(0, members.length > 4 ? 3 : 4)
                 .map((member, index) => (
                   <ElWrap w={32} h={32} key={index}>
-                    <PhotoIcon imgUrl={member.profile_picture}>
+                    <PhotoIcon imgUrl={member.profilePicture}>
                       <BodySBold>
-                        {!member.profile_picture
-                          ? InitialsGenerator(
-                              member.first_name,
-                              member.last_name
-                            )
+                        {!member.profilePicture
+                          ? InitialsGenerator(member.firstName, member.lastName)
                           : ''}
                       </BodySBold>
                     </PhotoIcon>

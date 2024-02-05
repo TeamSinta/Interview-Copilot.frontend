@@ -1,10 +1,10 @@
 export interface Interviewer {
   id: string;
   username: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  profile_picture: string | null;
+  profilePicture: string | null;
 }
 
 export interface TemplateResponse {

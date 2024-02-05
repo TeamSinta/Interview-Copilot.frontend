@@ -142,7 +142,7 @@ const CreateDepartment = () => {
           {currentMembers.map((member: any, index: number) => (
             <ElWrap w={40} h={40} key={index}>
               <Photo
-                onSelect={onMemberSelectd}
+                onSelect={() => {}}
                 id={member.id}
                 firstName={member.firstName}
                 lastName={member.lastName}
