@@ -56,6 +56,7 @@ import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer
 import InfoTab from './Components/InfoTab';
 import InterviewSideBar from './Components/InterviewSideBar';
 import { IReactClickedState } from './Daily/BottomNavBar/BottomNavBar';
+import { selectInterview, updateQuestionRating } from '@/features/interviews/interviewsSlice';
 
 // const components = {
 //   h3: H3,
@@ -85,7 +86,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
   useEffect(() => {
     const now = new Date();
     setStartTime(now);
-  }, []);
+  }, []); 
   const [isInterviewSideBarCollapsed, setIsInterviewSideBarCollapsed] =
     useState(false);
   const callObject = useDaily();
@@ -135,7 +136,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       );
       setTemplateQuestionsAndTopics(response);
     };
-
+  
     fetchQuestionsAndTopics();
   }, [interviewDetails]);
 
@@ -228,8 +229,16 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       }));
 
       updateInterviewQuestionRating(rating, question.id, interviewDetails.id);
+      dispatch(updateQuestionRating({ questionId : question.id , rating }));
     };
+    
+    const { questionRating } = useSelector(selectInterview);
 
+    useEffect(() => {
+      if(questionRating !== null){
+        setQuestionRatings(questionRating)
+      }
+    },[questionRating])
     useEffect(() => {
       setCollapseQuestion(false);
     }, [activeData]);
