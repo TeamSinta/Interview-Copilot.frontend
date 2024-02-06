@@ -17,6 +17,7 @@ import CheckType from './CheckType';
 import EndCallScreen from '@/pages/Interview/Daily/Call/EndCallScreenExternal';
 import PublicRoutes from './authenticated/PublicRoutes';
 import NotificationsPage from '@/pages/Notifications';
+import VerifyCode from '@/pages/Verify';
 
 const Routers = () => {
   return (
@@ -24,6 +25,7 @@ const Routers = () => {
       <Route path="" element={<PublicRoutes />}>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<LoginScreen />} />
+        <Route path="/verify" element={<VerifyCode />} />
         <Route path="/sign-up" element={<SignUpScreen />} />
       </Route>
       <Route path="/video-call" element={<CheckType />} />
