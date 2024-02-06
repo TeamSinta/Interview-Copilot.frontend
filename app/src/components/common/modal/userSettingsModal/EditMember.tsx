@@ -27,6 +27,7 @@ import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown'
 import StyledDeleteBox from '../../form/deleteBox/deleteBox';
 import { CompanyId } from '@/types/company';
 import { IDepartment } from '@/types/department';
+import { MODAL_TYPE } from '../GlobalModal';
 
 interface MemberModalProps {
   user: {
@@ -124,6 +125,8 @@ const EditMember: React.FC<MemberModalProps> = () => {
           multi
         />
         <StyledDeleteBox
+          targetModalType={MODAL_TYPE.DEL_MEMBER}
+          disabled={false}
           deleteItemText="member"
           deleteFromText="all your companies"
         />

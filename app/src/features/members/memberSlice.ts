@@ -32,7 +32,9 @@ export const memberSlice = createSlice({
       state.member.profilePicture = actions.payload.profilePicture;
       state.member.role = actions.payload.role;
     },
-
+    resetMemberInfo: (state) => {
+      state.member = initialState.member;
+    },
     setCurrentMembers: (state, action: PayloadAction<IMember[]>) => {
       state.currentMembers = action.payload.map((member) => ({
         ...member,
@@ -60,6 +62,7 @@ export const memberSlice = createSlice({
 
 export const {
   setMemberInfo,
+  resetMemberInfo,
   setCurrentMembers,
   toggleMemberSelected,
   resetMemberSelection,

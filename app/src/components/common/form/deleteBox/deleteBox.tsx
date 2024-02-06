@@ -40,7 +40,7 @@ const StyledDeleteBox: React.FC<IStyledDeleteBoxProps> = ({
       <ElWrap w={50} h={10}>
         <TextBtnS
           label="delete"
-          onClick={() => onClickModalOpen(MODAL_TYPE.DEL_DEP)}
+          onClick={() => onClickModalOpen(targetModalType)}
           disable={disabled} // Temporarily disabled
           className=""
         />

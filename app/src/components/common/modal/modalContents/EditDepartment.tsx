@@ -184,6 +184,7 @@ const EditDepartment = () => {
       </InputLayout>
       <TextIconBtnL {...textIconBtnArg} onClick={handleSaveClick} />
       <StyledDeleteBox
+        targetModalType={MODAL_TYPE.DEL_DEP}
         deleteItemText="department"
         deleteFromText="this company"
         disabled={false}

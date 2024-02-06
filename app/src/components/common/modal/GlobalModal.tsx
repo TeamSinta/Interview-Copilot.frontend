@@ -31,7 +31,7 @@ import EditDepartment from './modalContents/EditDepartment';
 import DeleteDepartment from './modalContents/DeleteDepartment';
 import { SetStateAction } from 'react';
 import EditDepartmentMembers from './modalContents/EditDepartmentMembers';
-import ModalM from './ModalM';
+import DeleteCompanyMember from './modalContents/DeleteCompanyMember';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
@@ -42,6 +42,7 @@ export enum MODAL_TYPE {
   SELECT_VAL = 'SELECT_VAL',
   SELECT_TEM = 'SELECT_TEM',
   MEMBER_SET = 'MEMBER_SET',
+  DEL_MEMBER = 'MEMBER_DEL',
   EDIT_INT = 'EDIT_INT',
   EDIT_MEM = 'EDIT_MEM',
   VIDEO_SETTINGS = 'VIDEO_SET',
@@ -160,6 +161,12 @@ const GlobalModal = (): JSX.Element => {
         return (
           <Modal title="Interviewers">
             <EditInterviewers />
+          </Modal>
+        );
+      case MODAL_TYPE.DEL_MEMBER:
+        return (
+          <Modal title="Confirmation">
+            <DeleteCompanyMember />
           </Modal>
         );
       case MODAL_TYPE.SELECT_VAL:
