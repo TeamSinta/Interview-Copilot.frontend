@@ -126,7 +126,7 @@ const EditMember: React.FC<MemberModalProps> = () => {
         />
         <StyledDeleteBox
           targetModalType={MODAL_TYPE.DEL_MEMBER}
-          disabled={false}
+          disabled={true}
           deleteItemText="member"
           deleteFromText="all your companies"
         />

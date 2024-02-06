@@ -33,23 +33,7 @@ const DeleteCompanyMember = () => {
   const member = useSelector((state: RootState) => state.member.member);
   const workspace = useSelector((state: RootState) => state.workspace);
 
-  const handleDeleteClick = async () => {
-    try {
-      await DeleteCompanyMember({
-        company_id: workspace.id,
-        member_id: member.id,
-      });
-
-      if (DeleteCompanyMember.isSuccess(response)) {
-        dispatch(closeModal());
-        dispatch(resetMemberInfo());
-      } else {
-        console.log('Failed to remove user ', response.error);
-      }
-    } catch (error) {
-      console.log('Failed to remove user', error);
-    }
-  };
+  const handleDeleteClick = async () => {};
 
   const handleCancelClick = () => {
     dispatch(closeModal());
