@@ -27,6 +27,7 @@ import Stack from '@mui/material/Stack';
 import { NumberIcon } from '../../cards/card/StyledCard';
 import Box from '@mui/material/Box';
 import { MODAL_TYPE } from '../GlobalModal';
+import { validateTitle } from '@/utils/inputValidations';
 
 const titleInputArg = {
   label: 'Title',
@@ -60,22 +61,6 @@ const EditDepartment = () => {
     department_id: currentDepartment.id,
     sort_by: '',
   });
-
-  const validateTitle = (value: string): string | null => {
-    if (!value.trim()) {
-      return (
-        <>
-          <BodySMedium
-            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
-          >
-            Title is required{' '}
-          </BodySMedium>
-        </>
-      );
-    }
-
-    return null;
-  };
 
   const onClickModalOpen = (targetModalType: MODAL_TYPE) => {
     dispatch(
@@ -145,7 +130,7 @@ const EditDepartment = () => {
             <MemberPhotosContainer>
               <Box sx={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
                 {departmentMembers
-                  ?.slice(0, departmentMembers.length > 4 ? 3 : 4)
+                  ?.slice(0, departmentMembers?.length > 4 ? 3 : 4)
                   .map((member: any, index: number) => (
                     <ElWrap w={40} h={40} key={index}>
                       <Photo

@@ -10,12 +10,10 @@ import {
   DepartmentDetails,
 } from './StyledDepartmentCard'; // Adjust the import path to match your file structure
 import { BodyMMedium } from '../../typeScale/StyledTypeScale';
+import { IDepartment } from '@/types/department';
 
 interface DepartmentCardProps {
-  department: {
-    id: string;
-    title: string;
-  };
+  department: IDepartment;
   onClick: (department: any) => void;
 }
 

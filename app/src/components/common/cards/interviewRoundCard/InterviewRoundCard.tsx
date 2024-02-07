@@ -16,17 +16,14 @@ import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { NumberIcon, PhotoIcon } from '../card/StyledCard';
 import { InitialsGenerator } from '@/utils/Utils';
 import TempCover from '@/assets/images/cover_1.jpg';
+import { IMember } from '@/types/company';
 
 export interface InterviewRoundCardProps {
   templateId: string;
   image?: string;
   title?: string;
   numberOfQuestions?: string;
-  members?: Array<{
-    firstName: string;
-    lastName: string;
-    profilePicture: string;
-  }>;
+  members?: Partial<IMember>[];
   selected?: boolean;
   imageUrl: string;
   setIsSelectedTemplate?: React.Dispatch<React.SetStateAction<boolean>>;

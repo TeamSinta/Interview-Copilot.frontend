@@ -23,6 +23,7 @@ import {
   toggleMemberSelected,
   resetMemberSelection,
 } from '@/features/members/memberSlice';
+import { validateTitle } from '@/utils/inputValidations';
 
 const titleInputArg = {
   label: 'Title',
@@ -101,22 +102,6 @@ const CreateDepartment = () => {
     } catch (error: any) {
       setValidationError('Error creating department: ' + error.message);
     }
-  };
-
-  const validateTitle = (value: string): string | null => {
-    if (!value.trim()) {
-      return (
-        <>
-          <BodySMedium
-            style={{ paddingTop: '52px', color: 'gray', textAlign: 'end' }}
-          >
-            Title is required{' '}
-          </BodySMedium>
-        </>
-      );
-    }
-
-    return null;
   };
 
   useEffect(() => {

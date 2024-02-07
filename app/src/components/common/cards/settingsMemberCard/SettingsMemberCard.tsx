@@ -15,17 +15,10 @@ import {
   BodyLMedium,
   BodySMedium,
 } from '../../typeScale/StyledTypeScale';
+import { IMember } from '@/types/company';
 
 interface MemberCardProps {
-  user: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    username: string;
-    email: string;
-    role: string;
-    profilePicture: string | null;
-  };
+  user: IMember;
   onClick: (user: any) => void;
 }
 

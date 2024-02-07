@@ -10,19 +10,16 @@ import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { openModal } from '@/features/modal/modalSlice';
-import { IMember } from '@/features/roles/rolesInterface';
-import { useFetchSelectMembers } from '@/features/roles/rolesSlice';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
 import { useEffect, useRef, useState } from 'react';
 import { RootState } from '@/app/store';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useAddTemplateMutation } from '@/features/templates/templatesAPISlice';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
-import NewDepartment from '../../form/newDepartment/newDepartment';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
 import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
+import { CompanyId, IMember } from '@/types/company';
 
 const titleInputArg = {
   error: false,
@@ -52,9 +49,9 @@ const CreateInterviews = () => {
   const [title, setTitle] = useState(''); // Separate state for title
   const [description, setDescription] = useState(''); // Separate state for description
 
-  const companyId: CompanyID = (!workspace.id
+  const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
+    : workspace.id)! as unknown as CompanyId;
 
   // const { members } = useFetchSelectMembers({
   //   company_id: companyId,
@@ -68,7 +65,7 @@ const CreateInterviews = () => {
   });
 
   useEffect(() => {
-    if (companyMembers && companyMembers.length > 0) {
+    if (companyMembers && companyMembers?.length > 0) {
       const initializedMembers = companyMembers.map((member) => ({
         ...member,
         member_idx: member.id,
@@ -81,7 +78,7 @@ const CreateInterviews = () => {
     }
   }, [companyMembers]);
 
-  const onMemberSelected = (memberId: number) => {
+  const onMemberSelected = (memberId: string) => {
     const updatedMembers = selectedMembers.map((member) =>
       member.id === memberId
         ? { ...member, selected: !member.selected }
@@ -94,7 +91,7 @@ const CreateInterviews = () => {
 
   // Fetch departments with an additional trigger
   const departments = useFetchCompanyDepartments(
-    companyId as CompanyID,
+    companyId as CompanyId,
     fetchTrigger
   );
 

@@ -22,14 +22,7 @@ import {
 import Photos from '../../buttons/photo/Photos';
 import { InitialsGenerator } from '@/utils/Utils';
 import TempCover from '@/assets/images/cover_1.jpg';
-
-export interface IMember {
-  id: string;
-  firstName: string;
-  lastName: string;
-  profilePicture: string;
-  selected?: boolean;
-}
+import { IMember } from '@/types/company';
 
 interface ITemplateHomeCard {
   title: string;
