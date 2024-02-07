@@ -86,8 +86,9 @@ const CreateDepartment = () => {
     };
 
     try {
-      const newDepartment =
-        await createNewDepartment(createDepartmentData).unwrap();
+      const newDepartment = await createNewDepartment(
+        createDepartmentData
+      ).unwrap();
       if (newDepartment && newDepartment.id) {
         await addDepartmentMembers({
           invitees: selectedMemberIds,
@@ -114,9 +115,7 @@ const CreateDepartment = () => {
     <ModalContentWrap>
       <TextInput
         {...titleInputArg}
-        onChange={(e) => {
-          onCreateDepTitleChange(e);
-        }}
+        onChange={onCreateDepTitleChange}
         value={newDepartmentName}
         validate={validateTitle}
         disable={isLoading}

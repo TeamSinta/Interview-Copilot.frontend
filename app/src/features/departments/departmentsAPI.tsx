@@ -8,6 +8,7 @@ import {
   IDepartment,
 } from '@/types/department';
 import { IMembersListResponse, SortBy } from '@/types/common';
+import { transformMemberList } from '@/utils/memberListTransform';
 
 export const departmentsAPI = createApi({
   reducerPath: 'departmentsApi',
@@ -96,19 +97,7 @@ export const departmentsAPI = createApi({
         url: `/company/department/members?department=${department_id}&sort_by=${sort_by}`,
         method: 'GET',
       }),
-      transformResponse: (response: IMembersListResponse[]): IMember[] => {
-        const transformedMembers = response.map((member) => ({
-          id: member.id,
-          firstName: member.first_name,
-          lastName: member.last_name,
-          email: member.email,
-          profilePicture: member.profile_picture,
-          username: member.username,
-          role: member.role,
-        }));
-
-        return transformedMembers;
-      },
+      transformResponse: transformMemberList,
       providesTags: ['Members'],
     }),
     addDepartmentMembers: builder.mutation<

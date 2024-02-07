@@ -1,5 +1,6 @@
 import { IMembersListResponse, SortBy } from '@/types/common';
 import { CompanyId, ICompany, IMember } from '@/types/company';
+import { transformMemberList } from '@/utils/memberListTransform';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const companyAPI = createApi({
@@ -27,17 +28,7 @@ export const companyAPI = createApi({
         url: `/company/members?company=${company_id}&sort_by=${sort_by}`,
         method: 'GET',
       }),
-      transformResponse: (response: IMembersListResponse[]): IMember[] => {
-        return response.map((member) => ({
-          id: member.id,
-          firstName: member.first_name,
-          lastName: member.last_name,
-          email: member.email,
-          profilePicture: member.profile_picture,
-          username: member.username,
-          role: member.role,
-        }));
-      },
+      transformResponse: transformMemberList,
       providesTags: ['Members'],
     }),
     getCompany: builder.query<ICompany, CompanyId>({
