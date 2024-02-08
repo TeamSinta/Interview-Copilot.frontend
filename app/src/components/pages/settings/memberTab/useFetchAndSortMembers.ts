@@ -1,13 +1,10 @@
 import {
-  CompanyID,
-  DepartmentID,
-} from '@/features/settingsDetail/userSettingTypes';
-import {
   useGetCompanyDepartmentsMutation,
   useGetCompanyMembersQuery,
 } from '@/features/settingsDetail/userSettingsAPI';
-import { MembersList } from '@/features/settingsDetail/userSettingsInterface';
-import { IOption } from '@/types/common';
+import { IMembersList, IOption, SortBy } from '@/types/common';
+import { CompanyId } from '@/types/company';
+import { DepartmentId } from '@/types/department';
 import { useEffect, useState } from 'react';
 
 export const useFetchCompanyMembers = ({
@@ -15,11 +12,11 @@ export const useFetchCompanyMembers = ({
   department_id,
   sortCriteria,
 }: {
-  company_id: CompanyID;
-  department_id: DepartmentID;
-  sortCriteria: string;
+  company_id: CompanyId;
+  department_id: DepartmentId;
+  sortCriteria: SortBy;
 }) => {
-  const [members, setMembers] = useState<MembersList[]>([]);
+  const [members, setMembers] = useState<IMembersList[]>([]);
 
   const { data, isSuccess } = useGetCompanyMembersQuery({
     company_id,
@@ -36,12 +33,16 @@ export const useFetchCompanyMembers = ({
   return { members };
 };
 
-export const useFetchCompanyDepartments = (companyId: CompanyID, trigger?: number) => {
+export const useFetchCompanyDepartments = (
+  company_id: CompanyId,
+  sort_by: SortBy,
+  trigger?: number
+) => {
   const [departments, setDepartments] = useState<IOption[]>([]);
   const [getCompanyDepartments] = useGetCompanyDepartmentsMutation();
 
   useEffect(() => {
-    getCompanyDepartments({ company_id: companyId })
+    getCompanyDepartments({ company_id, sort_by })
       .then((response) => {
         if ('data' in response && 'data') {
           const transformedData = (response.data as unknown as any[]).map(
@@ -57,7 +58,7 @@ export const useFetchCompanyDepartments = (companyId: CompanyID, trigger?: numbe
         }
       })
       .catch((error) => console.error('Error fetching company users:', error));
-  }, [companyId, getCompanyDepartments, trigger]);
+  }, [company_id, sort_by, getCompanyDepartments, trigger]);
 
   return departments;
 };

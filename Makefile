@@ -1,8 +1,12 @@
 
 # Initialization Commands
 
-.PHONY: build
-build:
+.PHONY: build-dev
+build-dev:
+		docker compose -f docker-compose-dev.yaml build
+
+.PHONY: build-staging
+build-staging:
 		docker compose -f docker-compose-staging.yaml build
 
 .PHONY: install
@@ -55,4 +59,4 @@ docker-down:
 # Setup Command
 .PHONY: setup
 setup:
-	make install install-pre-commit
+	make install install-pre-commit make build-dev

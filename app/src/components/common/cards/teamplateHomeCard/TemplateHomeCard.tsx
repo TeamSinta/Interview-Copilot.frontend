@@ -22,13 +22,7 @@ import {
 import Photos from '../../buttons/photo/Photos';
 import { InitialsGenerator } from '@/utils/Utils';
 import TempCover from '@/assets/images/cover_1.jpg';
-
-export interface IMember {
-  id: number;
-  profile_picture: string;
-  first_name: string;
-  last_name: string;
-}
+import { IMember } from '@/types/company';
 
 interface ITemplateHomeCard {
   title: string;
@@ -98,13 +92,10 @@ const TemplateHomeCard = (props: ITemplateHomeCard) => {
                 .slice(0, members.length > 4 ? 3 : 4)
                 .map((member: IMember, index) => (
                   <ElWrap w={32} h={32} key={index}>
-                    <PhotoIcon imgUrl={member.profile_picture}>
+                    <PhotoIcon imgUrl={member.profilePicture}>
                       <BodySBold>
-                        {!member.profile_picture
-                          ? InitialsGenerator(
-                              member.first_name,
-                              member.last_name
-                            )
+                        {!member.profilePicture
+                          ? InitialsGenerator(member.firstName, member.lastName)
                           : ''}
                       </BodySBold>
                     </PhotoIcon>

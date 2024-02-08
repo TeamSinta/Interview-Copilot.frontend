@@ -99,7 +99,6 @@ export default function HairCheck({
 
   const titleInputRef = useRef<{ triggerValidation: () => void } | null>(null);
 
-
   const workspace = useSelector((state: RootState) => state.workspace);
 
   // definitely should look over this, idk what TS is doing here om on the companyId type.
@@ -143,11 +142,11 @@ export default function HairCheck({
   };
 
   const startMeeting = async () => {
-    if (!selectedTemplate) setFormValid(false)
+    if (!selectedTemplate) setFormValid(false);
     let hasError = false; // Track if there's any validation error
     if (!newTitle.trim()) {
       if (titleInputRef.current) {
-        setFormValid(false)
+        setFormValid(false);
         titleInputRef.current.triggerValidation();
       }
       hasError = true;
@@ -458,7 +457,13 @@ export default function HairCheck({
               </ElWrap>
             </Stack>
             <BodySMedium>Title of your meeting</BodySMedium>
-            <div style={{ width: '100%' , marginBottom:'10px' , position:'relative' }}>
+            <div
+              style={{
+                width: '100%',
+                marginBottom: '10px',
+                position: 'relative',
+              }}
+            >
               <ElWrap>
                 <TextInput
                   name="title"
@@ -476,14 +481,14 @@ export default function HairCheck({
                 <BodySMedium
                   style={{
                     color: 'gray',
-                    position:'absolute',
+                    position: 'absolute',
                     bottom: -22,
-                    right: 0
+                    right: 0,
                   }}
                 >
                   Title is required{' '}
                 </BodySMedium>
-            ) : null}
+              ) : null}
             </div>
           </Stack>
           <div
@@ -511,9 +516,9 @@ export default function HairCheck({
                   )} Questions`}
                   members={template.interviewers?.map(
                     (interviewer: IMember) => ({
-                      first_name: interviewer.first_name,
-                      last_name: interviewer.last_name,
-                      profile_picture: interviewer.profile_picture,
+                      firstName: interviewer.firstName,
+                      lastName: interviewer.lastName,
+                      profilePicture: interviewer.profilePicture,
                     })
                   )}
                   onClick={(templateId) => {
@@ -527,15 +532,15 @@ export default function HairCheck({
               )}
             />
             {!isFormValid && !selectedTemplate ? (
-                <BodySMedium
-                  style={{
-                    color: 'red',
-                    position:'absolute',
-                    textAlign: 'center',
-                  }}
-                >
-                  Template is required{' '}
-                </BodySMedium>
+              <BodySMedium
+                style={{
+                  color: 'red',
+                  position: 'absolute',
+                  textAlign: 'center',
+                }}
+              >
+                Template is required{' '}
+              </BodySMedium>
             ) : null}
           </div>
           <ButtonWrapper>

@@ -7,35 +7,32 @@ import Invite from '@/components/common/form/invite/Invite';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { closeModal } from '@/features/modal/modalSlice';
-// import { selectedMember } from "@/features/roles/rolesSlice";
 import { RootState } from '@/app/store';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
-
-import { useFetchCompanyMembers } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
+import { useFetchCompanyMembers } from '@/hooks/useFetchCompanyMembers';
 import {
   useGetTemplateDetailQuery,
   useUpdateTemplateMutation,
 } from '@/features/templates/templatesAPISlice';
 import { useParams } from 'react-router-dom';
 import { IMember } from '../../cards/teamplateHomeCard/TemplateHomeCard';
+import { CompanyId } from '@/types/company';
 
 const EditInterviewers = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
   const [sortCriteria] = useState('');
-  const [departmentId] = useState('');
   const [selectedMembers, setSelectedMembers] = useState<IMember[]>([]);
 
   const { templateId } = useParams();
 
-  const companyId: CompanyID = (!workspace.id
+  const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
+    : workspace.id)! as unknown as CompanyId;
 
   const stringTemplateId = templateId?.toString();
 
@@ -43,7 +40,6 @@ const EditInterviewers = () => {
 
   const { members } = useFetchCompanyMembers({
     company_id: companyId,
-    department_id: departmentId,
     sortCriteria: sortCriteria,
   });
 
@@ -54,18 +50,16 @@ const EditInterviewers = () => {
         templateData.interviewers.map((i) => i.id)
       );
 
-      // console.log(members);
-
       const initializedMembers = members.map((member) => ({
         ...member,
-        member_idx: member.id, // map id to member_idx
+        id: member.id, // map id to member_idx
         selected: interviewerIds.has(member.id),
       }));
       setSelectedMembers(initializedMembers);
     }
   }, [members, templateData]); // Depend on templateData as well
 
-  const onMemberSelected = (memberId: number) => {
+  const onMemberSelected = (memberId: string) => {
     const updatedMembers = selectedMembers.map((member) =>
       member.id === memberId
         ? { ...member, selected: !member.selected }
@@ -106,10 +100,10 @@ const EditInterviewers = () => {
               <Photo
                 photoType={PhotoType.L}
                 onSelect={() => onMemberSelected(member.id)}
-                member_idx={member.id}
-                member_firstName={member.first_name}
-                member_lastName={member.last_name}
-                member_url={member.profile_picture}
+                id={member.id}
+                firstName={member.firstName}
+                lastName={member.lastName}
+                profilePicture={member.profilePicture}
                 selected={member.selected}
               />
             </ElWrap>

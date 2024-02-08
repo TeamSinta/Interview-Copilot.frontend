@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-export const UserCardContainer = styled.div`
+export const MemberCardContainer = styled.div`
   width: 100%;
-  height: 72px;
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,7 +25,7 @@ export const ProfilePicture = styled.img`
   background-color: gray;
 `;
 
-export const UserDetails = styled.div`
+export const MemberDetails = styled.div`
   flex-direction: column;
 `;
 

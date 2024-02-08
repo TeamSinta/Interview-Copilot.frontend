@@ -29,7 +29,9 @@ export const CardCover = styled.div<ICardCover>`
   /* background-image: url(${(props) => props.imgUrl}); */
   background-image: url(${(props) => props.imgUrl});
   background-size: cover, contain;
-  background-position: center, right bottom;
+  background-position:
+    center,
+    right bottom;
   background-repeat: no-repeat, no-repeat;
   position: relative;
   width: 100%;
@@ -57,13 +59,15 @@ export const CardIcon = styled.div`
 `;
 
 interface IPhotoIcon {
-  imgUrl: string;
+  imgUrl: string | undefined;
 }
 
 export const PhotoIcon = styled.div<IPhotoIcon>`
   background-image: url(${(props) => props.imgUrl});
   background-size: cover, contain;
-  background-position: center, right bottom;
+  background-position:
+    center,
+    right bottom;
   background-repeat: no-repeat, no-repeat;
   position: relative;
   width: 32px;
@@ -120,7 +124,9 @@ export const InterviewCardCover = styled.div<ICardCover>`
   /* background-image: url(${(props) => props.imgUrl}); */
   background-image: url(${Cover});
   background-size: cover;
-  background-position: center, right bottom;
+  background-position:
+    center,
+    right bottom;
   background-repeat: no-repeat, no-repeat;
   position: relative;
   width: 100%;

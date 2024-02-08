@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IDepartment, MembersList, UserData } from './userSettingsInterface';
-import { CompanyID, DepartmentID, UserID } from './userSettingTypes';
+import { DepartmentId, IDepartment, IUserData } from '@/types/department';
+import { IMembersList, SortBy } from '@/types/common';
+import { CompanyId } from '@/types/company';
+import { UserId } from '@/types/user';
 
 export const userAPI = createApi({
   reducerPath: 'userApi',
@@ -14,9 +16,9 @@ export const userAPI = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Departments'],
+  tagTypes: ['User'],
   endpoints: (builder) => ({
-    updateUser: builder.mutation<void, { userData: UserData }>({
+    updateUser: builder.mutation<void, { userData: IUserData }>({
       query: ({ userData }) => {
         return {
           url: '/user/userdetails/',
@@ -33,28 +35,29 @@ export const userAPI = createApi({
         };
       },
     }),
-    getCompanyMembers: builder.query<
-      MembersList[],
-      {
-        company_id: CompanyID;
-        department_id: DepartmentID;
-        sort_by: string;
-      }
-    >({
-      query: ({ company_id, department_id, sort_by }) => ({
-        url: `/company/members?company=${company_id}&department=${department_id}&sort_by=${sort_by}`,
-        method: 'GET',
-      }),
-    }),
+    // getCompanyMembers: builder.query<
+    //   IMembersList[],
+    //   {
+    //     company_id: CompanyId;
+    //     department_id: DepartmentId;
+    //     sort_by: SortBy;
+    //   }
+    // >({
+    //   query: ({ company_id, department_id, sort_by }) => ({
+    //     url: `/company/members?company=${company_id}&department=${department_id}&sort_by=${sort_by}`,
+    //     method: 'GET',
+    //   }),
+    // }),
     getCompanyDepartments: builder.mutation<
       IDepartment[],
       {
-        company_id?: CompanyID;
+        company_id: CompanyId;
+        sort_by: SortBy;
       }
     >({
-      query: ({ company_id }) => {
+      query: ({ company_id, sort_by }) => {
         return {
-          url: `/company/departments?company=${company_id}`,
+          url: `/company/departments?company=${company_id}&sort_by=${sort_by}`,
           method: 'GET',
         };
       },
@@ -63,8 +66,8 @@ export const userAPI = createApi({
     getUserDepartments: builder.mutation<
       void,
       {
-        user_id: UserID;
-        company_id: CompanyID;
+        user_id: UserId;
+        company_id: CompanyId;
       }
     >({
       query: ({ user_id, company_id }) => {
@@ -73,23 +76,6 @@ export const userAPI = createApi({
           method: 'GET',
         };
       },
-    }),
-    createNewDepartment: builder.mutation<
-      void,
-      {
-        company_id: CompanyID;
-        departmentTitle: string; // Assuming the department has a title field
-      }
-    >({
-      query: ({ company_id, departmentTitle }) => ({
-        url: `/company/departments`, // Updated URL as per your API
-        method: 'POST',
-        body: {
-          title: departmentTitle,
-          company_id: company_id, // Assuming 'title' is the expected field name for the department title
-        },
-      }),
-      invalidatesTags: ['Departments'],
     }),
     createDepartmentMember: builder.mutation({
       query: ({ company_id, department_id, user_id, body = {} }) => ({
@@ -107,6 +93,5 @@ export const {
   useGetCompanyMembersQuery,
   useGetCompanyDepartmentsMutation,
   useGetUserDepartmentsMutation,
-  useCreateNewDepartmentMutation,
   useCreateDepartmentMemberMutation,
 } = userAPI;
