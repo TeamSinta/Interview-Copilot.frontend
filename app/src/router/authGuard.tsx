@@ -88,9 +88,9 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   };
 
   const failedAuthentication = () => {
-    dispatch(resetUserState());
     removeCookies('access_token');
     removeCookies('refresh_token');
+    dispatch(resetUserState());
     navigate('/login');
   };
 

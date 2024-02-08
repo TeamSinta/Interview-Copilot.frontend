@@ -181,7 +181,7 @@ export const getInterview = async (interviewRoundId: string, token: string) => {
       },
     }
   );
-  if (result && result.data && result.data.interviewer) {
+  if (result?.data?.interviewer) {
     const interviewer = result.data.interviewer;
     result.data.interviewer = {
       ...interviewer,
@@ -190,10 +190,6 @@ export const getInterview = async (interviewRoundId: string, token: string) => {
       profilePicture: interviewer.profile_picture,
     };
   }
-  console.log(
-    'InterviewAPI fetched interview round and transformed data: ',
-    result.data
-  );
   return result.data;
 };
 

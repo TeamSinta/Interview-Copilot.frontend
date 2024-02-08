@@ -34,7 +34,7 @@ export const userSlice = createSlice({
     ) => {
       state.status = action.payload;
     },
-    resetUserState: () => initialState,
+    resetUserState: (state) => state = initialState,
     setIsAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
     },
