@@ -1,16 +1,20 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { getCookieValue } from '../cookieUtils';
+import axios, {
+  AxiosError,
+  AxiosRequestHeaders,
+  InternalAxiosRequestConfig,
+} from 'axios';
+import { clearAllCookies, getCookieValue } from '../cookieUtils';
 
 export const instance = axios.create({});
 
 //Temporary suspension of service due to the incomplete implementation of the login function.
 const requestHandler = async (
   config: InternalAxiosRequestConfig
-): Promise<
-  InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>
-> => {
+): Promise<InternalAxiosRequestConfig> => {
   const access_token = await getCookieValue('access_token');
-  config.headers.Authorization = `Bearer ${access_token}`;
+  config.headers = {
+    Authorization: `Bearer ${access_token}`,
+  } as AxiosRequestHeaders;
   //  Todo: Need to confirm with @mohamed shegow
   // if (import.meta.env.VITE_ENV === Env.DEVELOPE) {
   //   const token = localStorage.getItem("token");
@@ -42,6 +46,10 @@ const responseHandler = (response: any): any => {
 // Response Error Handler
 const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
   console.error(`[response error] [${JSON.stringify(error)}]`);
+  if (error.response?.status === 401) {
+    clearAllCookies();
+    window.location.href = '/login';
+  }
   return await Promise.reject(error);
 };
 
