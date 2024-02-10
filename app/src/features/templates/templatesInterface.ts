@@ -1,10 +1,12 @@
+import { IQuestion } from '../interviews/interviewsInterface';
+
 export interface Interviewer {
   id: string;
   username: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  profile_picture: string | null;
+  profilePicture: string | null;
 }
 
 export interface TemplateResponse {
@@ -25,9 +27,17 @@ export interface TQuestions {
   difficulty: string;
 }
 
+//What is this for?
 export interface TemplateQuestions {
   filter(arg0: (templateQuestion: TemplateQuestions) => boolean): unknown;
   template_id: number;
   topic: string;
   question: TQuestions[];
+}
+
+export interface ITemplateQuestion {
+  id: number;
+  question: IQuestion;
+  template_id: number;
+  topic: number;
 }

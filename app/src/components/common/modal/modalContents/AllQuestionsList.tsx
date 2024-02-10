@@ -26,12 +26,12 @@ import {
 } from './StyledModalContents';
 import Loading from '../../elements/loading/Loading';
 import { useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import MarkdownFromatConatiner from '../../markdownFormatContainer/MarkdownFormatContainer';
 
 const AllQuestionsList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedQuestion } = useSelector(selectInterview);
   const [openItems, setOpenItems] = useState(new Set());
-  const [html, setHtml] = useState<string>('');
   const [questions, setQuestions] = useState<IQuestion[]>([]);
 
   const openDetailHandler = (id: number, isOpen: boolean) => {
@@ -44,7 +44,7 @@ const AllQuestionsList = () => {
     }
   };
 
-  useEffect(() => {}, [openItems, setOpenItems, html, selectedQuestion]);
+  useEffect(() => {}, [openItems, setOpenItems, selectedQuestion]);
 
   const {
     data: questionsResponse,
@@ -117,7 +117,6 @@ const AllQuestionsList = () => {
                   <DetailOpenIcon
                     open={openItems.has(question.id)}
                     onClick={() => {
-                      setHtml(question.guidelines);
                       openDetailHandler(
                         question.id,
                         openItems.has(question.id)
@@ -149,7 +148,9 @@ const AllQuestionsList = () => {
                     openItems.has(question.id) ? 'detail' : 'detail none'
                   }
                 >
-                  <div dangerouslySetInnerHTML={{ __html: html }}></div>
+                  <MarkdownFromatConatiner>
+                    {question.guidelines}
+                  </MarkdownFromatConatiner>
                 </div>
               </div>
             ))}

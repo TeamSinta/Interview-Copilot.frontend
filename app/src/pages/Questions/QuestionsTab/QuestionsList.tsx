@@ -17,7 +17,6 @@ import {
   MoveIcon,
   PlusIcon,
   SelectArrowOpenIcon,
-  Star1Icon,
   TimeIcon,
 } from '@/components/common/svgIcons/Icons';
 import {
@@ -25,14 +24,13 @@ import {
   BodySMedium,
   H3Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
-import { H3 } from '@/components/common/typeScale/TypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import React, { useState } from 'react';
 
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
-import { Stack } from '@mui/material';
+import Loading from '@/components/common/elements/loading/Loading';
 import {
   InputDiv,
   InputLabelDiv,
@@ -44,14 +42,14 @@ import {
   OverviewDetails,
 } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
 import {
-  useDeleteQuestionMutation,
   useGetQuestionsQuery,
+  useDeleteQuestionMutation,
 } from '@/features/questions/questionsAPISlice';
-import Loading from '@/components/common/elements/loading/Loading';
+import { Stack } from '@mui/material';
+import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { useDispatch } from 'react-redux';
 import { openModal } from '@/features/modal/modalSlice';
-import ReactMarkdown from 'react-markdown';
 
 interface IState {
   [key: string]: any;
@@ -59,9 +57,6 @@ interface IState {
   time: number;
   guidelines: string;
 }
-const components = {
-  h3: H3,
-};
 
 const QuestionList = () => {
   const [questions, setQuestions] = React.useState<string[]>([]);
@@ -290,9 +285,12 @@ const QuestionList = () => {
                   <div
                     className={`detail ${openItems.has(index) ? '' : 'none'}`}
                   >
-                    <ReactMarkdown components={components}>
+                    {/* <ReactMarkdown components={components}>
                       {question.guidelines}
-                    </ReactMarkdown>
+                    </ReactMarkdown> */}
+                    <MarkdownFromatConatiner>
+                      {question.guidelines}
+                    </MarkdownFromatConatiner>
                   </div>
                 </OverviewDetailList>
               );

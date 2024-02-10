@@ -4,22 +4,21 @@ import Photos from '@/components/common/buttons/photo/Photos';
 import { PlusIcon } from '@/components/common/svgIcons/Icons';
 import { H3Bold } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
-import { IMockMembers } from '@/features/roles/rolesInterface';
+
+import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
+import { useGetInterviewTemplateQuery } from '@/features/interviewDetail/interviewDetailAPI';
+import { openModal } from '@/features/modal/modalSlice';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Title } from '../StyledInterview';
 import { OverviewInterviewers } from './StyledOverviewInterviewer';
-import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
-import { openModal } from '@/features/modal/modalSlice';
-import { useGetInterviewTemplateQuery } from '@/features/interviewDetail/interviewDetailAPI';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
-import React from 'react';
-
 const InterviewOverviewInterviewer = () => {
   const { templateId } = useParams();
+
   const {data : template , isSuccess} = useGetInterviewTemplateQuery(templateId)
-  const [interviewer , setInterviewer] = useState([])
+  const [interviewer , setInterviewer] = React.useState([])
 
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -48,42 +47,20 @@ const InterviewOverviewInterviewer = () => {
       </Title>
       <Photos>
         {interviewer.length > 0 ? (
-          interviewer.map((interview: IMockMembers, index: number) => (
+          interviewer.map((interview: any, index: number) => (
             <ElWrap w={40} h={40} key={index}>
               <Photo
                 photoType={PhotoType.L}
-                member_idx={interview.id}
-                member_firstName={interview.first_name}
-                member_lastName={interview.last_name}
-                member_url={interview.profile_picture}
+                id={interview.id}
+                firstName={interview.firstName}
+                lastName={interview.lastName}
+                profilePicture={interview.profilePicture}
               />
             </ElWrap>
           ))
         ) : (
           <></>
         )}
-        {/* <ElWrap w={40} h={40}>
-          <Photo
-            photoType={PhotoType.L}
-            onSelect={() => {}}
-            member_idx={1}
-            member_name={"Mattias Welamsson"}
-            member_url={""}
-            selected={false}
-          />
-        </ElWrap>
-        <ElWrap w={40} h={40}>
-          <Photo
-            photoType={PhotoType.L}
-            onSelect={() => {}}
-            member_idx={1}
-            member_name={"Mohamed Shegow"}
-            member_url={
-              "https://ca.slack-edge.com/T04C82XCPRU-U04D4BRG8CQ-c4ccf8605ed3-512"
-            }
-            selected={false}
-          />
-        </ElWrap> */}
       </Photos>
       <GlobalModal></GlobalModal>
     </OverviewInterviewers>

@@ -1,22 +1,23 @@
 import { RootState } from '@/app/store';
-import { createSlice } from '@reduxjs/toolkit';
+import { IMember } from '@/types/company';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface MemberState {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  // departments list
-  pictureUrl: string;
+  member: IMember;
+  currentMembers: IMember[];
 }
 
 const initialState: MemberState = {
-  id: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  // departments list
-  pictureUrl: '',
+  member: {
+    id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    profilePicture: '',
+    username: '',
+    role: '',
+  },
+  currentMembers: [],
 };
 
 export const memberSlice = createSlice({
@@ -24,16 +25,50 @@ export const memberSlice = createSlice({
   initialState,
   reducers: {
     setMemberInfo: (state, actions) => {
-      state.id = actions.payload.id;
-      state.firstName = actions.payload.firstName;
-      state.lastName = actions.payload.lastName;
-      state.email = actions.payload.email;
-      state.pictureUrl = actions.payload.pictureUrl;
+      state.member.id = actions.payload.id;
+      state.member.firstName = actions.payload.firstName;
+      state.member.lastName = actions.payload.lastName;
+      state.member.email = actions.payload.email;
+      state.member.profilePicture = actions.payload.profilePicture;
+      state.member.role = actions.payload.role;
+    },
+    resetMemberInfo: (state) => {
+      state.member = initialState.member;
+    },
+    setCurrentMembers: (state, action: PayloadAction<IMember[]>) => {
+      state.currentMembers = action.payload.map((member) => ({
+        ...member,
+        selected: member.selected ?? false,
+      }));
+    },
+    toggleMemberSelected: (state, action: PayloadAction<string>) => {
+      const memberId = action.payload;
+      const memberIndex = state.currentMembers.findIndex(
+        (member) => member.id === memberId
+      );
+      if (memberIndex !== -1) {
+        state.currentMembers[memberIndex].selected =
+          !state.currentMembers[memberIndex].selected;
+      }
+    },
+    resetMemberSelection: (state) => {
+      state.currentMembers = state.currentMembers.map((members) => ({
+        ...members,
+        selected: false,
+      }));
     },
   },
 });
 
-export const { setMemberInfo } = memberSlice.actions;
-export const selectSetMember = (state: RootState) => state.member;
+export const {
+  setMemberInfo,
+  resetMemberInfo,
+  setCurrentMembers,
+  toggleMemberSelected,
+  resetMemberSelection,
+} = memberSlice.actions;
+export const selectSetMember = (state: RootState) => state.member.member;
+export const selectCurrentMembers = (state: RootState) =>
+  state.member.currentMembers;
 
 export default memberSlice.reducer;

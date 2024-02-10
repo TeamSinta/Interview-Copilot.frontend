@@ -21,13 +21,31 @@ export const getInterviewDetailAsync = createAsyncThunk(
   'interviews/interviewDetail',
   async (templateId: string, { dispatch }) => {
     try {
-      const templateResult = await dispatch(InterviewDetailAPI.endpoints.getInterviewTemplate.initiate(templateId));
-      const sectionsResult = await dispatch(InterviewDetailAPI.endpoints.getInterviewSections.initiate(templateId));
-      const questionsResult = await dispatch(InterviewDetailAPI.endpoints.getInterviewDetail.initiate(templateId));
-      
+      const templateResult = await dispatch(
+        InterviewDetailAPI.endpoints.getInterviewTemplate.initiate(templateId)
+      );
+      const sectionsResult = await dispatch(
+        InterviewDetailAPI.endpoints.getInterviewSections.initiate(templateId)
+      );
+      const questionsResult = await dispatch(
+        InterviewDetailAPI.endpoints.getInterviewDetail.initiate(templateId)
+      );
+
       const template = templateResult.data;
       const sections = sectionsResult.data;
       const questions = questionsResult.data;
+
+      // added logic in here because template needs to be transformed
+      // template.interviewers;
+
+      if (template.interviewers) {
+        template.interviewers = template.interviewers.map((interviewer: any) => ({
+          ...interviewer,
+          firstName: interviewer.first_name,
+          lastName: interviewer.last_name,
+          profilePicture: interviewer.profile_picture,
+        }));
+      }
 
       return { template, sections, questions };
     } catch (error) {
@@ -56,10 +74,11 @@ export const interviewDetailSlice = createSlice({
   reducers: {
     setSelectedSection: (state, action) => {
       state.selectedSection = action.payload;
-          },
+    },
   },
 });
 
 export const { setSelectedSection } = interviewDetailSlice.actions;
-export const selectInterviewDetail = (state: RootState) => state.interviewDetail;
+export const selectInterviewDetail = (state: RootState) =>
+  state.interviewDetail;
 export default interviewDetailSlice.reducer;

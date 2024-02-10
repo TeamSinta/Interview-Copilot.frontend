@@ -17,10 +17,29 @@ export const templatesAPI = createApi({
   endpoints: (builder) => ({
     getTemplates: builder.query<object, void>({
       query: () => '/templates/templates/',
-      transformResponse: (res) =>
-        res.sort((a: string[], b: string[]) => b.id - a.id),
+      transformResponse: (res) => {
+        // Sort the templates first
+        res.sort((a: string[], b: string[]) => b.id - a.id);
+
+        // Transform each template
+        return res.map((template) => {
+          // Transform the interviewers array and assign it back to the template
+          template.interviewers = template.interviewers.map((interviewer) => ({
+            id: interviewer.id,
+            firstName: interviewer.first_name,
+            lastName: interviewer.last_name,
+            profilePicture: interviewer.profile_picture,
+          }));
+
+          return {
+            ...template, // Copy other properties of the template
+            interviewers: template.interviewers, // Include the transformed interviewers array
+          };
+        });
+      },
       providesTags: ['Templates'],
     }),
+
     addTemplate: builder.mutation({
       query: (template) => ({
         url: `/templates/templates/`,

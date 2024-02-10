@@ -26,6 +26,19 @@ export const authAPI = createApi({
         };
       },
     }),
+    authKitLogin: builder.mutation<any, any>({
+      query: (data) => {
+        const urlPath = import.meta.env.VITE_USE_MOCK_LOGIN
+          ? '/auth/mocklogin/'
+          : '/auth/login-with-code/';
+        return {
+          url: urlPath,
+          method: 'POST',
+          body: data,
+          credentials: 'include',
+        };
+      },
+    }),
     getUser: builder.mutation<UserReadSerializer, AccessToken>({
       query: (access) => {
         return {
@@ -68,6 +81,7 @@ export const authAPI = createApi({
 
 export const {
   useGoogleLoginMutation,
+  useAuthKitLoginMutation,
   useGetUserMutation,
   useValidateTokenMutation,
   useGetAccessTokenMutation,

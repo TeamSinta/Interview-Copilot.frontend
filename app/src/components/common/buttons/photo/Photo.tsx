@@ -10,10 +10,10 @@ import {
 import { PhotoType } from '@/features/utils/utilEnum';
 
 export interface IPhotoProps {
-  member_idx: number;
-  member_firstName: string;
-  member_lastName: string;
-  member_url: string;
+  id: number;
+  firstName: string;
+  lastName: string;
+  profilePicture: string;
   selected: boolean;
   onSelect: (memberIdx: number) => void;
   photoType: PhotoType.L | PhotoType.S;
@@ -21,10 +21,10 @@ export interface IPhotoProps {
 
 const Photo = (props: IPhotoProps) => {
   const {
-    member_idx,
-    member_firstName,
-    member_lastName,
-    member_url,
+    id,
+    firstName,
+    lastName,
+    profilePicture,
     selected,
     onSelect,
     photoType,
@@ -40,19 +40,17 @@ const Photo = (props: IPhotoProps) => {
     <PhotoCheckBoxDiv
       photoType={photoType}
       onClick={() => {
-        onSelect(member_idx);
+        onSelect(id);
         setSelectPhoto(selectPhoto ? false : true);
       }}
       className={selectPhoto ? 'checked' : ''}
     >
       {
-        // Check if member_url is null, empty, or contains only spaces
-        member_url === null || member_url.trim() === '' ? (
-          <NameCheckBox>
-            {InitialsGenerator(member_firstName, member_lastName)}
-          </NameCheckBox>
+        // Check if profilePicture is null, empty, or contains only spaces
+        profilePicture === null || profilePicture.trim() === '' ? (
+          <NameCheckBox>{InitialsGenerator(firstName, lastName)}</NameCheckBox>
         ) : (
-          <PhotoCheckBox url={member_url}></PhotoCheckBox>
+          <PhotoCheckBox url={profilePicture}></PhotoCheckBox>
         )
       }
 

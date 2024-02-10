@@ -17,7 +17,7 @@ import CreateDepartment from './modalContents/CreateDepartment';
 import SelectValue from './modalContents/SelectValues';
 import ModalL from './ModalL';
 import SelectTemplate from './modalContents/SelectTemplate';
-import MemberSettings from './userSettingsModal/MemberSettings';
+import EditMember from './userSettingsModal/EditMember';
 import EditInterviews from './modalContents/EditInterview';
 import AddCustomQuestion from './modalContents/AddCustomQuestion';
 import EditInterviewers from './modalContents/EditInterviewrs';
@@ -27,22 +27,29 @@ import CreateQuestionBank from './modalContents/CreateQuestionBank';
 import Logo from 'src/assets/svg/icon.svg';
 import Arrow from 'src/assets/svg/arrow.svg';
 import CoverLibrary from './modalContents/CoversLibrary';
+import EditDepartment from './modalContents/EditDepartment';
+import DeleteDepartment from './modalContents/DeleteDepartment';
 import { SetStateAction } from 'react';
+import EditDepartmentMembers from './modalContents/EditDepartmentMembers';
+import DeleteCompanyMember from './modalContents/DeleteCompanyMember';
 
 export enum MODAL_TYPE {
   CREATE_DEP = 'CREATE_DEP',
+  SELECT_DEP = 'SELECT_DEP',
   CREATE_INT = 'CREATE_INT',
   CREATE_QUEST_BANK = 'CREATE_QUEST_BANK',
   ADD_CUSTOM_QUESTION = 'ADD_CUSTOM_QUESTION',
   SELECT_VAL = 'SELECT_VAL',
   SELECT_TEM = 'SELECT_TEM',
   MEMBER_SET = 'MEMBER_SET',
+  DEL_MEMBER = 'MEMBER_DEL',
   EDIT_INT = 'EDIT_INT',
   EDIT_MEM = 'EDIT_MEM',
   VIDEO_SETTINGS = 'VIDEO_SET',
   SELECT_ALL_QUESTIONS = 'SELECT_ALL_QUESTIONS',
   COVER_LIBRARY = 'COVER_LIBRARY',
-  // ModalL = "ModalL",
+  DEL_DEP = 'DEL_DEP',
+  EDIT_DEP_MEM = 'EDIT_DEP_MEM',
 }
 
 interface IModalHeader {
@@ -103,6 +110,18 @@ const GlobalModal = (): JSX.Element => {
             <CreateDepartment />
           </Modal>
         );
+      case MODAL_TYPE.SELECT_DEP:
+        return (
+          <Modal title="Department Details">
+            <EditDepartment />
+          </Modal>
+        );
+      case MODAL_TYPE.EDIT_DEP_MEM:
+        return (
+          <Modal title="Department Members">
+            <EditDepartmentMembers />
+          </Modal>
+        );
       case MODAL_TYPE.SELECT_ALL_QUESTIONS:
         return (
           <ModalL title="All Questions Library">
@@ -144,6 +163,12 @@ const GlobalModal = (): JSX.Element => {
             <EditInterviewers />
           </Modal>
         );
+      case MODAL_TYPE.DEL_MEMBER:
+        return (
+          <Modal title="Confirmation">
+            <DeleteCompanyMember />
+          </Modal>
+        );
       case MODAL_TYPE.SELECT_VAL:
         return (
           <Modal title="Sections">
@@ -164,19 +189,8 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.MEMBER_SET:
         return (
-          <Modal title="Member Setting">
-            <MemberSettings
-              user={{
-                id: '',
-                first_name: '',
-                last_name: '',
-                email: '',
-                role: '',
-              }}
-              onClose={function (): void {
-                throw new Error('Function not implemented.');
-              }}
-            />
+          <Modal title="Member Settings">
+            <EditMember />
           </Modal>
         );
       case MODAL_TYPE.COVER_LIBRARY:
@@ -189,6 +203,12 @@ const GlobalModal = (): JSX.Element => {
                 throw new Error('Function not implemented.');
               }}
             />
+          </Modal>
+        );
+      case MODAL_TYPE.DEL_DEP:
+        return (
+          <Modal title="Confirmation">
+            <DeleteDepartment />
           </Modal>
         );
     }

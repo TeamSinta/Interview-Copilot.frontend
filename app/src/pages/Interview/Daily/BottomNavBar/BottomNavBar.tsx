@@ -28,7 +28,6 @@ import { openModal } from '@/features/modal/modalSlice';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import RoomService from '@/utils/dailyVideoService/videoApi';
 import { Grid } from '@mui/material';
-import Switch from '@mui/material/Switch';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../app/store';
 import Chat from '../Chat/Chat';
@@ -43,6 +42,7 @@ import {
   StyledFinishBtn,
 } from './StyledBottomNavBar';
 import './index.css';
+import { CustomSwitch } from '@/components/common/form/input/StyledInput';
 
 export interface IReactClickedState {
   clicked: number;
@@ -214,11 +214,10 @@ function BottomNavBar(props: IBottomNavBar) {
                       {isRecording ? 'Stop ' : 'Start '} Recording
                     </span>{' '}
                     <span className="icon" style={{ marginLeft: '5px' }}>
-                      <Switch
+                      <CustomSwitch
                         checked={recordSwitch}
                         onChange={handleRecordingToggle}
-                        color="default"
-                      />
+                          />
                     </span>
                   </div>
                 </StyledBottomNavButtons>

@@ -1,40 +1,89 @@
-import { useGoogleLogin } from '@react-oauth/google';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { WorkOS } from '@workos-inc/node';
+import {
+  useGoogleLoginMutation,
+  useAuthKitLoginMutation,
+} from '@/features/authentication/authenticationAPI';
+import { useEffect, useMemo, useCallback } from 'react';
+import { Token } from '@/features/authentication/authenticationInterface';
 
-import { useGoogleLoginMutation } from '@/features/authentication/authenticationAPI';
-
+const workos = new WorkOS(import.meta.env.VITE_WORKOS_SECRETKEY);
+interface IAuthKitLogin {
+  email: string;
+  code?: string;
+}
 interface GoogleLoginReturnType {
-  signIn: () => void;
+  HandleGoogleAuthUrl: () => void;
+  HandleAuthKitLogin: (data: IAuthKitLogin) => Promise<void>;
 }
 
-const GoogleLogin = (): GoogleLoginReturnType => {
+export const useQuery = () => {
+  const { search } = useLocation();
+
+  return useMemo(() => new URLSearchParams(search), [search]);
+};
+
+const useAuth = (): GoogleLoginReturnType => {
   const [googleLogin] = useGoogleLoginMutation();
+  const [authKitLogin] = useAuthKitLoginMutation();
   const [, setCookies] = useCookies(['refresh_token', 'access_token']);
   const navigate = useNavigate();
 
-  const signIn = useGoogleLogin({
-    flow: 'auth-code',
-    onSuccess: async (codeResponse) => {
-      const code = codeResponse.code;
+  const query = useQuery();
+  const code = query.get('code');
 
-      try {
-        const result = await googleLogin({ code }).unwrap();
-        if (result) {
-          setCookies('access_token', result['access'], { path: '/' });
-          setCookies('refresh_token', result['refresh'], { path: '/' });
-          navigate('/dashboard');
+  const getUthUrl = (provider: string) => {
+    return workos.userManagement.getAuthorizationUrl({
+      clientId: import.meta.env.VITE_WORKOS_CLIENTID,
+      provider,
+      redirectUri: import.meta.env.VITE_WORKOS_REDIRECTURI,
+    });
+  };
+
+  const setTokenAndNavigate = useCallback(
+    (token: Token) => {
+      console.log("token", token)
+      setCookies('access_token', token['access'], { path: '/' });
+      setCookies('refresh_token', token['refresh'], { path: '/' });
+      navigate('/dashboard');
+    },
+    [navigate, setCookies]
+  );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (code?.length) {
+        try {
+          const result = await googleLogin({ code }).unwrap();
+          if (result) {
+            setTokenAndNavigate(result);
+          }
+        } catch (error) {
+          console.log('Failed to login: ', error);
+          const urlWithoutCode = window.location.href.split('?')[0];
+          window.history.replaceState({}, document.title, urlWithoutCode);
         }
-      } catch (error) {
-        console.log('Failed to login: ', error);
       }
-    },
-    onError: (errorResponse) => {
-      console.log('Error', errorResponse);
-    },
-  });
+    };
+    fetchData();
+  }, [code, googleLogin, setTokenAndNavigate]);
 
-  return { signIn };
+  const HandleGoogleAuthUrl = () => {
+    window.location.href = getUthUrl('GoogleOAuth');
+  };
+
+  const HandleAuthKitLogin = async (data: IAuthKitLogin) => {
+    try {
+      const result = await authKitLogin(data).unwrap();
+      if (data?.code && result?.access) setTokenAndNavigate(result);
+      else if (result === true) navigate(`/verify?email=${data.email}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { HandleGoogleAuthUrl, HandleAuthKitLogin };
 };
 
-export default GoogleLogin;
+export default useAuth;

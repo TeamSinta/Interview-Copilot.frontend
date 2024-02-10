@@ -53,7 +53,7 @@ import {
   useCreateInterviewRoundMutation,
   useCreateCandidateMutation,
 } from '../../../../features/interviews/interviewsAPI';
-import { IMember } from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
+import { IMember } from '@/types/company';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 import { TemplateQuestions } from '@/features/templates/templatesInterface';
 import IconButton from '@mui/material/IconButton';
@@ -145,8 +145,8 @@ export default function HairCheck({
 
   const startMeeting = async () => {
     if (!selectedTemplate) setIsSelectedTemplate(true);
+    if (!selectedTemplate) setFormValid(false);
     let hasError = false; // Track if there's any validation error
-
     if (!newTitle.trim()) {
       if (titleInputRef.current) {
         setFormValid(false);
@@ -466,7 +466,13 @@ export default function HairCheck({
               </ElWrap>
             </Stack>
             <BodySMedium>Title of your meeting</BodySMedium>
-            <div style={{ width: '100%' , marginBottom:'10px' , position:'relative' }}>
+            <div
+              style={{
+                width: '100%',
+                marginBottom: '10px',
+                position: 'relative',
+              }}
+            >
               <ElWrap>
                 <TextInput
                   name="title"
@@ -480,13 +486,13 @@ export default function HairCheck({
                   validate={validateTitle}
                 />
               </ElWrap>
-              {newTitle === '' ? (
+              {!isFormValid && newTitle === '' ? (
                 <BodySMedium
                   style={{
                     color: 'gray',
-                    position:'absolute',
+                    position: 'absolute',
                     bottom: -22,
-                    right: 0
+                    right: 0,
                   }}
                 >
                   Title is required{' '}
@@ -520,9 +526,9 @@ export default function HairCheck({
                   )} Questions`}
                   members={template.interviewers?.map(
                     (interviewer: IMember) => ({
-                      first_name: interviewer.first_name,
-                      last_name: interviewer.last_name,
-                      profile_picture: interviewer.profile_picture,
+                      firstName: interviewer.firstName,
+                      lastName: interviewer.lastName,
+                      profilePicture: interviewer.profilePicture,
                     })
                   )}
                   onClick={(templateId) => {
@@ -535,11 +541,11 @@ export default function HairCheck({
                 />
               )}
             />
-            {isSelectedTemplate ? (
+            {!isFormValid && !selectedTemplate ? (
               <BodySMedium
                 style={{
                   color: 'red',
-                  position:'absolute',
+                  position: 'absolute',
                   textAlign: 'center',
                 }}
               >

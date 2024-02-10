@@ -16,20 +16,17 @@ import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { NumberIcon, PhotoIcon } from '../card/StyledCard';
 import { InitialsGenerator } from '@/utils/Utils';
 import TempCover from '@/assets/images/cover_1.jpg';
+import { IMember } from '@/types/company';
 
 export interface InterviewRoundCardProps {
   templateId: string;
   image?: string;
   title?: string;
   numberOfQuestions?: string;
-  members?: Array<{
-    first_name: string;
-    last_name: string;
-    profile_picture: string;
-  }>;
+  members?: Partial<IMember>[];
   selected?: boolean;
   imageUrl: string;
-  setIsSelectedTemplate?: React.Dispatch<React.SetStateAction<boolean>>
+  setIsSelectedTemplate?: React.Dispatch<React.SetStateAction<boolean>>;
   onClick?: (templateId: string) => void;
 }
 
@@ -41,7 +38,6 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
     numberOfQuestions,
     members,
     selected,
-    setIsSelectedTemplate,
     onClick,
   } = props;
 
@@ -49,11 +45,8 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
 
   const handleClick = () => {
     if (onClick && templateId) {
-      onClick(templateId)
-      if(setIsSelectedTemplate){
-        setIsSelectedTemplate(false)
-      }
-    };
+      onClick(templateId);
+    }
   };
 
   return (
@@ -103,13 +96,10 @@ const InterviewRoundCard = (props: InterviewRoundCardProps) => {
                 ?.slice(0, members.length > 4 ? 3 : 4)
                 .map((member, index) => (
                   <ElWrap w={32} h={32} key={index}>
-                    <PhotoIcon imgUrl={member.profile_picture}>
+                    <PhotoIcon imgUrl={member.profilePicture}>
                       <BodySBold>
-                        {!member.profile_picture
-                          ? InitialsGenerator(
-                              member.first_name,
-                              member.last_name
-                            )
+                        {!member.profilePicture
+                          ? InitialsGenerator(member.firstName, member.lastName)
                           : ''}
                       </BodySBold>
                     </PhotoIcon>

@@ -21,6 +21,8 @@ import { StyledButtonCustom } from '@/components/common/buttons/button/StyledBtn
 import { TextIconFilterIcon } from '@/components/common/filters/textIconFilter/StyledTextIconFilter';
 import { TransparentDropdownTitle } from '@/components/common/buttons/dropDownBtn/StyledDropDownBtn';
 import { Switch } from '@mui/base';
+import { Input } from '../../form/input/StyledInput';
+import classNames from 'classnames';
 
 const optionArrTime = Array.from({ length: 60 }, (_, index) => {
   const minute = index + 1;
@@ -47,6 +49,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const [open, setOpen] = useState<string>('');
     const [shadow, setShadow] = useState(false);
   const [isHover, setIsHover] = useState<string | null>(null);
+  const [competencyInput, setCompetencyInput] = useState('');
 
   const onHover = (
     item: string | ((prevState: null | string) => null) | null
@@ -61,7 +64,12 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const onSelectedItem = (item: StatusFilterType): void => {
     setOpen('');
     setIsHover(null);
-    props.onSelectStatus?.(item);
+  
+    if (props.label === 'Competency' && item === 'input value selected') {
+      props.onSelectStatus?.(competencyInput);
+    } else {
+      props.onSelectStatus?.(item);
+    }
   };
 
   const onSelectOpen = (): void => {
@@ -94,7 +102,11 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
             }`}
           onMouseEnter={() => onHover(value)}
           onMouseLeave={onUnhover}
-          onClick={() => onSelectedItem(value)}
+          onClick={() => {
+            onSelectedItem(value);
+            setCompetencyInput('')
+            onSelectOpen();
+          }}
         >
           <div style={{ width: '30px', marginTop: '2px' }}>
             {isHover === value && props.status !== value && <Switch />}{' '}
@@ -118,14 +130,13 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         className={shadow ? 'hover' : ''}
         onClick={() => {
           setShadow(false);
-          onSelectOpen();
         }}
       >
         {props.id === 'customQuestion' && props.icon ? (
           <SelectedItemDiv onClick={onSelectOpen}>
-            <StyledButtonCustom>
+            <StyledButtonCustom className={classNames({ 'customStyleCompetenct': props.status?.length &&  props.status?.length > 10 })}>
               <TextIconFilterIcon>{props.icon}</TextIconFilterIcon>
-              <BodyMMedium>
+              <BodyMMedium className='customStyleCompetenctText'>
                 {props.status === null || props.status === ''
                   ? props.label
                   : props.status}
@@ -133,7 +144,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
             </StyledButtonCustom>
           </SelectedItemDiv>
         ) : (
-          <StatusDropdownEl
+        <StatusDropdownEl
         onClick={onSelectOpen}
         bg={props.status}
         open={props.label === open}
@@ -165,7 +176,20 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
             </OptionLi>
           ) : null}
               <TransparentDropdownTitle>
+                {props.label === 'Competency' ? (
+               <Input
+               placeholder='Add Competency'
+               name='competencyInput'
+               value={competencyInput}
+               className='customStyleForCompetency'
+               onChange={(e) => { 
+                setCompetencyInput(e.target.value);
+                onSelectedItem(e.target.value);
+              } }
+             />
+                ) : (
                 <BodySMedium>Add {props.label}</BodySMedium>
+                )}
               </TransparentDropdownTitle>
               {Object.entries(dropdownFilter()).map(([key, value]) =>
                 renderOption({ key, value })

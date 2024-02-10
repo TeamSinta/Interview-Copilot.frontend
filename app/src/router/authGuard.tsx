@@ -18,6 +18,7 @@ import {
 import { setCurrentWorkspace } from '@/features/workspace/userWorkspaceSlice';
 import Loading from '@/components/common/elements/loading/Loading';
 import { AccessToken } from '@/features/settingsDetail/userSettingTypes';
+import { setCompany } from '@/features/company/companySlice';
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -82,13 +83,14 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
     if (user?.companies?.length > 0 && !workspace.id) {
       const defaultCompany = user.companies[0];
       dispatch(setCurrentWorkspace(defaultCompany));
+      dispatch(setCompany(defaultCompany));
     }
   };
 
   const failedAuthentication = () => {
-    dispatch(resetUserState());
     removeCookies('access_token');
     removeCookies('refresh_token');
+    dispatch(resetUserState());
     navigate('/login');
   };
 

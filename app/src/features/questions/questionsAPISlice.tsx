@@ -1,3 +1,4 @@
+import { IQuestion, IQuestionsBanks } from '@/types/question';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const QuestionsAPI = createApi({
@@ -14,10 +15,10 @@ export const QuestionsAPI = createApi({
   }),
   tagTypes: ['Questions', 'QuestionBanks'],
   endpoints: (builder) => ({
-    getQuestions: builder.query<any, undefined>({
+    getQuestions: builder.query({
       query: () => '/question/',
       transformResponse: (res) =>
-        res.sort((a: string[], b: string[]) => b.id - a.id),
+        res.sort((a: IQuestion, b: IQuestion) => b.id - a.id),
       providesTags: ['Questions'],
     }),
     addQuestion: builder.mutation({
@@ -49,10 +50,10 @@ export const QuestionsAPI = createApi({
       }),
       invalidatesTags: ['Questions'],
     }),
-    getQuestionBanks: builder.query<any, undefined>({
+    getQuestionBanks: builder.query({
       query: () => '/question/question-banks/',
       transformResponse: (res) =>
-        res.sort((a: string[], b: string[]) => b.id - a.id),
+        res.sort((a: IQuestionsBanks, b: IQuestionsBanks) => b.id - a.id),
       providesTags: ['QuestionBanks'],
     }),
     addQuestionBank: builder.mutation({
@@ -83,6 +84,14 @@ export const QuestionsAPI = createApi({
       }),
       invalidatesTags: ['QuestionBanks'],
     }),
+    deleteQuestionFromQuestionBank: builder.mutation({
+      query: (obj) => ({
+        url: `/question/question-banks/${obj.id}/delete/`,
+        method: 'POST',
+        body: obj,
+      }),
+      invalidatesTags: ['QuestionBanks'],
+    }),
   }),
 });
 
@@ -97,4 +106,5 @@ export const {
   useGetQuestionBankDetailQuery,
   useDeleteQuestionBankMutation,
   useUpdateQuestionBankMutation,
+  useDeleteQuestionFromQuestionBankMutation,
 } = QuestionsAPI;
