@@ -66,12 +66,14 @@ export const getTemplate = async (
 export const updateInterviewQuestionRating = async (
   rating: number,
   question_id: string,
-  interview_round_id: string
+  interview_round_id: string,
+  template_id: string ,
 ) => {
   const data = {
-    interview_round_id: interview_round_id,
-    question_id: question_id,
-    rating: rating,
+    interview_round_id,
+    question_id,
+    rating,
+    template_id
   };
   const result = await instance.post(
     `${BACKEND_URL}/interview-rounds/rateInterviewRoundQuestion/`,
