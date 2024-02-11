@@ -137,7 +137,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
     };
 
     fetchQuestionsAndTopics();
-  }, [interviewDetails]);
+  }, [interviewDetails, cookies]);
 
   const sidebarTabs = useMemo(() => {
     return (
@@ -220,14 +220,14 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       setPrevNum(prevNumber);
       setNextNum(nextNumber);
     };
-    const handleRating = (rating: number, question: string) => {
+    const handleRating = (rating: number, question: any) => {
       // update interview round question rating to new rating
       setQuestionRatings((prevRatings) => ({
         ...prevRatings,
         [question.id]: rating,
       }));
 
-      updateInterviewQuestionRating(rating, question.id, interviewDetails.id);
+      updateInterviewQuestionRating(rating, question.id, interviewDetails.id, interviewDetails.template_id);
     };
 
     useEffect(() => {
@@ -608,7 +608,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
 
     // Calculate elapsed time in milliseconds
     const elapsedTime =
-      reactClickTime - (startTime === null ? Date.now() : startTime);
+      reactClickTime - (startTime === null ? Date.now() : Number(startTime));
 
     // Convert elapsed time to minutes and seconds
     const minutes = Math.floor(elapsedTime / 60000);
@@ -677,7 +677,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       overlayRef.current.removeChild(node);
     }, []);
 
-    function handleSendFlyingEmoji(e) {
+    function handleSendFlyingEmoji(e: { detail: { message: any; position: any; }; }) {
       const emoji = e.detail.message;
       const position = e.detail.position;
 

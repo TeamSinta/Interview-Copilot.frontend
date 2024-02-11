@@ -1,13 +1,14 @@
 import { StyledIconBtnM } from '@/components/common/buttons/button/StyledBtn';
+import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
 import {
-  TwoArrowIcon,
-  RightArrowIcon,
   LeftArrowIcon,
+  RightArrowIcon,
+  TwoArrowIcon,
 } from '@/components/common/svgIcons/Icons';
 import {
+  BodyLMedium,
   BodySBold,
   BodySMedium,
-  BodyLMedium,
 } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { InputLabelDiv } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
@@ -15,18 +16,17 @@ import { updateInterviewQuestionRating } from '@/features/interviews/interviewsA
 import { RatingComponentL } from '@/pages/Interviews/Conclusion/MainScreen/InterviewQNA/RatingComponent';
 import { QuestionMeta } from '@/pages/Interviews/Conclusion/MainScreen/InterviewQNA/Tabs/QuestionTabQNA';
 import { Stack } from '@mui/system';
-import { useState, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { useEffect, useState } from 'react';
 import Chat from '../Daily/Chat/Chat';
 import InterviewStageSlider from '../InterviewStageSlider';
 import {
-  StyledInnerWrapper,
-  IndexStyle,
-  WhiteIndexStyle,
+  BottomQuestionButtons,
   CompetencyStyle,
   GuidelinesSection,
+  IndexStyle,
   StyledAnswerPoints,
-  BottomQuestionButtons,
+  StyledInnerWrapper,
+  WhiteIndexStyle,
 } from '../StyledInterview';
 
 interface Info {
@@ -62,7 +62,12 @@ const InterviewQuestionTab: React.FC<Info> = (info) => {
       [question.id]: rating,
     }));
 
-    updateInterviewQuestionRating(rating, question.id, interviewDetails.id);
+    updateInterviewQuestionRating(
+      rating,
+      question.id,
+      interviewDetails.id,
+      interviewDetails.template_id
+    );
   };
 
   useEffect(() => {
@@ -310,9 +315,9 @@ const InterviewQuestionTab: React.FC<Info> = (info) => {
                       <BodySBold style={{ marginBottom: '8px' }}>
                         {'Guidelines'}
                       </BodySBold>
-                      <ReactMarkdown components={components}>
+                      <MarkdownFromatConatiner>
                         {activeQuestionInfo?.answer}
-                      </ReactMarkdown>
+                      </MarkdownFromatConatiner>
                     </StyledAnswerPoints>
                   </GuidelinesSection>
                 </div>

@@ -1,26 +1,23 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch } from '@/app/store';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { EditIcon, PlusIcon } from '@/components/common/svgIcons/Icons';
 import {
-  H1,
   BodyLMedium,
-  H2Medium,
-  H2Bold,
   BodyMMedium,
+  H1,
+  H2Bold,
+  H2Medium,
 } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { openModal } from '@/features/modal/modalSlice';
 import { BackgroundColor } from '@/features/utils/utilEnum';
-import { Key, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Stack, Box } from '@mui/material';
-import TemplateHomeCard, {
-  IMember,
-} from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
-import { useState } from 'react';
-import { InterviewsBox, TemplateCardsBox } from '../Dashboard/StyledDashboard';
+import { Box, Stack } from '@mui/material';
+import { Key, useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { InterviewsBox, TemplateCardsBox } from '../Dashboard/StyledDashboard';
 import { CreateInterviewBox, DepartmentHeading } from './StyledTemplates';
 
 import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
@@ -32,10 +29,10 @@ import {
 import Loading from '@/components/common/elements/loading/Loading';
 import DropdownFilter from '@/components/common/filters/dropdownFilter/DropdownFilter';
 
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import { TemplateQuestions } from '@/features/templates/templatesInterface';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
+import { IMember } from '@/types/company';
 
 export interface Template {
   roundId: Key | null | undefined;
@@ -56,15 +53,6 @@ const Templates = () => {
   const [startX, setStartX] = useState(0);
   const [showEmptyState, setShowEmptyState] = useState(false);
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
-  const workspace = useSelector((state: RootState) => state.workspace);
-  const user = useSelector((state: RootState) => state.user);
-  const [departmentId, setDepartmentId] = useState('');
-  const [sortCriteria, setSortCritiera] = useState('');
-
-  // definitely should look over this, idk what TS is doing here om on the companyId type.
-  const companyId: CompanyID = (!workspace.id
-    ? user?.companies?.[0]?.id ?? workspace.id
-    : workspace.id)! as unknown as CompanyID;
 
   const getFilteredTemplateQuestionsLength = (
     templateQuestions: Record<string, TemplateQuestions> | null,
@@ -128,7 +116,7 @@ const Templates = () => {
     if (isSuccess) {
       setTemplateData(templates);
 
-      if (templates.length === 0) {
+      if (Array.isArray(templates) && templates?.length === 0) {
         const timeout = setTimeout(() => {
           setShowEmptyState(true);
         }, 500); // Delay of 500 milliseconds
@@ -145,18 +133,18 @@ const Templates = () => {
   if (isError) {
     return (
       <div>
-        <p>Error: {error}</p>
+        <p>Error: {String(error)}</p>
       </div>
     );
   }
 
   const handleCardClick = (templateId: string) => {
-    navigate(`/templates/${templateId}`);
+    if (templateId) navigate(`/templates/${templateId}`);
   };
 
   const templatesByDepartment: { [key: string]: Template[] } =
     templateData.reduce((groups, template: Template) => {
-      const department = template.department || 'General';
+      const department = template.department ?? 'General';
 
       if (!groups[department]) {
         groups[department] = [];
@@ -302,7 +290,7 @@ const Templates = () => {
                               template.id
                             )}
                             imageUrl={template.image}
-                            members={template.interviewers || []}
+                            members={template.interviewers ?? []}
                             // Include other template information as needed
                             onClick={() => handleCardClick(template.id)}
                           />

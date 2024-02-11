@@ -1,10 +1,9 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch } from '@/app/store';
 import {
   IconBtnL,
-  IconBtnM,
 } from '@/components/common/buttons/iconBtn/IconBtn';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import InterviewRoundCard from '@/components/common/cards/interviewRoundCard/InterviewRoundCard';
-import { IMember } from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import Loading from '@/components/common/elements/loading/Loading';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import {
@@ -31,19 +30,17 @@ import {
 import InterviewOverviewDetails from '@/components/pages/interview/overview_detail/InterviewOverviewDetails';
 import InterviewOverviewInterviewer from '@/components/pages/interview/overview_interviewer/InterviewOverviewInterviewer';
 import InterviewOverviewSections from '@/components/pages/interview/overview_section/InterviewOverviewSections';
-import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import { getInterviewDetailAsync } from '@/features/interviewDetail/interviewDetailSlice';
 import { openModal } from '@/features/modal/modalSlice';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import { TemplateQuestions } from '@/features/templates/templatesInterface';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 import { BackgroundColor } from '@/features/utils/utilEnum';
+import { IMember } from '@/types/company';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Template } from './Templates_/Templates';
-import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 
 const InterviewStage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -53,14 +50,6 @@ const InterviewStage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const user = useSelector((state: RootState) => state.user.user);
-  const workspace = useSelector((state: RootState) => state.workspace);
-
-  // definitely should look over this, idk what TS is doing here om on the companyId type.
-  const companyId: CompanyID = (!workspace.id
-    ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
 
   const {
     data: templates,
@@ -88,7 +77,7 @@ const InterviewStage = () => {
   if (isError) {
     return (
       <div>
-        <p>Error: {error}</p>
+        <p>Error: {String(error)}</p>
       </div>
     );
   }
@@ -128,10 +117,10 @@ const InterviewStage = () => {
   };
 
   const handleCardClick = (roundId: string) => {
-    navigate(`/templates/${roundId}`);
+    if (roundId) navigate(`/templates/${roundId}`);
   };
 
-  const numericTemplateId = Number(templateId || 0);
+  const numericTemplateId = Number(templateId ?? 0);
   const currentTemplate = templateData.find(
     (t) => Number(t.id) === numericTemplateId
   );
@@ -162,10 +151,10 @@ const InterviewStage = () => {
           <Star1Icon />
 
           <BodyLMedium className="inactive">{`${
-            currentTemplate?.department || 'General'
+            currentTemplate?.department ?? 'General'
           } `}</BodyLMedium>
           <Star1Icon />
-          <BodyLBold>{`${currentTemplate?.role_title || ''} `}</BodyLBold>
+          <BodyLBold>{`${currentTemplate?.role_title ?? ''} `}</BodyLBold>
         </Subtitle>
         <InterviewStageCardContainer>
           <InterviewStageBox
@@ -177,7 +166,7 @@ const InterviewStage = () => {
           >
             {templatesOfSameDepartment.map((template: Template, index) => (
               <InterviewRoundCard
-                key={index}
+                key={template.id}
                 templateId={template.id}
                 imageUrl={template.image}
                 title={template.role_title}

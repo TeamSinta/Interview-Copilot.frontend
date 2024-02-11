@@ -27,8 +27,8 @@ import {
   useGetQuestionBanksQuery,
   useGetQuestionsQuery,
 } from '@/features/questions/questionsAPISlice';
-import Loading from '../../elements/loading/Loading';
 import { useNavigate } from 'react-router-dom';
+import { IQuestion } from '@/types/question';
 
 const iconBtnMProps = {
   icon: <PlusIcon />,
@@ -66,7 +66,7 @@ const SelectValue = () => {
       const requestData = {
         topics_text: value,
         company_id: companyId,
-        template_id: templateID.templateID,
+        template_id: templateID?.templateID ?? templateID,
       };
 
       try {
@@ -75,7 +75,7 @@ const SelectValue = () => {
 
         if (!questionBanks || questionBanks?.length === 0) {
           dispatch(closeModal());
-          navigate(`/templates/${templateID.templateID}`);
+          navigate(`/templates/${templateID}`);
         }
 
         if (value === selectedComp[selectedComp.length - 1]) {
@@ -119,12 +119,7 @@ const SelectValue = () => {
       setNewComp(''); // Reset newComp to empty after adding
     }
   };
-  const {
-    data: questionsResponse,
-    isLoading,
-    isError,
-    error,
-  } = useGetQuestionsQuery();
+  const { data: questionsResponse, isError, error } = useGetQuestionsQuery({});
 
   const { data: questionBanks } = useGetQuestionBanksQuery();
 
@@ -132,7 +127,7 @@ const SelectValue = () => {
     if (questionsResponse) {
       // Extract unique competencies from questions
       const extractedCompetencies = new Set<string>();
-      questionsResponse.forEach((question) => {
+      questionsResponse.forEach((question: IQuestion) => {
         if (question.competency) {
           extractedCompetencies.add(question.competency);
         }
@@ -141,101 +136,95 @@ const SelectValue = () => {
     }
   }, [questionsResponse]);
 
-  if (isLoading) {
-    return <Loading />; // Your loading component
-  }
-
   if (isError) {
-    return <div>Error: {error}</div>; // Error handling
+    return <div>Error: {String(error)}</div>; // Error handling
   }
   return (
-    <>
-      <ModalContentWrap>
-        <SelectContentWrap>
-          <SelectContent>
-            <BodySMedium>
-              Add in your different sections for this interview, i.e. Your
-              values, purpose, or topic for that given section.
-            </BodySMedium>
-          </SelectContent>
-          <ModalContentWrap>
-            <InputLayout>
-              <BodySMedium>Selected Sections:</BodySMedium>
-              <SelectedValueWrap>
-                {/* <Competencies label="test" selected={true} /> */}
-                {selectedComp.map((value: string, index: number) => (
-                  <Competencies
-                    label={value}
-                    key={index}
-                    selected={false}
-                    onClick={() => {
-                      onCancel(value);
-                    }}
-                  ></Competencies>
-                ))}
-                <ElWrap w={32}>
-                  <IconBtnM
-                    {...iconBtnMProps}
-                    onClick={() => {
-                      setShowNewCompInput(showNewCompInput ? false : true);
-                    }}
-                  />
-                </ElWrap>
-              </SelectedValueWrap>
-            </InputLayout>
-            <NewComInputWrap className={showNewCompInput ? 'show' : ''}>
-              <TextInput
-                disable={false}
-                placeholder={'New Section'}
-                onChange={(e) => {
-                  setNewComp(e.target.value);
-                }}
-                name={'Section'}
-                value={newComp}
-                validate={() => null}
-              />
-              <ElWrap w={119} h={40}>
-                <TextBtnL
-                  disable={false}
-                  onClick={onClickNewComp}
-                  className={BackgroundColor.WHITE}
-                  label="Create"
+    <ModalContentWrap>
+      <SelectContentWrap>
+        <SelectContent>
+          <BodySMedium>
+            Add in your different sections for this interview, i.e. Your values,
+            purpose, or topic for that given section.
+          </BodySMedium>
+        </SelectContent>
+        <ModalContentWrap>
+          <InputLayout>
+            <BodySMedium>Selected Sections:</BodySMedium>
+            <SelectedValueWrap>
+              {/* <Competencies label="test" selected={true} /> */}
+              {selectedComp.map((value: string) => (
+                <Competencies
+                  label={value}
+                  key={value}
+                  selected={false}
+                  onClick={() => {
+                    onCancel(value);
+                  }}
+                ></Competencies>
+              ))}
+              <ElWrap w={32}>
+                <IconBtnM
+                  {...iconBtnMProps}
+                  onClick={() => {
+                    setShowNewCompInput(!showNewCompInput);
+                  }}
                 />
               </ElWrap>
-            </NewComInputWrap>
-            <InputLayout>
-              <BodySMedium>Recent Sections:</BodySMedium>
-              <CompetencesWrap>
-                {competencies.map((index: number) => (
-                  <Competencies
-                    label={index}
-                    key={index}
-                    selected={checkActive(index)}
-                    onClick={() => {
-                      onSelectComp(index);
-                    }}
-                  ></Competencies>
-                ))}
-              </CompetencesWrap>
-            </InputLayout>
-          </ModalContentWrap>
-        </SelectContentWrap>
-        <SelectedButtonWrap>
-          <TextBtnL
-            label="Skip"
-            disable={false}
-            onClick={() => {}}
-            className={BackgroundColor.WHITE}
-          />
-          <TextBtnL
-            label="Next"
-            disable={false}
-            onClick={handleNext}
-            className={BackgroundColor.ACCENT_PURPLE}
-          />
-        </SelectedButtonWrap>
-      </ModalContentWrap>
-    </>
+            </SelectedValueWrap>
+          </InputLayout>
+          <NewComInputWrap className={showNewCompInput ? 'show' : ''}>
+            <TextInput
+              disable={false}
+              placeholder={'New Section'}
+              onChange={(e) => {
+                setNewComp(e.target.value);
+              }}
+              name={'Section'}
+              value={newComp}
+              validate={() => null}
+            />
+            <ElWrap w={119} h={40}>
+              <TextBtnL
+                disable={false}
+                onClick={onClickNewComp}
+                className={BackgroundColor.WHITE}
+                label="Create"
+              />
+            </ElWrap>
+          </NewComInputWrap>
+          <InputLayout>
+            <BodySMedium>Recent Sections:</BodySMedium>
+            <CompetencesWrap>
+              {competencies.map((index: number) => (
+                <Competencies
+                  label={index}
+                  key={index}
+                  selected={checkActive(index)}
+                  onClick={() => {
+                    onSelectComp(index);
+                  }}
+                />
+              ))}
+            </CompetencesWrap>
+          </InputLayout>
+        </ModalContentWrap>
+      </SelectContentWrap>
+      <SelectedButtonWrap>
+        <TextBtnL
+          label="Skip"
+          disable={false}
+          onClick={() => {}}
+          className={BackgroundColor.WHITE}
+        />
+        <TextBtnL
+          label="Next"
+          disable={false}
+          onClick={handleNext}
+          className={BackgroundColor.ACCENT_PURPLE}
+        />
+      </SelectedButtonWrap>
+    </ModalContentWrap>
   );
 };
 

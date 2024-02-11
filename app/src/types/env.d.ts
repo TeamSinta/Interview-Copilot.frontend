@@ -9,6 +9,7 @@ interface ImportMetaEnv {
   readonly VITE_WORKOS_SECRETKEY: string;
   readonly VITE_WORKOS_CLIENTID: string;
   readonly VITE_WORKOS_REDIRECTURI: string;
+  readonly VITE_BACKEND_BASE_URL_SHORT: string;
 }
 
 interface ImportMeta {

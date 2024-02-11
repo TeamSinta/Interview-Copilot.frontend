@@ -1,42 +1,43 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Stack, Box, Container } from '@mui/material';
-import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
-import { BackgroundColor } from '@/features/utils/utilEnum';
-import { RightBracketIcon } from '@/components/common/svgIcons/Icons';
-import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
-import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
-import {
-  WelcomeHeading,
-  DescriptionText,
-  PendingReviewsHeading,
-  TextBox,
-  TemplateCardsBox,
-  EmptySectionContainer,
-  TemplateEmptyBox,
-  WavingHand,
-  InterviewsBox,
-  UpgradeButton,
-  WorkspaceTextBox,
-} from './StyledDashboard';
-import dashboardImage from 'src/assets/svg/HomePage_2.svg';
-import { StyledImage, StyledEmptyImage } from './StyledDashboard';
-import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/app/store';
-import { useNavigate } from 'react-router-dom';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import Loading from '@/components/common/elements/loading/Loading';
-import {
-  TemplateQuestions,
-  TemplateResponse,
-} from '@/features/templates/templatesInterface';
-import { createCall } from '@/utils/dailyVideoService/videoCallSlice';
+import { RightBracketIcon } from '@/components/common/svgIcons/Icons';
 import {
   BodyLBold,
   BodyLMedium,
 } from '@/components/common/typeScale/StyledTypeScale';
-import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
-import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
-import Grid from '@mui/material/Unstable_Grid2';
 import TopNavBarDash from '@/components/layouts/topnavbar/TopNavBarDash';
+import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
+import {
+  TemplateQuestions,
+  TemplateResponse,
+} from '@/features/templates/templatesInterface';
+import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { createCall } from '@/utils/dailyVideoService/videoCallSlice';
+import { Box, Container, Stack } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
+import dashboardImage from 'src/assets/svg/HomePage_2.svg';
+import {
+  DescriptionText,
+  EmptySectionContainer,
+  InterviewsBox,
+  PendingReviewsHeading,
+  StyledEmptyImage,
+  StyledImage,
+  TemplateCardsBox,
+  TemplateEmptyBox,
+  TextBox,
+  UpgradeButton,
+  WavingHand,
+  WelcomeHeading,
+  WorkspaceTextBox,
+} from './StyledDashboard';
 import Workspace from './WorkSpaceCounter';
 
 const DashBoard = () => {
@@ -69,13 +70,6 @@ const DashBoard = () => {
     navigate('/templates');
   };
 
-  const arg = {
-    label: 'Show All',
-    icon: <RightBracketIcon />,
-    className: BackgroundColor.ACCENT_PURPLE,
-    onClick: handleButtonClick,
-    disable: false,
-  };
   const arg_empty = {
     label: 'Go to Templates',
     icon: <RightBracketIcon />,
@@ -152,14 +146,7 @@ const DashBoard = () => {
   };
 
   const handleCardClick = (templateId: string) => {
-    navigate(`/templates/${templateId}`);
-  };
-
-  const handleSetDepartment = (value: string) => {
-    setDepartmentId(value);
-  };
-  const handleSortMembers = (value: string) => {
-    setSortCritiera(value);
+    if(templateId) navigate(`/templates/${templateId}`);
   };
 
   useEffect(() => {
@@ -175,7 +162,7 @@ const DashBoard = () => {
   if (isError) {
     return (
       <div>
-        <p>Error: {error}</p>
+        <p>Error: {String(error)}</p>
       </div>
     );
   }
@@ -191,8 +178,7 @@ const DashBoard = () => {
   };
 
   return (
-    <>
-      <Container
+    <Container
         maxWidth={'lg'}
         style={{ marginTop: '20px', marginBottom: '20px' }}
       >
@@ -313,7 +299,6 @@ const DashBoard = () => {
           )}
         </Grid>
       </Container>
-    </>
   );
 };
 
