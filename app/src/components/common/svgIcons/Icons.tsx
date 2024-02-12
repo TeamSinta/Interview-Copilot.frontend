@@ -15,6 +15,7 @@ import { ReactComponent as Time } from '@/assets/svg/time.svg';
 import { ReactComponent as Graph } from '@/assets/svg/graph.svg';
 import { ReactComponent as Star } from '@/assets/svg/star.svg';
 import { ReactComponent as Message } from '@/assets/svg/message.svg';
+import { ReactComponent as MessageOutline } from '@/assets/svg/MessageOutline.svg';
 import { ReactComponent as Location } from '@/assets/svg/location.svg';
 import { ReactComponent as Call } from '@/assets/svg/call.svg';
 import { ReactComponent as Info } from '@/assets/svg/info.svg';
@@ -340,4 +341,7 @@ export const MicMuteIcon = (): JSX.Element => {
 
 export const CamHideIcon = (): JSX.Element => {
   return <CamHide />;
+};
+export const MessageOutlinecon = (): JSX.Element => {
+  return <MessageOutline />;
 };

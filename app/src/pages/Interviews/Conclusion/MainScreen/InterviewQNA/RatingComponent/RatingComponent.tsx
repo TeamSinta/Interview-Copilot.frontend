@@ -14,6 +14,7 @@ import {
   TopStarIcon,
 } from '@/components/common/svgIcons/Icons';
 import { Grid } from '@mui/material';
+import { QuestionMeta } from '../Tabs/QuestionTabQNA';
 
 interface RatingButtonProps extends ICustomIconProps {
   Icon: React.FunctionComponent;
@@ -21,7 +22,7 @@ interface RatingButtonProps extends ICustomIconProps {
   activeIcon: boolean;
 }
 
-interface PredefinedRatingsProps {
+export interface PredefinedRatingsProps {
   rating: number;
 }
 
@@ -42,6 +43,7 @@ export const RatingButton: React.FC<RatingButtonProps> = ({
     <div style={{ marginRight: '5px' }}>
       <ElWrap w={24}>
         <StyledRatingBtnM
+          className="customizeHeightWidth"
           style={
             activeIcon ? { background: activeColor, boxShadow: 'none' } : {}
           }
@@ -332,13 +334,15 @@ export function RatingComponentL({
 export const PredefinedRatingsAndCompetency: React.FC<any> = ({
   competency,
   rating,
+  duration,
+  difficulty,
 }) => {
   const getCompetencyStyle = (rating: string) => {
     const color = buttons.find((button) => button.rate === rating)?.color;
 
     return {
       borderRadius: '10px',
-      backgroundColor: color ?? 'white',
+      backgroundColor: 'white',
       padding: '8px 16px',
       border: '1px solid #121212',
       fontSize: '10px',
@@ -347,25 +351,26 @@ export const PredefinedRatingsAndCompetency: React.FC<any> = ({
   };
 
   return (
-    <>
-      <Grid
-        xs={12}
-        md={6}
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-start',
-          paddingLeft: '8px',
-        }}
-      >
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'stretch',
+        width: '100%',
+        alignItems: 'center',
+        padding: '0px 8px',
+      }}
+    >
+      <Grid xs={12} md={4}>
         <div>
           <span style={getCompetencyStyle(rating)}>{competency}</span>{' '}
         </div>
       </Grid>
-      <Grid
-        xs={12}
-        md={6}
-        style={{ display: 'flex', justifyContent: 'flex-end' }}
-      >
+      {difficulty !== null && duration !== null && (
+        <Grid xs={12} md={4}>
+          <QuestionMeta duration={duration} difficulty={difficulty} />
+        </Grid>
+      )}
+      <Grid xs={12} md={4}>
         <div className="container">
           {' '}
           <div className="icon">
@@ -373,7 +378,7 @@ export const PredefinedRatingsAndCompetency: React.FC<any> = ({
           </div>
         </div>
       </Grid>
-    </>
+    </div>
   );
 };
 
@@ -381,7 +386,7 @@ export const PredefinedRatingsComponent: React.FC<PredefinedRatingsProps> = ({
   rating,
 }) => {
   return (
-    <div style={{ display: 'flex', margin: '0px' }}>
+    <div style={{ display: 'flex', margin: '0px' , gap:'5px' }}>
       {buttons.map(({ Icon, color, rate }) => (
         <span key={rate}>
           <RatingButton

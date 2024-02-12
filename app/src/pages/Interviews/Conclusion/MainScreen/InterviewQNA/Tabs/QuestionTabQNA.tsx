@@ -23,6 +23,7 @@ interface QuestionSummarizedAnswers {
 interface QuestionItemProps extends QuestionSummarizedAnswers {
   index: number;
   duration: string;
+  difficulty: string;
   handleClick: (index: number) => void;
   activeIndex: number;
 }
@@ -167,11 +168,12 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
   competency,
   duration,
   score,
+  difficulty,
   index,
   handleClick,
   activeIndex,
 }) => {
-  const lines = answer.split('- ').filter((line) => line.trim() !== '');
+  const lines = answer ? answer.split('- ').filter((line) => line.trim() !== '') : [];
 
   return (
     <>
@@ -188,6 +190,8 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
         <PredefinedRatingsAndCompetency
           competency={competency}
           rating={score}
+          duration={duration}
+          difficulty={difficulty}
         />
       </TextContainer>
 
@@ -225,8 +229,9 @@ export const QuestionsTabQNA: React.FC<QuestionsTabQNAProps> = ({
           competency={question.competency}
           score={question.score}
           handleClick={handleClick}
-          activeIndex={activeIndex}
-        />
+          activeIndex={activeIndex} 
+          difficulty={question.difficulty}       
+           />
       ))}
     </div>
   );
