@@ -1,7 +1,5 @@
 import { AppDispatch } from '@/app/store';
-import {
-  IconBtnL,
-} from '@/components/common/buttons/iconBtn/IconBtn';
+import { IconBtnL } from '@/components/common/buttons/iconBtn/IconBtn';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import InterviewRoundCard from '@/components/common/cards/interviewRoundCard/InterviewRoundCard';
 import Loading from '@/components/common/elements/loading/Loading';
@@ -55,8 +53,6 @@ const InterviewStage = () => {
     data: templates,
     isLoading,
     isSuccess,
-    isError,
-    error,
   } = useGetTemplatesQuery();
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
@@ -65,21 +61,13 @@ const InterviewStage = () => {
     if (templateId) {
       dispatch(getInterviewDetailAsync(templateId));
     }
-    if (isSuccess) {
+    if (isSuccess && templates?.length > 0) {
       setTemplateData(templates);
     }
   }, [dispatch, isSuccess, templateId, templates]);
 
   if (isLoading) {
     return <Loading />; // Render the loading component when data is still loading
-  }
-
-  if (isError) {
-    return (
-      <div>
-        <p>Error: {String(error)}</p>
-      </div>
-    );
   }
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
