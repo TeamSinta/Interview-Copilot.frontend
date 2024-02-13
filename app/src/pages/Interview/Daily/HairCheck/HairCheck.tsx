@@ -53,7 +53,6 @@ import {
   createCandidate,
   createInterviewRound,
 } from '../../../../features/interviews/interviewsAPI';
-import { IMember } from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 import { TemplateQuestions } from '@/features/templates/templatesInterface';
 import IconButton from '@mui/material/IconButton';
@@ -63,6 +62,7 @@ import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import { TextBtnM } from '@/components/common/buttons/textBtn/TextBtn';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
+import { IMember } from '@/types/company';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -210,7 +210,7 @@ export default function HairCheck({
   const { data: templatesData, isSuccess } = useGetTemplatesQuery();
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && templatesData?.length > 0) {
       setTemplates(templatesData);
     }
   }, [isSuccess, templatesData]);

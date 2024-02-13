@@ -108,12 +108,10 @@ const Templates = () => {
     data: templates,
     isLoading,
     isSuccess,
-    isError,
-    error,
   } = useGetTemplatesQuery();
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && templates?.length > 0) {
       setTemplateData(templates);
 
       if (Array.isArray(templates) && templates?.length === 0) {
@@ -130,13 +128,6 @@ const Templates = () => {
     return <Loading />; // Render the loading component when data is still loading
   }
 
-  if (isError) {
-    return (
-      <div>
-        <p>Error: {String(error)}</p>
-      </div>
-    );
-  }
 
   const handleCardClick = (templateId: string) => {
     if (templateId) navigate(`/templates/${templateId}`);
