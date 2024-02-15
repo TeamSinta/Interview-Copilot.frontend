@@ -146,7 +146,7 @@ const UserTab = () => {
               <BodySMedium style={{ opacity: 0.7 }}> Last Name</BodySMedium>
               <TextInput
                 disable={false}
-                placeholder={`${user.last_name}`}
+                placeholder={`${user.last_name ?? ''}`}
                 validate={validateTitle}
                 error={false}
                 onChange={(e) => {

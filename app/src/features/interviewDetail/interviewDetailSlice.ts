@@ -34,7 +34,7 @@ export const getInterviewDetailAsync = createAsyncThunk(
       template.interviewers = template.interviewers.map((interviewer) => ({
         ...interviewer,
         firstName: interviewer.first_name,
-        lastName: interviewer.last_name,
+        lastName: interviewer.last_name ?? '',
         profilePicture: interviewer.profile_picture,
       }));
     }

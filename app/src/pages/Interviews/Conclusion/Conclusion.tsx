@@ -80,7 +80,9 @@ const Conclusion: React.FC = () => {
       setInterviewTitle(interviewData.title);
       setInterviewerPicture(interviewData.interviewer.profile_picture);
       setInterviewerName(
-        `${interviewData.interviewer.first_name} ${interviewData.interviewer.last_name}`
+        `${interviewData.interviewer.first_name} ${
+          interviewData.interviewer.last_name ?? ''
+        }`
       );
       setIsVideoEmpty(!interviewData || !interviewData.video_uri);
     };
