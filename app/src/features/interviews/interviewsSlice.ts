@@ -1,8 +1,13 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { DataLoading } from '../utils/utilEnum';
 import { RootState } from '@/app/store';
 import { getQuestionsBank } from './interviewsAPI';
 import { IQuestion } from './interviewsInterface';
+
+interface QuestionRating {
+  questionId: string;
+  rating: number;
+}
 
 export const initialState = {
   round: {
@@ -28,6 +33,7 @@ export const initialState = {
   },
   selectedQuestion: [] as IQuestion[],
   status: DataLoading.UNSEND,
+  questionRating: {} as Record<string, number>,
 };
 
 export const getQuestionsBanksAsync = createAsyncThunk(
@@ -76,6 +82,9 @@ export const interviewsSlice = createSlice({
     resetQuestionBank: (state) => {
       Object.assign(state, initialState);
     },
+    updateQuestionRating: (state, action: PayloadAction<QuestionRating>) => {
+      state.questionRating[action.payload.questionId] = action.payload.rating;
+    },
   },
 });
 
@@ -85,6 +94,7 @@ export const {
   setSelectedQuestion,
   resetQuestionBank,
   setAllQuestionsSelected,
+  updateQuestionRating,
 } = interviewsSlice.actions;
 
 export const selectInterview = (state: RootState) => state.questionBanks;

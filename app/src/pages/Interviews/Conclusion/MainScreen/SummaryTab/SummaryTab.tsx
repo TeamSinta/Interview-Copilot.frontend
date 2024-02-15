@@ -5,6 +5,8 @@ import {
 } from '@/components/common/typeScale/StyledTypeScale';
 import InterviewQNA from '../InterviewQNA/InterviewQNA';
 import { Grid, Stack } from '@mui/material';
+import Badge from '@mui/material/Badge';
+
 
 import './SummaryTab.css';
 
@@ -14,7 +16,7 @@ import {
   StyledSummaryTab,
   AIGeneratedImageContainer,
 } from './StyledSummaryTab';
-import { summaryInfo } from './SummaryConstants';
+import { MessageOutlinecon } from '@/components/common/svgIcons/Icons';
 
 const AIGeneratedImage = () => (
   <AIGeneratedImageContainer>
@@ -42,9 +44,14 @@ const SummaryTab = ({ summaryInfo }) => {
     <StyledSummaryTab>
       <Grid container spacing={1}>
         <Grid item xs={12} md={12}>
-          <Stack direction={'row'} spacing={2}>
+          <Stack direction={'row'} justifyContent={'space-between'}>
+            <Stack direction={'row'} spacing={2}>
             <BodyLBold>{summaryInfo?.title ?? ''}</BodyLBold>
             <AIGeneratedImage />
+            </Stack>
+            <Badge badgeContent={<span style={{backgroundColor: '#6462F1', color: 'white' , height:'20px' , width:'20px' , borderRadius:'100%' , justifyContent:'center' , alignItems:'center' , display:'flex'}}>4</span>}>
+              <MessageOutlinecon />
+            </Badge>
           </Stack>
           <StyledSummaryDescription>
             <BodyMMedium>{summaryInfo?.description ?? ''}</BodyMMedium>
