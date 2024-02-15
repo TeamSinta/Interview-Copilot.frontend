@@ -1,14 +1,9 @@
-import { IOption } from '@/types/common';
+import { IDepartmentListProps } from '@/types/department';
 import {
   CheckInput,
   DepartmentListLayout,
   LabelDiv,
 } from './StyledDepartmentCheckList';
-
-interface IDepartmentListProps {
-  onChange: (data: IOption) => void;
-  data: IOption;
-}
 
 const DepartmentCheckList = (props: IDepartmentListProps) => {
   const { onChange, data } = props;

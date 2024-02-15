@@ -1,14 +1,7 @@
 import DepartmentDropdownFilter from '@/components/common/filters/dropdownFilter/DepartmentDropdownFilter';
 import DropdownFilter from '@/components/common/filters/dropdownFilter/DropdownFilter';
-import { IOption } from '@/types/common';
+import { IDepartmentDropDown } from '@/types/department';
 import React from 'react';
-
-interface IDepartmentDropDown {
-  departments: IOption[];
-  handleSetDepartment: (value: IOption | string) => void;
-  workspaceId: string | null;
-  multi?: boolean;
-}
 
 const DepartmentDropDown: React.FC<IDepartmentDropDown> = ({
   departments,

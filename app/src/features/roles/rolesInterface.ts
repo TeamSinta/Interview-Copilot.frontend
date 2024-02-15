@@ -1,7 +1,7 @@
 import { DataLoading } from '../utils/utilEnum';
 
 export interface IMockMembers {
-  id: number;
+  id: string;
   first_name: string;
   last_name: string;
   profile_picture: string;

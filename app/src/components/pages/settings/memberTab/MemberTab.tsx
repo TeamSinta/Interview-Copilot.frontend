@@ -6,32 +6,40 @@ import Stack from '@mui/material/Stack';
 import StyledInvitationBox from '@/components/common/form/inviteBox/InviteBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
-import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
 import MemberList from './MemberList';
 import SortingDropdown from './SortingDropdown';
-import {
-  useFetchCompanyDepartments,
-  useFetchCompanyMembers,
-} from './useFetchAndSortMembers';
+import { useFetchCompanyDepartments } from './useFetchAndSortMembers';
 import { useState } from 'react';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';
+import { SortBy } from '@/types/common';
+import { CompanyId } from '@/types/company';
+import { DepartmentId } from '@/types/department';
+import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
+import { useGetDepartmentMembersQuery } from '@/features/departments/departmentsAPI';
 
 const MemberTab = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
-  const [sortCriteria, setSortCritiera] = useState('');
-  const [departmentId, setDepartmentId] = useState('');
+  const [sortCriteria, setSortCritiera] = useState<SortBy>('');
+  const [departmentId, setDepartmentId] = useState<DepartmentId>('');
 
   // definitely should look over this, idk what TS is doing here om on the companyId type.
-  const companyId: CompanyID = (!workspace.id
+  const companyId: CompanyId = (!workspace.id
     ? user.companies[0].id
-    : workspace.id)! as unknown as CompanyID;
-  const { members } = useFetchCompanyMembers({
+    : workspace.id)! as unknown as CompanyId;
+
+  const { data: companyMembers } = useGetCompanyMembersQuery({
     company_id: companyId,
-    department_id: departmentId,
-    sortCriteria: sortCriteria,
+    sort_by: sortCriteria,
   });
+
+  const { data: departmentMembers } = useGetDepartmentMembersQuery({
+    department_id: departmentId,
+    sort_by: sortCriteria,
+  });
+
+  const membersToShow = departmentId ? departmentMembers : companyMembers;
 
   const onClickModalOpen = (modalType: MODAL_TYPE) => {
     dispatch(
@@ -41,13 +49,13 @@ const MemberTab = () => {
     );
   };
 
-  const handleSortMembers = (value: string) => {
+  const handleSortMembers = (value: SortBy) => {
     setSortCritiera(value);
   };
 
-  const departments = useFetchCompanyDepartments(companyId as CompanyID);
+  const departments = useFetchCompanyDepartments(companyId, sortCriteria);
 
-  const handleSetDepartment = (value: string) => {
+  const handleSetDepartment = (value: DepartmentId) => {
     setDepartmentId(value);
   };
 
@@ -74,7 +82,10 @@ const MemberTab = () => {
             />
           </ElWrap>
         </Stack>
-        <MemberList members={members} onClickModalOpen={onClickModalOpen} />
+        <MemberList
+          members={membersToShow}
+          onClickModalOpen={onClickModalOpen}
+        />
       </Stack>
       <StyledInvitationBox />
       <GlobalModal></GlobalModal>

@@ -3,17 +3,20 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { DataLoading } from '../utils/utilEnum';
 import { fetchMembers } from './rolesAPI';
 import { IMember, IMockMembers, RolesCreateSlice } from './rolesInterface';
-import { useGetCompanyMembersQuery } from '../settingsDetail/userSettingsAPI';
-import { CompanyID, DepartmentID } from '../settingsDetail/userSettingTypes';
 import { useEffect, useState } from 'react';
+import { CompanyId } from '@/types/company';
+import { DepartmentId } from '@/types/department';
+import { useGetCompanyMembersQuery } from '../company/companyAPI';
 
 export const initialState: RolesCreateSlice = {
   title: '',
   all_members: [
     {
+      id: '',
       member_idx: 0,
-      member_name: '',
-      member_url: '',
+      first_name: '',
+      last_name: '',
+      profile_picture: '',
       member_type: '',
       selected: false,
     },
@@ -26,8 +29,8 @@ export const useFetchSelectMembers = ({
   department_id,
   sortCriteria,
 }: {
-  company_id: CompanyID;
-  department_id: DepartmentID;
+  company_id: CompanyId;
+  department_id: DepartmentId;
   sortCriteria: string;
 }) => {
   const [members, setMembers] = useState<IMockMembers[]>([]);
@@ -51,6 +54,7 @@ export const useFetchSelectMembers = ({
   return { members };
 };
 
+// is this used at all? or only for mock?
 export const getMemberAsync = createAsyncThunk(
   'roles/fetchMember',
   async () => {

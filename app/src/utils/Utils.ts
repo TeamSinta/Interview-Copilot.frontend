@@ -11,3 +11,10 @@ export const InitialsGenerator = (
   // Combine the first initials with a space in between
   return firstInitial + '' + secondInitial;
 };
+
+export const TruncateText = (text: string, maxLength: number) => {
+  if (text.length > maxLength) {
+    return `${text.substring(0, maxLength)}...`;
+  }
+  return text;
+};

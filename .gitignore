@@ -17,18 +17,18 @@
 
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env
+#.env.local
+#.env.development.local
+#.env.test.local
+#.env.production.local
+#.env
 .process.env
-.env.staging
-.env.development
-.env.dev
+#.env.staging
+#.env.development
+#.env.dev
 # Ignore environment-specific files
-*/.env
-*/.env.staging
+#*/.env.dev
+#*/.env.staging
 
 npm-debug.log*
 yarn-debug.log*

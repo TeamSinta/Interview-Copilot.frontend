@@ -1,42 +1,43 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Stack, Box, Container } from '@mui/material';
-import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
-import { BackgroundColor } from '@/features/utils/utilEnum';
-import { RightBracketIcon } from '@/components/common/svgIcons/Icons';
-import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
-import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
-import {
-  WelcomeHeading,
-  DescriptionText,
-  PendingReviewsHeading,
-  TextBox,
-  TemplateCardsBox,
-  EmptySectionContainer,
-  TemplateEmptyBox,
-  WavingHand,
-  InterviewsBox,
-  UpgradeButton,
-  WorkspaceTextBox,
-} from './StyledDashboard';
-import dashboardImage from 'src/assets/svg/HomePage_2.svg';
-import { StyledImage, StyledEmptyImage } from './StyledDashboard';
-import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/app/store';
-import { useNavigate } from 'react-router-dom';
+import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import Loading from '@/components/common/elements/loading/Loading';
-import {
-  TemplateQuestions,
-  TemplateResponse,
-} from '@/features/templates/templatesInterface';
-import { createCall } from '@/utils/dailyVideoService/videoCallSlice';
+import { RightBracketIcon } from '@/components/common/svgIcons/Icons';
 import {
   BodyLBold,
   BodyLMedium,
 } from '@/components/common/typeScale/StyledTypeScale';
-import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
-import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
-import Grid from '@mui/material/Unstable_Grid2';
 import TopNavBarDash from '@/components/layouts/topnavbar/TopNavBarDash';
+import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
+import {
+  TemplateQuestions,
+  TemplateResponse,
+} from '@/features/templates/templatesInterface';
+import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
+import { BackgroundColor } from '@/features/utils/utilEnum';
+import { createCall } from '@/utils/dailyVideoService/videoCallSlice';
+import { Box, Container, Stack } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
+import dashboardImage from 'src/assets/svg/HomePage_2.svg';
+import {
+  DescriptionText,
+  EmptySectionContainer,
+  InterviewsBox,
+  PendingReviewsHeading,
+  StyledEmptyImage,
+  StyledImage,
+  TemplateCardsBox,
+  TemplateEmptyBox,
+  TextBox,
+  UpgradeButton,
+  WavingHand,
+  WelcomeHeading,
+  WorkspaceTextBox,
+} from './StyledDashboard';
 import Workspace from './WorkSpaceCounter';
 
 const DashBoard = () => {
@@ -61,21 +62,12 @@ const DashBoard = () => {
     data: templates,
     isLoading,
     isSuccess,
-    isError,
-    error,
   } = useGetTemplatesQuery();
 
   const handleButtonClick = () => {
     navigate('/templates');
   };
 
-  const arg = {
-    label: 'Show All',
-    icon: <RightBracketIcon />,
-    className: BackgroundColor.ACCENT_PURPLE,
-    onClick: handleButtonClick,
-    disable: false,
-  };
   const arg_empty = {
     label: 'Go to Templates',
     icon: <RightBracketIcon />,
@@ -152,18 +144,11 @@ const DashBoard = () => {
   };
 
   const handleCardClick = (templateId: string) => {
-    navigate(`/templates/${templateId}`);
-  };
-
-  const handleSetDepartment = (value: string) => {
-    setDepartmentId(value);
-  };
-  const handleSortMembers = (value: string) => {
-    setSortCritiera(value);
+    if (templateId) navigate(`/templates/${templateId}`);
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && templates?.length > 0) {
       setTemplates(templates);
     }
   }, [isSuccess, templates]);
@@ -172,13 +157,6 @@ const DashBoard = () => {
     return <Loading />; // Render the loading component when data is still loading
   }
 
-  if (isError) {
-    return (
-      <div>
-        <p>Error: {error}</p>
-      </div>
-    );
-  }
   const startDemo = async () => {
     try {
       // response after creating a room
@@ -191,129 +169,124 @@ const DashBoard = () => {
   };
 
   return (
-    <>
-      <Container
-        maxWidth={'lg'}
-        style={{ marginTop: '20px', marginBottom: '20px' }}
-      >
-        <TopNavBarDash />
+    <Container
+      maxWidth={'lg'}
+      style={{ marginTop: '20px', marginBottom: '20px' }}
+    >
+      <TopNavBarDash />
 
-        {/* 'lg' can be changed based on your design requirements */}
-        <Grid container spacing={4} justifyContent="center">
-          <Grid xs={12} md={12} lg={4}>
-            <div
-              style={{
-                display: 'flex',
-                gap: '16px',
-                flexDirection: 'column',
-                width: '100%',
-                height: '100%',
-                justifyContent: 'space-between',
-              }}
-            >
-              <Container style={{ minWidth: '320px', padding: '0px' }}>
-                <InterviewsBox style={{ padding: '42px' }}>
-                  <TextBox>
-                    <WelcomeHeading>
-                      Welcome back, {user.first_name}{' '}
-                      <WavingHand>👋</WavingHand>
-                    </WelcomeHeading>
-                    <DescriptionText>
-                      Helping teams hire faster and better. Get started by
-                      creating a template or launch a meeting.{' '}
-                      <DescriptionText> </DescriptionText>
-                    </DescriptionText>
-                  </TextBox>
-                </InterviewsBox>
-              </Container>{' '}
-              <Container style={{ minWidth: '320px', padding: '0px' }}>
-                {' '}
-                <InterviewsBox style={{ padding: '36px' }}>
-                  {' '}
-                  <WorkspaceTextBox>
-                    <BodyLBold>Workspace</BodyLBold>
-                    <UpgradeButton>Upgrade</UpgradeButton>
-                  </WorkspaceTextBox>
-                  <Workspace {...workspaceData} />
-                </InterviewsBox>
-              </Container>{' '}
-            </div>
-          </Grid>
-          <Grid
-            xs={12}
-            md={12}
-            lg={8}
-            justifyContent="center"
-            alignItems="center"
-            minWidth={'xs'}
+      {/* 'lg' can be changed based on your design requirements */}
+      <Grid container spacing={4} justifyContent="center">
+        <Grid xs={12} md={12} lg={4}>
+          <div
+            style={{
+              display: 'flex',
+              gap: '16px',
+              flexDirection: 'column',
+              width: '100%',
+              height: '100%',
+              justifyContent: 'space-between',
+            }}
           >
-            <Container style={{ padding: '0px' }}>
-              <StyledImage src={dashboardImage} alt="dashboard_picture" />
-            </Container>
-          </Grid>
-          {newTemplates.length === 0 ? (
-            <Grid xs={12}>
-              <TemplateEmptyBox>
-                <EmptySectionContainer>
-                  {' '}
-                  <StyledEmptyImage
-                    src={EmptySectionsImage}
-                    alt="dashboard_picture"
-                  />
-                  <BodyLMedium>
-                    Create a Template to be used during interviews or share with
-                    a teammate.
-                  </BodyLMedium>
-                  <Box
-                    style={{
-                      width: '248px',
-                    }}
-                  >
-                    <TextIconBtnL {...arg_empty} />
-                  </Box>
-                </EmptySectionContainer>
-              </TemplateEmptyBox>
-            </Grid>
-          ) : (
-            <Grid xs={12}>
-              <InterviewsBox>
-                <Stack direction="column" spacing={2}>
-                  <PendingReviewsHeading>
-                    Recent Templates
-                  </PendingReviewsHeading>
-                  <TemplateCardsBox
-                    onMouseDown={handleMouseDown}
-                    onMouseUp={handleMouseUp}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={handleMouseUp}
-                    ref={scrollContainerRef}
-                  >
-                    {newTemplates.map((interviewRound) => (
-                      <TemplateHomeCard
-                        key={interviewRound.id}
-                        title={interviewRound.role_title}
-                        disable={false}
-                        questions={getFilteredTemplateQuestionsLength(
-                          templateQuestions,
-                          interviewRound.id
-                        )}
-                        sections={getFilteredTemplateTopicsLength(
-                          templateQuestions,
-                          interviewRound.id
-                        )}
-                        imageUrl={interviewRound.image}
-                        members={interviewRound.interviewers || []}
-                        onClick={() => handleCardClick(interviewRound.id)} // Use interviewRound.id as the template ID
-                      />
-                    ))}
-                  </TemplateCardsBox>
-                </Stack>
+            <Container style={{ minWidth: '320px', padding: '0px' }}>
+              <InterviewsBox style={{ padding: '42px' }}>
+                <TextBox>
+                  <WelcomeHeading>
+                    Welcome back, {user.first_name} <WavingHand>👋</WavingHand>
+                  </WelcomeHeading>
+                  <DescriptionText>
+                    Helping teams hire faster and better. Get started by
+                    creating a template or launch a meeting.{' '}
+                    <DescriptionText> </DescriptionText>
+                  </DescriptionText>
+                </TextBox>
               </InterviewsBox>
-            </Grid>
-          )}
+            </Container>{' '}
+            <Container style={{ minWidth: '320px', padding: '0px' }}>
+              {' '}
+              <InterviewsBox style={{ padding: '36px' }}>
+                {' '}
+                <WorkspaceTextBox>
+                  <BodyLBold>Workspace</BodyLBold>
+                  <UpgradeButton>Upgrade</UpgradeButton>
+                </WorkspaceTextBox>
+                <Workspace {...workspaceData} />
+              </InterviewsBox>
+            </Container>{' '}
+          </div>
         </Grid>
-      </Container>
-    </>
+        <Grid
+          xs={12}
+          md={12}
+          lg={8}
+          justifyContent="center"
+          alignItems="center"
+          minWidth={'xs'}
+        >
+          <Container style={{ padding: '0px' }}>
+            <StyledImage src={dashboardImage} alt="dashboard_picture" />
+          </Container>
+        </Grid>
+        {newTemplates.length === 0 ? (
+          <Grid xs={12}>
+            <TemplateEmptyBox>
+              <EmptySectionContainer>
+                {' '}
+                <StyledEmptyImage
+                  src={EmptySectionsImage}
+                  alt="dashboard_picture"
+                />
+                <BodyLMedium>
+                  Create a Template to be used during interviews or share with a
+                  teammate.
+                </BodyLMedium>
+                <Box
+                  style={{
+                    width: '248px',
+                  }}
+                >
+                  <TextIconBtnL {...arg_empty} />
+                </Box>
+              </EmptySectionContainer>
+            </TemplateEmptyBox>
+          </Grid>
+        ) : (
+          <Grid xs={12}>
+            <InterviewsBox>
+              <Stack direction="column" spacing={2}>
+                <PendingReviewsHeading>Recent Templates</PendingReviewsHeading>
+                <TemplateCardsBox
+                  onMouseDown={handleMouseDown}
+                  onMouseUp={handleMouseUp}
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseUp}
+                  ref={scrollContainerRef}
+                >
+                  {newTemplates.map((interviewRound) => (
+                    <TemplateHomeCard
+                      key={interviewRound.id}
+                      title={interviewRound.role_title}
+                      disable={false}
+                      questions={getFilteredTemplateQuestionsLength(
+                        templateQuestions,
+                        interviewRound.id
+                      )}
+                      sections={getFilteredTemplateTopicsLength(
+                        templateQuestions,
+                        interviewRound.id
+                      )}
+                      imageUrl={interviewRound.image}
+                      members={interviewRound.interviewers || []}
+                      onClick={() => handleCardClick(interviewRound.id)} // Use interviewRound.id as the template ID
+                    />
+                  ))}
+                </TemplateCardsBox>
+              </Stack>
+            </InterviewsBox>
+          </Grid>
+        )}
+      </Grid>
+    </Container>
   );
 };
 

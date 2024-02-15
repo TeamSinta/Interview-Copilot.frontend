@@ -4,46 +4,39 @@ import { Stack, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
 import {
-  UserCardContainer,
+  MemberCardContainer,
   EditButton2,
   ProfilePicture,
-  UserDetails,
+  MemberDetails,
   PermissionLevel,
-} from './StyledUserCard'; // Adjust the import path to match your file structure
+} from './StyledMemberCard'; // Adjust the import path to match your file structure
 import {
   BodyMMedium,
   BodyLMedium,
   BodySMedium,
 } from '../../typeScale/StyledTypeScale';
+import { IMember } from '@/types/company';
 
-interface UserCardProps {
-  user: {
-    id: number;
-    first_name: string;
-    last_name: string;
-    username: string;
-    email: string;
-    role: string;
-    profile_picture: string | null;
-  };
+interface MemberCardProps {
+  user: IMember;
   onClick: (user: any) => void;
 }
 
-const SettingsUserCard: React.FC<UserCardProps> = ({ user, onClick }) => {
+const SettingsMemberCard: React.FC<MemberCardProps> = ({ user, onClick }) => {
   return (
-    <UserCardContainer onClick={() => onClick(user)}>
+    <MemberCardContainer onClick={() => onClick(user)}>
       <Stack direction="row" gap="16px" sx={{ width: '316px' }}>
         <ProfilePicture
           alt={`${user.username}'s Photo`}
-          src={user.profile_picture || ''}
+          src={user.profilePicture || ''}
         />
 
-        <UserDetails>
+        <MemberDetails>
           <BodyLMedium>
-            {user.first_name} {user.last_name}
+            {user.firstName} {user.lastName}
           </BodyLMedium>
           <BodyMMedium style={{ opacity: 0.5 }}>{user.email}</BodyMMedium>
-        </UserDetails>
+        </MemberDetails>
       </Stack>
       <PermissionLevel>
         <div
@@ -73,8 +66,8 @@ const SettingsUserCard: React.FC<UserCardProps> = ({ user, onClick }) => {
           </IconButton>
         </Tooltip>
       </EditButton2>
-    </UserCardContainer>
+    </MemberCardContainer>
   );
 };
 
-export default SettingsUserCard;
+export default SettingsMemberCard;

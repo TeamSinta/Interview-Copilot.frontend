@@ -27,6 +27,18 @@ export const getInterviewDetailAsync = createAsyncThunk(
   'interviews/interviewDetail',
   async (templateId: string) => {
     const template = await getInterviewTemplate(templateId);
+
+    // added logic in here because template needs to be transformed
+    // template.interviewers;
+    if (template && template.interviewers) {
+      template.interviewers = template.interviewers.map((interviewer) => ({
+        ...interviewer,
+        firstName: interviewer.first_name,
+        lastName: interviewer.last_name,
+        profilePicture: interviewer.profile_picture,
+      }));
+    }
+
     const sections = await getInterviewSections(templateId);
     const questions = await getInterviewDetail(templateId);
 

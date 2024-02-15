@@ -9,7 +9,7 @@ import {
   // getInterviewDetailAsync,
   selectInterviewDetail,
 } from '@/features/interviewDetail/interviewDetailSlice';
-import { IMockMembers } from '@/features/roles/rolesInterface';
+
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 // import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +17,7 @@ import { Title } from '../StyledInterview';
 import { OverviewInterviewers } from './StyledOverviewInterviewer';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { openModal } from '@/features/modal/modalSlice';
+import { IMember } from '@/types/company';
 
 const InterviewOverviewInterviewer = () => {
   const { template } = useSelector(selectInterviewDetail); // Use the correct selector to access interviewers
@@ -46,42 +47,20 @@ const InterviewOverviewInterviewer = () => {
       </Title>
       <Photos>
         {interviewer.length > 0 ? (
-          interviewer.map((interview: IMockMembers, index: number) => (
+          interviewer.map((interview: any, index: number) => (
             <ElWrap w={40} h={40} key={index}>
               <Photo
                 photoType={PhotoType.L}
-                member_idx={interview.id}
-                member_firstName={interview.first_name}
-                member_lastName={interview.last_name}
-                member_url={interview.profile_picture}
+                id={interview.id}
+                firstName={interview.firstName}
+                lastName={interview.lastName}
+                profilePicture={interview.profilePicture}
               />
             </ElWrap>
           ))
         ) : (
           <></>
         )}
-        {/* <ElWrap w={40} h={40}>
-          <Photo
-            photoType={PhotoType.L}
-            onSelect={() => {}}
-            member_idx={1}
-            member_name={"Mattias Welamsson"}
-            member_url={""}
-            selected={false}
-          />
-        </ElWrap>
-        <ElWrap w={40} h={40}>
-          <Photo
-            photoType={PhotoType.L}
-            onSelect={() => {}}
-            member_idx={1}
-            member_name={"Mohamed Shegow"}
-            member_url={
-              "https://ca.slack-edge.com/T04C82XCPRU-U04D4BRG8CQ-c4ccf8605ed3-512"
-            }
-            selected={false}
-          />
-        </ElWrap> */}
       </Photos>
       <GlobalModal></GlobalModal>
     </OverviewInterviewers>

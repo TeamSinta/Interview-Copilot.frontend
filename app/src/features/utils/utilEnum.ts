@@ -23,14 +23,15 @@ export enum StatusDropdownFilter {
   HIGH = 'High',
 }
 export enum CompetencyDropDownFilter {
-  LEADERSHIP = 'Leadership', 
+  LEADERSHIP = 'Leadership',
   TEAMWORK = 'Teamwork',
-  EMPATHY = 'Empathy'
+  EMPATHY = 'Empathy',
 }
 
 export enum TABS {
   PROFILE = 'profile',
   MEMBERS = 'members',
+  DEPARTMENTS = 'departments',
 }
 
 export enum SORT_CRITERIA {

@@ -18,6 +18,7 @@ import {
   ProfilePictureContainer,
   StyledImage,
 } from '@/pages/Settings/StyledSettings';
+import { Box } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -40,8 +41,8 @@ const UserTab = () => {
 
   const handleSaveClick = async () => {
     const userData = {
-      first_name: firstName || null,
-      last_name: lastName || null,
+      first_name: firstName || '',
+      last_name: lastName || '',
     };
 
     try {
@@ -137,7 +138,7 @@ const UserTab = () => {
                 onChange={(e) => {
                   setFirstName(e.target.value);
                 }}
-                name="lastName"
+                name="firstName"
                 value={firstName || ''}
               />
             </Stack>
@@ -169,6 +170,7 @@ const UserTab = () => {
           />
         </ElWrap>
       </Stack>
+      <Box height={100}></Box>
       <Stack direction="column" spacing={4}>
         <DeleteBox>
           <ChildElement>
