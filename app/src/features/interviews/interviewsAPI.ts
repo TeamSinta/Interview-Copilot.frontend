@@ -67,13 +67,13 @@ export const updateInterviewQuestionRating = async (
   rating: number,
   question_id: string,
   interview_round_id: string,
-  template_id: string ,
+  template_id: string
 ) => {
   const data = {
     interview_round_id,
     question_id,
     rating,
-    template_id
+    template_id,
   };
   const result = await instance.post(
     `${BACKEND_URL}/interview-rounds/rateInterviewRoundQuestion/`,
@@ -188,7 +188,7 @@ export const getInterview = async (interviewRoundId: string, token: string) => {
     result.data.interviewer = {
       ...interviewer,
       firstName: interviewer.first_name,
-      lastName: interviewer.last_name,
+      lastName: interviewer.last_name ?? '',
       profilePicture: interviewer.profile_picture,
     };
   }

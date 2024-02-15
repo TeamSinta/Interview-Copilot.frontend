@@ -43,7 +43,6 @@ const useAuth = (): GoogleLoginReturnType => {
 
   const setTokenAndNavigate = useCallback(
     (token: Token) => {
-      console.log("token", token)
       setCookies('access_token', token['access'], { path: '/' });
       setCookies('refresh_token', token['refresh'], { path: '/' });
       navigate('/dashboard');

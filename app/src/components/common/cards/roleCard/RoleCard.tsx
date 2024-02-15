@@ -64,7 +64,7 @@ const RoleCard = (props: IRoleCardProps) => {
                       {!member.member_url
                         ? InitialsGenerator(
                             member.member_first_name,
-                            member.member_last_name
+                            member.member_last_name ?? ''
                           )
                         : ''}
                     </BodySBold>

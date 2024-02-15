@@ -34,7 +34,7 @@ export const userSlice = createSlice({
     ) => {
       state.status = action.payload;
     },
-    resetUserState: (state) => state = initialState,
+    resetUserState: (state) => (state = initialState),
     setIsAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
     },
@@ -78,7 +78,7 @@ export const userSlice = createSlice({
         state.user.username = action.payload.username;
         state.user.email = action.payload.email;
         state.user.first_name = action.payload.first_name;
-        state.user.last_name = action.payload.last_name;
+        state.user.last_name = action.payload.last_name ?? '';
         state.user.profile_picture = action.payload.profile_picture;
         state.user.id = action.payload.pk;
         state.user.companies = action.payload.companies;
