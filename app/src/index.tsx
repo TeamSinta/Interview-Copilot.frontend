@@ -9,18 +9,20 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { createRoot } from 'react-dom/client';
+import { Theme } from '@radix-ui/themes';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
 
 root.render(
-  // uncomment stric mode while deployment 
-  // it is causing issue in sign in process as because of this 
+  // uncomment stric mode while deployment
+  // it is causing issue in sign in process as because of this
   // useEffect is running twice which is causing workos authentication failure
   // it will work fine in production
   // <React.StrictMode>
-    <Provider store={store}>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+  <Provider store={store}>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <Theme>
         <ThemeProvider theme={DefaultTheme}>
           <GlobalStyle />
           <GlobalFont />
@@ -28,7 +30,8 @@ root.render(
             <App />
           </BrowserRouter>
         </ThemeProvider>
-      </GoogleOAuthProvider>
-    </Provider>
+      </Theme>
+    </GoogleOAuthProvider>
+  </Provider>
   // </React.StrictMode>
 );

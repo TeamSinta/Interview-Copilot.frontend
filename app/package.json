@@ -12,6 +12,7 @@
     "@mdxeditor/editor": "^0.15.1",
     "@mui/material": "^5.13.2",
     "@mui/styled-engine-sc": "^5.12.0",
+    "@radix-ui/themes": "^2.0.3",
     "@react-oauth/google": "^0.9.0",
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
