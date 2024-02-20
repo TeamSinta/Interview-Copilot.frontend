@@ -15,6 +15,7 @@ interface IConclusionInterviewCardProps {
   disable: boolean;
   date: number | string;
   video_uri?: string;
+  thumbnail_uri?: string;
 }
 
 const formatDateDifference = (creationDate: string | number) => {
@@ -26,15 +27,26 @@ const formatDateDifference = (creationDate: string | number) => {
 };
 
 const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
+  console.log('this is the props:', props);
   const [hover, setHover] = useState(false);
-  const { name, title, disable, date, video_uri } = props;
+  const { name, title, disable, date, video_uri, thumbnail_uri } = props;
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  // const [thumbnail, setThumbnail] = useState('');
 
   const formattedDate = formatDateDifference(date);
+  console.log(
+    'this is the video uri:',
+    video_uri,
+    ' and thumbnail uri: ',
+    thumbnail_uri
+  );
 
   const toggleVideo = () => {
     setIsVideoPlaying(!isVideoPlaying);
   };
+
+  const DUMMY_DEFAULT_THUMBNAIL =
+    'https://sinta-media.s3.eu-west-1.amazonaws.com/interview-thumbnails/interview_thumbnail_Ojcw9twwUJcq1d7w2k8m.jpg';
 
   return (
     <ElWrap h={256}>
@@ -48,7 +60,8 @@ const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
         ) : (
           <video
             src={video_uri}
-            poster={''}
+            poster={thumbnail_uri || DUMMY_DEFAULT_THUMBNAIL}
+            onError={() => console.log('Error loading thumbnail')}
             controls={false}
             muted={true}
             loop={true}
