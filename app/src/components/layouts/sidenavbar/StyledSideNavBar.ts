@@ -10,7 +10,7 @@ export const StyledStack = styled(Stack)`
   width: 240px;
   left: 0px;
   top: 0px;
-  padding-left: 8px;
+  padding-left: 12px;
   padding-right: 16px;
   grid-area: side;
   position: -webkit-fixed; /* For Safari */
@@ -27,7 +27,7 @@ export const LogoImage = styled.img`
 
 export const NavButton = styled(Stack)`
   height: 38px;
-  width: 222px;
+  width: 218px;
   color: ${(props) => props.theme.colors.black};
   gap: 8px;
   border-radius: 6px;

@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 import './margin.sass';
 import '@radix-ui/themes/styles.css';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 
 
 
@@ -60,7 +62,7 @@ table {
 }
 body{
   font-weight: 100;
-  font-family: 'Chillax';
+  font-family: 'GeistSans';
 }
 
 a{

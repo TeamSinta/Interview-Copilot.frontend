@@ -117,11 +117,12 @@ const Conclusion: React.FC = () => {
     );
   }, [interviewTitle, interviewerName, interviewerPicture]);
 
+
   return (
     <Flex
       style={{
         height: '100vh',
-        background: '#F6F7FA',
+        background: '#F1F1F1',
         width: '100%',
       }}
       direction={'column'}
