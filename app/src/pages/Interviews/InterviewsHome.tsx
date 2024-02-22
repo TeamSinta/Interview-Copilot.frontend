@@ -16,6 +16,7 @@ interface TabPanelProps {
   index: string; // Change the type to string
   value: string; // Change the type to string
   video_uri?: string[];
+  thumbnail_uri?: string[];
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -131,6 +132,7 @@ export default function BasicTabs() {
                       name={interviewRound.title}
                       date={interviewRound.created_at}
                       video_uri={interviewRound.video_uri}
+                      thumbnail_uri={interviewRound.thumbnail_uri}
                     />
                   </div>
                 ))}
