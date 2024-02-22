@@ -16,7 +16,7 @@ export const authAPI = createApi({
     googleLogin: builder.mutation<Token, GoogleCode>({
       query: (code) => {
         const urlPath = import.meta.env.VITE_USE_MOCK_LOGIN
-          ? '/auth/login/'
+          ? '/auth/mocklogin/'
           : '/auth/login/';
         return {
           url: urlPath,
@@ -29,7 +29,7 @@ export const authAPI = createApi({
     authKitLogin: builder.mutation<any, any>({
       query: (data) => {
         const urlPath = import.meta.env.VITE_USE_MOCK_LOGIN
-          ? '/auth/login/'
+          ? '/auth/mocklogin/'
           : '/auth/login-with-code/';
         return {
           url: urlPath,

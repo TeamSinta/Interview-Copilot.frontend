@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import styled from 'styled-components';
 
 export const StyledStack = styled(Stack)`
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: #EBEEF2;
   min-height: 100vh;
   height: 100% !important;
   width: 240px;
@@ -16,7 +16,7 @@ export const StyledStack = styled(Stack)`
   position: -webkit-fixed; /* For Safari */
   position: fixed;
   overflow-y: auto;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
+  border-right: 1px solid #ccc;
 
 `;
 
@@ -41,7 +41,7 @@ export const NavButton = styled(Stack)`
   }
 
   &:hover {
-    background: ${(props) => props.theme.colors.palePurple};
+    background: #DCDFE5;
     cursor: pointer;
     transition: 0.2s ease-in-out;
     transform: none;
@@ -52,9 +52,9 @@ export const NavButton = styled(Stack)`
   }
 
   &.active {
-    background: ${(props) => props.theme.colors.palePurple};
+    background: #DCDFE5;
     /* border: 1.2px solid ${(props) => props.theme.colors.black}; */
-    color: #625df4;
+    color: black;
   }
 
   .link {
