@@ -1,5 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 import './margin.sass';
+import '@radix-ui/themes/styles.css';
+import './globals.css'
+
+
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,

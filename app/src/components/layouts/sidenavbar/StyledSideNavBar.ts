@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import styled from 'styled-components';
 
 export const StyledStack = styled(Stack)`
-  background-color: ${(props) => props.theme.colors.whisperGrey};
+  background-color: ${(props) => props.theme.colors.white};
   min-height: 100vh;
   height: 100% !important;
   width: 240px;
@@ -16,6 +16,8 @@ export const StyledStack = styled(Stack)`
   position: -webkit-fixed; /* For Safari */
   position: fixed;
   overflow-y: auto;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
+
 `;
 
 export const LogoImage = styled.img`

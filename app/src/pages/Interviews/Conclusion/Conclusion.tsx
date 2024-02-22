@@ -1,59 +1,35 @@
-import {
-  BodyMMedium,
-  H1,
-} from '@/components/common/typeScale/StyledTypeScale.js';
 import React, { useMemo, useState, useEffect } from 'react';
-import TopBar from './TopBar.js';
 import MainScreen from './MainScreen/MainScreen.js';
 import {} from '@/components/common/svgIcons/Icons.js';
 import styled from 'styled-components';
 
 import { useNavigate, useLocation } from 'react-router-dom'; // <-- Import useNavigate
 import SummarizerLoader from '@/components/common/elements/longLoading/LongLoading.js';
-import { Container } from '@mui/material';
+
 import { getInterview } from '@/features/interviews/interviewsAPI.js';
 import { useCookies } from 'react-cookie';
 
+import { CaretDownIcon, PersonIcon, StarIcon } from '@radix-ui/react-icons';
+
 import WebSockComp from '../../../components/common/socket/websock';
-import MainScreenNoVideo from './MainScreen/MainScreenNoVideo.js';
-import Loading from '@/components/common/elements/loading/Loading.js';
-import { Flex, Heading, Text } from '@radix-ui/themes';
+
+import {
+  Flex,
+  Heading,
+  Text,
+  HoverCard,
+  Avatar,
+  Box,
+  Badge,
+  Button,
+} from '@radix-ui/themes';
 
 const NavBarContainer = styled(Flex)`
   justify-content: space-between;
   align-items: center;
   background-color: #fff; // Adjust the color to match your design
   padding: 10px 20px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.1);
-`;
-
-const TitleBox = styled.div`
-  padding: 8px;
-  background-color: var(--gray-a2);
-  border-radius: var(--radius-3);
-  // Add additional styling as needed
-`;
-
-const Username = styled.span`
-  margin-right: 20px;
-  font-size: 18px;
-  // Add additional styling as needed
-`;
-
-const AddButton = styled.button`
-  margin-right: 10px;
-  // Style your add button here
-`;
-
-const PublishButton = styled.button`
-  // Style your publish button here
-`;
-
-const MainWrapper = styled.div`
-  padding: 20px;
-  padding-left: 10px;
-  padding-right: 0px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
 `;
 
 const Conclusion: React.FC = () => {
@@ -65,8 +41,6 @@ const Conclusion: React.FC = () => {
   const [interviewerName, setInterviewerName] = useState('');
   const [interviewerPicture, setInterviewerPicture] = useState('');
   const [interviewRound, setInterviewRound] = useState<any>(null);
-
-  const [isVideoEmpty, setIsVideoEmpty] = useState<boolean | null>(null);
 
   useEffect(() => {
     const fetchRatings = async () => {
@@ -82,7 +56,6 @@ const Conclusion: React.FC = () => {
           interviewData.interviewer.last_name ?? ''
         }`
       );
-      setIsVideoEmpty(!interviewData || !interviewData.video_uri);
     };
 
     fetchRatings();
@@ -96,30 +69,69 @@ const Conclusion: React.FC = () => {
     return (
       <>
         <NavBarContainer>
-          <Flex>
-            <Heading>{interviewTitle}</Heading>
+          <Flex gap={'5'} align={'center'}>
+            <Avatar
+              size="3"
+              fallback="R"
+              radius="full"
+              src="https://pbs.twimg.com/profile_images/1337055608613253126/r_eiMp2H_400x400.png"
+            />
+            <Heading as="h1" size="6">
+              {interviewTitle}
+            </Heading>
+            <Badge variant="outline" color="gray" size={'2'}>
+              <Text>
+                <HoverCard.Root>
+                  <HoverCard.Trigger>
+                    <Text>{interviewerName}</Text>
+                  </HoverCard.Trigger>
+                  <HoverCard.Content>
+                    <Flex gap="4">
+                      <Avatar
+                        size="3"
+                        fallback="R"
+                        radius="full"
+                        src={interviewerPicture}
+                      />
+                      <Box>
+                        <Heading size="3" as="h3">
+                          {interviewerName}
+                        </Heading>
+                        <Text>{interviewTitle}</Text>
+                      </Box>
+                    </Flex>
+                  </HoverCard.Content>
+                </HoverCard.Root>{' '}
+              </Text>
+            </Badge>
           </Flex>
           <Flex style={{ alignItems: 'center' }}>
-            <Text>{interviewerName}</Text>
-            <AddButton>+</AddButton>
-            <PublishButton>Publish</PublishButton>
+            <Button size={'3'}>
+              {' '}
+              <PersonIcon width="16" height="16" /> Decision{' '}
+              <CaretDownIcon width="16" height="16" />
+            </Button>
           </Flex>
         </NavBarContainer>
       </>
     );
-  }, [interviewTitle, interviewerName, interviewerPicture, navigate]);
+  }, [interviewTitle, interviewerName, interviewerPicture]);
 
   return (
-    <>
-      <Container
+    <Flex
+      style={{
+        height: '100vh',
+        background: '#F6F7FA',
+        width: '100%',
+      }}
+      direction={'column'}
+    >
+      {header}
+      <Flex
         style={{
-          margin: '0',
-          padding: '0',
-          width: '100%',
-          minWidth: '400px',
-          maxWidth: '100%',
-          background: '#F6F7FA',
+          padding: '20px 86px 46px 86px',
         }}
+        height={'100%'}
       >
         <WebSockComp
           interviewRoundId={location.state.id}
@@ -128,23 +140,10 @@ const Conclusion: React.FC = () => {
         {showLoader && location.state.useTimer ? (
           <SummarizerLoader /> // Show loader if showLoader is true
         ) : (
-          <>
-            {header}
-            {/* <MainWrapper>
-              <TopBar interviewRoundId={location.state.id} />
-            </MainWrapper> */}
-            {isVideoEmpty === null ? (
-              // Show a loading indicator while fetching data
-              <Loading />
-            ) : isVideoEmpty ? (
-              <MainScreenNoVideo interviewRoundId={location.state.id} />
-            ) : (
-              <MainScreen interviewRoundId={location.state.id} />
-            )}
-          </>
+          <MainScreen interviewRoundId={location.state.id} />
         )}
-      </Container>
-    </>
+      </Flex>
+    </Flex>
   );
 };
 

@@ -1,26 +1,25 @@
 import React, { useMemo, useState, ReactNode } from 'react';
-import { Divider, Grid, Stack } from '@mui/material';
-import { NavButton } from '@/components/layouts/sidenavbar/StyledSideNavBar';
 import '../index.css';
 import VideoPlayer from './VideoPlayer/VideoPlayer';
-import { H3Bold } from '@/components/common/typeScale/StyledTypeScale';
 import styled from 'styled-components';
 import ConclusionData from '@/services/conclusionService';
 import InterviewQNA from './InterviewQNA/InterviewQNA';
 import SummaryTab from './SummaryTab/SummaryTab';
-import { ReactionButtonBox } from './reactionBox/ReactionBox';
+import { Box, Button, Flex, Grid, Heading } from '@radix-ui/themes';
+
+type summaryType = 'summary' | 'question' | 'transcription' | 'notes';
 
 interface MainScreenProps {
   interviewRoundId: string;
 }
 
 interface setActiveTabProps {
-  (tabNumber: number): void;
+  (tabType: summaryType): void;
 }
 
 interface TabButtonProps {
-  setActiveTab: setActiveTabProps;
-  tabNumber: number;
+  onClick: () => any;
+  // tabType: summaryType;
   isActive: boolean;
   children: ReactNode;
 }
@@ -32,27 +31,31 @@ const TabContainer = styled.div`
   margin-top: 0;
   padding-bottom: 20px;
   flex-direction: column;
+  gap: 8px;
 
   @media (min-width: 1200px) {
     flex-direction: row;
   }
 `;
 
-const StyledNavButton = styled(NavButton)`
-  font-size: 12px;
-  width: 100%;
-  height: 35px;
-  border-radius: 10px;
-  margin-right: 5px;
-  margin-bottom: 5px;
+const InfoTabContainer = styled.div`
+  display: flex;
+  margin-top: 0;
+  flex-direction: column;
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+  }
+`;
+
+const StyledNavButton = styled(Button)`
+  color: black;
+
+  padding: 6px;
 
   @media (min-width: 1200px) {
     width: 100px;
     margin-bottom: 0;
-  }
-
-  &.active {
-    // style for active class here
   }
 `;
 
@@ -71,22 +74,22 @@ const ContentContainer = styled.div`
 `;
 
 const TabButton: React.FC<TabButtonProps> = ({
-  setActiveTab,
-  tabNumber,
+  onClick,
   isActive,
   children,
 }) => (
-  <StyledNavButton
-    onClick={() => setActiveTab(tabNumber)}
-    direction="row"
-    className={isActive ? 'rightTabs active' : 'rightTabs'}
-  >
+  <StyledNavButton onClick={onClick} variant={isActive ? 'outline' : 'none'}>
     <span>{children}</span>
   </StyledNavButton>
 );
 
 const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
-  const [activeTab, setActiveTab] = useState<number>(1);
+  const [summaryType, setSummaryType] = useState<
+    'summary' | 'question' | 'transcription' | 'notes'
+  >('summary');
+  const [informationType, setInformationType] = useState<'video' | 'info'>(
+    'video'
+  );
 
   const [
     summarizedAnswers,
@@ -95,110 +98,157 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     videoUrl,
     emojisData,
     loading,
-    error,
   ] = ConclusionData(interviewRoundId);
 
   const infoTabs = useMemo(
     () => (
       <TabContainer>
         <TabButton
-          setActiveTab={setActiveTab}
-          tabNumber={1}
-          isActive={activeTab === 1}
+          onClick={() => setSummaryType('summary')}
+          isActive={summaryType === 'summary'}
         >
           Summary
         </TabButton>
         <TabButton
-          setActiveTab={setActiveTab}
-          tabNumber={2}
-          isActive={activeTab === 2}
+          onClick={() => setSummaryType('question')}
+          isActive={summaryType === 'question'}
         >
           Questions
         </TabButton>
         <TabButton
-          setActiveTab={setActiveTab}
-          tabNumber={3}
-          isActive={activeTab === 3}
+          onClick={() => setSummaryType('transcription')}
+          isActive={summaryType === 'transcription'}
         >
           Transcription
         </TabButton>
         <TabButton
-          setActiveTab={setActiveTab}
-          tabNumber={4}
-          isActive={activeTab === 4}
+          onClick={() => setSummaryType('notes')}
+          isActive={summaryType === 'notes'}
         >
           Notes
         </TabButton>
       </TabContainer>
     ),
-    [activeTab]
+    [summaryType]
+  );
+
+  const mainTabs = useMemo(
+    () => (
+      <InfoTabContainer>
+        <TabButton
+          onClick={() => setInformationType('video')}
+          isActive={informationType === 'video'}
+        >
+          Video
+        </TabButton>
+        <TabButton
+          onClick={() => setInformationType('info')}
+          isActive={informationType === 'info'}
+        >
+          Info
+        </TabButton>
+      </InfoTabContainer>
+    ),
+    [informationType]
   );
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // Need to handle this properly later
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
+  const BoxShadow = styled(Box)`
+    background: white;
+    border-radius: 8px; // Adjust the border-radius as needed
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
+    padding: 20px; // Adjust the padding as needed
+  `;
+  const FlexShadow = styled(Flex)`
+    background: white;
+    border-radius: 8px; // Adjust the border-radius as needed
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
+    align-items: center;
+    padding: 24px;
+    justify-content: flex-start;
+    height: 100%;
+  `;
 
   return (
     <>
-      <Grid container spacing={0}>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={12}
-          lg={5}
-          style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}
+      <Grid columns="1fr 2fr" gap="3" width="100%" height={'100%'}>
+        <FlexShadow
+          style={{
+            background: 'white',
+          }}
+          direction={'column'}
         >
-          <Stack direction={'column'} spacing={2}>
-            <H3Bold>Technical Interview</H3Bold>
-            <div className="video-player-wrapper">
-              <VideoPlayer
-                questionsTranscript={questionsTranscript?.data}
-                videoUrl={videoUrl?.url}
-                emojisData={emojisData}
-              />
-            </div>
-            <Divider
-              style={{
-                width: '50%',
-                alignSelf: 'center',
-              }}
-            />
-            <div className="button-container">
-              <ReactionButtonBox />
-            </div>
-          </Stack>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={7}>
+          {mainTabs}
+          <Grid rows="1fr 1fr" gap="2" width="100%" height={'100%'}>
+            <Box>
+              {informationType === 'video' && (
+                <div className="video-player-wrapper">
+                  <VideoPlayer
+                    questionsTranscript={questionsTranscript?.data}
+                    videoUrl={videoUrl?.url}
+                    emojisData={emojisData}
+                  />
+                </div>
+              )}
+            </Box>
+            <Flex direction={'column'} gap={'3'} width={'100%'}>
+              <Heading as="h4" size="3">
+                {' '}
+                Leslie McDonalds with you
+              </Heading>
+              <Flex direction={'column'}>
+                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                  {' '}
+                  Properties
+                </h4>
+                <small className="leading-7 [&:not(:first-child)]:mt-6"> Date</small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">  Time</small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">  Job Title</small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">  Interview Subject</small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">  Department</small>
+              </Flex>
+              <Flex direction={'column'}>
+              <h2 className="text-sm bg-red-400">
+                  {' '}
+                  Results
+                </h2>
+
+                <small className="leading-7 [&:not(:first-child)]:mt-6"> Questions asked</small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6"> Candidate Time</small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6"> Interview duration</small>
+              </Flex>
+            </Flex>
+          </Grid>
+        </FlexShadow>
+
+        <BoxShadow style={{ background: 'white' }} grow={'1'}>
           {infoTabs}
           <ContentContainer>
-            {activeTab === 1 && (
+            {summaryType === 'summary' && (
               <SummaryTab summaryInfo={summarizedInterview?.data} />
             )}
 
-            {activeTab === 2 && (
+            {summaryType === 'question' && (
               <InterviewQNA
                 propData={summarizedAnswers?.data}
                 screen={'question'}
               />
             )}
 
-            {activeTab === 3 && (
+            {summaryType === 'transcription' && (
               <InterviewQNA
                 propData={questionsTranscript?.data}
                 screen={'transcription'}
               />
             )}
-            {activeTab === 4 && (
+            {summaryType === 'notes' && (
               <InterviewQNA propData={emojisData} screen={'notes'} />
             )}
           </ContentContainer>
-        </Grid>
+        </BoxShadow>
       </Grid>
     </>
   );

@@ -15,5 +15,5 @@ export const StyledTopNavBar = styled(Box)`
   position: sticky;
   top: 0; // Stick to the top of the viewport
   z-index: 1000; // Ensures the navbar is above other content
-  background-color: white;
+  background-color: #F6F7FA;;
 `;

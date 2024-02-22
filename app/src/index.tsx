@@ -11,6 +11,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { createRoot } from 'react-dom/client';
 import { Theme } from '@radix-ui/themes';
 
+
 const container = document.getElementById('root');
 const root = createRoot(container!);
 
@@ -22,15 +23,15 @@ root.render(
   // <React.StrictMode>
   <Provider store={store}>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-      <Theme>
-        <ThemeProvider theme={DefaultTheme}>
+      <ThemeProvider theme={DefaultTheme}>
+        <Theme>
           <GlobalStyle />
           <GlobalFont />
           <BrowserRouter>
             <App />
           </BrowserRouter>
-        </ThemeProvider>
-      </Theme>
+        </Theme>
+      </ThemeProvider>
     </GoogleOAuthProvider>
   </Provider>
   // </React.StrictMode>

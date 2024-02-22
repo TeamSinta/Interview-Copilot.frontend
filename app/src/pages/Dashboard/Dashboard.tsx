@@ -171,7 +171,10 @@ const DashBoard = () => {
   return (
     <Container
       maxWidth={'lg'}
-      style={{ marginTop: '20px', marginBottom: '20px' }}
+      style={{
+        marginTop: '20px',
+        marginBottom: '20px',
+      }}
     >
       <TopNavBarDash />
 
