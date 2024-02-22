@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import './margin.sass';
 import '@radix-ui/themes/styles.css';
-import './globals.css'
 
 
 
