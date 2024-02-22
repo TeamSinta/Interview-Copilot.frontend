@@ -597,7 +597,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
         {' '}
         <div
           style={{
-            backgroundColor: '#6462F1',
+            backgroundColor: 'white',
             position: 'relative',
             display: 'flex',
             flexDirection: 'column',
@@ -693,23 +693,18 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
           <div
             style={{
               flexGrow: 0,
-              backgroundColor: '#6462F1',
+              backgroundColor: '#EDEFF2',
               display: 'flex',
               flexDirection: 'column',
               borderRadius: '10px',
             }}
           >
-            <div className="currentQuestionLabel">
-              {getCurrentQuestionNumber()}
-            </div>
             <div
               ref={timelineRef}
               className="timeline"
               onClick={handleProgressBarClick}
-              onMouseMove={handleProgressBarHover}
               onMouseLeave={handleProgressBarLeave}
             >
-              {questionBar}
               {tooltipData.question !== '' && (
                 <div
                   className="tooltip"
@@ -723,7 +718,6 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                     {formatTime(tooltipData.time)}
                   </p>
                   <br></br>
-                  <p>{tooltipData.question}</p>
                 </div>
               )}
               {renderEmoticonsOnTimeline} {interviewerCandidateBar}

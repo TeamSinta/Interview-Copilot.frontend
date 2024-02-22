@@ -1,61 +1,35 @@
-import {
-  BodyMMedium,
-  H1,
-} from '@/components/common/typeScale/StyledTypeScale.js';
 import React, { useMemo, useState, useEffect } from 'react';
-import TopBar from './TopBar.js';
 import MainScreen from './MainScreen/MainScreen.js';
-import {
-  BottomArrowIcon,
-  CandidateIcon,
-  RightArrowIcon,
-} from '@/components/common/svgIcons/Icons.js';
+import {} from '@/components/common/svgIcons/Icons.js';
 import styled from 'styled-components';
 
 import { useNavigate, useLocation } from 'react-router-dom'; // <-- Import useNavigate
 import SummarizerLoader from '@/components/common/elements/longLoading/LongLoading.js';
-import { Container, Divider, Grid, Stack } from '@mui/material';
+
 import { getInterview } from '@/features/interviews/interviewsAPI.js';
 import { useCookies } from 'react-cookie';
-import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn.js';
-import { BackgroundColor } from '@/features/utils/utilEnum.js';
-import ElWrap from '@/components/layouts/elWrap/ElWrap.js';
-import { IconBtnM } from '@/components/common/buttons/iconBtn/IconBtn.js';
+
+import { CaretDownIcon, PersonIcon, StarIcon } from '@radix-ui/react-icons';
+
 import WebSockComp from '../../../components/common/socket/websock';
-import MainScreenNoVideo from './MainScreen/MainScreenNoVideo.js';
-import { LoadingCircle } from '@/components/common/elements/longLoading/LoadLoading.js';
-import Loading from '@/components/common/elements/loading/Loading.js';
 
-const HeaderWrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 16px;
-  gap: 16px;
-`;
+import {
+  Flex,
+  Heading,
+  Text,
+  HoverCard,
+  Avatar,
+  Box,
+  Badge,
+  Button,
+} from '@radix-ui/themes';
 
-const IconWrapper = styled.div`
-  width: 35px;
-`;
-const ProfilePic = styled.img`
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  border-radius: 18px;
-`;
-
-const Title = styled.div`
-  font-size: 20px;
-`;
-const CreatedContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const MainWrapper = styled.div`
-  padding: 20px;
-  padding-left: 10px;
-  padding-right: 0px;
+const NavBarContainer = styled(Flex)`
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff; // Adjust the color to match your design
+  padding: 10px 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
 `;
 
 const Conclusion: React.FC = () => {
@@ -68,8 +42,6 @@ const Conclusion: React.FC = () => {
   const [interviewerPicture, setInterviewerPicture] = useState('');
   const [interviewRound, setInterviewRound] = useState<any>(null);
 
-  const [isVideoEmpty, setIsVideoEmpty] = useState<boolean | null>(null);
-
   useEffect(() => {
     const fetchRatings = async () => {
       const interviewData = await getInterview(
@@ -80,9 +52,10 @@ const Conclusion: React.FC = () => {
       setInterviewTitle(interviewData.title);
       setInterviewerPicture(interviewData.interviewer.profile_picture);
       setInterviewerName(
-        `${interviewData.interviewer.first_name} ${interviewData.interviewer.last_name}`
+        `${interviewData.interviewer.first_name} ${
+          interviewData.interviewer.last_name ?? ''
+        }`
       );
-      setIsVideoEmpty(!interviewData || !interviewData.video_uri);
     };
 
     fetchRatings();
@@ -95,84 +68,70 @@ const Conclusion: React.FC = () => {
   const header = useMemo(() => {
     return (
       <>
-        <Grid container className="bar ">
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems={'center'}
-            style={{ width: '100%', padding: '12px' }}
-          >
-            <HeaderWrapper>
-              <ElWrap w={38}>
-                <IconBtnM
-                  onClick={() => navigate(-1)}
-                  icon={<RightArrowIcon />}
-                  disable={false}
-                  className={BackgroundColor.WHITE}
-                />
-              </ElWrap>
-
-              <Stack direction="column" justifyContent="flex-start" spacing={2}>
-                <Title>
-                  <H1 style={{ lineHeight: '100%' }}>{` ${interviewTitle}`}</H1>
-                </Title>
-
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  alignItems={'center'}
-                  justifyContent={'flex-start'}
-                >
-                  <ProfilePic src={interviewerPicture}></ProfilePic>
-
-                  <BodyMMedium style={{ marginTop: '0px' }}>
-                    {interviewerName}
-                  </BodyMMedium>
-                  <BodyMMedium> · </BodyMMedium>
-                  <BodyMMedium style={{ marginTop: '0px' }}>Today</BodyMMedium>
-                  <BodyMMedium> · </BodyMMedium>
-                  <BodyMMedium style={{ marginTop: '0px' }}>
-                    Not Shared
-                  </BodyMMedium>
-                  <BottomArrowIcon />
-                </Stack>
-              </Stack>
-            </HeaderWrapper>
-            <Stack
-              direction="row"
-              spacing={2}
-              alignItems={'center'}
-              divider={<Divider orientation="vertical" flexItem />}
-            >
-              <CreatedContainer>
-                <BodyMMedium> 1 / 3 Summaries Created</BodyMMedium>
-              </CreatedContainer>
-              <ElWrap w={227}>
-                <TextIconBtnL
-                  label="Share"
-                  onClick={() => {}}
-                  icon={<CandidateIcon />}
-                  disable={false}
-                  className={BackgroundColor.ACCENT_PURPLE}
-                />
-              </ElWrap>
-            </Stack>
-          </Stack>
-        </Grid>
+        <NavBarContainer>
+          <Flex gap={'5'} align={'center'}>
+            <Avatar
+              size="3"
+              fallback="R"
+              radius="full"
+              src="https://pbs.twimg.com/profile_images/1337055608613253126/r_eiMp2H_400x400.png"
+            />
+            <Heading as="h1" size="6">
+              {interviewTitle}
+            </Heading>
+            <Badge variant="outline" color="gray" size={'2'}>
+              <Text>
+                <HoverCard.Root>
+                  <HoverCard.Trigger>
+                    <Text>{interviewerName}</Text>
+                  </HoverCard.Trigger>
+                  <HoverCard.Content>
+                    <Flex gap="4">
+                      <Avatar
+                        size="3"
+                        fallback="R"
+                        radius="full"
+                        src={interviewerPicture}
+                      />
+                      <Box>
+                        <Heading size="3" as="h3">
+                          {interviewerName}
+                        </Heading>
+                        <Text>{interviewTitle}</Text>
+                      </Box>
+                    </Flex>
+                  </HoverCard.Content>
+                </HoverCard.Root>{' '}
+              </Text>
+            </Badge>
+          </Flex>
+          <Flex style={{ alignItems: 'center' }}>
+            <Button size={'3'}>
+              {' '}
+              <PersonIcon width="16" height="16" /> Decision{' '}
+              <CaretDownIcon width="16" height="16" />
+            </Button>
+          </Flex>
+        </NavBarContainer>
       </>
     );
-  }, [interviewTitle, interviewerName, interviewerPicture, navigate]);
+  }, [interviewTitle, interviewerName, interviewerPicture]);
 
   return (
-    <>
-      <Container
+    <Flex
+      style={{
+        height: '100vh',
+        background: '#F6F7FA',
+        width: '100%',
+      }}
+      direction={'column'}
+    >
+      {header}
+      <Flex
         style={{
-          margin: '0',
-          padding: '0',
-          width: '100%',
-          minWidth: '400px',
-          maxWidth: '100%',
+          padding: '20px 86px 46px 86px',
         }}
+        height={'100%'}
       >
         <WebSockComp
           interviewRoundId={location.state.id}
@@ -181,23 +140,10 @@ const Conclusion: React.FC = () => {
         {showLoader && location.state.useTimer ? (
           <SummarizerLoader /> // Show loader if showLoader is true
         ) : (
-          <>
-            {header}
-            <MainWrapper>
-              <TopBar interviewRoundId={location.state.id} />
-            </MainWrapper>
-            {isVideoEmpty === null ? (
-              // Show a loading indicator while fetching data
-              <Loading />
-            ) : isVideoEmpty ? (
-              <MainScreenNoVideo interviewRoundId={location.state.id} />
-            ) : (
-              <MainScreen interviewRoundId={location.state.id} />
-            )}
-          </>
+          <MainScreen interviewRoundId={location.state.id} />
         )}
-      </Container>
-    </>
+      </Flex>
+    </Flex>
   );
 };
 

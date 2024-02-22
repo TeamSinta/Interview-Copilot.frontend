@@ -9,7 +9,7 @@ export const transformMemberList = (
   return response.map((member) => ({
     id: member.id,
     firstName: member.first_name,
-    lastName: member.last_name,
+    lastName: member.last_name ?? '',
     email: member.email,
     profilePicture: member.profile_picture,
     username: member.username,

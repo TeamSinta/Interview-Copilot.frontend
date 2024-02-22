@@ -9,6 +9,7 @@ export const StyledContainer = styled.div`
   grid-template-rows: 100px 1fr;
   max-width: 100%;
 
+
   /* Add more media queries for othesr screen sizes as needed */
 `;
 

@@ -24,7 +24,13 @@ const LoginScreen = () => {
 
   const { HandleAuthKitLogin } = useAuth();
   const query = useQuery();
-  const email = query.get('email');
+  let email = query.get('email');
+  email = email?.replace(' ', '+')!;
+
+  const handleOnVeriry = () => {
+    if (!email || !code) return;
+    HandleAuthKitLogin({ code, email: email! });
+  };
 
   return (
     <Stack
@@ -40,7 +46,11 @@ const LoginScreen = () => {
           <Stack gap="8px">
             <H2Bold>Verify Your Code</H2Bold>
             <BodyLMedium>Enter the code sent to {email}</BodyLMedium>
-            <Box display={'flex'} flexDirection={'row'} justifyContent={"center"}>
+            <Box
+              display={'flex'}
+              flexDirection={'row'}
+              justifyContent={'center'}
+            >
               <VerificationInput
                 value={code}
                 autoFocus
@@ -52,21 +62,21 @@ const LoginScreen = () => {
                   pattern: '[0-9]',
                   autoComplete: 'one-time-code',
                 }}
-                classNames={{
-                  // container: "container",
-                  // character: "character",
-                  // characterInactive: "character--inactive",
-                  // characterSelected: "character--selected",
-                  // characterFilled: "character--filled",
-                }}
+                classNames={
+                  {
+                    // container: "container",
+                    // character: "character",
+                    // characterInactive: "character--inactive",
+                    // characterSelected: "character--selected",
+                    // characterFilled: "character--filled",
+                  }
+                }
               />
             </Box>
             <TextBtnL
               label="Vefiry"
-              disable={false}
-              onClick={() => {
-                HandleAuthKitLogin({ code, email: email! });
-              }}
+              disable={!code}
+              onClick={handleOnVeriry}
               className={BackgroundColor.ACCENT_PURPLE}
             />
           </Stack>

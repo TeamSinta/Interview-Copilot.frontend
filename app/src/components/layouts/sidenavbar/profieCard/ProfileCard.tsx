@@ -1,9 +1,6 @@
-import React from 'react';
-import Ellipse297Image from 'src/assets/images/SintaLogo.png';
-import { styled } from '@mui/material/styles';
-import { Button } from '@mui/material';
-import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
+import { styled } from '@mui/material/styles';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LogoImage } from '../../topnavbar/StyledTopBarNav';
 
@@ -89,7 +86,7 @@ function ProfileCard() {
           <LogoImage src={user.profile_picture as string} alt="user photo" />
         </FrameContainer>
         <EmailText>{`${user.email}`}</EmailText>
-        <NameText>{`${user.first_name} ${user.last_name}`}</NameText>
+        <NameText>{`${user.first_name} ${user.last_name ?? ''}`}</NameText>
       </Link>
     </ProfileCardContainer>
   );
