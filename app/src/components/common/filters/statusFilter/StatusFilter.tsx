@@ -47,7 +47,7 @@ interface IStatusFilterProps {
 
 const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const [open, setOpen] = useState<string>('');
-    const [shadow, setShadow] = useState(false);
+  const [shadow, setShadow] = useState(false);
   const [isHover, setIsHover] = useState<string | null>(null);
   const [competencyInput, setCompetencyInput] = useState('');
 
@@ -64,7 +64,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const onSelectedItem = (item: StatusFilterType): void => {
     setOpen('');
     setIsHover(null);
-  
+
     if (props.label === 'Competency' && item === 'input value selected') {
       props.onSelectStatus?.(competencyInput);
     } else {
@@ -99,7 +99,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         <OptionA
           className={`customOptionA ${
             props.status === value ? 'selected' : ''
-            }`}
+          }`}
           onMouseEnter={() => onHover(value)}
           onMouseLeave={onUnhover}
           onClick={() => {
@@ -150,18 +150,18 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         open={props.label === open}
         >
             <SelectedItemDiv>
-        <BodyMMedium>
-        {props.status === null ? `------------` : props.status}
-        </BodyMMedium>
-        </SelectedItemDiv>
-        </StatusDropdownEl>
+              <BodyMMedium>
+                {props.status === null ? `------------` : props.status}
+              </BodyMMedium>
+            </SelectedItemDiv>
+          </StatusDropdownEl>
         )}
         <OptionUl
           open={props.label === props.openDropdown}
           className={props.id === 'customQuestion' ? 'customizeUl' : ''}
           onMouseLeave={() => {
             setOpen('');
-            props.onOpenDropdown('')
+            props.onOpenDropdown('');
           }}
         >
           {props.id !== 'customQuestion' ? (
@@ -182,7 +182,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
                name='competencyInput'
                value={competencyInput}
                className='customStyleForCompetency'
-               onChange={(e) => { 
+               onChange={(e) => {
                 setCompetencyInput(e.target.value);
                 onSelectedItem(e.target.value);
               } }

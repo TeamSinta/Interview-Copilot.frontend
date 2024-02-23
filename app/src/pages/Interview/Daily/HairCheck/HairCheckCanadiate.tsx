@@ -5,9 +5,11 @@ import {
   useDaily,
   useDailyEvent,
   DailyVideo,
+  useVideoTrack,
+  useAudioTrack,
 } from '@daily-co/daily-react';
 import UserMediaError from '../UserMediaError/UserMediaError';
-import { MenuItem } from '@mui/material';
+import { IconButton, Menu, MenuItem } from '@mui/material';
 import {
   VideoContainer,
   ButtonWrapper,
@@ -20,15 +22,23 @@ import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import {
+  DropUpIcon,
   RightBracketIcon,
   VideoCam,
+  VideoCamoff,
   VideoMic,
+  VideoMicOff,
   VideoSound,
 } from '@/components/common/svgIcons/Icons';
 import TextInput from '@/components/common/form/textInput/TextInput';
 import { BodySMedium, H1 } from '@/components/common/typeScale/StyledTypeScale';
 import DropUpBtn from '@/components/common/dropUpBtn/dropUpBtn';
 import Sintaimage from '@/assets/images/SintaLogo.png';
+import {
+  DropdownButton,
+  IconButtonWrapper,
+  IconWrapper,
+} from './StyledHairCheck';
 
 interface HairCheckProps {
   joinCall: () => void;
@@ -51,7 +61,6 @@ export default function HairCheckCandidate({
   const callObject = useDaily();
 
   const [getUserMediaError, setGetUserMediaError] = useState(false);
-  const [activeTab, setActiveTab] = useState('devices');
 
   useDailyEvent(
     'camera-error',
@@ -73,7 +82,7 @@ export default function HairCheckCandidate({
     setMicrophone(e.target.value);
   };
 
-  const updateSpeaker = (e: ChangeEvent<HTMLSelectElement>) => {
+  const updateSpeakers = (e: ChangeEvent<HTMLSelectElement>) => {
     setSpeaker(e.target.value);
   };
 
@@ -95,7 +104,7 @@ export default function HairCheckCandidate({
     <MenuItem
       key={`speaker-${speaker.device.deviceId}`}
       value={speaker.device.deviceId}
-      onClick={() => updateSpeaker(speaker.device.deviceId)}
+      onClick={() => updateSpeakers(speaker.device.deviceId)}
     >
       {speaker.device.label}
     </MenuItem>
@@ -110,6 +119,42 @@ export default function HairCheckCandidate({
       {camera.device.label}
     </MenuItem>
   ));
+
+  const localVideo = useVideoTrack(localParticipant?.session_id);
+  const localAudio = useAudioTrack(localParticipant?.session_id);
+  const mutedVideo = localVideo.isOff;
+  const mutedAudio = localAudio.isOff;
+
+  const toggleVideo = useCallback(() => {
+    callObject?.setLocalVideo(mutedVideo);
+  }, [callObject, mutedVideo]);
+
+  const toggleAudio = useCallback(() => {
+    callObject?.setLocalAudio(mutedAudio);
+  }, [callObject, mutedAudio]);
+
+  const [micMenuAnchorEl, setMicMenuAnchorEl] = useState(null);
+  const [speakerMenuAnchorEl, setSpeakerMenuAnchorEl] = useState(null);
+  const [cameraMenuAnchorEl, setCameraMenuAnchorEl] = useState(null);
+
+  // Handlers for opening and closing menus
+  const handleMicMenuClick = (event) => {
+    setMicMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleSpeakerMenuClick = (event) => {
+    setSpeakerMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleCameraMenuClick = (event) => {
+    setCameraMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setMicMenuAnchorEl(null);
+    setSpeakerMenuAnchorEl(null);
+    setCameraMenuAnchorEl(null);
+  };
 
   const validateTitle = (value: string): string | null => {
     if (!value.trim()) {
@@ -153,19 +198,69 @@ export default function HairCheckCandidate({
               fit={'cover'}
             />
 
-            <Stack direction="row" sx={{ gap: '4px', display: 'flex' }}>
-              <DropUpBtn
-                mainButtonContent={<VideoMic />}
-                dropdownItems={microphoneItems}
-              />
-              <DropUpBtn
-                mainButtonContent={<VideoSound />}
-                dropdownItems={speakerItems}
-              />
-              <DropUpBtn
-                mainButtonContent={<VideoCam />}
-                dropdownItems={cameraItems}
-              />
+            <Stack
+              direction="row"
+              sx={{ marginTop: '4px', gap: '4px', display: 'flex' }}
+            >
+              <IconButtonWrapper>
+                <IconButton onClick={toggleVideo}>
+                  {mutedVideo ? <VideoCamoff /> : <VideoCam />}
+                </IconButton>
+                <DropdownButton onClick={handleCameraMenuClick}>
+                  <IconWrapper>
+                    <DropUpIcon />
+                  </IconWrapper>
+                </DropdownButton>
+              </IconButtonWrapper>
+              <Menu
+                anchorEl={cameraMenuAnchorEl}
+                keepMounted
+                open={Boolean(cameraMenuAnchorEl)}
+                onClose={handleClose}
+              >
+                {cameraItems}
+              </Menu>
+              {/* Toggle Audio Button */}
+              <IconButtonWrapper>
+                <IconButton onClick={toggleAudio}>
+                  {mutedAudio ? <VideoMicOff /> : <VideoMic />}
+                </IconButton>
+                <DropdownButton onClick={handleMicMenuClick}>
+                  <IconWrapper>
+                    <DropUpIcon />
+                  </IconWrapper>
+                </DropdownButton>
+              </IconButtonWrapper>
+
+              <Menu
+                anchorEl={micMenuAnchorEl}
+                keepMounted
+                open={Boolean(micMenuAnchorEl)}
+                onClose={handleClose}
+              >
+                {microphoneItems}
+              </Menu>
+              {/* Audio Button with Dropdown */}
+              <IconButtonWrapper>
+                <IconButton>
+                  <VideoSound />
+                </IconButton>
+                <DropdownButton onClick={handleSpeakerMenuClick}>
+                  <IconWrapper>
+                    <DropUpIcon />
+                  </IconWrapper>
+                </DropdownButton>
+              </IconButtonWrapper>
+              <Menu
+                anchorEl={speakerMenuAnchorEl}
+                keepMounted
+                open={Boolean(speakerMenuAnchorEl)}
+                onClose={handleClose}
+              >
+                {speakerItems}
+              </Menu>
+
+              {/* Microphone Button with Dropdown */}
             </Stack>
           </VideoContainer>
         )}

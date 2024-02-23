@@ -15,7 +15,6 @@ interface IConclusionInterviewCardProps {
   disable: boolean;
   date: number | string;
   video_uri?: string;
-  thumbnail_uri?: string;
 }
 
 const formatDateDifference = (creationDate: string | number) => {
@@ -28,16 +27,10 @@ const formatDateDifference = (creationDate: string | number) => {
 
 const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
   const [hover, setHover] = useState(false);
-  const { name, title, disable, date, video_uri, thumbnail_uri } = props;
+  const { name, title, disable, date, video_uri } = props;
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const formattedDate = formatDateDifference(date);
-  console.log(
-    'this is the video uri:',
-    video_uri,
-    ' and thumbnail uri: ',
-    thumbnail_uri
-  );
 
   const toggleVideo = () => {
     setIsVideoPlaying(!isVideoPlaying);
@@ -55,8 +48,7 @@ const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
         ) : (
           <video
             src={video_uri}
-            poster={thumbnail_uri}
-            onError={() => console.log('Error loading thumbnail')}
+            poster={''}
             controls={false}
             muted={true}
             loop={true}
@@ -66,7 +58,7 @@ const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
         )}
         <CardContent
           onMouseEnter={() => {
-            setHover(!disable);
+            setHover(disable ? false : true);
           }}
           onMouseLeave={() => {
             setHover(false);

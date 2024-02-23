@@ -50,7 +50,7 @@ const TextArea = forwardRef<HTMLInputElement, ITextAreaProps>((props, ref) => {
       };
     }
   }, [ref]);
-  
+
   return (
     <>
       <StyledTextareaDiv className={`${error ? 'error' : ''}`}>

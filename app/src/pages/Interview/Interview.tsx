@@ -307,7 +307,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
                         margin: '5px',
                         marginBottom: '10px',
                         cursor: 'pointer',
-                        opacity: index === 0 ? '0.5' : '1',
+                        opacity: index === 0 ? '1' : '1',
                       }}
                       onClick={() => {
                         showQuestionDetail(a, index);
@@ -549,7 +549,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
             }}
           >
             <span style={{ fontWeight: 'lighter', marginLeft: '2px' }}>
-              {stage + ': '}
+              {'Deparment: '}
             </span>
             <span
               style={{
@@ -558,7 +558,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
                 marginLeft: '2px',
               }}
             >
-              {stageName}
+              {interviewDetails.department}
             </span>{' '}
           </div>
         </Grid>{' '}

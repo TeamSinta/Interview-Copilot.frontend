@@ -132,11 +132,11 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
                     </OnverviewDetailTitle>
                   </div>
                   <div className="summary">
-                  {question.competency !== null && (
-                    <div className="comp" key={index}>
-                      <BodySMedium>{question.competency}</BodySMedium>
-                    </div>
-                  )}
+                    {question.competency !== null && (
+                      <div className="comp" key={index}>
+                        <BodySMedium>{question.competency}</BodySMedium>
+                      </div>
+                    )}
                     <div className="icon-div">
                       <div className="time-level">
                         <TimeIcon />
@@ -190,7 +190,11 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
           />
           <TextIconBtnL
             disable={false}
-            onClick={() => { onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION,{questionBankID})}}
+            onClick={() => {
+              onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION, {
+                questionBankID,
+              });
+            }}
             className={BackgroundColor.ACCENT_PURPLE}
             icon={<Star1Icon />}
             label="Add Custom Question"

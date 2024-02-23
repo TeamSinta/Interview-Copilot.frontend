@@ -45,7 +45,7 @@
   padding: 10px;
   flex: 1;
   overflow: scroll;
-    min-width: 150px;
+  min-width: 150px;
 }
 
 .bar-decision {

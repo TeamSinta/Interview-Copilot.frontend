@@ -91,7 +91,7 @@ export const StyledButtonCustom = styled.button`
   font-size: 14px;
   width: 150px;
   padding: 10px 16px;
-  z-index:999;
+  z-index: 999;
   :hover {
     cursor: pointer;
     background: ${(props) => props.theme.colors.lightPurple};

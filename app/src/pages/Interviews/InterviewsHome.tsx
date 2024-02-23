@@ -44,9 +44,11 @@ const TABS = {
   ARCHIVED: 'archived',
 };
 
+
 export default function BasicTabs() {
   const [activeTab, setActiveTab] = React.useState(TABS.INTERVIEWS);
   const [interviews, setInterviews] = React.useState([]);
+  console.log(interviews);
   const [cookies, ,] = useCookies(['access_token']);
 
   const navigate = useNavigate();
