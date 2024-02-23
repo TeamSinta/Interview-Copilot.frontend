@@ -13,6 +13,7 @@ import {
 } from './StyledVideoCall'; // Update the import path
 import { Interview } from '@/pages/Interview';
 import { useNavigate } from 'react-router-dom';
+import { useRoomExp } from '@daily-co/daily-react';
 
 const STATE = {
   IDLE: 'STATE_IDLE',
@@ -53,6 +54,13 @@ export default function VideoCall() {
       res(true);
     });
   };
+
+  // const { ejectDate } = useRoomExp({
+  //   onCountdown: useCallback(({ hours, minutes, seconds }) => {
+  //     // Update the countdown in the state
+  //     setMeetingExpiration(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+  //   }, []),
+  // });
 
   const joinCall = useCallback(async () => {
     callObject?.join({ url: roomUrl });

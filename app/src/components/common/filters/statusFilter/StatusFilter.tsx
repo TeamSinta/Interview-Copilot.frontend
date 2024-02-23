@@ -47,7 +47,7 @@ interface IStatusFilterProps {
 
 const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const [open, setOpen] = useState<string>('');
-    const [shadow, setShadow] = useState(false);
+  const [shadow, setShadow] = useState(false);
   const [isHover, setIsHover] = useState<string | null>(null);
   const [competencyInput, setCompetencyInput] = useState('');
 
@@ -64,7 +64,7 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
   const onSelectedItem = (item: StatusFilterType): void => {
     setOpen('');
     setIsHover(null);
-  
+
     if (props.label === 'Competency' && item === 'input value selected') {
       props.onSelectStatus?.(competencyInput);
     } else {
@@ -99,12 +99,12 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
         <OptionA
           className={`customOptionA ${
             props.status === value ? 'selected' : ''
-            }`}
+          }`}
           onMouseEnter={() => onHover(value)}
           onMouseLeave={onUnhover}
           onClick={() => {
             onSelectedItem(value);
-            setCompetencyInput('')
+            setCompetencyInput('');
             onSelectOpen();
           }}
         >
@@ -134,9 +134,14 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
       >
         {props.id === 'customQuestion' && props.icon ? (
           <SelectedItemDiv onClick={onSelectOpen}>
-            <StyledButtonCustom className={classNames({ 'customStyleCompetenct': props.status?.length &&  props.status?.length > 10 })}>
+            <StyledButtonCustom
+              className={classNames({
+                customStyleCompetenct:
+                  props.status?.length && props.status?.length > 10,
+              })}
+            >
               <TextIconFilterIcon>{props.icon}</TextIconFilterIcon>
-              <BodyMMedium className='customStyleCompetenctText'>
+              <BodyMMedium className="customStyleCompetenctText">
                 {props.status === null || props.status === ''
                   ? props.label
                   : props.status}
@@ -144,24 +149,24 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
             </StyledButtonCustom>
           </SelectedItemDiv>
         ) : (
-        <StatusDropdownEl
-        onClick={onSelectOpen}
-        bg={props.status}
-        open={props.label === open}
-        >
+          <StatusDropdownEl
+            onClick={onSelectOpen}
+            bg={props.status}
+            open={props.label === open}
+          >
             <SelectedItemDiv>
-        <BodyMMedium>
-        {props.status === null ? `------------` : props.status}
-        </BodyMMedium>
-        </SelectedItemDiv>
-        </StatusDropdownEl>
+              <BodyMMedium>
+                {props.status === null ? `------------` : props.status}
+              </BodyMMedium>
+            </SelectedItemDiv>
+          </StatusDropdownEl>
         )}
         <OptionUl
           open={props.label === props.openDropdown}
           className={props.id === 'customQuestion' ? 'customizeUl' : ''}
           onMouseLeave={() => {
             setOpen('');
-            props.onOpenDropdown('')
+            props.onOpenDropdown('');
           }}
         >
           {props.id !== 'customQuestion' ? (
@@ -175,25 +180,25 @@ const StatusFilter = (props: IStatusFilterProps): JSX.Element => {
               </OptionA>
             </OptionLi>
           ) : null}
-              <TransparentDropdownTitle>
-                {props.label === 'Competency' ? (
-               <Input
-               placeholder='Add Competency'
-               name='competencyInput'
-               value={competencyInput}
-               className='customStyleForCompetency'
-               onChange={(e) => { 
-                setCompetencyInput(e.target.value);
-                onSelectedItem(e.target.value);
-              } }
-             />
-                ) : (
-                <BodySMedium>Add {props.label}</BodySMedium>
-                )}
-              </TransparentDropdownTitle>
-              {Object.entries(dropdownFilter()).map(([key, value]) =>
-                renderOption({ key, value })
-              )}
+          <TransparentDropdownTitle>
+            {props.label === 'Competency' ? (
+              <Input
+                placeholder="Add Competency"
+                name="competencyInput"
+                value={competencyInput}
+                className="customStyleForCompetency"
+                onChange={(e) => {
+                  setCompetencyInput(e.target.value);
+                  onSelectedItem(e.target.value);
+                }}
+              />
+            ) : (
+              <BodySMedium>Add {props.label}</BodySMedium>
+            )}
+          </TransparentDropdownTitle>
+          {Object.entries(dropdownFilter()).map(([key, value]) =>
+            renderOption({ key, value })
+          )}
         </OptionUl>
       </StatusDropdownWrap>
     </StatusDropdownLayout>

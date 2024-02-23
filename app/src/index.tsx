@@ -11,7 +11,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { createRoot } from 'react-dom/client';
 import { Theme } from '@radix-ui/themes';
 
-
 const container = document.getElementById('root');
 const root = createRoot(container!);
 

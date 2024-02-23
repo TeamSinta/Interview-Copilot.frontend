@@ -315,7 +315,6 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
     const minutes = Math.floor(duration / 60);
     const seconds = Math.floor(duration % 60);
     const formattedDuration = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    // console.log(formattedDuration);
     setTotalDuration(formattedDuration);
   };
 

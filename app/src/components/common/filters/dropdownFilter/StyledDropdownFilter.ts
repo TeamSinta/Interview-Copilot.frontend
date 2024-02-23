@@ -199,7 +199,6 @@ export const OptionUl = styled.ul<IDropdownOpen>`
           max-height: 400px;
           box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); /* Adjust shadow here */
 
-
           /* transition: opacity 0.3s ease, visibility 0.3s ease,
             transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32); */
           /* transition: 0.2s ease-in; */

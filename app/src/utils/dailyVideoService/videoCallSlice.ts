@@ -16,15 +16,18 @@ const initialState: VideoCallState = {
   apiError: false,
 };
 
-export const createCall = createAsyncThunk('videoCall/createCall', async () => {
-  try {
-    const room = await videoApi.createRoom();
-    return room.url;
-  } catch (error) {
-    console.error('Error creating room', error);
-    throw new Error('Could not create room');
+export const createCall = createAsyncThunk(
+  'videoCall/createCall',
+  async (duration) => {
+    try {
+      const room = await videoApi.createRoom(duration);
+      return room.url;
+    } catch (error) {
+      console.error('Error creating room', error);
+      throw new Error('Could not create room');
+    }
   }
-});
+);
 
 export const startHairCheck = createAsyncThunk(
   'videoCall/startHairCheck',

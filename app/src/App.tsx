@@ -8,6 +8,7 @@ import { RootState } from './app/store';
 import { Navigate, useLocation } from 'react-router-dom';
 import ConclusionContainer from './components/layouts/container/conclusionContainer/ConclusionContainer';
 import { ConclusionStyledMain } from './components/layouts/container/conclusionContainer/StyledConclusionContianer';
+import { Toaster } from '@/components/ui/toaster';
 
 function App() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function App() {
             <SideNavBar />
             <Routers />
           </ConclusionStyledMain>
+          <Toaster />
         </ConclusionContainer>
       </>
     );
@@ -48,6 +50,7 @@ function App() {
           <StyledMain>
             <Routers />
           </StyledMain>
+          <Toaster />
         </Container>
       ) : (
         <Routers />

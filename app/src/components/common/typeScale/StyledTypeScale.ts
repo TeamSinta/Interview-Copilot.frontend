@@ -1,51 +1,51 @@
 import styled from 'styled-components';
 
 export const H1 = styled.h1`
-  font-family: 'ChillaxSemi';
+  font-family: 'InterSemi';
   font-size: 32px;
   font-weight: 600;
   line-height: 125%;
 `;
 
 export const H2Bold = styled.h2`
-  font-family: 'ChillaxSemi';
+  font-family: 'InterSemi';
   font-size: 24px;
   font-weight: 600;
   line-height: 125%;
 `;
 
 export const H2Medium = styled(H2Bold)`
-  font-family: 'Chillax';
+  font-family: 'InterMedium';
   font-size: 24px;
   font-weight: 500;
   line-height: 125%;
 `;
 
 export const H3Bold = styled.h3`
-  font-family: 'ChillaxSemi';
+  font-family: 'InterSemi';
   font-size: 20px;
   font-weight: 600;
   line-height: 125%;
 `;
 
 export const H3Medium = styled(H3Bold)`
-  font-family: 'Chillax';
+  font-family: 'Inter';
   font-weight: 500;
 `;
 
 export const BodyLBold = styled.div`
-  font-family: 'ChillaxSemi';
+  font-family: 'InterSemi';
   font-size: 16px;
   line-height: 150%;
   font-weight: 600;
 `;
 
 export const BodyLSemiBold = styled(BodyLBold)`
-  font-family: 'Chillax';
+  font-family: 'Inter';
 `;
 
 export const BodyLMedium = styled(BodyLBold)`
-  font-family: 'Chillax';
+  font-family: 'Inter';
   font-weight: 500;
 `;
 
@@ -61,7 +61,7 @@ export const BodyMMedium = styled(BodyLMedium)`
   font-size: 14px;
   width: fit-content;
   &.customStyleCompetenctText {
-    overflow:hidden;
+    overflow: hidden;
   }
 `;
 

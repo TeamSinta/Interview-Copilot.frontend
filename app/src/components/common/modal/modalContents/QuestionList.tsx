@@ -139,9 +139,9 @@ const QuestionList = () => {
                 </div>
                 <div className="body">
                   {question.competency !== null && (
-                     <QuestionValue>
-                     <BodySMedium>{question.competency}</BodySMedium>
-                   </QuestionValue>
+                    <QuestionValue>
+                      <BodySMedium>{question.competency}</BodySMedium>
+                    </QuestionValue>
                   )}
                   <div className="iconDiv">
                     <TimeIcon />

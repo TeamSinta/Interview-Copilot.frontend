@@ -4,20 +4,19 @@ import Stack from '@mui/material/Stack';
 import styled from 'styled-components';
 
 export const StyledStack = styled(Stack)`
-  background-color: #EBEEF2;
+  background-color: #ebeef2;
   min-height: 100vh;
   height: 100% !important;
   width: 240px;
   left: 0px;
   top: 0px;
-  padding-left: 8px;
+  padding-left: 12px;
   padding-right: 16px;
   grid-area: side;
   position: -webkit-fixed; /* For Safari */
   position: fixed;
   overflow-y: auto;
   border-right: 1px solid #ccc;
-
 `;
 
 export const LogoImage = styled.img`
@@ -27,7 +26,7 @@ export const LogoImage = styled.img`
 
 export const NavButton = styled(Stack)`
   height: 38px;
-  width: 222px;
+  width: 218px;
   color: ${(props) => props.theme.colors.black};
   gap: 8px;
   border-radius: 6px;
@@ -41,7 +40,7 @@ export const NavButton = styled(Stack)`
   }
 
   &:hover {
-    background: #DCDFE5;
+    background: #dcdfe5;
     cursor: pointer;
     transition: 0.2s ease-in-out;
     transform: none;
@@ -52,7 +51,7 @@ export const NavButton = styled(Stack)`
   }
 
   &.active {
-    background: #DCDFE5;
+    background: #dcdfe5;
     /* border: 1.2px solid ${(props) => props.theme.colors.black}; */
     color: black;
   }
@@ -147,14 +146,13 @@ export const Spacer = styled.div`
   padding-bottom: -8px;
 `;
 
-
 export const DropdownWrapButton = styled(Button)`
   position: relative;
   width: 100%;
   background: ${(props) => props.theme.colors.palePurple};
   border-radius: 12px;
   z-index: 1;
-  color:${(props) => props.theme.colors.palePurple} ;
+  color: ${(props) => props.theme.colors.palePurple};
   &.hover {
     cursor: pointer;
     box-shadow: 0px 4px 0px ${(props) => props.theme.colors.palePurple};

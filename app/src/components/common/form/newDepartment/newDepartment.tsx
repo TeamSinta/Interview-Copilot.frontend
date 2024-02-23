@@ -32,19 +32,17 @@ export interface IInviteProps {
     | DataLoading.REJECTED;
 }
 
-const NewDepartment: React.FC<NewDepartmentProps> = ({ onDepartmentCreated }) => {
-
-
+const NewDepartment: React.FC<NewDepartmentProps> = ({
+  onDepartmentCreated,
+}) => {
   const [newDepartmentName, setNewDepartmentName] = useState('');
   const user = useSelector((state: RootState) => state.user.user);
   const workspace = useSelector((state: RootState) => state.workspace);
-
 
   const [createNewDepartment, { isLoading }] = useCreateNewDepartmentMutation();
   const companyId: CompanyID = (!workspace.id
     ? user.companies[0].id
     : workspace.id)! as unknown as CompanyID;
-
 
   const onDepartmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewDepartmentName(e.target.value);
@@ -65,7 +63,6 @@ const NewDepartment: React.FC<NewDepartmentProps> = ({ onDepartmentCreated }) =>
         // Handle error
       });
   };
-
 
   return (
     <InviteWrap>

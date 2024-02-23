@@ -61,7 +61,7 @@ export const CenteredTypography = styled(Typography)`
   text-align: center;
   color: #121212;
   font-size: 20px;
-  font-family: Chillax;
+  font-family: Inter;
   font-weight: 600;
   line-height: 25px;
   word-wrap: break-word;

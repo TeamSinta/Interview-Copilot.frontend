@@ -1,6 +1,4 @@
-import {
-  BodyLMedium
-} from '@/components/common/typeScale/StyledTypeScale';
+import { BodyLMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { Box } from '@mui/material';
 import styled from 'styled-components';
 
@@ -34,7 +32,6 @@ export const SuperContainer = styled.div`
   }
 `;
 
-
 export const StyledImage = styled.img`
   align-self: center;
 
@@ -67,7 +64,6 @@ export const TextRow = styled.div`
 export const GrayBodyLMedium = styled(BodyLMedium)`
   color: rgba(18, 18, 18, 0.5);
 `;
-
 
 export const MainContainer = styled(Box)`
   display: flex;

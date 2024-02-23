@@ -56,7 +56,6 @@ import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer
 import InfoTab from './Components/InfoTab';
 import InterviewSideBar from './Components/InterviewSideBar';
 import { IReactClickedState } from './Daily/BottomNavBar/BottomNavBar';
-import { selectInterview, updateQuestionRating } from '@/features/interviews/interviewsSlice';
 
 // const components = {
 //   h3: H3,
@@ -86,7 +85,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
   useEffect(() => {
     const now = new Date();
     setStartTime(now);
-  }, []); 
+  }, []);
   const [isInterviewSideBarCollapsed, setIsInterviewSideBarCollapsed] =
     useState(false);
   const callObject = useDaily();
@@ -136,7 +135,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       );
       setTemplateQuestionsAndTopics(response);
     };
-  
+
     fetchQuestionsAndTopics();
   }, [interviewDetails, cookies]);
 
@@ -228,18 +227,9 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
         [question.id]: rating,
       }));
 
-      updateInterviewQuestionRating(rating, question.id, interviewDetails.id, interviewDetails.template_id));
-      dispatch(updateQuestionRating({ questionId : question.id , rating }));
-
+      updateInterviewQuestionRating(rating, question.id, interviewDetails.id, interviewDetails.template_id);
     };
-    
-    const { questionRating } = useSelector(selectInterview);
 
-    useEffect(() => {
-      if(questionRating !== null){
-        setQuestionRatings(questionRating)
-      }
-    },[questionRating])
     useEffect(() => {
       setCollapseQuestion(false);
     }, [activeData]);
@@ -317,7 +307,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
                         margin: '5px',
                         marginBottom: '10px',
                         cursor: 'pointer',
-                        opacity: index === 0 ? '0.5' : '1',
+                        opacity: index === 0 ? '1' : '1',
                       }}
                       onClick={() => {
                         showQuestionDetail(a, index);
@@ -530,7 +520,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
         <Grid lg={12}>
           <Grid container>
             <Grid item lg={10} md={10} sm={10} xs={10}>
-              <span style={{ fontWeight: '600', fontFamily: 'ChillaxSemi' }}>
+              <span style={{ fontWeight: '600', fontFamily: 'InterSemi' }}>
                 {interviewDetails.title}
               </span>
             </Grid>
@@ -559,16 +549,16 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
             }}
           >
             <span style={{ fontWeight: 'lighter', marginLeft: '2px' }}>
-              {stage + ': '}
+              {'Deparment: '}
             </span>
             <span
               style={{
                 fontWeight: '600',
-                fontFamily: 'ChillaxSemi',
+                fontFamily: 'InterSemi',
                 marginLeft: '2px',
               }}
             >
-              {stageName}
+              {interviewDetails.department}
             </span>{' '}
           </div>
         </Grid>{' '}
@@ -583,7 +573,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
               <p
                 style={{
                   fontWeight: '600',
-                  fontFamily: 'ChillaxSemi',
+                  fontFamily: 'InterSemi',
                   fontSize: activeTab === 1 ? '20px' : '12px',
                 }}
               >

@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Input, InputError, InputLayout } from '@/components/common/form/input/StyledInput';
+import {
+  Input,
+  InputError,
+  InputLayout,
+} from '@/components/common/form/input/StyledInput';
 
 export interface ITextInput {
   disable: boolean;
@@ -8,11 +12,11 @@ export interface ITextInput {
   name: string;
   value: string;
   validate: (value: string) => string | null; // Validation function
-  id?:string
+  id?: string;
 }
 
 const TextInput = (props: ITextInput, ref: React.Ref<any>) => {
-  const { disable, placeholder, onChange, name, value, validate , id } = props;
+  const { disable, placeholder, onChange, name, value, validate, id } = props;
   const [inputValue, setInputValue] = useState<{ [key: string]: string }>({
     [name]: value,
   });
@@ -55,7 +59,9 @@ const TextInput = (props: ITextInput, ref: React.Ref<any>) => {
         disabled={disable}
         placeholder={placeholder}
         onChange={handleInputChange}
-        className={`${error ? 'error' : '' } ${id === 'CustomQuestionTitle' ? 'customStyle' : '' }`}
+        className={`${error ? 'error' : ''} ${
+          id === 'CustomQuestionTitle' ? 'customStyle' : ''
+        }`}
         value={inputValue[name]}
       />
       {error ? <InputError>{error}</InputError> : <></>}

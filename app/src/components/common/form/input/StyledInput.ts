@@ -1,4 +1,4 @@
-import { Switch, alpha , styled as styling } from '@mui/material';
+import { Switch, alpha, styled as styling } from '@mui/material';
 import styled from 'styled-components';
 
 export const InputLayout = styled.div`
@@ -40,14 +40,14 @@ export const Input = styled.input`
   &.customStyleForCompetency {
     padding: 0px 0px;
     border-radius: 0px;
-    width:144px;
+    width: 144px;
     background: ${(props) => props.theme.colors.white};
     height: 21px;
     font-size: 12px;
     ::placeholder {
       color: #979696;
+    }
   }
-}
 `;
 
 export const InputError = styled.div`
@@ -62,7 +62,7 @@ export const InputError = styled.div`
 
 export const TextAreaError = styled.div`
   font-size: 12px;
-  font-family: 'Chillax';
+  font-family: 'Inter';
   position: absolute;
   bottom: -20px;
   right: 0px;
@@ -174,7 +174,7 @@ export const StyledTextareaDiv = styled.div`
     min-height: 62px;
     position: relative;
     overflow: auto;
-    font-family: 'Chillax';
+    font-family: 'Inter';
     background-color: transparent;
     background: transparent;
 
@@ -236,7 +236,7 @@ export const StyledTextareaDiv = styled.div`
 `;
 export const CustomSwitch = styling(Switch)(({ theme }) => ({
   '& .MuiSwitch-switchBase.Mui-checked': {
-    color: '#6462F1', 
+    color: '#6462F1',
     '&:hover': {
       backgroundColor: alpha('#6462F1', theme.palette.action.hoverOpacity),
     },
