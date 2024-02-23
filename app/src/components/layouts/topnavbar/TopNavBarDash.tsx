@@ -15,8 +15,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
 import { createCall } from '../../../utils/dailyVideoService/videoCallSlice';
 import { H2Medium } from '@/components/common/typeScale/StyledTypeScale';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
+import { useToast } from '@/components/ui/use-toast';
 
 export interface IButton {
   to: string;
@@ -30,6 +29,7 @@ const TopNavBarDash = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const { toast } = useToast();
 
   const handleCloseSnackbar = (
     event?: React.SyntheticEvent | Event,
@@ -42,15 +42,20 @@ const TopNavBarDash = (): JSX.Element => {
   };
   const startDemo = async () => {
     try {
-      // response after creating a room
       const responseRoom = await dispatch(createCall());
-
-      navigate(`/video-call/?roomUrl=${encodeURIComponent(responseRoom.payload)}
-      `);
+      navigate(
+        `/video-call/?roomUrl=${encodeURIComponent(responseRoom.payload)}`
+      );
     } catch (error) {
       console.error(error);
+      toast({
+        title: 'Error',
+        description: 'An error occurred while starting the demo.',
+        status: 'error',
+      });
     }
   };
+
   const planMeeting = async () => {
     try {
       const responseRoom = await dispatch(createCall());
@@ -58,20 +63,30 @@ const TopNavBarDash = (): JSX.Element => {
         responseRoom.payload
       )}`;
 
-      // Copy the formatted meeting URL to the clipboard
       navigator.clipboard.writeText(meetingUrl).then(
         () => {
-          setSnackbarMessage(
-            'Meeting URL copied to clipboard Add link to your calender'
-          );
-          setSnackbarOpen(true);
+          toast({
+            title: 'Meeting URL copied to clipboard',
+            description: 'Add link to your calendar',
+            status: 'success',
+          });
         },
         (err) => {
           console.error('Could not copy text: ', err);
+          toast({
+            title: 'Error',
+            description: 'Could not copy the meeting URL to clipboard.',
+            status: 'error',
+          });
         }
       );
     } catch (error) {
       console.error(error);
+      toast({
+        title: 'Error',
+        description: 'An error occurred while planning the meeting.',
+        status: 'error',
+      });
     }
   };
 
@@ -111,21 +126,6 @@ const TopNavBarDash = (): JSX.Element => {
           />
         </ElWrap>
       </Stack>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={5000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity="success"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
     </StyledTopNavBar>
   );
 };
