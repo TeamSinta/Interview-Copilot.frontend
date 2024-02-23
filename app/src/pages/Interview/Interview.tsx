@@ -520,7 +520,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
         <Grid lg={12}>
           <Grid container>
             <Grid item lg={10} md={10} sm={10} xs={10}>
-              <span style={{ fontWeight: '600', fontFamily: 'ChillaxSemi' }}>
+              <span style={{ fontWeight: '600', fontFamily: 'InterSemi' }}>
                 {interviewDetails.title}
               </span>
             </Grid>
@@ -554,7 +554,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
             <span
               style={{
                 fontWeight: '600',
-                fontFamily: 'ChillaxSemi',
+                fontFamily: 'InterSemi',
                 marginLeft: '2px',
               }}
             >
@@ -573,7 +573,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
               <p
                 style={{
                   fontWeight: '600',
-                  fontFamily: 'ChillaxSemi',
+                  fontFamily: 'InterSemi',
                   fontSize: activeTab === 1 ? '20px' : '12px',
                 }}
               >

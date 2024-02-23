@@ -25,7 +25,7 @@ const InvitationBoxContent = styled.div`
 const Title = styled.div`
   color: #121212;
   font-size: 16px;
-  font-family: Chillax;
+  font-family: Inter;
   font-weight: 600;
   line-height: 24px;
   word-wrap: break-word;
@@ -40,7 +40,7 @@ const EmailInput = styled.input`
   border: 1px solid #121212;
   padding-left: 16px;
   font-size: 14px;
-  font-family: Chillax;
+  font-family: Inter;
   font-weight: 500;
   line-height: 21px;
   margin-top: 16px;

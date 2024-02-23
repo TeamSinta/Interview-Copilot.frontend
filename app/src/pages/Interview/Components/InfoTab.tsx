@@ -76,7 +76,7 @@ const InfoTab: React.FC<IInfoTab> = ({ interviewDetails }) => {
           style={{
             fontWeight: '600',
             fontSize: '12px',
-            fontFamily: 'ChillaxSemi',
+            fontFamily: 'InterSemi',
           }}
         >
           {'Competencies'}

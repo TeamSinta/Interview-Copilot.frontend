@@ -62,7 +62,7 @@ export const InputError = styled.div`
 
 export const TextAreaError = styled.div`
   font-size: 12px;
-  font-family: 'Chillax';
+  font-family: 'Inter';
   position: absolute;
   bottom: -20px;
   right: 0px;
@@ -174,7 +174,7 @@ export const StyledTextareaDiv = styled.div`
     min-height: 62px;
     position: relative;
     overflow: auto;
-    font-family: 'Chillax';
+    font-family: 'Inter';
     background-color: transparent;
     background: transparent;
 
@@ -236,7 +236,7 @@ export const StyledTextareaDiv = styled.div`
 `;
 export const CustomSwitch = styling(Switch)(({ theme }) => ({
   '& .MuiSwitch-switchBase.Mui-checked': {
-    color: '#6462F1', 
+    color: '#6462F1',
     '&:hover': {
       backgroundColor: alpha('#6462F1', theme.palette.action.hoverOpacity),
     },

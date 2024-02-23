@@ -65,7 +65,7 @@ export const StyledBottomNavButtons = styled.button`
   padding: 10px;
   color: white;
   width: fit-content;
-  font-family: 'Chillax';
+  font-family: 'Inter';
   margin: 5px;
   border: none;
   height: 35px;

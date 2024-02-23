@@ -72,6 +72,7 @@ export const DescriptionText = styled(BodySMedium)`
 
   align-items: center;
   text-align: center;
+  color: #666666;
 `;
 
 export const PendingReviewsHeading = styled(BodyLBold)`
