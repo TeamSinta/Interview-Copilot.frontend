@@ -227,12 +227,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
         [question.id]: rating,
       }));
 
-      updateInterviewQuestionRating(
-        rating,
-        question.id,
-        interviewDetails.id,
-        interviewDetails.template_id
-      );
+      updateInterviewQuestionRating(rating, question.id, interviewDetails.id, interviewDetails.template_id);
     };
 
     useEffect(() => {
@@ -682,9 +677,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       overlayRef.current.removeChild(node);
     }, []);
 
-    function handleSendFlyingEmoji(e: {
-      detail: { message: any; position: any };
-    }) {
+    function handleSendFlyingEmoji(e: { detail: { message: any; position: any; }; }) {
       const emoji = e.detail.message;
       const position = e.detail.position;
 

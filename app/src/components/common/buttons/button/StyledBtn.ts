@@ -268,6 +268,10 @@ export const StyledRatingBtnM = styled.button`
   box-shadow: 0px 2px 0px #121212;
   height: 24px;
   width: 100%;
+  &.customizeHeightWidth {
+    height: 30px;
+    width: 30px;
+  }
 
   svg {
     width: 14px;
