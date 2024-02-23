@@ -137,8 +137,9 @@ const SideNavBar = (): ReactElement => {
           >
             <Link to={navButtonLink.to} className="link">
               {navButtonLink.icon}
-             <p className=" text-sm leading-tight font-medium ">
-{navButtonLink.text}</p>
+              <p className=" text-sm leading-tight font-medium ">
+                {navButtonLink.text}
+              </p>
             </Link>
           </NavButton>
         ))}

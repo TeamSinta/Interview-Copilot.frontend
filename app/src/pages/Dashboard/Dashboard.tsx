@@ -58,11 +58,7 @@ const DashBoard = () => {
     buttonText: 'Upgrade',
   };
 
-  const {
-    data: templates,
-    isLoading,
-    isSuccess,
-  } = useGetTemplatesQuery();
+  const { data: templates, isLoading, isSuccess } = useGetTemplatesQuery();
 
   const handleButtonClick = () => {
     navigate('/templates');

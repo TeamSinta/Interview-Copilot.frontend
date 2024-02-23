@@ -104,12 +104,12 @@ export const InterviewsBox = styled(Box)`
   width: 100%;
   padding: 24px 24px 24px 24px;
   background: white;
-    border-radius: 8px; // Adjust the border-radius as needed
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
-    align-items: center;
-    padding: 24px;
-    justify-content: flex-start;
-    height: 100%;
+  border-radius: 8px; // Adjust the border-radius as needed
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
+  align-items: center;
+  padding: 24px;
+  justify-content: flex-start;
+  height: 100%;
 `;
 
 export const TemplateCardsBox = styled(Box)`
@@ -183,7 +183,6 @@ export const StyledImage = styled.img`
   opacity: 100%;
   height: 100%;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
-
 `;
 
 export const ButtonContainer = styled.div`

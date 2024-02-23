@@ -117,7 +117,6 @@ const Conclusion: React.FC = () => {
     );
   }, [interviewTitle, interviewerName, interviewerPicture]);
 
-
   return (
     <Flex
       style={{

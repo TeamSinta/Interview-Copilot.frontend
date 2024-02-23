@@ -61,7 +61,7 @@ export const BodyMMedium = styled(BodyLMedium)`
   font-size: 14px;
   width: fit-content;
   &.customStyleCompetenctText {
-    overflow:hidden;
+    overflow: hidden;
   }
 `;
 

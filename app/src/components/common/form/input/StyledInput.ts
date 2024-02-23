@@ -1,4 +1,4 @@
-import { Switch, alpha , styled as styling } from '@mui/material';
+import { Switch, alpha, styled as styling } from '@mui/material';
 import styled from 'styled-components';
 
 export const InputLayout = styled.div`
@@ -40,14 +40,14 @@ export const Input = styled.input`
   &.customStyleForCompetency {
     padding: 0px 0px;
     border-radius: 0px;
-    width:144px;
+    width: 144px;
     background: ${(props) => props.theme.colors.white};
     height: 21px;
     font-size: 12px;
     ::placeholder {
       color: #979696;
+    }
   }
-}
 `;
 
 export const InputError = styled.div`

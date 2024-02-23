@@ -31,7 +31,6 @@ const FrameContainer = styled('div')({
   left: `16px`,
   top: `40px`, // Adjust this value as needed
   height: `2px`,
-
 });
 
 const EmailText = styled('div')({

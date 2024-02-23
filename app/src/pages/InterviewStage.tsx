@@ -49,11 +49,7 @@ const InterviewStage = () => {
   const [startX, setStartX] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const {
-    data: templates,
-    isLoading,
-    isSuccess,
-  } = useGetTemplatesQuery();
+  const { data: templates, isLoading, isSuccess } = useGetTemplatesQuery();
 
   const { data: templateQuestions } = useGetTemplateQuestionsQuery();
 

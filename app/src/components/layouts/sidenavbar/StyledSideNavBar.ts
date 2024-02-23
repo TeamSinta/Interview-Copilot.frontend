@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import styled from 'styled-components';
 
 export const StyledStack = styled(Stack)`
-  background-color: #EBEEF2;
+  background-color: #ebeef2;
   min-height: 100vh;
   height: 100% !important;
   width: 240px;
@@ -17,7 +17,6 @@ export const StyledStack = styled(Stack)`
   position: fixed;
   overflow-y: auto;
   border-right: 1px solid #ccc;
-
 `;
 
 export const LogoImage = styled.img`
@@ -41,7 +40,7 @@ export const NavButton = styled(Stack)`
   }
 
   &:hover {
-    background: #DCDFE5;
+    background: #dcdfe5;
     cursor: pointer;
     transition: 0.2s ease-in-out;
     transform: none;
@@ -52,7 +51,7 @@ export const NavButton = styled(Stack)`
   }
 
   &.active {
-    background: #DCDFE5;
+    background: #dcdfe5;
     /* border: 1.2px solid ${(props) => props.theme.colors.black}; */
     color: black;
   }

@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
-import InterSemi from "../font/Inter-SemiBold.otf"
-import InterMedium from "../font/Inter-Medium.otf"
-import Inter from "../font/Inter-Regular.otf"
+import InterSemi from '../font/Inter-SemiBold.otf';
+import InterMedium from '../font/Inter-Medium.otf';
+import Inter from '../font/Inter-Regular.otf';
 
 export default createGlobalStyle`
     @font-face {

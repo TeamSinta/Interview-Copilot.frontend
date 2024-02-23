@@ -20,7 +20,6 @@
   border-radius: 8px;
   padding: 10px;
   width: 100%;
-
 }
 .content-box {
   display: flex;
@@ -145,7 +144,6 @@
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
-
 }
 
 .video-player-wrapper .video-player-container {

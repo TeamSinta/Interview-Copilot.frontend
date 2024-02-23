@@ -44,7 +44,6 @@ const TABS = {
   ARCHIVED: 'archived',
 };
 
-
 export default function BasicTabs() {
   const [activeTab, setActiveTab] = React.useState(TABS.INTERVIEWS);
   const [interviews, setInterviews] = React.useState([]);
