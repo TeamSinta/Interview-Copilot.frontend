@@ -342,6 +342,3 @@ export const MicMuteIcon = (): JSX.Element => {
 export const CamHideIcon = (): JSX.Element => {
   return <CamHide />;
 };
-export const MessageOutlinecon = (): JSX.Element => {
-  return <MessageOutline />;
-};

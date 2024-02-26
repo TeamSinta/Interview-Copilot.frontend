@@ -1,3 +1,4 @@
+import { Box, Flex } from '@radix-ui/themes';
 import styled from 'styled-components';
 
 export const GridContainer = styled.div`
@@ -29,4 +30,22 @@ export const GridContainer = styled.div`
   @media (max-width: 768px) {
     grid-template-columns: repeat(1, 1fr);
   }
+`;
+
+export const BoxShadow = styled(Box)`
+background: white;
+border-radius: 8px; // Adjust the border-radius as needed
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
+padding: 20px; // Adjust the padding as needed
+`;
+
+
+export const FlexShadow = styled(Flex)`
+background: white;
+border-radius: 8px; // Adjust the border-radius as needed
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
+align-items: center;
+padding: 20px;
+justify-content: flex-start;
+height: 100%;
 `;

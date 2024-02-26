@@ -5,7 +5,23 @@ import styled from 'styled-components';
 import ConclusionData from '@/services/conclusionService';
 import InterviewQNA from './InterviewQNA/InterviewQNA';
 import SummaryTab from './SummaryTab/SummaryTab';
-import { Box, Button, Flex, Grid, Heading } from '@radix-ui/themes';
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  Container,
+  Flex,
+  Grid,
+  Heading,
+  Section,
+  Text,
+} from '@radix-ui/themes';
+import {
+  BodyMMedium,
+  BodySMedium,
+} from '@/components/common/typeScale/StyledTypeScale';
+import { BoxShadow, FlexShadow } from '../../StyledConclusions';
 
 type summaryType = 'summary' | 'question' | 'transcription' | 'notes';
 
@@ -60,17 +76,11 @@ const StyledNavButton = styled(Button)`
 `;
 
 const ContentContainer = styled.div`
-  background-color: #f6f6fb;
-  padding: 10px 20px;
   border-radius: 10px;
   margin-top: 0px;
   overflow-y: auto;
-  max-height: calc(100vh - 40vh);
+  max-height: calc(100vh - 20vh);
   min-height: 580px;
-
-  @media (min-width: 1200px) {
-    padding: 20px 20px;
-  }
 `;
 
 const TabButton: React.FC<TabButtonProps> = ({
@@ -156,22 +166,6 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     return <div>Loading...</div>;
   }
 
-  const BoxShadow = styled(Box)`
-    background: white;
-    border-radius: 8px; // Adjust the border-radius as needed
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
-    padding: 20px; // Adjust the padding as needed
-  `;
-  const FlexShadow = styled(Flex)`
-    background: white;
-    border-radius: 8px; // Adjust the border-radius as needed
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // This creates the drop shadow effect
-    align-items: center;
-    padding: 24px;
-    justify-content: flex-start;
-    height: 100%;
-  `;
-
   return (
     <>
       <Grid columns="1fr 2fr" gap="3" width="100%" height={'100%'}>
@@ -185,13 +179,54 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
           <Grid rows="1fr 1fr" gap="2" width="100%" height={'100%'}>
             <Box>
               {informationType === 'video' && (
-                <div className="video-player-wrapper">
+                <Flex className="mt-3">
                   <VideoPlayer
                     questionsTranscript={questionsTranscript?.data}
                     videoUrl={videoUrl?.url}
                     emojisData={emojisData}
                   />
-                </div>
+                </Flex>
+              )}
+              {informationType === 'info' && (
+                <Flex className="mt-3 m-0 " direction="column">
+                  <Card size="3" className="bg-blue-400">
+                    <Flex gap="3" align="center" className="mb-3">
+                      <Avatar
+                        size="5"
+                        radius="medium"
+                        fallback="T"
+                        color="indigo"
+                      />
+                      <Box>
+                        <Text as="div" size="2" color="gray">
+                          Engineering
+                        </Text>
+                        <Text as="div" size="4" weight="bold">
+                          Teodros Girmay
+                        </Text>
+                      </Box>
+                    </Flex>
+                    <Flex direction={'row'} justify={'between'}>
+                      {' '}
+                      <Box>
+                        <Text as="div" size="2" color="gray">
+                          Email
+                        </Text>
+                        <Text as="div" size="3" weight="normal">
+                          Teodros Girmay
+                        </Text>
+                      </Box>
+                      <Box>
+                        <Text as="div" size="2" color="gray">
+                          Resume
+                        </Text>
+                        <Text as="div" size="3" weight="normal">
+                          Teodros Girmay
+                        </Text>
+                      </Box>
+                    </Flex>
+                  </Card>
+                </Flex>
               )}
             </Box>
             <Flex direction={'column'} gap={'3'} width={'100%'}>
@@ -200,43 +235,46 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
                 Leslie McDonalds with you
               </Heading>
               <Flex direction={'column'}>
-                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                <h4 className="scroll-m-20 text-md font-semibold tracking-tight text-gray-300">
                   {' '}
                   Properties
                 </h4>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                <BodyMMedium className="text-sm font-medium leading-none mt-2">
                   {' '}
                   Date
-                </small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                </BodyMMedium>
+                <BodyMMedium className="text-sm font-medium leading-none mt-1">
                   {' '}
                   Time
-                </small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                </BodyMMedium>
+                <BodyMMedium className="text-sm font-medium leading-none mt-1">
                   {' '}
                   Job Title
-                </small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                </BodyMMedium>
+                <BodyMMedium className="text-sm font-medium leading-none mt-1">
                   {' '}
                   Interview Subject
-                </small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                </BodyMMedium>
+                <BodyMMedium className="text-sm font-medium leading-none mt-1">
                   {' '}
                   Department
-                </small>
+                </BodyMMedium>
               </Flex>
               <Flex direction={'column'}>
-                <h2 className="text-sm bg-red-400"> Results</h2>
+                <h4 className="scroll-m-20 text-md font-semibold tracking-tight  text-gray-300">
+                  {' '}
+                  Results
+                </h4>
 
-                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                <small className="text-sm font-medium leading-none mt-2">
                   {' '}
                   Questions asked
                 </small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                <small className="text-sm font-medium leading-none mt-1">
                   {' '}
                   Candidate Time
                 </small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                <small className="text-sm font-medium leading-none mt-1">
                   {' '}
                   Interview duration
                 </small>
