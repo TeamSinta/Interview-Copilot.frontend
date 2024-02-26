@@ -591,7 +591,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
     <>
       <div
         className="video-player-container"
-        style={{ position: 'relative', width: '95%' }}
+        style={{ position: 'relative', width: '100%' }}
       >
         {' '}
         <div
@@ -601,7 +601,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
             display: 'flex',
             flexDirection: 'column',
             borderRadius: '10px',
-            height: '98%',
+            height: '100%',
           }}
         >
           <div
@@ -625,7 +625,11 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                 onTimeUpdate={handleTimeUpdate}
               ></video>
             </div>
-            <div>
+            <div
+              style={{
+                marginBottom: '50px',
+              }}
+            >
               <div
                 style={{
                   position: 'absolute',

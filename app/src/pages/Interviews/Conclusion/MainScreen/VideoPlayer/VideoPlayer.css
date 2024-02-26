@@ -238,35 +238,6 @@ video {
   transform: translateX(-50%);
 }
 
-.tooltip {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  color: black;
-  font-size: 9px;
-  border-radius: 4px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-  /*  z-index: 999; */
-  padding: 10px;
-  margin-top: -40px;
-  display: none;
-}
-
-.tooltip::before {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 1%;
-  transform: translateX(20%);
-  border-top: 10px solid white;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  display: none;
-}
 
 .ques-bar:hover + .tooltip,
 .ques-bar:hover + .tooltip::before {

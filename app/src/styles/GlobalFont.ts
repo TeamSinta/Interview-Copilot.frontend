@@ -2,6 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 import InterSemi from '../font/Inter-SemiBold.otf';
 import InterMedium from '../font/Inter-Medium.otf';
 import Inter from '../font/Inter-Regular.otf';
+import InterBold from '../font/Inter-Bold.otf';
+
 
 export default createGlobalStyle`
     @font-face {
@@ -18,4 +20,8 @@ export default createGlobalStyle`
         src: local("Inter-Medium"), url(${InterMedium}) format('opentype');
     }
 
+    @font-face {
+        font-family: "InterBold";
+        src: local("Inter-Bold"), url(${InterBold}) format('opentype');
+    }
 `;

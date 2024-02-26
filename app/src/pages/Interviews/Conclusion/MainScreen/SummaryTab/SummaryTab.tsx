@@ -3,20 +3,19 @@ import {
   BodyLBold,
   BodyMMedium,
 } from '@/components/common/typeScale/StyledTypeScale';
-import InterviewQNA from '../InterviewQNA/InterviewQNA';
 import { Grid, Stack } from '@mui/material';
-import Badge from '@mui/material/Badge';
-
 
 import './SummaryTab.css';
 
 import {
   StyledSummaryDescription,
-  StyledRoundBox,
   StyledSummaryTab,
   AIGeneratedImageContainer,
+  StyledRoundBox,
 } from './StyledSummaryTab';
 import { MessageOutlinecon } from '@/components/common/svgIcons/Icons';
+import InterviewQNA from '../InterviewQNA/InterviewQNA';
+import TailwindEditor from '../Editor/Editor';
 
 const AIGeneratedImage = () => (
   <AIGeneratedImageContainer>
@@ -42,28 +41,13 @@ const AIGeneratedImage = () => (
 const SummaryTab = ({ summaryInfo }) => {
   return (
     <StyledSummaryTab>
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={12}>
-          <Stack direction={'row'} justifyContent={'space-between'}>
-            <Stack direction={'row'} spacing={2}>
-            <BodyLBold>{summaryInfo?.title ?? ''}</BodyLBold>
-            <AIGeneratedImage />
-            </Stack>
-            <Badge badgeContent={<span style={{backgroundColor: '#6462F1', color: 'white' , height:'20px' , width:'20px' , borderRadius:'100%' , justifyContent:'center' , alignItems:'center' , display:'flex'}}>4</span>}>
-              <MessageOutlinecon />
-            </Badge>
-          </Stack>
-          <StyledSummaryDescription>
-            <BodyMMedium>{summaryInfo?.description ?? ''}</BodyMMedium>
-          </StyledSummaryDescription>
-          <StyledRoundBox>
-            <InterviewQNA
-              propData={summaryInfo?.faq ?? ''}
-              screen={'summary'}
-            />
-          </StyledRoundBox>
-        </Grid>
-      </Grid>
+      <TailwindEditor />
+      <StyledSummaryDescription>
+        <BodyMMedium>{summaryInfo?.description ?? ''}</BodyMMedium>
+      </StyledSummaryDescription>
+      <StyledRoundBox>
+        <InterviewQNA propData={summaryInfo?.faq ?? ''} screen={'summary'} />
+      </StyledRoundBox>
     </StyledSummaryTab>
   );
 };
