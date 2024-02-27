@@ -23,12 +23,12 @@ const tiptapLink = TiptapLink.configure({
 });
 const taskList = TaskList.configure({
   HTMLAttributes: {
-    class: cx("not-prose pl-2"),
+    class: cx("not-prose leading-3  pl-2 "),
   },
 });
 const taskItem = TaskItem.configure({
   HTMLAttributes: {
-    class: cx("flex items-start my-4"),
+    class: cx("flex items-center leading-normal  "),
   },
   nested: true,
 });
@@ -72,17 +72,17 @@ const starterKit = StarterKit.configure({
   },
   blockquote: {
     HTMLAttributes: {
-      class: cx("border-l-4 border-primary"),
+      class: cx("border-solid border-black-600 border-l-4"),
     },
   },
   codeBlock: {
     HTMLAttributes: {
-      class: cx("rounded-sm bg-muted border p-5 font-mono font-medium"),
+      class: cx("rounded-sm bg-muted text-black border p-5 font-mono font-medium"),
     },
   },
   code: {
     HTMLAttributes: {
-      class: cx("rounded-md bg-muted  px-1.5 py-1 font-mono font-medium"),
+      class: cx("rounded-md bg-muted px-1.5 py-1 font-mono font-medium"),
       spellcheck: "false",
     },
   },
@@ -101,5 +101,6 @@ export const defaultExtensions = [
   taskList,
   taskItem,
   horizontalRule,
-  simpleExtensions
+  simpleExtensions,
+
 ];
