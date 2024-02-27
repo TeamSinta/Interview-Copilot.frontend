@@ -5,7 +5,6 @@ import Placeholder from "@tiptap/extension-placeholder";
 import TiptapUnderline from "@tiptap/extension-underline";
 import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
-import ListItem from '@tiptap/extension-list-item'
 import { Markdown } from "tiptap-markdown";
 import Highlight from "@tiptap/extension-highlight";
 import CustomKeymap from "./custom-keymap";
@@ -70,7 +69,8 @@ export {
   TaskItem,
   TaskList,
   InputRule,
-
 };
+
+
 
 //Todo: Maybe I should create an utils entry

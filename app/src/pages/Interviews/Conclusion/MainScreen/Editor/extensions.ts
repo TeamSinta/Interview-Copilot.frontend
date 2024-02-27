@@ -21,24 +21,6 @@ const tiptapLink = TiptapLink.configure({
     ),
   },
 });
-
-// const tiptapImage = TiptapImage.extend({
-//   addProseMirrorPlugins() {
-//     return [UploadImagesPlugin()];
-//   },
-// }).configure({
-//   allowBase64: true,
-//   HTMLAttributes: {
-//     class: cx("rounded-lg border border-muted"),
-//   },
-// });
-
-// const updatedImage = UpdatedImage.configure({
-//   HTMLAttributes: {
-//     class: cx("rounded-lg border border-muted"),
-//   },
-// });
-
 const taskList = TaskList.configure({
   HTMLAttributes: {
     class: cx("not-prose pl-2"),

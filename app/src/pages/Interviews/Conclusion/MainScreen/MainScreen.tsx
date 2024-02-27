@@ -10,17 +10,12 @@ import {
   Box,
   Button,
   Card,
-  Container,
   Flex,
   Grid,
   Heading,
-  Section,
   Text,
 } from '@radix-ui/themes';
-import {
-  BodyMMedium,
-  BodySMedium,
-} from '@/components/common/typeScale/StyledTypeScale';
+import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { BoxShadow, FlexShadow } from '../../StyledConclusions';
 
 type summaryType = 'summary' | 'question' | 'transcription' | 'notes';
