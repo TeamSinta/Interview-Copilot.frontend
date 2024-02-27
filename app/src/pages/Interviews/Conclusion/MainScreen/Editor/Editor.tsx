@@ -3,42 +3,74 @@ import {
   EditorRoot,
   defaultEditorProps,
   type JSONContent,
-  EditorCommand,
-  EditorCommandEmpty,
-  EditorCommandItem,
 } from 'novel';
 import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { Editor as EditorInstance } from 'novel';
-import { defaultEditorContent } from './lib/content';
 import { defaultExtensions } from './extensions';
 import SlashCommand from './extensions/slash-command';
+import { saveContentToBackend } from '@/features/interviewDetail/interviewDetailAPI';
 
 const extensions = [...defaultExtensions, SlashCommand];
 
-const TailwindEditor = () => {
+// Updated the component to accept propData as a prop
+const TailwindEditor = ({ propData }) => {
   const [initialContent, setInitialContent] = useState<null | JSONContent>(
     null
   );
   const [saveStatus, setSaveStatus] = useState('Saved');
-
-  const [, setContent] = useState(null);
-
   const debouncedUpdates = useDebouncedCallback(
     async (editor: EditorInstance) => {
       const json = editor.getJSON();
 
       window.localStorage.setItem('novel-content', JSON.stringify(json));
-      setSaveStatus('Saved');
+      setSaveStatus('Saving...');
+      try {
+        // Replace this with your actual API call
+        const stringifyJSON = JSON.stringify(json);
+        await saveContentToBackend(propData.summary_id, stringifyJSON);
+        setSaveStatus('Saved');
+      } catch (error) {
+        console.error('Failed to save content:', error);
+        setSaveStatus('Save failed, try again');
+      }
     },
     500
   );
 
   useEffect(() => {
+    // Attempt to load content from localStorage
     const content = window.localStorage.getItem('novel-content');
-    if (content) setInitialContent(JSON.parse(content));
-    else setInitialContent(defaultEditorContent);
-  }, []);
+    if (content) {
+      try {
+        const parsedContent = JSON.parse(content);
+
+        setInitialContent(parsedContent);
+      } catch (error) {
+        console.error('Error parsing content from localStorage:', error);
+        // If parsing fails, fallback to propData
+        setInitialContent(parsePropData(propData?.description));
+      }
+    } else {
+      // If no content in localStorage, fallback to propData
+      setInitialContent(parsePropData(propData?.description));
+      console.log(propData.description);
+    }
+  }, []); // Dependency array is empty to ensure this effect runs only once on mount
+
+  // Helper function to parse propData if it's a string or return it directly if it's already an object
+  function parsePropData(data) {
+    if (typeof data === 'string') {
+      try {
+        return JSON.parse(data);
+      } catch (error) {
+        console.error('Error parsing propData:', error);
+        return null; // Return null or default content as a fallback
+      }
+    }
+    return data; // Return propData directly if it's not a string
+  }
+  // Add propData to the dependency array to re-run effect when propData changes
 
   if (!initialContent) return null;
 
@@ -62,7 +94,7 @@ const TailwindEditor = () => {
               class: `prose prose-headings:font-title prose-sm sm:prose-base focus:outline-none max-w-full lg:prose-lg  `,
             },
           }}
-        ></EditorContent>
+        />
       </EditorRoot>
     </div>
   );

@@ -75,7 +75,7 @@ const ContentContainer = styled.div`
   margin-top: 0px;
   overflow-y: auto;
   max-height: calc(100vh - 20vh);
-  min-height: 580px;
+  min-height: calc(100vh - 20vh);
 `;
 
 const TabButton: React.FC<TabButtonProps> = ({
@@ -171,7 +171,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
           direction={'column'}
         >
           {mainTabs}
-          <Grid rows="1fr 1fr" gap="2" width="100%" height={'100%'}>
+          <Grid gap="6" width="100%">
             <Box>
               {informationType === 'video' && (
                 <Flex className="mt-3">
@@ -201,7 +201,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
                         </Text>
                       </Box>
                     </Flex>
-                    <Flex direction={'row'} justify={'between'}>
+                    <Flex direction={'row'} gap={'9'} style={{}}>
                       {' '}
                       <Box>
                         <Text as="div" size="2" color="gray">

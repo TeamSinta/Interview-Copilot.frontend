@@ -123,6 +123,7 @@ const Conclusion: React.FC = () => {
         height: '100vh',
         background: '#F1F1F1',
         width: '100%',
+        overflow: 'scroll',
       }}
       direction={'column'}
     >
@@ -131,7 +132,6 @@ const Conclusion: React.FC = () => {
         style={{
           padding: '20px 86px 46px 86px',
         }}
-        height={'100%'}
       >
         <WebSockComp
           interviewRoundId={location.state.id}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { IndexStyle, InterviewContainerStyle } from '../InterviewQNA';
 import { Grid } from '@mui/material';
-import { QuestionCollapsible } from '../QuestionCollapsible';
 import {
   ClockIcon,
   SoundLevelIcon,
@@ -9,9 +8,18 @@ import {
 import { PredefinedRatingsAndCompetency } from '../RatingComponent';
 import styled from 'styled-components';
 import {
+  BodyLSemiBold,
   BodyMMedium,
   BodySBold,
 } from '@/components/common/typeScale/StyledTypeScale';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
+import { Cross2Icon, RowSpacingIcon } from '@radix-ui/react-icons';
+import { Button } from '@/components/ui/button';
+import { ChevronsUpDown } from 'lucide-react';
 
 interface QuestionSummarizedAnswers {
   question: string;
@@ -59,6 +67,7 @@ const FlexContainer = styled.div`
 const IndexContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const IconContainer = styled.div`
@@ -139,26 +148,29 @@ export const QuestionTextDisplay: React.FC<QuestionTextDisplayProps> = ({
   activeIndex,
   question,
 }) => {
+  const isActive = index === activeIndex;
+
   return (
-    <QuestionContainer
-      container
-      spacing={1}
-      className="interview-qna-item"
-      onClick={() => handleClick(index)}
-    >
-      <Grid item xs={12} md={12}>
-        <IndexContainer>
-          <IndexStyle>
-            <BodySBold>{index + 1}</BodySBold>
-          </IndexStyle>
-          <QuestionCollapsible
-            index={index}
-            activeIndex={activeIndex}
-            question={question}
-          />
-        </IndexContainer>
-      </Grid>
-    </QuestionContainer>
+    <>
+      <Collapsible open={isActive} onOpenChange={() => handleClick(index)}>
+        <CollapsibleTrigger asChild>
+          <IndexContainer>
+            <IndexStyle>
+              <BodySBold>{index + 1 ?? ''}. </BodySBold>
+              <BodyLSemiBold>{question}</BodyLSemiBold>
+            </IndexStyle>
+
+            <Button variant="ghost" size="sm" className="w-9 p-0">
+              <ChevronsUpDown className="h-4 w-4" />
+              <span className="sr-only">Toggle</span>
+            </Button>
+          </IndexContainer>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          {/* Content to show when the question is active/open */}
+        </CollapsibleContent>
+      </Collapsible>
+    </>
   );
 };
 
@@ -173,7 +185,9 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
   handleClick,
   activeIndex,
 }) => {
-  const lines = answer ? answer.split('- ').filter((line) => line.trim() !== '') : [];
+  const lines = answer
+    ? answer.split('- ').filter((line) => line.trim() !== '')
+    : [];
 
   return (
     <>
@@ -186,14 +200,14 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
         />
       </InterviewContainerStyle>
 
-      <TextContainer container spacing={1} className="" alignItems="center">
+      {/* <TextContainer container spacing={1} className="" alignItems="center">
         <PredefinedRatingsAndCompetency
           competency={competency}
           rating={score}
           duration={duration}
           difficulty={difficulty}
         />
-      </TextContainer>
+      </TextContainer> */}
 
       <AnswerContainer
         className={`question-answer ${activeIndex === index ? 'show' : ''}`}
@@ -207,7 +221,7 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
           </BodyMMedium>
         ))}
       </AnswerContainer>
-      <hr style={{ opacity: '0.25' }} />
+      <hr style={{ opacity: '1' }} />
     </>
   );
 };
@@ -229,9 +243,9 @@ export const QuestionsTabQNA: React.FC<QuestionsTabQNAProps> = ({
           competency={question.competency}
           score={question.score}
           handleClick={handleClick}
-          activeIndex={activeIndex} 
-          difficulty={question.difficulty}       
-           />
+          activeIndex={activeIndex}
+          difficulty={question.difficulty}
+        />
       ))}
     </div>
   );
