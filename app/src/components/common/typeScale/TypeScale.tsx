@@ -15,3 +15,11 @@ export const H3Component = ({ children }: any) => {
 export const BodyNMediumComponent = ({ children }: any) => {
   return <BodyMMedium>{children}</BodyMMedium>;
 };
+
+export const TypographyH1 = (props: { content: string }) => {
+  return (
+    <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+      {props.content}
+    </h1>
+  );
+};

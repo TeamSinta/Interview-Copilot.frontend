@@ -56,7 +56,10 @@ import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer
 import InfoTab from './Components/InfoTab';
 import InterviewSideBar from './Components/InterviewSideBar';
 import { IReactClickedState } from './Daily/BottomNavBar/BottomNavBar';
-import { selectInterview, updateQuestionRating } from '@/features/interviews/interviewsSlice';
+import {
+  selectInterview,
+  updateQuestionRating,
+} from '@/features/interviews/interviewsSlice';
 
 // const components = {
 //   h3: H3,
@@ -86,7 +89,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
   useEffect(() => {
     const now = new Date();
     setStartTime(now);
-  }, []); 
+  }, []);
   const [isInterviewSideBarCollapsed, setIsInterviewSideBarCollapsed] =
     useState(false);
   const callObject = useDaily();
@@ -136,7 +139,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       );
       setTemplateQuestionsAndTopics(response);
     };
-  
+
     fetchQuestionsAndTopics();
   }, [interviewDetails, cookies]);
 
@@ -228,18 +231,22 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
         [question.id]: rating,
       }));
 
-      updateInterviewQuestionRating(rating, question.id, interviewDetails.id, interviewDetails.template_id));
-      dispatch(updateQuestionRating({ questionId : question.id , rating }));
-
+      updateInterviewQuestionRating(
+        rating,
+        question.id,
+        interviewDetails.id,
+        interviewDetails.template_id
+      );
+      dispatch(updateQuestionRating({ questionId: question.id, rating }));
     };
-    
+
     const { questionRating } = useSelector(selectInterview);
 
     useEffect(() => {
-      if(questionRating !== null){
-        setQuestionRatings(questionRating)
+      if (questionRating !== null) {
+        setQuestionRatings(questionRating);
       }
-    },[questionRating])
+    }, [questionRating]);
     useEffect(() => {
       setCollapseQuestion(false);
     }, [activeData]);
@@ -687,7 +694,9 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       overlayRef.current.removeChild(node);
     }, []);
 
-    function handleSendFlyingEmoji(e: { detail: { message: any; position: any; }; }) {
+    function handleSendFlyingEmoji(e: {
+      detail: { message: any; position: any };
+    }) {
       const emoji = e.detail.message;
       const position = e.detail.position;
 

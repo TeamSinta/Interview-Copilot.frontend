@@ -8,6 +8,7 @@ import { RootState } from './app/store';
 import { Navigate, useLocation } from 'react-router-dom';
 import ConclusionContainer from './components/layouts/container/conclusionContainer/ConclusionContainer';
 import { ConclusionStyledMain } from './components/layouts/container/conclusionContainer/StyledConclusionContianer';
+import { Theme, ThemeProvider } from './components/common/theme/ThemeProvider';
 
 function App() {
   const location = useLocation();
@@ -41,17 +42,19 @@ function App() {
 
   return (
     <>
-      {isAuthenticated ? (
-        <Container>
-          <SideNavBar />
-          <TopNavBar />
-          <StyledMain>
-            <Routers />
-          </StyledMain>
-        </Container>
-      ) : (
-        <Routers />
-      )}
+      <ThemeProvider defaultTheme={Theme.LIGHT} storageKey="vite-ui-theme">
+        {isAuthenticated ? (
+          <Container>
+            <SideNavBar />
+            <TopNavBar />
+            <StyledMain>
+              <Routers />
+            </StyledMain>
+          </Container>
+        ) : (
+          <Routers />
+        )}
+      </ThemeProvider>
     </>
   );
 }

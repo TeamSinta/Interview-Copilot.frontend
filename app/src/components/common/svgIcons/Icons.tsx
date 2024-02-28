@@ -137,7 +137,7 @@ export const DocumentIcon = (): JSX.Element => {
 };
 
 export const GoogleIcon = (): JSX.Element => {
-  return <Google />;
+  return <Google width="18" height="18" />;
 };
 
 export const PlusIcon = (): JSX.Element => {
