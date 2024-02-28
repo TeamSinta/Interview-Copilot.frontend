@@ -1,25 +1,44 @@
 import React from 'react';
-import { IndexStyle, InterviewContainerStyle } from '../InterviewQNA';
+import { InterviewContainerStyle } from '../InterviewQNA';
 import { Grid } from '@mui/material';
 import {
   ClockIcon,
   SoundLevelIcon,
 } from '@/components/common/svgIcons/CustomIcons';
-import { PredefinedRatingsAndCompetency } from '../RatingComponent';
 import styled from 'styled-components';
 import {
-  BodyLSemiBold,
   BodyMMedium,
-  BodySBold,
+  H2Bold,
+  H3Bold,
+  H3Medium,
 } from '@/components/common/typeScale/StyledTypeScale';
+
+import { PredefinedRatingsComponent } from '../RatingComponent/RatingComponent';
+import { Flex } from '@radix-ui/themes';
+import { AccordionItem } from '@radix-ui/react-accordion';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
-import { Cross2Icon, RowSpacingIcon } from '@radix-ui/react-icons';
-import { Button } from '@/components/ui/button';
-import { ChevronsUpDown } from 'lucide-react';
+  Accordion,
+  AccordionContent,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+
+interface Question {
+  question: string;
+  answer: string;
+  competency?: string | null; // Make competency optional and nullable
+  score: number;
+  duration: string;
+  difficulty?: string;
+  index?: number;
+}
+
+interface CompetencyGroup {
+  [key: string]: {
+    questions: Question[];
+    totalScore: number;
+    averageScore?: number;
+  };
+}
 
 interface QuestionSummarizedAnswers {
   question: string;
@@ -47,6 +66,8 @@ interface QuestionTextDisplayProps {
   question: string;
   handleClick: QuestionItemProps['handleClick'];
   index?: number;
+  score: number;
+  answer: string;
 }
 
 interface QuestionMetaProps {
@@ -67,7 +88,8 @@ const FlexContainer = styled.div`
 const IndexContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 16px;
 `;
 
 const IconContainer = styled.div`
@@ -121,6 +143,30 @@ const AnswerContainer = styled.div`
   }
 `;
 
+const groupQuestionsByCompetency = (questions: Question[]) => {
+  const grouped: CompetencyGroup = questions.reduce(
+    (acc: CompetencyGroup, question) => {
+      // Default to "General" if competency is null or undefined
+      const competency = question.competency || 'General';
+      if (!acc[competency]) {
+        acc[competency] = { questions: [], totalScore: 0 };
+      }
+      acc[competency].questions.push(question);
+      acc[competency].totalScore += question.score;
+      return acc;
+    },
+    {}
+  );
+
+  // Calculate average score for each competency
+  Object.keys(grouped).forEach((competency) => {
+    const group = grouped[competency];
+    group.averageScore = group.totalScore / group.questions.length;
+  });
+
+  return grouped;
+};
+
 export const QuestionMeta: React.FC<QuestionMetaProps> = ({
   duration,
   difficulty,
@@ -147,29 +193,38 @@ export const QuestionTextDisplay: React.FC<QuestionTextDisplayProps> = ({
   index,
   activeIndex,
   question,
+  score,
+  answer,
 }) => {
   const isActive = index === activeIndex;
 
+  const stringIndex = `item-${index}`;
+  const defaultValues = [`item-${activeIndex}`];
   return (
     <>
-      <Collapsible open={isActive} onOpenChange={() => handleClick(index)}>
-        <CollapsibleTrigger asChild>
-          <IndexContainer>
-            <IndexStyle>
-              <BodySBold>{index + 1 ?? ''}. </BodySBold>
-              <BodyLSemiBold>{question}</BodyLSemiBold>
-            </IndexStyle>
-
-            <Button variant="ghost" size="sm" className="w-9 p-0">
-              <ChevronsUpDown className="h-4 w-4" />
-              <span className="sr-only">Toggle</span>
-            </Button>
-          </IndexContainer>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          {/* Content to show when the question is active/open */}
-        </CollapsibleContent>
-      </Collapsible>
+      <Accordion
+        type="multiple"
+        className="w-full"
+        defaultValue={defaultValues}
+      >
+        <AccordionItem value={stringIndex}>
+          <AccordionTrigger>
+            {' '}
+            <IndexContainer>
+              <PredefinedRatingsComponent rating={score} />{' '}
+              <H3Medium
+                className="italic font-bold
+"
+              >
+                {question}
+              </H3Medium>
+            </IndexContainer>
+          </AccordionTrigger>
+          <AccordionContent>
+            <BodyMMedium>{answer}</BodyMMedium>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </>
   );
 };
@@ -189,6 +244,8 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
     ? answer.split('- ').filter((line) => line.trim() !== '')
     : [];
 
+  console.log(score);
+
   return (
     <>
       <InterviewContainerStyle>
@@ -197,30 +254,11 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
           index={index}
           activeIndex={activeIndex}
           question={question}
+          score={score}
+          answer={answer}
         />
       </InterviewContainerStyle>
 
-      {/* <TextContainer container spacing={1} className="" alignItems="center">
-        <PredefinedRatingsAndCompetency
-          competency={competency}
-          rating={score}
-          duration={duration}
-          difficulty={difficulty}
-        />
-      </TextContainer> */}
-
-      <AnswerContainer
-        className={`question-answer ${activeIndex === index ? 'show' : ''}`}
-      >
-        {lines.map((line, index) => (
-          <BodyMMedium
-            key={index}
-            style={{ display: 'block', marginBottom: '0.5em' }}
-          >
-            • {line}
-          </BodyMMedium>
-        ))}
-      </AnswerContainer>
       <hr style={{ opacity: '1' }} />
     </>
   );
@@ -231,21 +269,35 @@ export const QuestionsTabQNA: React.FC<QuestionsTabQNAProps> = ({
   data,
   handleClick,
 }) => {
+  const groupedQuestions = groupQuestionsByCompetency(data);
+
   return (
     <div>
-      {data?.map((question, index) => (
-        <QuestionItem
-          key={index}
-          index={index}
-          duration={question.duration}
-          question={question.question}
-          answer={question.answer}
-          competency={question.competency}
-          score={question.score}
-          handleClick={handleClick}
-          activeIndex={activeIndex}
-          difficulty={question.difficulty}
-        />
+      {Object.entries(groupedQuestions).map(([competency, group]) => (
+        <div key={competency}>
+          <Flex direction={'row'} className=" ">
+            <div className=" flex items-center  mt-3 rounded-lg px-3 border border-gray-300 shadow-md  border-solid">
+              <h2>{competency}</h2>
+              <PredefinedRatingsComponent
+                rating={Math.round(group.averageScore || 0)}
+              />
+            </div>
+          </Flex>
+          {group.questions.map((question, index) => (
+            <QuestionItem
+              key={index}
+              index={index}
+              duration={question.duration?.toString() ?? ''} // Convert to string, provide fallback
+              question={question.question}
+              answer={question.answer}
+              competency={question.competency ?? ''} // Provide fallback for null or undefined
+              score={question.score}
+              handleClick={handleClick}
+              activeIndex={activeIndex}
+              difficulty={question.difficulty ?? ''}
+            />
+          ))}
+        </div>
       ))}
     </div>
   );

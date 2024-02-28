@@ -61,10 +61,8 @@ const InfoTabContainer = styled.div`
 
 const StyledNavButton = styled(Button)`
   color: black;
-
   padding: 6px;
-
-  @media (min-width: 1200px) {
+  @media (min-width: 1000px) {
     width: 100px;
     margin-bottom: 0;
   }

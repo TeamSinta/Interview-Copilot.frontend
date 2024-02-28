@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   StyledIconBtnM,
   StyledRatingBtnL,
-  StyledRatingBtnM,
 } from '@/components/common/buttons/button/StyledBtn';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { ICustomIconProps } from '@/components/common/svgIcons/CustomIcons';
@@ -40,16 +39,9 @@ export const RatingButton: React.FC<RatingButtonProps> = ({
   activeColor = '',
 }) => {
   return (
-    <div style={{ marginRight: '5px' }}>
+    <div className="flex items-center  ">
       <ElWrap w={24}>
-        <StyledRatingBtnM
-          className="customizeHeightWidth"
-          style={
-            activeIcon ? { background: activeColor, boxShadow: 'none' } : {}
-          }
-        >
-          <Icon />
-        </StyledRatingBtnM>
+        <Icon />
       </ElWrap>
     </div>
   );
@@ -338,8 +330,6 @@ export const PredefinedRatingsAndCompetency: React.FC<any> = ({
   difficulty,
 }) => {
   const getCompetencyStyle = (rating: string) => {
-    const color = buttons.find((button) => button.rate === rating)?.color;
-
     return {
       borderRadius: '10px',
       backgroundColor: 'white',
@@ -386,16 +376,18 @@ export const PredefinedRatingsComponent: React.FC<PredefinedRatingsProps> = ({
   rating,
 }) => {
   return (
-    <div style={{ display: 'flex', margin: '0px' , gap:'5px' }}>
-      {buttons.map(({ Icon, color, rate }) => (
-        <span key={rate}>
-          <RatingButton
-            Icon={Icon}
-            activeColor={color}
-            activeIcon={rating === rate}
-          />
-        </span>
-      ))}
+    <div>
+      {buttons
+        .filter(({ rate }) => rating === rate) // Filter buttons to only those with matching rate
+        .map(({ Icon, color, rate }) => (
+          <span key={rate}>
+            <RatingButton
+              Icon={Icon}
+              activeColor={color}
+              activeIcon={rating === rate}
+            />
+          </span>
+        ))}
     </div>
   );
 };
