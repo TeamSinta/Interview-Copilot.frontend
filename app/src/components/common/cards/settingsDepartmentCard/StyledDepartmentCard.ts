@@ -17,7 +17,6 @@ export const DepartmentCardContainer = styled.div`
   }
 `;
 
-
 export const DepartmentDetails = styled.div`
   margin-left: 16px;
   flex-direction: column;

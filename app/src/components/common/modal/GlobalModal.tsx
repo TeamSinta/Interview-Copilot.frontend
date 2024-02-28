@@ -136,7 +136,7 @@ const GlobalModal = (): JSX.Element => {
         );
       case MODAL_TYPE.CREATE_QUEST_BANK:
         return (
-          <Modal title="Create New Question Bank">
+          <Modal title="New Question Bank">
             <CreateQuestionBank />
           </Modal>
         );

@@ -1,13 +1,16 @@
 import { RootState } from '@/app/store';
 import { createSlice } from '@reduxjs/toolkit';
 import { redirect } from 'react-router-dom';
-import { CompetencyDropDownFilter, StatusDropdownFilter } from '../utils/utilEnum';
+import {
+  CompetencyDropDownFilter,
+  StatusDropdownFilter,
+} from '../utils/utilEnum';
 
 export interface IStateEdit {
   [key: string]: any;
   id: number;
   question_text: string;
-  reply_time:string;
+  reply_time: string;
   guidelines: string;
   competency: string | CompetencyDropDownFilter;
   difficulty: string | StatusDropdownFilter;
@@ -19,7 +22,7 @@ export interface ModalState {
   isOpen: boolean;
   history: string;
   questionBankID: string;
-  dataForEdit?: IStateEdit | null
+  dataForEdit?: IStateEdit | null;
 }
 
 const initialState: ModalState = {
@@ -28,7 +31,7 @@ const initialState: ModalState = {
   history: '',
   templateID: '',
   questionBankID: '',
-  dataForEdit: null
+  dataForEdit: null,
 };
 
 export const modalSlice = createSlice({
@@ -36,7 +39,8 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     openModal: (state, actions) => {
-      const { modalType, templateID, questionBankID , dataForEdit } = actions.payload;
+      const { modalType, templateID, questionBankID, dataForEdit } =
+        actions.payload;
       state.modalType = modalType;
       state.templateID = templateID;
       state.questionBankID = questionBankID;

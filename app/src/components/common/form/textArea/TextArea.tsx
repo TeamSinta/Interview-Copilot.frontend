@@ -15,14 +15,14 @@ import {
 } from '@mdxeditor/editor';
 
 import '@mdxeditor/editor/style.css';
-import { useEffect, forwardRef, useState, useRef} from 'react';
+import { useEffect, forwardRef, useState, useRef } from 'react';
 import { StyledTextareaDiv } from '@/components/common/form/input/StyledInput';
 
 interface ITextAreaProps {
   placeholder: string;
   onChange: (e: any) => void;
   value: string;
-    validate: (value: string) => string | null; // Validation function
+  validate: (value: string) => string | null; // Validation function
 }
 
 const TextArea = forwardRef<HTMLInputElement, ITextAreaProps>((props, ref) => {
@@ -34,7 +34,7 @@ const TextArea = forwardRef<HTMLInputElement, ITextAreaProps>((props, ref) => {
     setInputValue(newValue);
     const validationError = validate ? validate(newValue) : null;
     setError(validationError);
-        onChange(newValue);
+    onChange(newValue);
   };
   const triggerValidation = () => {
     const validationError = validate(inputValue);
@@ -50,7 +50,7 @@ const TextArea = forwardRef<HTMLInputElement, ITextAreaProps>((props, ref) => {
       };
     }
   }, [ref]);
-  
+
   return (
     <>
       <StyledTextareaDiv className={`${error ? 'error' : ''}`}>

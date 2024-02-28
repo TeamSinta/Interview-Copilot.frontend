@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
-import { Box } from '@mui/material';
-import React from 'react';
+import { Alert, Box, Snackbar } from '@mui/material';
+import React, { useState } from 'react';
 import SearchInput from '@/components/common/form/serchInput/SearchInput';
 import {
   CalendarIcon,
@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
 import { createCall } from '../../../utils/dailyVideoService/videoCallSlice';
+import { useToast } from '@/components/ui/use-toast';
 
 export interface IButton {
   to: string;
@@ -31,16 +32,66 @@ const TopNavBar = (): JSX.Element => {
   const navigate = useNavigate();
 
   const dispatch: AppDispatch = useDispatch();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const { toast } = useToast();
 
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
   const startDemo = async () => {
     try {
-      // response after creating a room
       const responseRoom = await dispatch(createCall());
-
-      navigate(`/video-call/?roomUrl=${encodeURIComponent(responseRoom.payload)}
-      `);
+      navigate(
+        `/video-call/?roomUrl=${encodeURIComponent(responseRoom.payload)}`
+      );
     } catch (error) {
       console.error(error);
+      toast({
+        title: 'Error',
+        description: 'An error occurred while starting the demo.',
+        status: 'error',
+      });
+    }
+  };
+
+  const planMeeting = async () => {
+    try {
+      const responseRoom = await dispatch(createCall());
+      const meetingUrl = `localhost:3001/video-call/?roomUrl=${encodeURIComponent(
+        responseRoom.payload
+      )}`;
+
+      navigator.clipboard.writeText(meetingUrl).then(
+        () => {
+          toast({
+            title: 'Meeting URL copied to clipboard',
+            description: 'Add link to your calendar',
+            status: 'success',
+          });
+        },
+        (err) => {
+          console.error('Could not copy text: ', err);
+          toast({
+            title: 'Error',
+            description: 'Could not copy the meeting URL to clipboard.',
+            status: 'error',
+          });
+        }
+      );
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Error',
+        description: 'An error occurred while planning the meeting.',
+        status: 'error',
+      });
     }
   };
 
@@ -67,13 +118,28 @@ const TopNavBar = (): JSX.Element => {
               {
                 label: 'Plan a Meeting',
                 icon: <CalendarIcon />,
-                onClick: () => {},
+                onClick: planMeeting,
               },
               // You can add more buttons dynamically by adding more objects to this array
             ]}
           />
         </ElWrap>
       </Stack>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </StyledTopNavBar>
   );
 };

@@ -204,21 +204,42 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
                   {' '}
                   Properties
                 </h4>
-                <small className="leading-7 [&:not(:first-child)]:mt-6"> Date</small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">  Time</small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">  Job Title</small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">  Interview Subject</small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6">  Department</small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                  {' '}
+                  Date
+                </small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                  {' '}
+                  Time
+                </small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                  {' '}
+                  Job Title
+                </small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                  {' '}
+                  Interview Subject
+                </small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                  {' '}
+                  Department
+                </small>
               </Flex>
               <Flex direction={'column'}>
-              <h2 className="text-sm bg-red-400">
-                  {' '}
-                  Results
-                </h2>
+                <h2 className="text-sm bg-red-400"> Results</h2>
 
-                <small className="leading-7 [&:not(:first-child)]:mt-6"> Questions asked</small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6"> Candidate Time</small>
-                <small className="leading-7 [&:not(:first-child)]:mt-6"> Interview duration</small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                  {' '}
+                  Questions asked
+                </small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                  {' '}
+                  Candidate Time
+                </small>
+                <small className="leading-7 [&:not(:first-child)]:mt-6">
+                  {' '}
+                  Interview duration
+                </small>
               </Flex>
             </Flex>
           </Grid>

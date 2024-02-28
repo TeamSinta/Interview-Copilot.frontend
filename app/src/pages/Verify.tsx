@@ -74,7 +74,7 @@ const LoginScreen = () => {
               />
             </Box>
             <TextBtnL
-              label="Vefiry"
+              label="Verify"
               disable={!code}
               onClick={handleOnVeriry}
               className={BackgroundColor.ACCENT_PURPLE}

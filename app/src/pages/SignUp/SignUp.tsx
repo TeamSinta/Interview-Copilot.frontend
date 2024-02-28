@@ -1,7 +1,7 @@
 import {
   BodyLMedium,
   BodyLSemiBold,
-  H2Bold
+  H2Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
 import Terms from '@/components/pages/login/Terms/Terms';
 import GoogleLoginButton from '@/components/pages/login/googleLoginBtn/GoogleLoginButton';
@@ -16,7 +16,7 @@ import {
   StyledImage,
   StyledLogo,
   SuperContainer,
-  TextRow
+  TextRow,
 } from './StyledSignUp';
 
 const SignUpScreen = () => {

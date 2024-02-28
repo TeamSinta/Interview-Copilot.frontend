@@ -103,7 +103,7 @@ const TopBar = ({ interviewRoundId }) => {
                 </span>{' '}
                 <span
                   style={{
-                    fontFamily: 'ChillaxSemi',
+                    fontFamily: 'InterSemi',
                     fontWeight: '600',
                   }}
                 >
@@ -150,7 +150,7 @@ const TopBar = ({ interviewRoundId }) => {
                 </span>
                 <span
                   style={{
-                    fontFamily: 'ChillaxSemi',
+                    fontFamily: 'InterSemi',
                     fontWeight: '600',
                   }}
                 >

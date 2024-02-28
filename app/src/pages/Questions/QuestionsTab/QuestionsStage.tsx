@@ -5,7 +5,7 @@ import {
   InterviewOverviewContainer,
   InterviewOverviewLayout,
   InterviewStageContainer,
-  Title
+  Title,
 } from '@/components/pages/interview/StyledInterview';
 import CompetenciesFilter from './CompetenciesFilter';
 import QuestionList from './QuestionsList';

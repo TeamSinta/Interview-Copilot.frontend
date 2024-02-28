@@ -1,9 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import {
-  // Input,
-  InputError,
-  InputLayout,
-} from '@/components/common/form/input/StyledInput';
+import { InputError } from '@/components/common/form/input/StyledInput';
 import { Input } from '@/components/ui/input';
 
 export interface ITextInput {

@@ -104,11 +104,7 @@ const Templates = () => {
     },
   };
 
-  const {
-    data: templates,
-    isLoading,
-    isSuccess,
-  } = useGetTemplatesQuery();
+  const { data: templates, isLoading, isSuccess } = useGetTemplatesQuery();
 
   useEffect(() => {
     if (isSuccess && templates?.length > 0) {
@@ -127,7 +123,6 @@ const Templates = () => {
   if (isLoading) {
     return <Loading />; // Render the loading component when data is still loading
   }
-
 
   const handleCardClick = (templateId: string) => {
     if (templateId) navigate(`/templates/${templateId}`);

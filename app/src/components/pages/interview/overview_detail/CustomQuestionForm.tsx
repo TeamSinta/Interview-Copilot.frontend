@@ -202,8 +202,8 @@ function CustomQuestionForm(
         <TextArea
           disabled={false}
           placeholder={
-          'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'
-        }
+            'e.g. Frontend Developers are in demand today. A lot of companies are readily hiring them with attractive salary packages. If you believe you possess the skills.'
+          }
           name="guidelines"
           onChange={textAreaOnChange}
           value={
@@ -259,7 +259,10 @@ function CustomQuestionForm(
         {!dataForEdit ? (
           <FormControlLabel
             control={
-              <CustomSwitch checked={addMoreQuestion} onChange={handleSwitchChange} />
+              <CustomSwitch
+                checked={addMoreQuestion}
+                onChange={handleSwitchChange}
+              />
             }
             label={<BodySMedium>Create More</BodySMedium>}
           />

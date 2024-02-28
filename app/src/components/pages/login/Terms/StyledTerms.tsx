@@ -13,7 +13,6 @@ export const GrayBodyMMedium = styled(BodyMMedium)`
   color: rgba(18, 18, 18, 0.5);
 `;
 
-
 export const TextBox = styled(Box)`
   max-width: 500px;
   margin-bottom: 30px;

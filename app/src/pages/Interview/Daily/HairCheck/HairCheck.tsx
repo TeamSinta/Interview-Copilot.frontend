@@ -169,8 +169,6 @@ export default function HairCheck({
         user_id: user_id, // Assuming you have the user's ID here
       };
 
-      console.log(candidateData);
-
       const candidateResponse = await createCandidate(candidateData);
       const candidate_id = candidateResponse.id;
 
@@ -190,6 +188,8 @@ export default function HairCheck({
         email: 'support@sintahr.com',
         name: selectedTemplate.role_title,
         candidate_id: candidate_id,
+        department: response.department, // Add department from the response
+        description: response.description, // Add description from the response
       };
 
       setInterviewRoundDetails(interviewDetails).then(() => {

@@ -27,14 +27,17 @@ import {
   OverviewDetailTitle,
   OverviewDetails,
 } from '@/components/pages/interview/overview_detail/StyledOverviewDetail';
-import {useDeleteQuestionFromQuestionBankMutation, useGetQuestionBankDetailQuery, useGetQuestionsQuery } from '@/features/questions/questionsAPISlice';
+import {
+  useDeleteQuestionFromQuestionBankMutation,
+  useGetQuestionBankDetailQuery,
+  useGetQuestionsQuery,
+} from '@/features/questions/questionsAPISlice';
 import Loading from '@/components/common/elements/loading/Loading';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { openModal } from '@/features/modal/modalSlice';
 import { useDispatch } from 'react-redux';
 import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer/MarkdownFormatContainer';
 import { useParams } from 'react-router-dom';
-
 
 const QuestionBanksQuestionsList = ({ questionBank }) => {
   const [allQuestions, setQuestions] = React.useState<string[]>([]);
@@ -52,11 +55,9 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
     error,
   } = useGetQuestionsQuery();
 
-  const [ deleteQuestion ] = useDeleteQuestionFromQuestionBankMutation()
+  const [deleteQuestion] = useDeleteQuestionFromQuestionBankMutation();
   const { questionBankId } = useParams(); // Replace 'questionBankId' with your actual parameter name
-  const {
-    refetch
-    } = useGetQuestionBankDetailQuery(questionBankId);
+  const { refetch } = useGetQuestionBankDetailQuery(questionBankId);
 
   React.useEffect(() => {
     if (isSuccess) {
@@ -94,14 +95,14 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
       })
     );
   };
-  const deleteQuestionFromList = async (id : string) => {
+  const deleteQuestionFromList = async (id: string) => {
     const questionData = {
-      question_ids : [id],
-      id : questionBankID
+      question_ids: [id],
+      id: questionBankID,
     };
-   await deleteQuestion(questionData)
-   await refetch()
-  }
+    await deleteQuestion(questionData);
+    await refetch();
+  };
   // useEffect(() => {}, [dispatch, openItems]);
   return (
     <OverviewDetails>
@@ -132,11 +133,11 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
                     </OnverviewDetailTitle>
                   </div>
                   <div className="summary">
-                  {question.competency !== null && (
-                    <div className="comp" key={index}>
-                      <BodySMedium>{question.competency}</BodySMedium>
-                    </div>
-                  )}
+                    {question.competency !== null && (
+                      <div className="comp" key={index}>
+                        <BodySMedium>{question.competency}</BodySMedium>
+                      </div>
+                    )}
                     <div className="icon-div">
                       <div className="time-level">
                         <TimeIcon />
@@ -153,7 +154,7 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
                       <IconBtnM
                         disable={false}
                         onClick={() => {
-                          deleteQuestionFromList(question.id)
+                          deleteQuestionFromList(question.id);
                         }}
                         icon={<CloseIcon />}
                         className={BackgroundColor.WHITE}
@@ -190,7 +191,11 @@ const QuestionBanksQuestionsList = ({ questionBank }) => {
           />
           <TextIconBtnL
             disable={false}
-            onClick={() => { onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION,{questionBankID})}}
+            onClick={() => {
+              onClickModalOpen(MODAL_TYPE.ADD_CUSTOM_QUESTION, {
+                questionBankID,
+              });
+            }}
             className={BackgroundColor.ACCENT_PURPLE}
             icon={<Star1Icon />}
             label="Add Custom Question"
