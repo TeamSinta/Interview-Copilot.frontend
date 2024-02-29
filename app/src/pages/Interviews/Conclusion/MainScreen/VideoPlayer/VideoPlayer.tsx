@@ -2,15 +2,15 @@ import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import './VideoPlayer.css'; // Import the CSS file
 
 import { ICustomIconProps } from '@/components/common/svgIcons/CustomIcons';
-import { Button, Text } from '@radix-ui/themes';
 
 import { FullscreenIcon, Pause, Play, Volume2, VolumeX } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export const MuteButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
 
   return (
-    <Button size="3" variant="soft">
+    <Button variant="outline">
       <VolumeX className="h-4 w-4" />
     </Button>
   );
@@ -19,7 +19,7 @@ export const SoundButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
 
   return (
-    <Button size="3" variant="soft">
+    <Button variant="outline">
       <Volume2 className="h-4 w-4" />
     </Button>
   );
@@ -28,7 +28,7 @@ export const PauseButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
 
   return (
-    <Button size="3" variant="solid">
+    <Button>
       <Pause className="h-4 w-4" />
     </Button>
   );
@@ -37,7 +37,7 @@ export const PlayButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
 
   return (
-    <Button size="3" variant="solid">
+    <Button>
       <Play className="h-4 w-4" />
     </Button>
   );
@@ -45,7 +45,7 @@ export const PlayButton = (props: ICustomIconProps): JSX.Element => {
 export const FullscreenButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
   return (
-    <Button size="3" variant="soft">
+    <Button variant="outline">
       <FullscreenIcon className="h-4 w-4" />
     </Button>
   );
@@ -59,7 +59,6 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
   // const [isFullScreen, setIsFullScreen] = useState<any>(false);
   const [currentTime, setCurrentTime] = useState<any>(0);
   const [totalDuration, setTotalDuration] = useState<any>(0);
-  const currentQuestion = useRef('');
   const [emoticonData, setEmoticonData] = useState<any>([]);
   const timelineRef = useRef<any>(null);
   // const [timelineWidth, setTimelineWidth] = useState<any>(0);
@@ -68,10 +67,8 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
     question: '',
     time: 0,
   });
-  const [tooltipPosition, setTooltipPosition] = useState<any>({ x: 0, y: 0 });
 
   const [interviewerData, setInterviewerData] = useState<any>([]);
-  const [questionData, setQuestionData] = useState<any>([]);
 
   const emoticonKeyPairs = {
     '1': '🔥',
@@ -233,7 +230,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
 
   useEffect(() => {
     setInterviewerData(response?.interviewerData);
-    setQuestionData(response?.questionData);
+
     setEmoticonData(emojisData);
     // setTotalDuration(response?.videoDuration);
   }, []);

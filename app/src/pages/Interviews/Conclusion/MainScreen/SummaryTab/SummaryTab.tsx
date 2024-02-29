@@ -4,15 +4,15 @@ import React from 'react';
 
 import './SummaryTab.css';
 
-import { StyledSummaryDescription, StyledSummaryTab } from './StyledSummaryTab';
+import { StyledSummaryDescription } from './StyledSummaryTab';
 
 import TailwindEditor from '../Editor/Editor';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const SummaryTab = ({ summaryInfo }) => {
-  const editorId = summaryInfo?.summary_id ?? 'defaultEditorId';
+  const editorId = summaryInfo?.summary_id ?? 'defaultEditorId ';
   return (
-    <StyledSummaryTab>
+    <>
       <TailwindEditor
         propData={summaryInfo?.description ?? ''}
         editorId="summaryEditor"
@@ -21,7 +21,7 @@ const SummaryTab = ({ summaryInfo }) => {
       />
       <StyledSummaryDescription></StyledSummaryDescription>
       {/* Additional content */}
-    </StyledSummaryTab>
+    </>
   );
 };
 

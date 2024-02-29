@@ -23,7 +23,7 @@ export const InterviewContainerStyle = styled.div`
 
 export const IndexStyle = styled(Flex)`
   border-radius: 5px;
-  background-color: white;
+  background-color: #f1f5ff;
 
   margin-left: 8px;
   font-size: 10px;

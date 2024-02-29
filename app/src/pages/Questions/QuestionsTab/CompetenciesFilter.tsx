@@ -58,11 +58,7 @@ const CompetenciesFilter: React.FC = () => {
   return (
     <OverviewSections>
       <InputLayout>
-        <SearchInput
-          disable={false}
-          placeholder={'Search for Competencies'}
-          error={false}
-        />
+
         <CompetencesWrap>
           {competencies.map((index: number) => (
             <Competencies

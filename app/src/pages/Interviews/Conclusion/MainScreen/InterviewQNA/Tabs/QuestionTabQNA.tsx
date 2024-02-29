@@ -93,7 +93,7 @@ const IndexContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 16px;
+  gap: 0px;
 `;
 
 const IconContainer = styled.div`
@@ -287,7 +287,7 @@ export const QuestionsTabQNA: React.FC<QuestionsTabQNAProps> = ({
       {Object.entries(groupedQuestions).map(([competency, group]) => (
         <div key={competency}>
           <Flex direction={'row'} className=" ">
-            <div className=" flex items-center  mt-6 rounded-lg px-4 border border-gray-300 shadow border-solid">
+            <div className=" flex items-center  mt-6 text-sm rounded-lg py-0.5 px-2 border border-gray-300 shadow border-solid">
               <h2>{competency}</h2>
               <PredefinedRatingsComponent
                 rating={Math.round(group.averageScore || 0)}

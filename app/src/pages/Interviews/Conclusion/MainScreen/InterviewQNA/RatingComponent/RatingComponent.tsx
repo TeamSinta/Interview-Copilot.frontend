@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   StyledIconBtnM,
+  StyledIconSVG,
   StyledRatingBtnL,
 } from '@/components/common/buttons/button/StyledBtn';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
@@ -39,10 +40,10 @@ export const RatingButton: React.FC<RatingButtonProps> = ({
   activeColor = '',
 }) => {
   return (
-    <div className="flex items-center  ">
-      <ElWrap w={24}>
+    <div className="flex items-center width ">
+      <StyledIconSVG>
         <Icon />
-      </ElWrap>
+      </StyledIconSVG>
     </div>
   );
 };

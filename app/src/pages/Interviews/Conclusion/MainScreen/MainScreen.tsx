@@ -103,6 +103,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     loading,
   ] = ConclusionData(interviewRoundId);
 
+
   const infoTabs = useMemo(
     () => (
       <TabContainer>
@@ -232,22 +233,40 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
                   {' '}
                   Properties
                 </h4>
-                <BodyMMedium className="text-sm font-medium leading-none mt-2">
-                  {' '}
-                  Date
-                </BodyMMedium>
-                <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                  {' '}
-                  Time
-                </BodyMMedium>
-                <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                  {' '}
-                  Job Title
-                </BodyMMedium>
-                <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                  {' '}
-                  Interview Subject
-                </BodyMMedium>
+                <Flex direction={'row'} justify={'between'} width={'100%'}>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-2">
+                    {' '}
+                    Date
+                  </BodyMMedium>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-2">
+                    {' '}
+                    Date
+                  </BodyMMedium>
+                </Flex>
+                <Flex direction={'row'} justify={'between'} width={'100%'}>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
+                    {' '}
+                    Time
+                  </BodyMMedium>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
+                    {' '}
+                    Time
+                  </BodyMMedium>
+                </Flex>
+
+                <Flex direction={'row'} justify={'between'} width={'100%'}>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
+                    {' '}
+                    Job Title
+                  </BodyMMedium>
+                </Flex>
+
+                <Flex direction={'row'} justify={'between'} width={'100%'}>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
+                    {' '}
+                    Interview Subject
+                  </BodyMMedium>
+                </Flex>
                 <BodyMMedium className="text-sm font-medium leading-none mt-1">
                   {' '}
                   Department
@@ -258,14 +277,19 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
                   {' '}
                   Results
                 </h4>
-
-                <small className="text-sm font-medium leading-none mt-2">
-                  {' '}
-                  Questions asked
-                </small>
+                <Flex direction={'row'} justify={'between'} width={'100%'}>
+                  <small className="text-sm font-medium leading-none mt-2">
+                    {' '}
+                    Questions asked
+                  </small>
+                  <small className="text-sm font-medium leading-none mt-2">
+                    {' '}
+                    {summarizedAnswers?.data?.length ?? ''} Questions
+                  </small>
+                </Flex>
                 <small className="text-sm font-medium leading-none mt-1">
                   {' '}
-                  Candidate Time
+                  Candidate talk time
                 </small>
                 <small className="text-sm font-medium leading-none mt-1">
                   {' '}

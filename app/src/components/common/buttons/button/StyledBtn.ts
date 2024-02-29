@@ -332,3 +332,15 @@ export const StyledRatingBtnS = styled(StyledButtonM)`
     }
   }
 `;
+
+
+
+
+export const StyledIconSVG = styled.div`
+
+  svg {
+      width: 28px;
+      height: 28px;
+    }
+
+`;

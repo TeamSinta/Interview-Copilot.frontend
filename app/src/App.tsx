@@ -17,7 +17,8 @@ function App() {
   const isVideoCallRoute = location.pathname.startsWith('/video-call/');
   const isConclusionRoute =
     location.pathname === '/interviews/conclusion/' ||
-    location.pathname === '/dashboard';
+    location.pathname === '/dashboard' ||
+    location.pathname === '/interviews';
 
   if (isAuthenticated && location.pathname === '/login') {
     return <Navigate to="/dashboard" />;
@@ -40,6 +41,7 @@ function App() {
       </>
     );
   }
+
 
   return (
     <>
