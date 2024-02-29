@@ -74,7 +74,7 @@ export const ConclusionToolbar = ({
             </div>
             <div className="">
               {!!initialData?.icon && (
-                <div className="flex items-center gap-x-2 group/icon  ">
+                <div className="flex items-center gap-x-2 mt-1 pr-1 group/icon  ">
                   <IconPicker onChange={onIconSelect}>
                     <p className="text-3xl hover:opacity-75 transition">
                       {initialData.icon}
@@ -97,7 +97,7 @@ export const ConclusionToolbar = ({
           <Flex gap={'3'}>
             <Select>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Theme" />
+                <SelectValue placeholder="Interviews" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>

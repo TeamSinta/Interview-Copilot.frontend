@@ -14,12 +14,11 @@ export const ChatStyled = styled.div`
 `;
 
 export const InterviewContainerStyle = styled.div`
-  font-weight: bold !important;
   cursor: pointer;
   padding: 10px;
   padding-left: 0px;
-  padding-right: 10px;
-  margin-bottom: 20px;
+
+  margin-bottom: 0px;
 `;
 
 export const IndexStyle = styled(Flex)`

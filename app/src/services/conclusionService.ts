@@ -26,6 +26,7 @@ const ConclusionData = (interviewRoundId: string) => {
     import.meta.env.VITE_BACKEND_URL
   }/question_response/interviewer-feedback/${interviewRoundId}/`;
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,6 +34,7 @@ const ConclusionData = (interviewRoundId: string) => {
         const summarizedAnswersAPIResponse = await instance.get(
           summarizedAnswersAPI
         );
+        console.log(summarizedAnswersAPIResponse.data);
         const summaryInfoAPIResponse = await instance.get(summaryInfoAPI);
         const videoUrlAPIResponse = await instance.get(videoUrlAPI);
         const emojiFeedbackApiResponse = await instance.get(emojiFeedbackApi);
@@ -53,7 +55,10 @@ const ConclusionData = (interviewRoundId: string) => {
       } finally {
         setLoading(false);
       }
+
     };
+
+
 
     fetchData();
   }, [

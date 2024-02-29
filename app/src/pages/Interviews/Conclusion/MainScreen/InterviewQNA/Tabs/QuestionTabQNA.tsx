@@ -21,6 +21,7 @@ import {
   AccordionContent,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import TailwindEditor from '../../Editor/Editor';
 
 interface Question {
   question: string;
@@ -30,6 +31,7 @@ interface Question {
   duration: string;
   difficulty?: string;
   index?: number;
+  id?: string;
 }
 
 interface CompetencyGroup {
@@ -53,6 +55,7 @@ interface QuestionItemProps extends QuestionSummarizedAnswers {
   difficulty: string;
   handleClick: (index: number) => void;
   activeIndex: number;
+  key: number;
 }
 
 interface QuestionsTabQNAProps {
@@ -68,6 +71,7 @@ interface QuestionTextDisplayProps {
   index?: number;
   score: number;
   answer: string;
+  key: string;
 }
 
 interface QuestionMetaProps {
@@ -195,11 +199,16 @@ export const QuestionTextDisplay: React.FC<QuestionTextDisplayProps> = ({
   question,
   score,
   answer,
+  answer_id,
 }) => {
   const isActive = index === activeIndex;
 
   const stringIndex = `item-${index}`;
   const defaultValues = [`item-${activeIndex}`];
+  const editorId = answer_id; // Fallback ID if summaryInfo is null
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  console.log(answer_id);
+
   return (
     <>
       <Accordion
@@ -221,7 +230,12 @@ export const QuestionTextDisplay: React.FC<QuestionTextDisplayProps> = ({
             </IndexContainer>
           </AccordionTrigger>
           <AccordionContent>
-            <BodyMMedium>{answer}</BodyMMedium>
+            <TailwindEditor
+              propData={answer ?? ''}
+              editorId={editorId}
+              saveApiEndpoint={`${BACKEND_URL}/question_response/interviewer-feedback/${editorId}/update-answers`}
+              requestName={'Answer text'}
+            />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -239,13 +253,8 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
   index,
   handleClick,
   activeIndex,
+  answer_id,
 }) => {
-  const lines = answer
-    ? answer.split('- ').filter((line) => line.trim() !== '')
-    : [];
-
-  console.log(score);
-
   return (
     <>
       <InterviewContainerStyle>
@@ -256,6 +265,7 @@ export const QuestionItem: React.FC<QuestionItemProps> = ({
           question={question}
           score={score}
           answer={answer}
+          answer_id={answer_id}
         />
       </InterviewContainerStyle>
 
@@ -271,12 +281,13 @@ export const QuestionsTabQNA: React.FC<QuestionsTabQNAProps> = ({
 }) => {
   const groupedQuestions = groupQuestionsByCompetency(data);
 
+  console.log(groupedQuestions);
   return (
     <div>
       {Object.entries(groupedQuestions).map(([competency, group]) => (
         <div key={competency}>
           <Flex direction={'row'} className=" ">
-            <div className=" flex items-center  mt-3 rounded-lg px-3 border border-gray-300 shadow-md  border-solid">
+            <div className=" flex items-center  mt-6 rounded-lg px-4 border border-gray-300 shadow border-solid">
               <h2>{competency}</h2>
               <PredefinedRatingsComponent
                 rating={Math.round(group.averageScore || 0)}
@@ -286,6 +297,7 @@ export const QuestionsTabQNA: React.FC<QuestionsTabQNAProps> = ({
           {group.questions.map((question, index) => (
             <QuestionItem
               key={index}
+              answer_id={question.answer_id}
               index={index}
               duration={question.duration?.toString() ?? ''} // Convert to string, provide fallback
               question={question.question}
