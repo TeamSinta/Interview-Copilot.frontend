@@ -3,9 +3,6 @@ import {
   EditorRoot,
   defaultEditorProps,
   type JSONContent,
-  EditorCommand,
-  EditorCommandEmpty,
-  EditorCommandItem,
 } from 'novel';
 import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
@@ -13,16 +10,15 @@ import { Editor as EditorInstance } from 'novel';
 import { defaultEditorContent } from './lib/content';
 import { defaultExtensions } from './extensions';
 import SlashCommand from './extensions/slash-command';
+import DragAndDrop from './extensions/drag-and-drop';
 
-const extensions = [...defaultExtensions, SlashCommand];
+const extensions = [...defaultExtensions, SlashCommand, DragAndDrop];
 
 const TailwindEditor = () => {
   const [initialContent, setInitialContent] = useState<null | JSONContent>(
     null
   );
   const [saveStatus, setSaveStatus] = useState('Saved');
-
-  const [, setContent] = useState(null);
 
   const debouncedUpdates = useDebouncedCallback(
     async (editor: EditorInstance) => {
@@ -62,7 +58,7 @@ const TailwindEditor = () => {
               class: `prose prose-headings:font-title prose-sm sm:prose-base focus:outline-none max-w-full lg:prose-lg  `,
             },
           }}
-        ></EditorContent>
+        />
       </EditorRoot>
     </div>
   );

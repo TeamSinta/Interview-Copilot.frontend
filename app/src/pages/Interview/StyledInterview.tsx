@@ -90,7 +90,7 @@ export const StyledInterviewContent = styled.div<StyledInterviewContent>`
 `;
 
 export const StyledTopView = styled.div`
-  height: 7.5em;
+  height: 8.7em;
   overflow: hidden;
 `;
 
@@ -111,6 +111,7 @@ export const StyledTabInfo = styled.div`
   flex-direction: column;
   flex: 1;
   position: relative;
+  padding-left: 30px;
 
   ::-webkit-scrollbar {
     background-color: #f6f6fb;
