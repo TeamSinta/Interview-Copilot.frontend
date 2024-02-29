@@ -102,9 +102,9 @@ export const StyledInnerDiv = styled.div`
   overflow-x: hidden;
   flex: 1;
 `;
+
 export const StyledTabInfo = styled.div`
   padding: 15px;
-  background-color: #f6f6fb;
   border-radius: 10px;
   overflow-y: auto;
   display: flex;
@@ -137,6 +137,14 @@ export const StyledTabInfo = styled.div`
     margin: 0px;
     width: 5px;
   }
+
+  /* Center content if active tab is 1 */
+  ${({ isCentered }) =>
+    isCentered &&
+    css`
+      justify-content: center;
+      align-items: center;
+    `}
 `;
 
 export const BottomTabSection = styled.div`
