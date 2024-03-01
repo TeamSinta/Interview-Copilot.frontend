@@ -124,6 +124,7 @@ const MainScreen: React.FC<MainScreenProps> = ({
     loading,
   ] = ConclusionData(interviewRoundId);
 
+  console.log(summarizedInterview);
   const isEmptyOrError = (data) => {
     // Check for null or undefined data
     if (!data) return true;

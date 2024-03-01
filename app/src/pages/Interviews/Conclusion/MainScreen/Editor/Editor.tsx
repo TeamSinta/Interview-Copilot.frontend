@@ -30,7 +30,6 @@ const TailwindEditor = ({
     window.localStorage.setItem(localStorageKey, JSON.stringify(json));
     const stringJson = JSON.stringify(json);
     const requestBody = { [requestName]: stringJson }; // Constructing requestBody dynamically
-
     setSaveStatus('Saving...');
     try {
       // Using axios instance to make a patch request
@@ -63,6 +62,7 @@ const TailwindEditor = ({
       // Fallback to propData if local storage is empty
       // Assuming propData is an object. If it's a string, you may need JSON.parse(propData)
       setInitialContent(propData);
+      console.log(propData);
     }
   }, [editorId, propData]);
 

@@ -15,7 +15,7 @@ const SummaryTab = ({ summaryInfo }) => {
     <>
       <TailwindEditor
         propData={summaryInfo?.description ?? ''}
-        editorId="summaryEditor"
+        editorId={editorId}
         saveApiEndpoint={`${BACKEND_URL}/summary/${editorId}/update-description/`}
         requestName={'description'}
       />
