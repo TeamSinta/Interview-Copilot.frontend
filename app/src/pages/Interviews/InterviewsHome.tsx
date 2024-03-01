@@ -90,7 +90,7 @@ export default function BasicTabs() {
           <Grid
             columns={{ xs: '1', md: '2', sm: '1', lg: '3', xl: '4' }}
             gap="5"
-            className="px-6 justify-around py-9 h-full"
+            className="px-6 justify-around py-9"
           >
             {' '}
             <div className="flex flex-col space-y-3 py-9 px-1  ">
