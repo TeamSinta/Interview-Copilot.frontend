@@ -7,8 +7,21 @@ const CANDIDATE_DETAILS = {
   LINKEDIN: 'https://linkedin.com/',
   DESCRIPTION:
     'The Adaface Front-end Developer Online Test screens candidates for the typical skills recruiters look for Front-end Developer roles: Expertise with HTML, CSS, and JavaScript Be well-versed in key React/Angular ideas Working knowledge of complicated codebases, systems, and source code management systems such as Git Prior experience in project delivery and improvement Skills in critical user-facing systems Unix/Linux experience, including basic commands and scripting Competency in English to cooperate with engineering managers',
-
-  COMPETENCIES: ['Leadership', 'Empathy'],
+  JOB_DESCRIPTION: 'Some of the basic elements of design are',
+  DESCRIPTION_Data: [
+    'Size - it is the area occupied by one shape with the other.',
+    'Texture - the surface of the shape - Smooth, soft, hard, glossy, and such.',
+    'Color - The light reflected from the objects. The three characteristics of color are hue, value, and intensity.',
+  ],
+  COMPETENCIES: [
+    'CSS',
+    'AngularJs',
+    'JavaScript',
+    'FullStackDeveloper',
+    'NodeJs',
+    'Leadership',
+    'Empathy',
+  ],
 };
 
 const QUESTIONS_DATA = {

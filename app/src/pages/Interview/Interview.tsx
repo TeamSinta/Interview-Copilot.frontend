@@ -56,6 +56,8 @@ import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer
 import InfoTab from './Components/InfoTab';
 import InterviewSideBar from './Components/InterviewSideBar';
 import { IReactClickedState } from './Daily/BottomNavBar/BottomNavBar';
+import HeadingMeeting from './Components/HeadingMeeting';
+import RightArrow from 'src/assets/svg/rightArrowIcon.svg';
 
 // const components = {
 //   h3: H3,
@@ -81,6 +83,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
   });
 
   const [startTime, setStartTime] = useState<Date | null>(null);
+  const [showSecondComponent, setShowSecondComponent] = useState(false);
 
   useEffect(() => {
     const now = new Date();
@@ -175,7 +178,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
             }}
             className={activeTab === 2 ? 'rightTabs active' : 'rightTabs'}
           >
-            <span>Questions</span>
+            <span>Notes</span>
           </NavButton>{' '}
         </span>
         <span>
@@ -192,7 +195,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
             }}
             className={activeTab === 3 ? 'rightTabs active' : 'rightTabs'}
           >
-            <span>Notes</span>
+            <span>Questions</span>
           </NavButton>
         </span>
       </div>
@@ -227,7 +230,12 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
         [question.id]: rating,
       }));
 
-      updateInterviewQuestionRating(rating, question.id, interviewDetails.id, interviewDetails.template_id);
+      updateInterviewQuestionRating(
+        rating,
+        question.id,
+        interviewDetails.id,
+        interviewDetails.template_id
+      );
     };
 
     useEffect(() => {
@@ -516,80 +524,41 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
 
   const interviewSideBarData = (
     <>
-      <StyledTopView>
-        <Grid lg={12}>
-          <Grid container>
-            <Grid item lg={10} md={10} sm={10} xs={10}>
-              <span style={{ fontWeight: '600', fontFamily: 'InterSemi' }}>
-                {interviewDetails.title}
-              </span>
-            </Grid>
-            <Grid lg={2} md={2} sm={2} xs={2}>
-              <span
-                onClick={collapseInterviewSideBar}
-                style={{ float: 'right' }}
-              >
-                <BottomArrowIcon />
-              </span>
-            </Grid>
-          </Grid>
-        </Grid>
-        <br></br>
-        <Grid lg={11}>
-          <div
-            style={{
-              backgroundColor: '#F6F6FB',
-              padding: '10px',
-              borderRadius: '10px',
-              display: 'flex',
-              fontSize: '9px',
-              alignItems: 'center',
-              alignContent: 'center',
-              width: 'fit-content',
-            }}
-          >
-            <span style={{ fontWeight: 'lighter', marginLeft: '2px' }}>
-              {'Deparment: '}
-            </span>
-            <span
-              style={{
-                fontWeight: '600',
-                fontFamily: 'InterSemi',
-                marginLeft: '2px',
-              }}
-            >
-              {interviewDetails.department}
-            </span>{' '}
-          </div>
-        </Grid>{' '}
-        <br></br>
-        {sidebarTabs}{' '}
-      </StyledTopView>
-      <br></br>
+      <StyledTopView>{sidebarTabs} </StyledTopView>
       <StyledInnerDiv>
         <StyledTabInfo>
           {activeTab === 1 ? (
             <>
-              <p
-                style={{
-                  fontWeight: '600',
-                  fontFamily: 'InterSemi',
-                  fontSize: activeTab === 1 ? '20px' : '12px',
-                }}
-              >
-                {interviewDetails.name}
-              </p>{' '}
-              <br></br>
+              {showSecondComponent ? (
+                <>
+                  <p className="font-semibold text-2xl">
+                    {interviewDetails.name}
+                    <div className="bg-lightBg text-xs rounded-md p-2 my-2 flex items-center w-fit flex-col content-center">
+                      <p className="font-light ml-1 text-gray-500">
+                        Department:{' '}
+                        <span className="text-gray-800 font-semibold ">
+                          {interviewDetails.department ?? 'Template'}
+                        </span>
+                      </p>
+                    </div>
+                  </p>
+                  <InfoTab interviewDetails={interviewDetails} />
+                </>
+              ) : (
+                <HeadingMeeting />
+              )}
+              <div className="flex justify-end items-end">
+                <button
+                  className="text-primaryTextColor border border-primaryTextColor rounded-md py-2 px-4 flex right-0 justify-end w-fit items-center"
+                  onClick={() => setShowSecondComponent(!showSecondComponent)}
+                >
+                  Templates{' '}
+                  <img src={RightArrow} alt="arrow" className="pl-2" />
+                </button>
+              </div>
             </>
           ) : null}
-
-          {activeTab === 1 ? (
-            <InfoTab interviewDetails={interviewDetails} />
-          ) : null}
           {activeTab === 2 ? (
-            <InterviewQuestionTab data={templateQuestionsAndTopics?.data} />
-          ) : null}
-          {activeTab === 3 ? (
             <Notes
               notesEntered={notesEntered}
               elapsedTime={initTime}
@@ -597,8 +566,10 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
               reactClicked={reactClicked}
             />
           ) : null}
+          {activeTab === 3 ? (
+            <InterviewQuestionTab data={templateQuestionsAndTopics?.data} />
+          ) : null}
         </StyledTabInfo>
-        <br></br>
       </StyledInnerDiv>
     </>
   );
@@ -677,7 +648,9 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       overlayRef.current.removeChild(node);
     }, []);
 
-    function handleSendFlyingEmoji(e: { detail: { message: any; position: any; }; }) {
+    function handleSendFlyingEmoji(e: {
+      detail: { message: any; position: any };
+    }) {
       const emoji = e.detail.message;
       const position = e.detail.position;
 

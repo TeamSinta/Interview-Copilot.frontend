@@ -90,8 +90,11 @@ export const StyledInterviewContent = styled.div<StyledInterviewContent>`
 `;
 
 export const StyledTopView = styled.div`
-  height: 8.7em;
+  padding: 8px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const StyledInnerDiv = styled.div`
@@ -111,7 +114,6 @@ export const StyledTabInfo = styled.div`
   flex-direction: column;
   flex: 1;
   position: relative;
-  padding-left: 30px;
 
   ::-webkit-scrollbar {
     background-color: #f6f6fb;
@@ -182,9 +184,9 @@ export const GuidelinesSection = styled.div`
 `;
 
 export const StyledInfoDescription = styled.div`
-  padding: 10px;
+  padding: 18px;
   border-radius: 10px;
-  height: fit-content;
+  height: 70%;
 
   overflow-y: auto;
   width: 100%;
