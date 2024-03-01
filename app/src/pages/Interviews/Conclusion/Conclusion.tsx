@@ -99,7 +99,10 @@ const Conclusion: React.FC = () => {
         {showLoader && location.state.useTimer ? (
           <SummarizerLoader /> // Show loader if showLoader is true
         ) : (
-          <MainScreen interviewRoundId={location.state.id} />
+          <MainScreen
+            interviewRoundId={location.state.id}
+            interviewRoundData={interviewRound}
+          />
         )}
       </Flex>
     </Flex>

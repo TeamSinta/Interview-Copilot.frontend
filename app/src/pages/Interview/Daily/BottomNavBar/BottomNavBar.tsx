@@ -70,7 +70,7 @@ const emojis = {
   '👎': 3,
   '🔥': 1,
   '😂': 5,
-  '❤️': 4,
+  '😍 ': 4,
 };
 
 function BottomNavBar(props: IBottomNavBar) {
@@ -378,10 +378,7 @@ function BottomNavBar(props: IBottomNavBar) {
                             }}
                           >
                             {emoji === '❤️' ? (
-                              <i
-                                className="fa fa-heart"
-                                style={{ color: '#FF3D2F' }}
-                              ></i>
+                              <i style={{ color: '#FF3D2F' }}>❤️</i>
                             ) : (
                               emoji
                             )}

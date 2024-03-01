@@ -41,7 +41,7 @@ const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
   return (
     <Card className="h-52 w-80 shadow-md hover:bg-secondary/90 cursor-pointer flex justify-between flex-col">
       <CardHeader>
-        <CardTitle className="text-xl text-ellipsis w-64  truncate ">
+        <CardTitle className="text-xl text-ellipsis w-64 s truncate ">
           {icon} {name}
         </CardTitle>
       </CardHeader>

@@ -17,11 +17,20 @@ import {
 } from '@radix-ui/themes';
 import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { BoxShadow, FlexShadow } from '../../StyledConclusions';
+import { InformationBox } from './InfoformationBox/InformationBox';
+import { QuestionIcon } from '@/components/common/svgIcons/Icons';
+import { PersonIcon } from '@radix-ui/react-icons';
+import { Skeleton } from '@/components/ui/skeleton';
+import { FileX2, TentTreeIcon } from 'lucide-react';
+import SkeletonLoading from './Ui/SkeletonLoading';
+
+import DeleteDialog from './Ui/DeleteHelper';
 
 type summaryType = 'summary' | 'question' | 'transcription' | 'notes';
 
 interface MainScreenProps {
   interviewRoundId: string;
+  interviewRoundData: string[];
 }
 
 interface setActiveTabProps {
@@ -86,7 +95,19 @@ const TabButton: React.FC<TabButtonProps> = ({
   </StyledNavButton>
 );
 
-const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
+const EmptyStateComponent = ({ message }) => (
+  <div style={{ textAlign: 'center', padding: '10px' }}>
+    {/* Adjust size as needed */}
+    <Text color={'gray'} size={'5'}>
+      {message}
+    </Text>
+  </div>
+);
+
+const MainScreen: React.FC<MainScreenProps> = ({
+  interviewRoundId,
+  interviewRoundData,
+}) => {
   const [summaryType, setSummaryType] = useState<
     'summary' | 'question' | 'transcription' | 'notes'
   >('summary');
@@ -103,6 +124,51 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     loading,
   ] = ConclusionData(interviewRoundId);
 
+  const isEmptyOrError = (data) => {
+    // Check for null or undefined data
+    if (!data) return true;
+
+    // If data has an 'error' property, check for 401 or 404 specifically
+    if (data.error) {
+      return data.error.statusCode === 401 || data.error.statusCode === 404;
+    }
+    if (Array.isArray(data) && data.length === 0) return true;
+    if (typeof data === 'object' && Object.keys(data).length === 0) return true;
+
+    return false;
+  };
+
+  // Function to render the empty state based on the error code or null data
+  const renderEmptyState = (errorCode) => {
+    switch (errorCode) {
+      case 401:
+        return (
+          <>
+            <EmptyStateComponent message="Unauthorized access." />
+          </>
+        );
+      case 404:
+        return (
+          <>
+            <EmptyStateComponent message="Content not found." />
+          </>
+        );
+      default:
+        return (
+          <>
+            {' '}
+            <div className="flex flex-col items-center text-center justify-center	h-[600px] gap-2 w-4/4">
+              {' '}
+              <TentTreeIcon size={'49'} />
+              <div>
+                <EmptyStateComponent message="No data available." />{' '}
+                <DeleteDialog />
+              </div>
+            </div>
+          </>
+        );
+    }
+  };
 
   const infoTabs = useMemo(
     () => (
@@ -157,7 +223,11 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
   );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <SkeletonLoading />
+      </>
+    );
   }
 
   return (
@@ -223,105 +293,48 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
                 </Flex>
               )}
             </Box>
-            <Flex direction={'column'} gap={'3'} width={'100%'}>
-              <Heading as="h4" size="3">
-                {' '}
-                Leslie McDonalds with you
-              </Heading>
-              <Flex direction={'column'}>
-                <h4 className="scroll-m-20 text-md font-semibold tracking-tight text-gray-300">
-                  {' '}
-                  Properties
-                </h4>
-                <Flex direction={'row'} justify={'between'} width={'100%'}>
-                  <BodyMMedium className="text-sm font-medium leading-none mt-2">
-                    {' '}
-                    Date
-                  </BodyMMedium>
-                  <BodyMMedium className="text-sm font-medium leading-none mt-2">
-                    {' '}
-                    Date
-                  </BodyMMedium>
-                </Flex>
-                <Flex direction={'row'} justify={'between'} width={'100%'}>
-                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                    {' '}
-                    Time
-                  </BodyMMedium>
-                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                    {' '}
-                    Time
-                  </BodyMMedium>
-                </Flex>
-
-                <Flex direction={'row'} justify={'between'} width={'100%'}>
-                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                    {' '}
-                    Job Title
-                  </BodyMMedium>
-                </Flex>
-
-                <Flex direction={'row'} justify={'between'} width={'100%'}>
-                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                    {' '}
-                    Interview Subject
-                  </BodyMMedium>
-                </Flex>
-                <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                  {' '}
-                  Department
-                </BodyMMedium>
-              </Flex>
-              <Flex direction={'column'}>
-                <h4 className="scroll-m-20 text-md font-semibold tracking-tight  text-gray-300">
-                  {' '}
-                  Results
-                </h4>
-                <Flex direction={'row'} justify={'between'} width={'100%'}>
-                  <small className="text-sm font-medium leading-none mt-2">
-                    {' '}
-                    Questions asked
-                  </small>
-                  <small className="text-sm font-medium leading-none mt-2">
-                    {' '}
-                    {summarizedAnswers?.data?.length ?? ''} Questions
-                  </small>
-                </Flex>
-                <small className="text-sm font-medium leading-none mt-1">
-                  {' '}
-                  Candidate talk time
-                </small>
-                <small className="text-sm font-medium leading-none mt-1">
-                  {' '}
-                  Interview duration
-                </small>
-              </Flex>
-            </Flex>
+            <InformationBox
+              interviewRoundData={interviewRoundData}
+              questionsData={summarizedAnswers}
+              transcriptData={questionsTranscript}
+            />
           </Grid>
         </FlexShadow>
 
         <BoxShadow style={{ background: 'white' }} grow={'1'}>
           {infoTabs}
           <ContentContainer>
-            {summaryType === 'summary' && (
-              <SummaryTab summaryInfo={summarizedInterview?.data} />
-            )}
-
-            {summaryType === 'question' && (
-              <InterviewQNA
-                propData={summarizedAnswers?.data}
-                screen={'question'}
-              />
-            )}
-
-            {summaryType === 'transcription' && (
-              <InterviewQNA
-                propData={questionsTranscript?.data}
-                screen={'transcription'}
-              />
-            )}
-            {summaryType === 'notes' && (
-              <InterviewQNA propData={emojisData} screen={'notes'} />
+            {summaryType === 'summary' ? (
+              isEmptyOrError(summarizedInterview?.data) ? (
+                renderEmptyState(summarizedInterview?.error?.statusCode)
+              ) : (
+                <SummaryTab summaryInfo={summarizedInterview?.data} />
+              )
+            ) : summaryType === 'question' ? (
+              isEmptyOrError(summarizedAnswers?.data) ? (
+                renderEmptyState(summarizedAnswers?.error?.statusCode)
+              ) : (
+                <InterviewQNA
+                  propData={summarizedAnswers?.data}
+                  screen={'question'}
+                />
+              )
+            ) : summaryType === 'transcription' ? (
+              isEmptyOrError(questionsTranscript?.data) ? (
+                renderEmptyState(questionsTranscript?.error?.statusCode)
+              ) : (
+                <InterviewQNA
+                  propData={questionsTranscript?.data}
+                  screen={'transcription'}
+                />
+              )
+            ) : (
+              summaryType === 'notes' &&
+              (isEmptyOrError(emojisData) ? (
+                renderEmptyState(emojisData?.error?.statusCode)
+              ) : (
+                <InterviewQNA propData={emojisData} screen={'notes'} />
+              ))
             )}
           </ContentContainer>
         </BoxShadow>
