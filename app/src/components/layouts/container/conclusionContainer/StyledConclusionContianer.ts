@@ -8,6 +8,7 @@ export const ConclusionStyledContainer = styled.div`
   grid-template-columns: 240px 1fr;
   max-width: 100%;
 
+
   /* Add more media queries for othesr screen sizes as needed */
 `;
 

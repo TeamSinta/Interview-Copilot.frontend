@@ -126,7 +126,7 @@ video {
     margin-top: -5px;
     z-index: 99 !important;
     box-sizing: border-box;
-    color: white;
+    color: black;
   }
 
   .left-control {
@@ -138,28 +138,7 @@ video {
   }
 }
 
-/*Timeline*/
 
-/* .timeline {
-  height: 10px;
-  background-color: #ccc !important;
-  border-radius: 5px;
-} */
-
-/*Comment Icon Container */
-.comment-wrapper {
-  position: absolute;
-  margin-bottom: 290px !important;
-}
-.comment-container {
-  position: absolute;
-  background-color: #f2f2f2;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid black !important;
-  color: black;
-  display: inline;
-}
 
 .comment-container::before {
   content: '';
@@ -190,7 +169,7 @@ video {
 
 .timeline {
   position: relative;
-  height: 90px;
+  height: 10px;
   background-color: transparent;
   cursor: pointer;
   margin: 10px;
@@ -207,7 +186,8 @@ video {
 
 .progress-indicator {
   position: absolute;
-  top: -4px;
+  top: 1;
+    margin-top: -6px;
   left: 0;
   width: 10px;
   height: 10px;
@@ -256,8 +236,8 @@ video {
 }
 
 .currentQuestionLabel {
-  font-size: 10px;
-  color: white;
+  font-size: 16px;
+    color: black;
   padding-left: 10px;
   margin-top: 20px;
 }

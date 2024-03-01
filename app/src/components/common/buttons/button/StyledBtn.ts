@@ -238,63 +238,7 @@ export const SmallButtonLayout = styled.div<IButtonLayout>`
   }}
 `;
 
-// export const StyledRatingBtnM = styled(StyledButtonM)`
-//   &.accentPurple {
-//     svg {
-//       width: 18px;
-//       height: 18px;
-//     }
-//   }
 
-//   &.white {
-//     svg {
-//       width: 12px;
-//       height: 12px;
-//     }
-//   }
-// `;
-
-export const StyledRatingBtnM = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  background-color: white;
-  border: 0;
-  position: relative;
-  outline: 1px solid ${(props) => props.theme.colors.black};
-  outline-offset: -1px;
-  border-radius: 7px;
-  box-shadow: 0px 2px 0px #121212;
-  height: 24px;
-  width: 100%;
-  &.customizeHeightWidth {
-    height: 30px;
-    width: 30px;
-  }
-
-  svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  ${(props) =>
-    !props.disabled &&
-    `
-    :hover {
-      cursor: pointer;
-      box-shadow: 0px 4px 0px #121212;
-      transition: 0.5s;
-    }
-
-    :active {
-      box-shadow: 0px 0px 0px #121212;
-      transform: translateY(4px);
-    }
-
-
-    `}
-`;
 
 export const StyledRatingBtnL = styled.button`
   display: flex;
@@ -387,4 +331,16 @@ export const StyledRatingBtnS = styled(StyledButtonM)`
       height: 18px;
     }
   }
+`;
+
+
+
+
+export const StyledIconSVG = styled.div`
+
+  svg {
+      width: 28px;
+      height: 28px;
+    }
+
 `;

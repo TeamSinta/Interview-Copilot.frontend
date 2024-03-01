@@ -61,10 +61,8 @@ const InfoTabContainer = styled.div`
 
 const StyledNavButton = styled(Button)`
   color: black;
-
   padding: 6px;
-
-  @media (min-width: 1200px) {
+  @media (min-width: 1000px) {
     width: 100px;
     margin-bottom: 0;
   }
@@ -75,7 +73,7 @@ const ContentContainer = styled.div`
   margin-top: 0px;
   overflow-y: auto;
   max-height: calc(100vh - 20vh);
-  min-height: 580px;
+  min-height: calc(100vh - 20vh);
 `;
 
 const TabButton: React.FC<TabButtonProps> = ({
@@ -104,6 +102,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     emojisData,
     loading,
   ] = ConclusionData(interviewRoundId);
+
 
   const infoTabs = useMemo(
     () => (
@@ -171,7 +170,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
           direction={'column'}
         >
           {mainTabs}
-          <Grid rows="1fr 1fr" gap="2" width="100%" height={'100%'}>
+          <Grid gap="6" width="100%">
             <Box>
               {informationType === 'video' && (
                 <Flex className="mt-3">
@@ -201,7 +200,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
                         </Text>
                       </Box>
                     </Flex>
-                    <Flex direction={'row'} justify={'between'}>
+                    <Flex direction={'row'} gap={'9'} style={{}}>
                       {' '}
                       <Box>
                         <Text as="div" size="2" color="gray">
@@ -234,22 +233,40 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
                   {' '}
                   Properties
                 </h4>
-                <BodyMMedium className="text-sm font-medium leading-none mt-2">
-                  {' '}
-                  Date
-                </BodyMMedium>
-                <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                  {' '}
-                  Time
-                </BodyMMedium>
-                <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                  {' '}
-                  Job Title
-                </BodyMMedium>
-                <BodyMMedium className="text-sm font-medium leading-none mt-1">
-                  {' '}
-                  Interview Subject
-                </BodyMMedium>
+                <Flex direction={'row'} justify={'between'} width={'100%'}>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-2">
+                    {' '}
+                    Date
+                  </BodyMMedium>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-2">
+                    {' '}
+                    Date
+                  </BodyMMedium>
+                </Flex>
+                <Flex direction={'row'} justify={'between'} width={'100%'}>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
+                    {' '}
+                    Time
+                  </BodyMMedium>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
+                    {' '}
+                    Time
+                  </BodyMMedium>
+                </Flex>
+
+                <Flex direction={'row'} justify={'between'} width={'100%'}>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
+                    {' '}
+                    Job Title
+                  </BodyMMedium>
+                </Flex>
+
+                <Flex direction={'row'} justify={'between'} width={'100%'}>
+                  <BodyMMedium className="text-sm font-medium leading-none mt-1">
+                    {' '}
+                    Interview Subject
+                  </BodyMMedium>
+                </Flex>
                 <BodyMMedium className="text-sm font-medium leading-none mt-1">
                   {' '}
                   Department
@@ -260,14 +277,19 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
                   {' '}
                   Results
                 </h4>
-
-                <small className="text-sm font-medium leading-none mt-2">
-                  {' '}
-                  Questions asked
-                </small>
+                <Flex direction={'row'} justify={'between'} width={'100%'}>
+                  <small className="text-sm font-medium leading-none mt-2">
+                    {' '}
+                    Questions asked
+                  </small>
+                  <small className="text-sm font-medium leading-none mt-2">
+                    {' '}
+                    {summarizedAnswers?.data?.length ?? ''} Questions
+                  </small>
+                </Flex>
                 <small className="text-sm font-medium leading-none mt-1">
                   {' '}
-                  Candidate Time
+                  Candidate talk time
                 </small>
                 <small className="text-sm font-medium leading-none mt-1">
                   {' '}

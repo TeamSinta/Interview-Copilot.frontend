@@ -52,7 +52,7 @@ const starterKit = StarterKit.configure({
   },
   bulletList: {
     HTMLAttributes: {
-      class: cx("list-disc list-outside leading-3 -mt-2"),
+      class: cx("list-disc list-outside leading-3 mt-1"),
     },
   },
   paragraph: {
@@ -62,12 +62,12 @@ const starterKit = StarterKit.configure({
   },
   orderedList: {
     HTMLAttributes: {
-      class: cx("list-decimal list-outside leading-3 -mt-2"),
+      class: cx("list-decimal list-outside leading-3 mt-1"),
     },
   },
   listItem: {
     HTMLAttributes: {
-      class: cx("leading-normal -mb-2"),
+      class: cx("leading-normal -mb-1"),
     },
   },
   blockquote: {

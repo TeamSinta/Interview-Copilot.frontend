@@ -30,7 +30,7 @@ export const H3Bold = styled.h3`
 
 export const H3Medium = styled(H3Bold)`
   font-family: 'Inter';
-  font-weight: 500;
+
 `;
 
 export const BodyLBold = styled.div`

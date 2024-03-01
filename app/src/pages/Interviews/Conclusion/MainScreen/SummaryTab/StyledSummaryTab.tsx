@@ -142,7 +142,7 @@ export const StyledSummaryTab = styled.div`
 export const StyledButtonContent = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 10px;
+  font-size: 16px;
 `;
 
 export const StyledDecisionGrid = styled(Grid)`
