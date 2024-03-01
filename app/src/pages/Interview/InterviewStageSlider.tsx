@@ -67,40 +67,25 @@ export default function InterviewStageSlider({
     resetList();
   };
   return (
-    <div
-      ref={parentRef}
-      style={{
-        display: 'flex',
-        width: '100%',
-        fontSize: '12px',
-        transition: 'transform 0.3s',
-        overflow: 'hidden',
-        whiteSpace: 'nowrap',
-      }}
-    >
+    <div ref={parentRef} className="flex w-full overflow-hidden">
       {data &&
         data.map((stage, index) => (
           <div
             key={index}
             ref={(ref) => (itemRefs.current[index] = ref as HTMLDivElement)}
             onClick={() => handleClick(index)}
-            style={{
-              opacity: activeIndex === index ? '1' : '0.5',
-              cursor: 'pointer',
-              padding: '0px',
-              marginRight: '10px',
-              paddingLeft: '0px',
-            }}
+            className={`${
+              activeIndex === index ? 'opacity-100' : 'opacity-50 '
+            } cursor-pointer mr-4`}
           >
-            <span style={{ width: '90%', padding: '15px' }}>{stage.stage}</span>
-            <hr
+            <span
+              className="p-2 block rounded-lg mx-auto my-3"
               style={{
-                borderRadius: '20px',
-                border: '2px solid #6462F1',
-                marginBottom: '15px',
-                padding: '0px',
+                border: activeIndex === index ? '2px solid #3E63DD' : 'none',
               }}
-            />
+            >
+              {stage.stage}
+            </span>
           </div>
         ))}
     </div>

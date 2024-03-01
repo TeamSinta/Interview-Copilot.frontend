@@ -151,15 +151,9 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
               setActiveTab(1);
             }}
             direction="row"
-            style={{
-              fontSize: '12px',
-              height: '30px',
-              borderRadius: '10px',
-              width: 'fit-content',
-              padding: '17px 19px',
-              lineHeight: '125%',
-            }}
-            className={activeTab === 1 ? 'rightTabs active' : 'rightTabs'}
+            className={`text-xs h-7 rounded-lg px-5 leading-snug ${
+              activeTab === 1 ? 'rightTabs active' : 'rightTabs'
+            }`}
           >
             <span>Info</span>
           </NavButton>{' '}
@@ -168,15 +162,9 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
           <NavButton
             onClick={() => setActiveTab(2)}
             direction="row"
-            style={{
-              fontSize: '12px',
-              height: '30px',
-              borderRadius: '10px',
-              width: 'fit-content',
-              marginLeft: '5px',
-              padding: '17px 19px',
-            }}
-            className={activeTab === 2 ? 'rightTabs active' : 'rightTabs'}
+            className={`text-xs h-7 rounded-lg px-5 leading-snug ${
+              activeTab === 2 ? 'rightTabs active' : 'rightTabs'
+            }`}
           >
             <span>Notes</span>
           </NavButton>{' '}
@@ -185,15 +173,9 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
           <NavButton
             onClick={() => setActiveTab(3)}
             direction="row"
-            style={{
-              fontSize: '12px',
-              height: '30px',
-              borderRadius: '10px',
-              width: 'fit-content',
-              marginLeft: '5px',
-              padding: '17px 19px',
-            }}
-            className={activeTab === 3 ? 'rightTabs active' : 'rightTabs'}
+            className={`text-xs h-7 rounded-lg px-5 leading-snug ${
+              activeTab === 3 ? 'rightTabs active' : 'rightTabs'
+            }`}
           >
             <span>Questions</span>
           </NavButton>
@@ -250,73 +232,29 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
 
     return (
       <>
-        <div
-          style={{
-            padding: '2px',
-            flex: '1',
-            flexDirection: 'column',
-            display: 'flex',
-          }}
-        >
-          {collapseQuestion ? (
-            <Stack direction="row" justifyContent="space-between">
-              <InterviewStageSlider
-                data={data}
-                setActiveData={setActiveData}
-                resetList={resetList}
-              />
-              <span
-                style={{
-                  marginLeft: '18px',
-
-                  backgroundColor: 'transparent',
-                }}
-                onClick={() => {
-                  setCollapseQuestion(false);
-                }}
-              >
-                <ElWrap w={50}>
-                  <StyledIconBtnM
-                    style={{ backgroundColor: 'white', stroke: 'white' }}
-                  >
-                    <div
-                      style={{
-                        transform: 'rotate(45deg)',
-                        stroke: '${(props) => props.theme.colors.white',
-                      }}
-                    >
-                      <TwoArrowIcon />
-                    </div>
-                  </StyledIconBtnM>
-                </ElWrap>
-              </span>
-            </Stack>
-          ) : (
+        {collapseQuestion ? (
+          <Stack direction="row" justifyContent="space-between">
             <InterviewStageSlider
               data={data}
               setActiveData={setActiveData}
               resetList={resetList}
             />
-          )}
+          </Stack>
+        ) : (
+          <InterviewStageSlider
+            data={data}
+            setActiveData={setActiveData}
+            resetList={resetList}
+          />
+        )}
+        <div className="p-3 flex flex-1 flex-col bg-lightBg rounded-xl">
           <StyledInnerWrapper>
             {' '}
             {!collapseQuestion
               ? activeData?.questions?.map((a: any, index: any) => {
                   return (
                     <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        fontSize: '12px',
-                        lineHeight: '15px',
-                        borderRadius: '10px',
-                        padding: '15px 10px',
-                        backgroundColor: 'white',
-                        margin: '5px',
-                        marginBottom: '10px',
-                        cursor: 'pointer',
-                        opacity: index === 0 ? '1' : '1',
-                      }}
+                      className="flex items-center text-xs leading-4 rounded-lg p-4 bg-white m-1 mb-2 cursor-pointer opacity-100"
                       onClick={() => {
                         showQuestionDetail(a, index);
                       }}
@@ -504,6 +442,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
                 justifyContent="flex-end"
                 spacing={1}
                 alignItems="flex-end"
+                className="bg-white pt-3"
               >
                 <InputLabelDiv style={{ width: '100%' }}>
                   <Chat
@@ -559,15 +498,23 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
             </>
           ) : null}
           {activeTab === 2 ? (
-            <Notes
-              notesEntered={notesEntered}
-              elapsedTime={initTime}
-              setReactClicked={setReactClicked}
-              reactClicked={reactClicked}
-            />
+            <Notes notesInfo={interviewDetails.notes} />
           ) : null}
           {activeTab === 3 ? (
-            <InterviewQuestionTab data={templateQuestionsAndTopics?.data} />
+            <>
+              <p className="font-semibold text-2xl">
+                {interviewDetails.name}
+                <div className="bg-lightBg text-xs rounded-md p-2 my-2 flex items-center w-fit flex-col content-center">
+                  <p className="font-light ml-1 text-gray-500">
+                    Department:{' '}
+                    <span className="text-gray-800 font-semibold ">
+                      {interviewDetails.department ?? 'Template'}
+                    </span>
+                  </p>
+                </div>
+              </p>
+              <InterviewQuestionTab data={templateQuestionsAndTopics?.data} />
+            </>
           ) : null}
         </StyledTabInfo>
       </StyledInnerDiv>

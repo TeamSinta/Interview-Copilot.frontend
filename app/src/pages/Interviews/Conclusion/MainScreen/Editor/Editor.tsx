@@ -7,6 +7,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { Editor as EditorInstance } from 'novel';
+import { defaultEditorContent } from './lib/content';
 import { defaultExtensions } from './extensions';
 import SlashCommand from './extensions/slash-command';
 import DragAndDrop from './extensions/drag-and-drop';
@@ -21,8 +22,17 @@ const TailwindEditor = ({
   editorId,
   saveApiEndpoint,
   requestName,
+  showSaveStatus,
+}: {
+  propData: any;
+  editorId: string;
+  saveApiEndpoint: string;
+  requestName: string;
+  showSaveStatus?: boolean;
 }) => {
-  const [initialContent, setInitialContent] = useState(null);
+  const [initialContent, setInitialContent] = useState<null | JSONContent>(
+    null
+  );
   const [saveStatus, setSaveStatus] = useState('Saved');
 
   const debouncedUpdates = useDebouncedCallback(
@@ -66,20 +76,20 @@ const TailwindEditor = ({
     } else {
       // Fallback to propData if local storage is empty
       // Assuming propData is an object. If it's a string, you may need JSON.parse(propData)
-      setInitialContent(propData);
+      setInitialContent(propData ? propData : defaultEditorContent);
     }
   }, [editorId, propData]);
-
   if (!initialContent) return null;
   return (
     <div className="relative w-full max-w-screen-xl  h-full">
-      <div className="absolute right-5  z-10 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
-        {saveStatus}
-      </div>
+      {showSaveStatus && (
+        <div className="absolute right-5 z-10 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
+          {saveStatus}
+        </div>
+      )}
       <EditorRoot>
         <EditorContent
           initialContent={initialContent}
-          className=""
           onUpdate={({ editor }) => {
             debouncedUpdates(editor);
             setSaveStatus('Unsaved');

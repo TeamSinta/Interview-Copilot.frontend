@@ -26,7 +26,6 @@ export const LogoImage = styled.img`
 
 export const NavButton = styled(Stack)`
   height: 38px;
-  width: 218px;
   color: ${(props) => props.theme.colors.black};
   gap: 8px;
   border-radius: 6px;

@@ -14,9 +14,8 @@ import {
 } from './StyledChatBot';
 import { IconBtnL } from '../../buttons/iconBtn/IconBtn';
 import { BackgroundColor } from '@/features/utils/utilEnum';
-import { PencilIcon, Send } from '../../svgIcons/Icons';
+import { SendMessageIcon } from '../../svgIcons/Icons';
 import { useDispatch } from 'react-redux';
-
 import { addNote } from '@/features/interviews/notesSlice';
 
 const Chat = (props: any) => {
@@ -107,12 +106,27 @@ const Chat = (props: any) => {
   }, [messages]);
 
   return (
-    <ChatContainer>
+    <div className="w-full flex flex-col relative bg-white px-4">
+      {messages.length > 0 && (
+        <>
+          <ChatMessages ref={chatMessagesRef}>
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className="whitespace-pre-wrap text-sm mb-2 rounded-lg p-1"
+                style={{ border: '2px solid lightgray' }}
+              >
+                {message.text}
+              </div>
+            ))}
+          </ChatMessages>
+          <div className="text-end text-xs p-2 text-gray-400">
+            To see all your notes, see the "Notes" tab.
+          </div>
+        </>
+      )}
       <ChatInput>
-        <ElWrap w={32}>
-          <PencilIcon />
-        </ElWrap>
-        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+        <div className="flex flex-row w-full">
           <Textarea
             value={inputText}
             onChange={handleInputChange}
@@ -121,26 +135,16 @@ const Chat = (props: any) => {
             rows={1}
           />
         </div>
-        <ElWrap w={40} h={35}>
+        <ElWrap w={50} h={50}>
           <IconBtnL
             disable={false}
             onClick={handleSend} // Use the handleSend function
             className={BackgroundColor.ACCENT_PURPLE}
-            icon={<Send />}
+            icon={<SendMessageIcon />}
           />
         </ElWrap>
       </ChatInput>
-      {messages.length > 0 && (
-        <>
-          <div style={{ textAlign: 'center', padding: '8px', color: 'gray' }}>
-            To see all your notes, see the "Notes" tab.
-          </div>
-          <ChatMessages ref={chatMessagesRef}>
-            <div style={{ whiteSpace: 'pre-wrap' }}>{lastMessage}</div>
-          </ChatMessages>
-        </>
-      )}
-    </ChatContainer>
+    </div>
   );
 };
 

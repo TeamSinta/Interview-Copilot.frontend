@@ -327,9 +327,7 @@ export const BottomQuestionButtons = styled.span`
   bottom: 0;
   position: absolute;
   margin-bottom: 10px;
-
   padding: 15px;
-  background-color: #f6f6fb;
   left: 0;
   right: 0;
 `;

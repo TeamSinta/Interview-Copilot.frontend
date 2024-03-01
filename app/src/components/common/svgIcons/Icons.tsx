@@ -73,6 +73,7 @@ import { ReactComponent as VideoCamIcon } from '@/assets/svg/VideoCamIcon.svg';
 import { ReactComponent as VideoSoundIcon } from '@/assets/svg/VideoSoundIcon.svg';
 import { ReactComponent as VideoCamOffIcon } from '@/assets/svg/VideoCamOff.svg';
 import { ReactComponent as VideoMicOffIcon } from '@/assets/svg/VideoMicOff.svg';
+import { ReactComponent as SendMessage } from '@/assets/svg/send.svg';
 
 import { ReactComponent as Emoji } from '@/assets/svg/emoji.svg';
 
@@ -99,6 +100,10 @@ export const VideoCamoff = (): JSX.Element => {
 
 export const Send = (): JSX.Element => {
   return <SendIcon />;
+};
+
+export const SendMessageIcon = (): JSX.Element => {
+  return <SendMessage />;
 };
 
 export const VideoCam = (): JSX.Element => {
