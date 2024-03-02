@@ -33,6 +33,12 @@ const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const formattedDate = formatDateDifference(date);
+  console.log(
+    'this is the video uri:',
+    video_uri,
+    ' and thumbnail uri: ',
+    thumbnail_uri
+  );
 
   const toggleVideo = () => {
     setIsVideoPlaying(!isVideoPlaying);
