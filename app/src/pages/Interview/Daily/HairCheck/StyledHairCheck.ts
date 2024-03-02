@@ -105,7 +105,7 @@ export const ButtonWrapper = styled.label`
   display: flex;
   gap: 12px;
   width: 100%;
-  margin-top: 28px;
+  margin-top: 18px;
 `;
 
 export const Input = styled.input`

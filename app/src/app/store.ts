@@ -20,12 +20,14 @@ import departmentReducer from '@/features/departments/departmentSlice';
 import { departmentsAPI } from '@/features/departments/departmentsAPI';
 import companyReducer from '@/features/company/companySlice';
 import { companyAPI } from '@/features/company/companyAPI';
+import { InterviewRoundsAPI } from '@/features/interviews/interviewsAPISlice';
 
 export const store = configureStore({
   reducer: {
     [authAPI.reducerPath]: authAPI.reducer,
     [userAPI.reducerPath]: userAPI.reducer,
     [templatesAPI.reducerPath]: templatesAPI.reducer,
+    [InterviewRoundsAPI.reducerPath]: InterviewRoundsAPI.reducer,
     [QuestionsAPI.reducerPath]: QuestionsAPI.reducer,
     [templateQuestionsAPI.reducerPath]: templateQuestionsAPI.reducer,
     [companyAPI.reducerPath]: companyAPI.reducer,
@@ -49,6 +51,7 @@ export const store = configureStore({
       authAPI.middleware,
       userAPI.middleware,
       templatesAPI.middleware,
+      InterviewRoundsAPI.middleware,
       QuestionsAPI.middleware,
       templateQuestionsAPI.middleware,
       departmentsAPI.middleware,
