@@ -25,8 +25,9 @@ import { FileX2, TentTreeIcon } from 'lucide-react';
 import SkeletonLoading from './Ui/SkeletonLoading';
 
 import DeleteDialog from './Ui/DeleteHelper';
+import useTranscriptData from '@/services/TranscriptS3Service';
 
-type summaryType = 'summary' | 'question' | 'transcription' | 'notes';
+type summaryType = 'summary' | 'question' | 'transcription' | 'notes' | 's3';
 
 interface MainScreenProps {
   interviewRoundId: string;
@@ -109,7 +110,7 @@ const MainScreen: React.FC<MainScreenProps> = ({
   interviewRoundData,
 }) => {
   const [summaryType, setSummaryType] = useState<
-    'summary' | 'question' | 'transcription' | 'notes'
+    'summary' | 'question' | 'transcription' | 'notes' | 's3'
   >('summary');
   const [informationType, setInformationType] = useState<'video' | 'info'>(
     'video'
@@ -124,7 +125,10 @@ const MainScreen: React.FC<MainScreenProps> = ({
     loading,
   ] = ConclusionData(interviewRoundId);
 
-  console.log(summarizedInterview);
+  const { transcript, error } = useTranscriptData(interviewRoundId);
+
+  console.log(transcript);
+
   const isEmptyOrError = (data) => {
     // Check for null or undefined data
     if (!data) return true;
@@ -197,6 +201,12 @@ const MainScreen: React.FC<MainScreenProps> = ({
           isActive={summaryType === 'notes'}
         >
           Notes
+        </TabButton>
+        <TabButton
+          onClick={() => setSummaryType('s3')}
+          isActive={summaryType === 's3'}
+        >
+          S3 Transcript
         </TabButton>
       </TabContainer>
     ),
@@ -328,6 +338,12 @@ const MainScreen: React.FC<MainScreenProps> = ({
                   propData={questionsTranscript?.data}
                   screen={'transcription'}
                 />
+              )
+            ) : summaryType === 's3' ? (
+              isEmptyOrError(transcript) ? (
+                renderEmptyState(transcript?.error?.statusCode)
+              ) : (
+                <h1>{JSON.stringify(transcript, null, 2)}</h1>
               )
             ) : (
               summaryType === 'notes' &&
