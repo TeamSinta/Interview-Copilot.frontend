@@ -17,7 +17,7 @@ import {
 } from '@radix-ui/themes';
 import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { BoxShadow, FlexShadow } from '../../StyledConclusions';
-import { InformationBox } from './InfoformationBox/InformationBox';
+import { InformationBox } from './InformationBox/InformationBox';
 import { QuestionIcon } from '@/components/common/svgIcons/Icons';
 import { PersonIcon } from '@radix-ui/react-icons';
 import { Skeleton } from '@/components/ui/skeleton';
