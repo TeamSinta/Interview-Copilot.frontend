@@ -118,7 +118,6 @@ export const TemplateCardsBox = styled(Box)`
   display: flex; // Set to flex to enable horizontal scrolling
   gap: 20px;
   align-items: center;
-
   margin-top: 22px;
   width: 100%;
   overflow-x: auto; // Enable horizontal scrolling
