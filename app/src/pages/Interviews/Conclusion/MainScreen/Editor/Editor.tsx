@@ -26,10 +26,9 @@ const TailwindEditor = ({
 
   const debouncedUpdates = useDebouncedCallback(async (editor) => {
     const json = editor.getJSON();
-    const localStorageKey = `novel-content-${editorId}`; // Unique key for local storage
+    const localStorageKey = `novel-${requestName}-${editorId}`; // Unique key for local storage
     window.localStorage.setItem(localStorageKey, JSON.stringify(json));
-    const stringJson = JSON.stringify(json);
-    const requestBody = { [requestName]: stringJson }; // Constructing requestBody dynamically
+    const requestBody = { requestName: json }; // Constructing requestBody dynamically
     setSaveStatus('Saving...');
     try {
       // Using axios instance to make a patch request
@@ -38,7 +37,6 @@ const TailwindEditor = ({
       if (response.status === 200) {
         // Checking response status code for success
         setSaveStatus('Saved');
-        localStorage.clear();
       } else {
         throw new Error('Network response was not ok.');
       }
@@ -49,20 +47,25 @@ const TailwindEditor = ({
   }, 500);
 
   useEffect(() => {
-    const localStorageKey = `novel-content-${editorId}`;
+    const localStorageKey = `novel-${requestName}-${editorId}`;
     let content = window.localStorage.getItem(localStorageKey);
 
-    if (content) {
+    if (content && content.trim() !== '') {
       try {
         const parsedContent = JSON.parse(content);
         setInitialContent(parsedContent);
       } catch (error) {
         console.error('Error parsing content from localStorage:', error);
+        // Handle error or set a fallback state
       }
-    } else {
-      // Fallback to propData if local storage is empty
-      // Assuming propData is an object. If it's a string, you may need JSON.parse(propData)
-      setInitialContent(propData);
+    } else if (propData && propData.trim() !== '') {
+      try {
+        const parsedContent = JSON.parse(propData);
+        setInitialContent(parsedContent);
+      } catch (error) {
+        console.error('Error parsing propData:', error);
+        // Handle error or set a fallback state
+      }
     }
   }, [editorId, propData]);
 

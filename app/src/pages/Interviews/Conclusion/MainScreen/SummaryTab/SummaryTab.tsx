@@ -10,14 +10,13 @@ import TailwindEditor from '../Editor/Editor';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const SummaryTab = ({ summaryInfo }) => {
-  const editorId = summaryInfo?.summary_id ?? 9;
+  const editorId = summaryInfo?.summary_id ?? 0;
 
-  const editorNumbered = editorId + 39;
   return (
     <>
       <TailwindEditor
         propData={summaryInfo?.description ?? ''}
-        editorId={editorNumbered}
+        editorId={editorId}
         saveApiEndpoint={`${BACKEND_URL}/summary/${editorId}/update-description/`}
         requestName={'description'}
       />
