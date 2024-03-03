@@ -128,9 +128,14 @@ export default function BasicTabs() {
       ) : error?.statusCode === 404 ? (
         'Interviews not found.'
       ) : (
-        <div className="flex flex-col items-center text-center	  gap-2 w-[200px]">
-          <Heading size={'5'}>No Interviews yet.</Heading>
-          <Text size={'1'}>Start a meeting to have a summary generated. </Text>
+        <div className="flex flex-col items-center">
+          <h2 className="scroll-m-20 border-b mb-2 text-2xl font-semibold tracking-tight first:mt-0">
+            No interviews summaries.
+          </h2>
+          <p className="text-center w-[290px]  text-gray-500 ">
+            Start a meeting with a candidate to have your interviews summarized
+            and ready to share.
+          </p>
         </div>
       );
     return (
@@ -142,11 +147,15 @@ export default function BasicTabs() {
               <BodySMedium style={{ color: 'grey' }}>My Library</BodySMedium>
               <H1>Interviews</H1>
             </Box>
-            <div className="flex items-center flex-col gap-2 h-96 justify-end ">
+          </Stack>
+
+          <div className="flex items-center flex-col gap-6 h-96 justify-end ">
+            {' '}
+            <div className="flex flex-col items-center text-center	  gap-4 w-[490px]">
               <Layers2 />
               <p>{errorMessage}</p>
             </div>
-          </Stack>
+          </div>
         </ContainerHome>
       </>
     );

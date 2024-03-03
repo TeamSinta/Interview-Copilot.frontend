@@ -133,7 +133,7 @@ export const InformationBox = ({
   return (
     <Flex direction="column" gap="3" css={{ width: '100%' }}>
       <Heading as="h4" size="3">
-        Leslie and you
+        Teodros Girmay and you
       </Heading>
       <PropertySection
         information={interviewRoundData}

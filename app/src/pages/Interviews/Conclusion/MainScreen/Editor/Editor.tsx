@@ -38,6 +38,7 @@ const TailwindEditor = ({
       if (response.status === 200) {
         // Checking response status code for success
         setSaveStatus('Saved');
+        localStorage.clear();
       } else {
         throw new Error('Network response was not ok.');
       }
@@ -62,7 +63,6 @@ const TailwindEditor = ({
       // Fallback to propData if local storage is empty
       // Assuming propData is an object. If it's a string, you may need JSON.parse(propData)
       setInitialContent(propData);
-      console.log(propData);
     }
   }, [editorId, propData]);
 

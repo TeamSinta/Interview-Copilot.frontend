@@ -21,8 +21,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
-import dashboardImage from 'src/assets/svg/HomePage_2.svg';
+import EmptySectionsImage from "src/assets/images/'Empty Questions Page Illustration.jpg";
+import dashboardImage from 'src/assets/images/HomePage_2.jpg';
 import {
   DescriptionText,
   EmptySectionContainer,
