@@ -50,6 +50,24 @@ export default function VideoCall() {
     await newCallObject.startCamera();
   }, []);
 
+  const startTranscriptionBot = async (meetingUrl) => {
+    try {
+      const response = await instance.post(
+        `${BACKEND_URL}/new_transcription/start_transcription/`,
+        {
+          meeting_url: meetingUrl,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to start transcription bot');
+      }
+      console.log('Transcription bot started successfully');
+    } catch (error) {
+      console.error('Error starting transcription bot:', error);
+    }
+  };
+
   const setDetails = async (details: any) => {
     new Promise((res, rej) => {
       setInterviewRoundDetails(details);
@@ -141,6 +159,9 @@ export default function VideoCall() {
       switch (callObject?.meetingState?.()) {
         case 'joined-meeting':
           setAppState(STATE.JOINED);
+          if (roomUrl) {
+            startTranscriptionBot(roomUrl);
+          }
           break;
         case 'left-meeting':
           const interviewRoundId = localStorage.getItem('interviewRoundId');
