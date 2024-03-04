@@ -35,32 +35,28 @@ const TailwindEditor = ({
   );
   const [saveStatus, setSaveStatus] = useState('Saved');
 
-  const debouncedUpdates = useDebouncedCallback(
-    async (editor: EditorInstance) => {
-      const json = editor.getJSON();
-      const localStorageKey = `novel-content-${editorId}`; // Unique key for local storage
-      localStorage.setItem(localStorageKey, JSON.stringify(json));
-      const stringJson = JSON.stringify(json);
-      const requestBody = { [requestName]: stringJson }; // Constructing requestBody dynamically
+  const debouncedUpdates = useDebouncedCallback(async (editor) => {
+    const json = editor.getJSON();
+    const localStorageKey = `novel-content-${editorId}`; // Unique key for local storage
+    window.localStorage.setItem(localStorageKey, JSON.stringify(json));
+    const stringJson = JSON.stringify(json);
+    const requestBody = { [requestName]: stringJson }; // Constructing requestBody dynamically
+    setSaveStatus('Saving...');
+    try {
+      // Using axios instance to make a patch request
+      const response = await instance.patch(saveApiEndpoint, requestBody);
 
-      setSaveStatus('Saving...');
-      try {
-        // Using axios instance to make a patch request
-        const response = await instance.patch(saveApiEndpoint, requestBody);
-
-        if (response.status === 200) {
-          // Checking response status code for success
-          setSaveStatus('Saved');
-        } else {
-          throw new Error('Network response was not ok.');
-        }
-      } catch (error) {
-        console.error('Failed to save content:', error);
-        setSaveStatus('Save failed, try again');
+      if (response.status === 200) {
+        // Checking response status code for success
+        setSaveStatus('Saved');
+      } else {
+        throw new Error('Network response was not ok.');
       }
-    },
-    500
-  );
+    } catch (error) {
+      console.error('Failed to save content:', error);
+      setSaveStatus('Save failed, try again');
+    }
+  }, 500);
 
   useEffect(() => {
     const localStorageKey = `novel-content-${editorId}`;

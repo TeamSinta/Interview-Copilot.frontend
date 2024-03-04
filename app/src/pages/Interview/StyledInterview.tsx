@@ -108,7 +108,8 @@ export const StyledInnerDiv = styled.div`
 
 export const StyledTabInfo = styled.div`
   padding: 15px;
-  border-radius: 10px;
+  background-color: #f6f6fb;
+  border-radius: 8px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;

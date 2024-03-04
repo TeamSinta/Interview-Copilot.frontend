@@ -9,9 +9,13 @@ import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconF
 import { getInterviews } from '../../features/interviews/interviewsAPI';
 import { useCookies } from 'react-cookie';
 import { IInterviewRound } from '@/types/interview';
-import { Grid } from '@radix-ui/themes';
+import { Grid, Heading, Text } from '@radix-ui/themes';
 import { ContainerHome } from './StyledConclusions';
 import TopNavBar from '@/components/layouts/topnavbar/TopNavBar';
+import { Skeleton } from '@/components/ui/skeleton';
+import emptyInterviewsImage from '@/assets/images/message_empty (1).png';
+import { PersonIcon } from '@radix-ui/react-icons';
+import { Layers2 } from 'lucide-react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -50,15 +54,23 @@ const TABS = {
 export default function BasicTabs() {
   const [activeTab, setActiveTab] = React.useState(TABS.INTERVIEWS);
   const [interviews, setInterviews] = React.useState([]);
-  console.log(interviews);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
   const [cookies, ,] = useCookies(['access_token']);
-
   const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchInterviews = async () => {
-      const response = await getInterviews();
-      setInterviews(response);
+      setLoading(true);
+      try {
+        const response = await getInterviews(); // Assuming getInterviews() handles the fetch
+        setInterviews(response);
+        setError(null);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchInterviews();
@@ -68,6 +80,79 @@ export default function BasicTabs() {
     setActiveTab(tab);
   };
 
+  // Render loading state
+  if (loading) {
+    return (
+      <>
+        <TopNavBar />
+        <ContainerHome>
+          {/* Skeleton loading state */}
+          <Grid
+            columns={{ xs: '1', md: '2', sm: '1', lg: '3', xl: '4' }}
+            gap="5"
+            className="px-6 justify-around py-9"
+          >
+            {' '}
+            <div className="flex flex-col space-y-3 py-9 px-1  ">
+              <Skeleton className="h-52 w-80 rounded-xl" />
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+            <div className="flex flex-col space-y-3 py-9 px-1  ">
+              <Skeleton className="h-52 w-80  rounded-xl" />
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+            <div className="flex flex-col space-y-3 py-9 px-1  ">
+              <Skeleton className="h-52 w-80 rounded-xl" />
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+            <div className="flex flex-col space-y-3 py-9 px-1  ">
+              <Skeleton className="h-52 w-80  rounded-xl" />
+            </div>
+            <div className="flex flex-col space-y-3 py-9 px-1  ">
+              <Skeleton className="h-52 w-80  rounded-xl" />
+            </div>
+          </Grid>
+        </ContainerHome>
+      </>
+    );
+  }
+
+  // Render error or empty states
+  if (error || interviews.length === 0) {
+    const errorMessage =
+      error?.statusCode === 401 ? (
+        'Unauthorized access. Please log in.'
+      ) : error?.statusCode === 404 ? (
+        'Interviews not found.'
+      ) : (
+        <div className="flex flex-col items-center text-center	  gap-2 w-[200px]">
+          <Heading size={'5'}>No Interviews yet.</Heading>
+          <Text size={'1'}>Start a meeting to have a summary generated. </Text>
+        </div>
+      );
+    return (
+      <>
+        <TopNavBar />
+        <ContainerHome>
+          <Stack spacing={3} className="px-6">
+            <Box>
+              <BodySMedium style={{ color: 'grey' }}>My Library</BodySMedium>
+              <H1>Interviews</H1>
+            </Box>
+            <div className="flex items-center flex-col gap-2 h-96 justify-end ">
+              <Layers2 />
+              <p>{errorMessage}</p>
+            </div>
+          </Stack>
+        </ContainerHome>
+      </>
+    );
+  }
+
+  // Regular content rendering
   return (
     <>
       <TopNavBar />
@@ -86,8 +171,8 @@ export default function BasicTabs() {
 
           <Grid
             columns={{ xs: '1', md: '2', sm: '1', lg: '3', xl: '4' }}
-            gap="3"
-            className="px-4"
+            gap="5"
+            className="px-6 justify-around "
           >
             {interviews.map((interviewRound: IInterviewRound, index) => (
               <div
@@ -98,18 +183,16 @@ export default function BasicTabs() {
                 }}
                 key={index}
               >
-                <Box height="9">
-                  <ConclusionInterviewCard
-                    key={index}
-                    title={interviewRound.candidate_name}
-                    disable={false}
-                    name={interviewRound.title}
-                    date={interviewRound.created_at}
-                    video_uri={interviewRound.video_uri}
-                    thumbnail_uri={interviewRound.thumbnail_uri}
-                    icon={interviewRound.icon}
-                  />
-                </Box>
+                <ConclusionInterviewCard
+                  key={index}
+                  title={interviewRound.candidate_name}
+                  disable={false}
+                  name={interviewRound.title}
+                  date={interviewRound.created_at}
+                  video_uri={interviewRound.video_uri}
+                  thumbnail_uri={interviewRound.thumbnail_uri}
+                  icon={interviewRound.icon}
+                />
               </div>
             ))}
           </Grid>

@@ -14,5 +14,6 @@ export const ConclusionStyledContainer = styled.div`
 
 export const ConclusionStyledMain = styled.div`
   grid-area: main;
-  overflow-x: hidden;
+
+
 `;
