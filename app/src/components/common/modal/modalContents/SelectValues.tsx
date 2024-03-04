@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { closeModal, openModal } from '@/features/modal/modalSlice';
 import { BackgroundColor } from '@/features/utils/utilEnum';

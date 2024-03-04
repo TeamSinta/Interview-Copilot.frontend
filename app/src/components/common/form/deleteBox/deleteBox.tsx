@@ -5,7 +5,7 @@ import { TextBtnS } from '../../buttons/textBtn/TextBtn';
 import { openModal } from '@/features/modal/modalSlice';
 import { MODAL_TYPE } from '../../modal/GlobalModal';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { IStyledDeleteBoxProps } from '@/types/deleteBox';
 
 export const DeleteBoxContainer = styled.div`

@@ -1,11 +1,11 @@
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { openModal } from '@/features/modal/modalSlice';
 import Stack from '@mui/material/Stack';
 import StyledInvitationBox from '@/components/common/form/inviteBox/InviteBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import MemberList from './MemberList';
 import SortingDropdown from './SortingDropdown';
 import { useFetchCompanyDepartments } from './useFetchAndSortMembers';

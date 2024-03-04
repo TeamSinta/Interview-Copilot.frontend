@@ -9,7 +9,7 @@ import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconF
 import { getInterviews } from '../../features/interviews/interviewsAPI';
 import { useCookies } from 'react-cookie';
 import { IInterviewRound } from '@/types/interview';
-import { Grid, Heading, Text } from '@radix-ui/themes';
+import { Grid } from '@radix-ui/themes';
 import { ContainerHome } from './StyledConclusions';
 import TopNavBar from '@/components/layouts/topnavbar/TopNavBar';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -177,34 +177,31 @@ export default function BasicTabs() {
             </BodySMedium>
             <H1>Interviews</H1>
           </Box>
-
-          <Grid
-            columns={{ xs: '1', md: '2', sm: '1', lg: '3', xl: '4' }}
-            gap="5"
-            className="px-6 justify-around "
-          >
-            {interviews.map((interviewRound: IInterviewRound, index) => (
-              <div
-                onClick={() => {
-                  navigate('/interviews/conclusion/', {
-                    state: { id: interviewRound.id, useTimer: false },
-                  });
-                }}
-                key={index}
-              >
-                <ConclusionInterviewCard
+          <div className="flex flex-center px-11">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {interviews.map((interviewRound: IInterviewRound, index) => (
+                <div
+                  onClick={() => {
+                    navigate('/interviews/conclusion/', {
+                      state: { id: interviewRound.id, useTimer: false },
+                    });
+                  }}
                   key={index}
-                  title={interviewRound.candidate_name}
-                  disable={false}
-                  name={interviewRound.title}
-                  date={interviewRound.created_at}
-                  video_uri={interviewRound.video_uri}
-                  thumbnail_uri={interviewRound.thumbnail_uri}
-                  icon={interviewRound.icon}
-                />
-              </div>
-            ))}
-          </Grid>
+                >
+                  <ConclusionInterviewCard
+                    key={index}
+                    title={interviewRound.candidate_name}
+                    disable={false}
+                    name={interviewRound.title}
+                    date={interviewRound.created_at}
+                    video_uri={interviewRound.video_uri}
+                    thumbnail_uri={interviewRound.thumbnail_uri}
+                    icon={interviewRound.icon}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </Stack>
       </ContainerHome>
     </>

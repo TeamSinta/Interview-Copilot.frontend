@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import Loading from '@/components/common/elements/loading/Loading';
@@ -49,11 +49,11 @@ const DashBoard = () => {
   const workspaceData = {
     title: 'Workspace',
     items: [
-      { label: 'Plan type', value: 'Free' },
-      { label: 'Collaborators', value: '2 of 3' },
+      { label: 'Plan type', value: 'Pro' },
+      { label: 'Collaborators', value: '1 of 3' },
       { label: 'Summaries', value: '1 of 3' },
       { label: 'Interviews', value: '1' },
-      { label: 'Templates', value: '12' },
+      { label: 'Templates', value: '9' },
     ],
     buttonText: 'Upgrade',
   };

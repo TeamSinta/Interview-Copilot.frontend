@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';

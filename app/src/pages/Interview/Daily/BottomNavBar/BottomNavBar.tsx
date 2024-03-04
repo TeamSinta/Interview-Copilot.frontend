@@ -29,7 +29,7 @@ import { useWindowSize } from '@/hooks/useWindowSize';
 import RoomService from '@/utils/dailyVideoService/videoApi';
 import { Grid } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../../app/store';
+import { AppDispatch } from '../../../../store';
 import Chat from '../Chat/Chat';
 import RecordingPrompt from './RecordingPrompt';
 import {

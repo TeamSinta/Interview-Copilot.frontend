@@ -7,7 +7,7 @@ import { InviteContainer, InviteWrap } from './StyledDepartment';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { useCreateNewDepartmentMutation } from '@/features/settingsDetail/userSettingsAPI';
 import { CompanyID } from '@/features/settingsDetail/userSettingTypes';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 
 const TextBtnLProps = {
   disable: false,

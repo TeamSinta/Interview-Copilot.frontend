@@ -40,17 +40,19 @@ const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
   };
 
   return (
-    <Card className="h-52 w-80 shadow-md hover:bg-secondary/90 cursor-pointer flex justify-between flex-col">
-      <CardHeader>
-        <CardTitle className="text-xl text-ellipsis w-64 s truncate ">
-          {icon} {name}
-        </CardTitle>
-      </CardHeader>
-      <CardContent></CardContent>
-      <CardFooter>
-        <CardDescription>{formattedDate}</CardDescription>{' '}
-      </CardFooter>
-    </Card>
+    <div className="flex flex-wrap justify-start gap-4">
+      <Card className="h-52 w-full shadow-md hover:bg-secondary/90 cursor-pointer flex justify-between flex-col">
+        <CardHeader>
+          <CardTitle className="text-xl text-ellipsis w-54 s truncate ">
+            {icon} {name}
+          </CardTitle>
+        </CardHeader>
+        <CardContent></CardContent>
+        <CardFooter>
+          <CardDescription>{formattedDate}</CardDescription>{' '}
+        </CardFooter>
+      </Card>
+    </div>
     // <Card
     //   className={(hover ? 'hover' : '').concat(disable ? ' disable' : ' ')}
     //   id="cardId"

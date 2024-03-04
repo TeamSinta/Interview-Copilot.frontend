@@ -48,7 +48,7 @@ import {
   H3Bold,
 } from '@/components/common/typeScale/StyledTypeScale';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../../app/store';
+import { RootState } from '../../../../store';
 import {
   createCandidate,
   createInterviewRound,

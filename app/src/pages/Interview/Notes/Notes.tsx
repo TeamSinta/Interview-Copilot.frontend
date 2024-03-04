@@ -12,7 +12,7 @@ import Chat from '@/components/common/form/chatBox/ChatBox';
 import { IconBtnL } from '@/components/common/buttons/iconBtn/IconBtn';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { addNote } from '@/features/interviews/notesSlice';
 
 type Comment = {
