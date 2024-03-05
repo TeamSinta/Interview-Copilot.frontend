@@ -7,12 +7,11 @@ const exportInterviewPdf = async (interview_round_id: InterviewRoundId) => {
   }/export_to_pdf?interview_round_id=${interview_round_id}`;
 
   try {
-    // Use the Axios instance to make the GET request
     const response = await instance.get(api_url, { responseType: 'blob' });
     const blob = response.data;
 
     // Default filename in case parsing fails
-    let filename = 'defaultFilename.pdf';
+    let filename = 'SintaInterviewExport.pdf';
 
     // Where the filename is picked up from the response
     const contentDisposition = response.headers['content-disposition'];
@@ -34,9 +33,7 @@ const exportInterviewPdf = async (interview_round_id: InterviewRoundId) => {
     link.remove();
   } catch (error) {
     console.error('Download error:', error);
-    // Here, Axios errors can be handled directly
-    // For instance, you might want to check error.response.status
-    // to handle different types of HTTP errors specifically
+    throw error;
   }
 };
 

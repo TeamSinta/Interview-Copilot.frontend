@@ -51,6 +51,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { CheckboxReactHookFormMultiple } from './ExportForm';
 import { AvatarFallback, Avatar, AvatarImage } from '@/components/ui/avatar';
 import exportInterviewPdf from '@/features/export/exportAPI';
+import { InterviewRoundId } from '@/types/common';
 
 interface ToolbarProps {
   interviewData: any;
@@ -65,7 +66,7 @@ export const ConclusionToolbar = ({
   preview,
 }: ToolbarProps) => {
   const [update, { isLoading }] = useUpdateInterviewRoundMutation();
-  const removeIcon = console.log('here');
+  const removeIcon = '';
   const { toast } = useToast();
 
   const onIconSelect = (icon: string) => {
@@ -76,16 +77,60 @@ export const ConclusionToolbar = ({
   };
 
   const onRemoveIcon = () => {
-    console.log('remove');
+    // console.log('remove');
     // removeIcon({
     //   id: interviewData._id,
     // });
   };
 
-  const handleExportClick = () => {
-    console.log(interviewData.id);
-    const interview_round_id = 9;
-    exportInterviewPdf(interview_round_id);
+  const handleExportClick = async (interview_round_id: InterviewRoundId) => {
+    toast({
+      title: 'Success',
+      description: 'The export has started. Your download will begin shortly.',
+    });
+    try {
+      await exportInterviewPdf(interview_round_id);
+    } catch (error) {
+      console.error('Download error:', error);
+      let action = undefined;
+      let title = '';
+      let message = 'An unexpected error occurred. Please try again later.';
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            title = 'Bad request';
+            message = 'Please check your request and try again.';
+            break;
+          case 403:
+            title = 'Forbidden';
+            message = 'You do not have permission to perform this action.';
+            break;
+          case 404:
+            title = 'Not found';
+            message = 'The requested resource was not found.';
+
+            break;
+          case 500:
+            message =
+              'Oops! Something went wrong on our end. If the problem persists, please contact support.';
+            action = (
+              <ToastAction
+                altText="button to contact support"
+                onClick={console.log('Placeholder')}
+              >
+                Support
+              </ToastAction>
+            );
+            break;
+        }
+      }
+      toast({
+        variant: 'destructive',
+        title: title,
+        description: message,
+        action,
+      });
+    }
   };
 
   return (
@@ -277,15 +322,7 @@ export const ConclusionToolbar = ({
               </div>
               <DialogFooter>
                 <DialogClose>
-                  <Button
-                    onClick={() => {
-                      toast({
-                        title: 'Downloading',
-                        description: 'This should only take a second...',
-                      });
-                      handleExportClick();
-                    }}
-                  >
+                  <Button onClick={() => handleExportClick(interviewData.id)}>
                     Export
                   </Button>
                 </DialogClose>
