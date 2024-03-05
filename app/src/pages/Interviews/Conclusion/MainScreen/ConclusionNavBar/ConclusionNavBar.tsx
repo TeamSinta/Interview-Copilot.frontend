@@ -50,8 +50,7 @@ import { Toggle } from '@/components/ui/toggle';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { CheckboxReactHookFormMultiple } from './ExportForm';
 import { AvatarFallback, Avatar, AvatarImage } from '@/components/ui/avatar';
-import exportInterviewPdf from '@/features/export/exportAPI';
-import { InterviewRoundId } from '@/types/common';
+import useExportToPdf from '@/hooks/useExportToPdf';
 
 interface ToolbarProps {
   interviewData: any;
@@ -65,9 +64,9 @@ export const ConclusionToolbar = ({
   interviewerName,
   preview,
 }: ToolbarProps) => {
+  const { exportInterviewPdf } = useExportToPdf();
   const [update, { isLoading }] = useUpdateInterviewRoundMutation();
   const removeIcon = '';
-  const { toast } = useToast();
 
   const onIconSelect = (icon: string) => {
     update({
@@ -83,54 +82,8 @@ export const ConclusionToolbar = ({
     // });
   };
 
-  const handleExportClick = async (interview_round_id: InterviewRoundId) => {
-    toast({
-      title: 'Success',
-      description: 'The export has started. Your download will begin shortly.',
-    });
-    try {
-      await exportInterviewPdf(interview_round_id);
-    } catch (error) {
-      console.error('Download error:', error);
-      let action = undefined;
-      let title = 'Error';
-      let message = 'An unexpected error occurred. Please try again later.';
-      if (error.response) {
-        switch (error.response.status) {
-          case 400:
-            title = 'Bad request';
-            message = 'Please check your request and try again.';
-            break;
-          case 403:
-            title = 'Forbidden';
-            message = 'You do not have permission to perform this action.';
-            break;
-          case 404:
-            title = 'Not found';
-            message = 'The requested resource was not found.';
-
-            break;
-          case 500:
-            message =
-              'Oops! Something went wrong on our end. If the problem persists, please contact support.';
-            action = (
-              <ToastAction
-                altText="button to contact support"
-                onClick={console.log('Placeholder')}
-              >
-                Support
-              </ToastAction>
-            );
-            break;
-        }
-      }
-      toast({
-        variant: 'destructive',
-        title: title,
-        description: message,
-        action,
-      });
-    }
+  const handleExportClick = async () => {
+    await exportInterviewPdf(interviewData.id);
   };
 
   return (
@@ -322,9 +275,7 @@ export const ConclusionToolbar = ({
               </div>
               <DialogFooter>
                 <DialogClose>
-                  <Button onClick={() => handleExportClick(interviewData.id)}>
-                    Export
-                  </Button>
+                  <Button onClick={() => handleExportClick()}>Export</Button>
                 </DialogClose>
               </DialogFooter>
             </DialogContent>
