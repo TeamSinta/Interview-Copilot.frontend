@@ -1,7 +1,7 @@
 import { InterviewRoundId } from '@/types/common';
 import { instance } from '@/utils/axiosService/customAxios';
 
-const exportInterviewPdf = async (interview_round_id: InterviewRoundId) => {
+const apiExportInterviewPdf = async (interview_round_id: InterviewRoundId) => {
   const api_url = `${
     import.meta.env.VITE_BACKEND_URL
   }/export_to_pdf?interview_round_id=${interview_round_id}`;
@@ -37,4 +37,4 @@ const exportInterviewPdf = async (interview_round_id: InterviewRoundId) => {
   }
 };
 
-export default exportInterviewPdf;
+export default apiExportInterviewPdf;
