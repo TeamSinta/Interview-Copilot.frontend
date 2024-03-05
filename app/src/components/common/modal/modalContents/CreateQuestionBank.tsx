@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { TextBtnL } from '@/components/common/buttons/textBtn/TextBtn';
 import { InputLayout } from '@/components/common/form/input/StyledInput';
 import TextArea from '@/components/common/form/textArea/TextArea';

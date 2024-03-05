@@ -16,5 +16,6 @@ export interface IMembersListResponse {
   selected?: boolean;
 }
 
+export type InterviewRoundId = number;
 export type AccessToken = string | undefined;
 export type SortBy = string;

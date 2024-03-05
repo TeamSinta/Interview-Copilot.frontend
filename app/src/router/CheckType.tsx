@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import VideoCallExternal from '@/utils/dailyVideoService/videoCallExternalComponent';
 import VideoCallComponent from '@/utils/dailyVideoService/videoCallComponent';
 

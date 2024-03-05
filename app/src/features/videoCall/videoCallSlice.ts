@@ -4,7 +4,7 @@ import { videoCallState } from './videoCallInterface';
 // THIS IS AN EXAMPLE FOR VIDEOCALLSLICE AND STATES WE COULD UTILIZE THROUGHOUT THE APP
 const initialState: videoCallState = {
   active_call: false,
-  recording: false,
+  recording: true,
   participans: {
     interviewer: {
       name: '',

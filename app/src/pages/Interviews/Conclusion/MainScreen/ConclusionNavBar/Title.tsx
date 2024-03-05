@@ -7,18 +7,18 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useUpdateInterviewRoundMutation } from '@/features/interviews/interviewsAPISlice';
 
 interface TitleProps {
-  initialData: any;
+  interviewData: any;
 }
 
-export const Title = ({ initialData }: TitleProps) => {
+export const Title = ({ interviewData }: TitleProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [update] = useUpdateInterviewRoundMutation();
 
-  const [title, setTitle] = useState(initialData.title || 'Untitled');
+  const [title, setTitle] = useState(interviewData.title || 'Untitled');
   const [isEditing, setIsEditing] = useState(false);
 
   const enableInput = () => {
-    setTitle(initialData.title);
+    setTitle(interviewData.title);
     setIsEditing(true);
     setTimeout(() => {
       inputRef.current?.focus();
@@ -33,7 +33,7 @@ export const Title = ({ initialData }: TitleProps) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
     update({
-      id: initialData.id,
+      id: interviewData.id,
       title: event.target.value || 'Untitled',
     });
   };
@@ -54,16 +54,16 @@ export const Title = ({ initialData }: TitleProps) => {
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={title}
-          className="text-2xl	 font-semibold	 px-2 w-90 focus-visible:ring-transparent mr-2 ml-1"
+          className="px-2 ml-1 mr-2 text-2xl font-semibold w-90 focus-visible:ring-transparent"
         />
       ) : (
         <Button
           onClick={enableInput}
           variant="ghost"
           size="lg"
-          className="text-2xl	font-semibold	 justify-start text-start	flex items-start  h-auto p-1  w-60 "
+          className="flex items-start justify-start h-auto p-1 text-2xl font-semibold text-start w-60 "
         >
-          <span className="truncate">{initialData?.title}</span>
+          <span className="truncate">{interviewData?.title}</span>
         </Button>
       )}
     </div>
@@ -71,5 +71,5 @@ export const Title = ({ initialData }: TitleProps) => {
 };
 
 Title.Skeleton = function TitleSkeleton() {
-  return <Skeleton className="h-9 w-20 rounded-md" />;
+  return <Skeleton className="w-20 rounded-md h-9" />;
 };

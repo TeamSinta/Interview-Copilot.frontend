@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import Photo from '@/components/common/buttons/photo/Photo';
 import Photos from '@/components/common/buttons/photo/Photos';
 import { PhotoContainer } from '@/components/common/buttons/photo/StyledPhoto';
@@ -14,7 +14,7 @@ import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContentWrap } from './StyledModalContents';
 import { useEffect, useRef, useState } from 'react';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { useAddTemplateMutation } from '@/features/templates/templatesAPISlice';
 import { useFetchCompanyDepartments } from '@/components/pages/settings/memberTab/useFetchAndSortMembers';
 import DepartmentDropDown from '@/components/common/dropDown/DepartmentDropdown';

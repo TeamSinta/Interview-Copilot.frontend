@@ -1,4 +1,4 @@
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';

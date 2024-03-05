@@ -1,4 +1,4 @@
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconFilter';
 import SearchInput from '@/components/common/form/serchInput/SearchInput';
 import { BodySMedium, H1 } from '@/components/common/typeScale/StyledTypeScale';

@@ -12,7 +12,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { closeModal } from '@/features/modal/modalSlice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import {
   useGetTemplateDetailQuery,
   useUpdateTemplateMutation,

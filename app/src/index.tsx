@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import { store } from './store';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { createRoot } from 'react-dom/client';
 import { Theme } from '@radix-ui/themes';

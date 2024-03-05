@@ -1,10 +1,10 @@
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { openModal } from '@/features/modal/modalSlice';
 import Stack from '@mui/material/Stack';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import SortingDropdown from './SortingDropdown';
 import { useState } from 'react';
 import DepartmentList from './DepartmentList';

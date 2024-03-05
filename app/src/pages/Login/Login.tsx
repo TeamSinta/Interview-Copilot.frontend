@@ -13,7 +13,7 @@ import useAuth, { useQuery } from '@/hooks/useGoogleLogin';
 import { Box, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LogoImage from 'src/assets/images/SintaLogo.png';
-import LoginPageImage from 'src/assets/svg/LogInPageIllustration.svg';
+import LoginPageImage from 'src/assets/images/LogInPageIllustration.jpg';
 import {
   Container,
   GrayBodyLMedium,

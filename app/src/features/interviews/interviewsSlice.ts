@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { DataLoading } from '../utils/utilEnum';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { getQuestionsBank } from './interviewsAPI';
 import { IQuestion } from './interviewsInterface';
 

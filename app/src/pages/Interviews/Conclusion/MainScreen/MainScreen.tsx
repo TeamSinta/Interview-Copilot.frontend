@@ -8,25 +8,26 @@ import SummaryTab from './SummaryTab/SummaryTab';
 import {
   Avatar,
   Box,
-  Button,
   Card,
   Flex,
   Grid,
   Heading,
   Text,
+  Button,
 } from '@radix-ui/themes';
 import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { BoxShadow, FlexShadow } from '../../StyledConclusions';
-import { InformationBox } from './InfoformationBox/InformationBox';
+import { InformationBox } from './InformationBox/InformationBox';
 import { QuestionIcon } from '@/components/common/svgIcons/Icons';
-import { PersonIcon } from '@radix-ui/react-icons';
+import { ButtonIcon, PersonIcon } from '@radix-ui/react-icons';
 import { Skeleton } from '@/components/ui/skeleton';
 import { FileX2, TentTreeIcon } from 'lucide-react';
 import SkeletonLoading from './Ui/SkeletonLoading';
 
 import DeleteDialog from './Ui/DeleteHelper';
+import useTranscriptData from '@/services/TranscriptS3Service';
 
-type summaryType = 'summary' | 'question' | 'transcription' | 'notes';
+type summaryType = 'summary' | 'question' | 'transcription' | 'notes' | 's3';
 
 interface MainScreenProps {
   interviewRoundId: string;
@@ -70,11 +71,6 @@ const InfoTabContainer = styled.div`
 
 const StyledNavButton = styled(Button)`
   color: black;
-  padding: 6px;
-  @media (min-width: 1000px) {
-    width: 100px;
-    margin-bottom: 0;
-  }
 `;
 
 const ContentContainer = styled.div`
@@ -90,9 +86,14 @@ const TabButton: React.FC<TabButtonProps> = ({
   isActive,
   children,
 }) => (
-  <StyledNavButton onClick={onClick} variant={isActive ? 'outline' : 'none'}>
+  <Button
+    onClick={onClick}
+    size="2"
+    className=" text-black  bg-black text-sm"
+    variant={isActive ? 'outline' : ''}
+  >
     <span>{children}</span>
-  </StyledNavButton>
+  </Button>
 );
 
 const EmptyStateComponent = ({ message }) => (
@@ -109,7 +110,7 @@ const MainScreen: React.FC<MainScreenProps> = ({
   interviewRoundData,
 }) => {
   const [summaryType, setSummaryType] = useState<
-    'summary' | 'question' | 'transcription' | 'notes'
+    'summary' | 'question' | 'transcription' | 'notes' | 's3'
   >('summary');
   const [informationType, setInformationType] = useState<'video' | 'info'>(
     'video'
@@ -124,7 +125,10 @@ const MainScreen: React.FC<MainScreenProps> = ({
     loading,
   ] = ConclusionData(interviewRoundId);
 
-  console.log(summarizedInterview);
+  const { transcript, error } = useTranscriptData(interviewRoundId);
+
+  console.log(transcript);
+
   const isEmptyOrError = (data) => {
     // Check for null or undefined data
     if (!data) return true;
@@ -197,6 +201,12 @@ const MainScreen: React.FC<MainScreenProps> = ({
           isActive={summaryType === 'notes'}
         >
           Notes
+        </TabButton>
+        <TabButton
+          onClick={() => setSummaryType('s3')}
+          isActive={summaryType === 's3'}
+        >
+          S3 Transcript
         </TabButton>
       </TabContainer>
     ),
@@ -328,6 +338,12 @@ const MainScreen: React.FC<MainScreenProps> = ({
                   propData={questionsTranscript?.data}
                   screen={'transcription'}
                 />
+              )
+            ) : summaryType === 's3' ? (
+              isEmptyOrError(transcript) ? (
+                renderEmptyState(transcript?.error?.statusCode)
+              ) : (
+                <h1>{JSON.stringify(transcript, null, 2)}</h1>
               )
             ) : (
               summaryType === 'notes' &&

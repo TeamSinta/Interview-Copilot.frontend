@@ -4,7 +4,7 @@ import { StyledMain } from './components/layouts/container/StyledContainer';
 import Container from './components/layouts/container/Container';
 import Routers from './router/Routers';
 import { useSelector } from 'react-redux';
-import { RootState } from './app/store';
+import { RootState } from './store';
 import { Navigate, useLocation } from 'react-router-dom';
 import ConclusionContainer from './components/layouts/container/conclusionContainer/ConclusionContainer';
 import { ConclusionStyledMain } from './components/layouts/container/conclusionContainer/StyledConclusionContianer';

@@ -12,7 +12,7 @@ import { DropDownButton } from '@/components/common/buttons/dropDownBtn/DropDown
 import { StyledTopNavBar } from './StyledTopBarNav';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../app/store';
+import { AppDispatch } from '../../../store';
 import { createCall } from '../../../utils/dailyVideoService/videoCallSlice';
 import { H2Medium } from '@/components/common/typeScale/StyledTypeScale';
 import { useToast } from '@/components/ui/use-toast';

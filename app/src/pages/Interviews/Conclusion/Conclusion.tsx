@@ -9,7 +9,6 @@ import SummarizerLoader from '@/components/common/elements/longLoading/LongLoadi
 import { getInterview } from '@/features/interviews/interviewsAPI.js';
 import { useCookies } from 'react-cookie';
 
-
 import WebSockComp from '../../../components/common/socket/websock';
 
 import { Flex } from '@radix-ui/themes';
@@ -83,7 +82,7 @@ const Conclusion: React.FC = () => {
       direction={'column'}
     >
       <ConclusionToolbar
-        initialData={interviewRound}
+        interviewData={interviewRound}
         interviewerName={interviewerName}
         interviewerPicture={interviewerPicture}
       />

@@ -9,7 +9,7 @@ import TextIconFilter from '@/components/common/filters/textIconFilter/TextIconF
 import { getInterviews } from '../../features/interviews/interviewsAPI';
 import { useCookies } from 'react-cookie';
 import { IInterviewRound } from '@/types/interview';
-import { Grid, Heading, Text } from '@radix-ui/themes';
+import { Grid } from '@radix-ui/themes';
 import { ContainerHome } from './StyledConclusions';
 import TopNavBar from '@/components/layouts/topnavbar/TopNavBar';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -87,34 +87,32 @@ export default function BasicTabs() {
         <TopNavBar />
         <ContainerHome>
           {/* Skeleton loading state */}
-          <Grid
-            columns={{ xs: '1', md: '2', sm: '1', lg: '3', xl: '4' }}
-            gap="5"
-            className="px-6 justify-around py-9"
-          >
-            {' '}
-            <div className="flex flex-col space-y-3 py-9 px-1  ">
-              <Skeleton className="h-52 w-80 rounded-xl" />
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
+          <div className="flex flex-center px-11">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {' '}
+              <div className="flex flex-col space-y-3 py-9 px-1  ">
+                <Skeleton className="h-52 w-80 rounded-xl" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+              <div className="flex flex-col space-y-3 py-9 px-1  ">
+                <Skeleton className="h-52 w-80  rounded-xl" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+              <div className="flex flex-col space-y-3 py-9 px-1  ">
+                <Skeleton className="h-52 w-80 rounded-xl" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+              <div className="flex flex-col space-y-3 py-9 px-1  ">
+                <Skeleton className="h-52 w-80  rounded-xl" />
+              </div>
+              <div className="flex flex-col space-y-3 py-9 px-1  ">
+                <Skeleton className="h-52 w-80  rounded-xl" />
+              </div>
             </div>
-            <div className="flex flex-col space-y-3 py-9 px-1  ">
-              <Skeleton className="h-52 w-80  rounded-xl" />
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
-            </div>
-            <div className="flex flex-col space-y-3 py-9 px-1  ">
-              <Skeleton className="h-52 w-80 rounded-xl" />
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
-            </div>
-            <div className="flex flex-col space-y-3 py-9 px-1  ">
-              <Skeleton className="h-52 w-80  rounded-xl" />
-            </div>
-            <div className="flex flex-col space-y-3 py-9 px-1  ">
-              <Skeleton className="h-52 w-80  rounded-xl" />
-            </div>
-          </Grid>
+          </div>
         </ContainerHome>
       </>
     );
@@ -128,9 +126,14 @@ export default function BasicTabs() {
       ) : error?.statusCode === 404 ? (
         'Interviews not found.'
       ) : (
-        <div className="flex flex-col items-center text-center	  gap-2 w-[200px]">
-          <Heading size={'5'}>No Interviews yet.</Heading>
-          <Text size={'1'}>Start a meeting to have a summary generated. </Text>
+        <div className="flex flex-col items-center">
+          <h2 className="scroll-m-20 border-b mb-2 text-2xl font-semibold tracking-tight first:mt-0">
+            No interviews summaries.
+          </h2>
+          <p className="text-center w-[290px]  text-gray-500 ">
+            Start a meeting with a candidate to have your interviews summarized
+            and ready to share.
+          </p>
         </div>
       );
     return (
@@ -142,11 +145,15 @@ export default function BasicTabs() {
               <BodySMedium style={{ color: 'grey' }}>My Library</BodySMedium>
               <H1>Interviews</H1>
             </Box>
-            <div className="flex items-center flex-col gap-2 h-96 justify-end ">
+          </Stack>
+
+          <div className="flex items-center flex-col gap-6 h-96 justify-end ">
+            {' '}
+            <div className="flex flex-col items-center text-center	  gap-4 w-[490px]">
               <Layers2 />
               <p>{errorMessage}</p>
             </div>
-          </Stack>
+          </div>
         </ContainerHome>
       </>
     );
@@ -168,34 +175,32 @@ export default function BasicTabs() {
             </BodySMedium>
             <H1>Interviews</H1>
           </Box>
-
-          <Grid
-            columns={{ xs: '1', md: '2', sm: '1', lg: '3', xl: '4' }}
-            gap="5"
-            className="px-6 justify-around "
-          >
-            {interviews.map((interviewRound: IInterviewRound, index) => (
-              <div
-                onClick={() => {
-                  navigate('/interviews/conclusion/', {
-                    state: { id: interviewRound.id, useTimer: false },
-                  });
-                }}
-                key={index}
-              >
-                <ConclusionInterviewCard
+          <div className="flex flex-center px-11">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {interviews.map((interviewRound: IInterviewRound, index) => (
+                <div
+                  onClick={() => {
+                    navigate('/interviews/conclusion/', {
+                      state: { id: interviewRound.id, useTimer: false },
+                    });
+                  }}
                   key={index}
-                  title={interviewRound.candidate_name}
-                  disable={false}
-                  name={interviewRound.title}
-                  date={interviewRound.created_at}
-                  video_uri={interviewRound.video_uri}
-                  thumbnail_uri={interviewRound.thumbnail_uri}
-                  icon={interviewRound.icon}
-                />
-              </div>
-            ))}
-          </Grid>
+                  className=" min-w-64"
+                >
+                  <ConclusionInterviewCard
+                    key={index}
+                    title={interviewRound.candidate_name}
+                    disable={false}
+                    name={interviewRound.title}
+                    date={interviewRound.created_at}
+                    video_uri={interviewRound.video_uri}
+                    thumbnail_uri={interviewRound.thumbnail_uri}
+                    icon={interviewRound.icon}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </Stack>
       </ContainerHome>
     </>

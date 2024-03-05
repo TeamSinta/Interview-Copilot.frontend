@@ -91,9 +91,10 @@ const FlexContainer = styled.div`
 
 const IndexContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   gap: 0px;
+  text-align: start;
 `;
 
 const IconContainer = styled.div`
@@ -108,43 +109,6 @@ const Text = styled.div<TextProps>`
   padding: 0px;
   margin: 0px;
   margin-left: 4px;
-`;
-
-const QuestionContainer = styled(Grid)`
-  font-size: 14px;
-  margin: 0px;
-  padding: 0px;
-`;
-
-const TextContainer = styled(Grid)`
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0px 0px;
-  font-size: 12px;
-  margin: 0px;
-  margin-bottom: 15px;
-  margin-top: 3px;
-`;
-
-const AnswerContainer = styled.div`
-  margin-top: 12px;
-  margin-bottom: 12px;
-  font-weight: 500;
-  border-radius: 10px;
-  background-color: white;
-  font-size: 14px;
-  padding: 20px;
-  width: 100%;
-  line-height: 1.5;
-
-  BodyMMedium {
-    white-space: pre-line; /* This will handle line breaks */
-  }
-
-  BodyMMedium:before {
-    content: '• '; /* Bullet point */
-    display: block;
-  }
 `;
 
 const groupQuestionsByCompetency = (questions: Question[]) => {
@@ -221,12 +185,7 @@ export const QuestionTextDisplay: React.FC<QuestionTextDisplayProps> = ({
             {' '}
             <IndexContainer>
               <PredefinedRatingsComponent rating={score} />{' '}
-              <H3Medium
-                className="italic font-bold
-"
-              >
-                {question}
-              </H3Medium>
+              <h4 className="font-semibold text-lg">{question}</h4>
             </IndexContainer>
           </AccordionTrigger>
           <AccordionContent>

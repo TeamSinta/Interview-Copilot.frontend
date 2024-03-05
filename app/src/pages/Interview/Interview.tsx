@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import { StyledIconBtnM } from '@/components/common/buttons/button/StyledBtn';
 import {
   BottomArrowIcon,

@@ -9,7 +9,7 @@ import {
   checkUserAuthentication,
   setTokens,
 } from '@/features/authentication/authenticationSlice';
-import { RootState, AppDispatch } from '@/app/store';
+import { RootState, AppDispatch } from '@/store';
 import {
   useGetAccessTokenMutation,
   useGetUserMutation,

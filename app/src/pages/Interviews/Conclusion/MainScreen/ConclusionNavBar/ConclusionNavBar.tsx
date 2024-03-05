@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { ToastAction } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
 
 import { IconPicker } from './Icon-Picker';
 import { Box, Flex, Heading, HoverCard, Text } from '@radix-ui/themes';
@@ -33,6 +35,7 @@ import { Title } from './Title';
 import { useUpdateInterviewRoundMutation } from '@/features/interviews/interviewsAPISlice';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -47,35 +50,40 @@ import { Toggle } from '@/components/ui/toggle';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { CheckboxReactHookFormMultiple } from './ExportForm';
 import { AvatarFallback, Avatar, AvatarImage } from '@/components/ui/avatar';
+import useExportToPdf from '@/hooks/useExportToPdf';
 
 interface ToolbarProps {
-  initialData: any;
+  interviewData: any;
   preview?: boolean;
   interviewerPicture: any;
   interviewerName: any;
 }
-
 export const ConclusionToolbar = ({
-  initialData,
+  interviewData,
   interviewerPicture,
   interviewerName,
   preview,
 }: ToolbarProps) => {
+  const { exportInterviewPdf } = useExportToPdf();
   const [update, { isLoading }] = useUpdateInterviewRoundMutation();
-  const removeIcon = console.log('here');
+  const removeIcon = '';
 
   const onIconSelect = (icon: string) => {
     update({
-      id: initialData.id,
+      id: interviewData.id,
       icon,
     });
   };
 
   const onRemoveIcon = () => {
-    console.log('remove');
+    // console.log('remove');
     // removeIcon({
-    //   id: initialData._id,
+    //   id: interviewData._id,
     // });
+  };
+
+  const handleExportClick = async () => {
+    await exportInterviewPdf(interviewData.id);
   };
 
   return (
@@ -86,41 +94,41 @@ export const ConclusionToolbar = ({
       >
         <Flex gap={'1'} justify={'between'} align={'center'}>
           <Flex gap={'1'}>
-            <div className="gap-x-1 py-1">
-              {!initialData.icon && (
+            <div className="py-1 gap-x-1">
+              {!interviewData.icon && (
                 <IconPicker asChild onChange={onIconSelect}>
                   <Button
-                    className="text-muted-foreground text-xs"
+                    className="text-xs text-muted-foreground"
                     variant="outline"
                     size="sm"
                   >
-                    <Smile className="h-4 w-4 mr-2" />
+                    <Smile className="w-4 h-4 mr-2" />
                     Add icon
                   </Button>
                 </IconPicker>
               )}
             </div>
             <div className="">
-              {!!initialData?.icon && (
-                <div className="flex items-center gap-x-2 mt-1 pr-1 group/icon  ">
+              {!!interviewData?.icon && (
+                <div className="flex items-center pr-1 mt-1 gap-x-2 group/icon ">
                   <IconPicker onChange={onIconSelect}>
-                    <p className="text-3xl hover:opacity-75 transition">
-                      {initialData.icon}
+                    <p className="text-3xl transition hover:opacity-75">
+                      {interviewData.icon}
                     </p>
                   </IconPicker>
                   {/* /code to remove button icon */}
                   {/* <Button
                   onClick={onRemoveIcon}
-                  className="rounded-full opacity-0 group-hover/icon:opacity-100 transition text-muted-foreground text-xs"
+                  className="text-xs transition rounded-full opacity-0 group-hover/icon:opacity-100 text-muted-foreground"
                   variant="outline"
                   size="icon"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="w-4 h-4" />
                 </Button> */}
                 </div>
               )}
             </div>
-            <Title initialData={initialData} />
+            <Title interviewData={interviewData} />
           </Flex>
           <Flex gap={'1'}>
             <Select>
@@ -130,7 +138,7 @@ export const ConclusionToolbar = ({
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Interviews</SelectLabel>
-                  <SelectItem value="light">{initialData.title}</SelectItem>
+                  <SelectItem value="light">{interviewData.title}</SelectItem>
                   <SelectItem value="dark">Dark</SelectItem>
                   <SelectItem value="system">System</SelectItem>
                 </SelectGroup>
@@ -138,12 +146,12 @@ export const ConclusionToolbar = ({
             </Select>
             <Button
               variant="link"
-              className=" decoration-transparent text-gray-500"
+              className="text-gray-500 decoration-transparent"
             >
               <Text>
                 <HoverCard.Root>
                   <HoverCard.Trigger>
-                    <Text>{initialData?.created_at ?? ''}</Text>
+                    <Text>{interviewData?.created_at ?? ''}</Text>
                   </HoverCard.Trigger>
                   <HoverCard.Content>
                     <div className="flex justify-between space-x-4">
@@ -160,11 +168,11 @@ export const ConclusionToolbar = ({
                           {' '}
                           {interviewerName}
                         </h4>
-                        <p className="text-sm">{initialData.title}</p>
+                        <p className="text-sm">{interviewData.title}</p>
                         <div className="flex items-center pt-2">
-                          <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{' '}
+                          <CalendarIcon className="w-4 h-4 mr-2 opacity-70" />{' '}
                           <span className="text-xs text-muted-foreground">
-                            {initialData?.created_at ?? ''}
+                            {interviewData?.created_at ?? ''}
                           </span>
                         </div>
                       </div>
@@ -181,7 +189,7 @@ export const ConclusionToolbar = ({
             <DialogTrigger asChild>
               <Button variant="outline">
                 {' '}
-                <HelpCircle className="mr-2 h-4 w-4" /> Decision{' '}
+                <HelpCircle className="w-4 h-4 mr-2" /> Decision{' '}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -198,32 +206,32 @@ export const ConclusionToolbar = ({
                 orientation={'horizontal'}
                 type="single"
               >
-                <div className="flex flex-item w-full gap-3">
+                <div className="flex w-full gap-3 flex-item">
                   <ToggleGroupItem
                     value="a"
-                    className="flex-item w-full h-5/5 "
+                    className="w-full flex-item h-5/5 "
                     variant={'outline'}
                   >
                     {' '}
-                    <ThumbsUp className="mr-2 h-4 w-4 stroke-green-400 h-5/5 " />{' '}
+                    <ThumbsUp className="w-4 h-4 mr-2 stroke-green-400 h-5/5 " />{' '}
                     Hire
                   </ToggleGroupItem>
                   <ToggleGroupItem
                     variant={'outline'}
-                    className="flex-item w-full"
+                    className="w-full flex-item"
                     value="b"
                   >
                     {' '}
-                    <ThumbsDownIcon className="mr-2 h-4 w-4 stroke-red-400" />{' '}
+                    <ThumbsDownIcon className="w-4 h-4 mr-2 stroke-red-400" />{' '}
                     Don't Hire
                   </ToggleGroupItem>
                 </div>
                 <ToggleGroupItem
                   variant={'outline'}
-                  className="flex-item w-full"
+                  className="w-full flex-item"
                   value="c"
                 >
-                  <StarIcon className="mr-2 h-4 w-4 stroke-green-500" /> Strong
+                  <StarIcon className="w-4 h-4 mr-2 stroke-green-500" /> Strong
                   Hire
                 </ToggleGroupItem>
               </ToggleGroup>
@@ -245,7 +253,7 @@ export const ConclusionToolbar = ({
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
+                <div className="grid items-center grid-cols-4 gap-4">
                   <Label htmlFor="name" className="text-right">
                     File Type
                   </Label>
@@ -258,15 +266,17 @@ export const ConclusionToolbar = ({
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
+                {/* <div className="grid items-center grid-cols-4 gap-4">
                   <Label htmlFor="username" className="text-right">
                     Select
                   </Label>
                   <CheckboxReactHookFormMultiple />
-                </div>
+                </div> */}
               </div>
               <DialogFooter>
-                <Button>Export</Button>
+                <DialogClose>
+                  <Button onClick={() => handleExportClick()}>Export</Button>
+                </DialogClose>
               </DialogFooter>
             </DialogContent>
           </Dialog>
