@@ -29,6 +29,7 @@ import { toast } from 'sonner';
 import { getPrevText } from '../components/editor';
 import Magic from '../components/magic';
 import Loading from '@/components/common/elements/loading/Loading';
+import 'src/output.css';
 
 interface CommandItemProps {
   title: string;
@@ -99,6 +100,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
           .focus()
           .deleteRange(range)
           .toggleNode('paragraph', 'paragraph')
+          .updateAttributes('paragraph', { class: 'bordered-text' })
           .run();
       },
     },

@@ -11,8 +11,9 @@ export const ChatMessages = styled.div`
   background: ${(props) => props.theme.colors.white};
   color: #000;
   border-radius: 10px;
-  padding: 8px 12px;
+  padding: 0px 12px;
   margin: 8px;
+  margin-bottom: 0px;
   max-width: 80%; /* Adjust the max-width as needed */
   align-self: flex-end; /* Right-align the sent messages */
   max-height: 90px; /* Limit the max height of chat messages */
@@ -26,7 +27,7 @@ export const ChatInput = styled.div`
   background: #eceff6;
   border: none;
   outline: none;
-  padding: 8px 10px;
+  padding: 6px;
   font: inherit;
   font-size: 14px;
   display: flex;

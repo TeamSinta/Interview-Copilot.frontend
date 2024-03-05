@@ -41,14 +41,13 @@ export const EmojiOverlayWrapper = styled.div`
 `;
 
 export const StyledInterviewContent = styled.div<StyledInterviewContent>`
-  background-color: white;
   width: 100%;
   border: 1px solid black;
   border-radius: 10px;
   padding: 15px;
   padding-bottom: 0px;
   position: relative;
-  height: ${(props) => (props.isCollapsed ? '50px' : '80vh')};
+  height: ${(props) => (props.isCollapsed ? '50px' : '84vh')};
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -62,7 +61,6 @@ export const StyledInterviewContent = styled.div<StyledInterviewContent>`
     margin: 0px;
     width: 10px;
     height: 5px;
-    padding: 10px;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -101,15 +99,12 @@ export const StyledInnerDiv = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  min-height: 0;
   overflow-x: hidden;
   flex: 1;
 `;
 
 export const StyledTabInfo = styled.div`
-  padding: 15px;
-  background-color: #f6f6fb;
-  border-radius: 8px;
+  border-bottom-radius: 12px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -247,41 +242,6 @@ export const CompetencyStyle = styled.span`
   margin-right: 5px;
 `;
 
-export const StyledInnerWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  height: 40vh;
-
-  overflow-y: auto;
-  min-height: 0px;
-  position: relative;
-
-  ::-webkit-scrollbar {
-    background-color: #f6f6fb;
-    border-radius: 10px;
-    padding: 0px;
-    margin: 0px;
-    width: 5px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: lightgrey;
-    border-radius: 5px;
-    padding: 0px;
-    margin: 0px;
-    width: 5px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-    padding: 1px;
-    padding: 0px;
-    margin: 0px;
-    width: 5px;
-  }
-`;
-
 export const StyledQuestionList = styled.div`
   overflow-y: auto;
   min-height: 0px;
@@ -325,10 +285,8 @@ export const StyledAnswerPoints = styled.div`
 `;
 
 export const BottomQuestionButtons = styled.span`
-  bottom: 0;
-  position: absolute;
+  bottom: 10;
   margin-bottom: 10px;
-  padding: 15px;
   left: 0;
   right: 0;
 `;

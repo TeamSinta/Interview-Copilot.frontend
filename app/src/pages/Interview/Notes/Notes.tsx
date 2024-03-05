@@ -5,7 +5,11 @@ function Notes(props: any) {
   const { notesInfo } = props;
 
   return (
-    <Stack className="h-full" direction="column" justifyContent="space-between">
+    <Stack
+      className="h-full px-3"
+      direction="column"
+      justifyContent="space-between"
+    >
       <TailwindEditor
         propData={notesInfo?.description ?? ''} // Pass the description from notesInfo
         editorId={'notesEditor'}

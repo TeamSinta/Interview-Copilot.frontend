@@ -231,25 +231,36 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
     }
 
     return (
-      <>
-        {collapseQuestion ? (
-          <Stack direction="row" justifyContent="space-between">
+      <div className="h-full flex flex-col gap-2">
+        <div className="p-3 rounded-b-xl bg-white mb-2">
+          <p className="font-semibold text-2xl">
+            {interviewDetails.name}
+            <div className="bg-lightBg text-xs rounded-md p-2 my-2 flex items-center w-fit flex-col content-center">
+              <p className="font-light ml-1 text-gray-500">
+                Department:{' '}
+                <span className="text-gray-800 font-semibold ">
+                  {interviewDetails.department ?? 'Template'}
+                </span>
+              </p>
+            </div>
+          </p>
+          {collapseQuestion ? (
+            <Stack direction="row" justifyContent="space-between">
+              <InterviewStageSlider
+                data={data}
+                setActiveData={setActiveData}
+                resetList={resetList}
+              />
+            </Stack>
+          ) : (
             <InterviewStageSlider
               data={data}
               setActiveData={setActiveData}
               resetList={resetList}
             />
-          </Stack>
-        ) : (
-          <InterviewStageSlider
-            data={data}
-            setActiveData={setActiveData}
-            resetList={resetList}
-          />
-        )}
-        <div className="p-3 flex flex-1 flex-col bg-lightBg rounded-xl">
-          <StyledInnerWrapper>
-            {' '}
+          )}
+
+          <div className="flex flex-col h-[36vh] overflow-y-auto min-h-0 relative interview-details bg-lightBg rounded-xl p-2">
             {!collapseQuestion
               ? activeData?.questions?.map((a: any, index: any) => {
                   return (
@@ -433,92 +444,79 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
                 </div>
               </div>
             ) : null}
-          </StyledInnerWrapper>
-
-          {collapseQuestion ? (
-            <BottomQuestionButtons>
-              <Stack
-                direction="row"
-                justifyContent="flex-end"
-                spacing={1}
-                alignItems="flex-end"
-                className="bg-white pt-3"
-              >
-                <InputLabelDiv style={{ width: '100%' }}>
-                  <Chat
-                    notesEntered={notesEntered}
-                    elapsedTime={initTime}
-                    setReactClicked={setReactClicked}
-                    activeQuestionID={activeQuestionInfo.id}
-                    reactClicked={reactClicked}
-                  />
-                </InputLabelDiv>
-              </Stack>
-            </BottomQuestionButtons>
-          ) : null}
+          </div>
         </div>
-      </>
+        {collapseQuestion ? (
+          <div className="bg-white py-2 rounded-xl">
+            <Stack
+              direction="row"
+              justifyContent="flex-end"
+              spacing={1}
+              alignItems="flex-end"
+              className="bg-white py-2"
+            >
+              <InputLabelDiv style={{ width: '100%' }}>
+                <Chat
+                  notesEntered={notesEntered}
+                  elapsedTime={initTime}
+                  setReactClicked={setReactClicked}
+                  activeQuestionID={activeQuestionInfo.id}
+                  reactClicked={reactClicked}
+                />
+              </InputLabelDiv>
+            </Stack>
+          </div>
+        ) : null}
+      </div>
     );
   };
 
   const interviewSideBarData = (
-    <>
-      <StyledTopView>{sidebarTabs} </StyledTopView>
-      <StyledInnerDiv>
-        <StyledTabInfo>
-          {activeTab === 1 ? (
-            <>
-              {showSecondComponent ? (
-                <>
-                  <p className="font-semibold text-2xl">
-                    {interviewDetails.name}
-                    <div className="bg-lightBg text-xs rounded-md p-2 my-2 flex items-center w-fit flex-col content-center">
-                      <p className="font-light ml-1 text-gray-500">
-                        Department:{' '}
-                        <span className="text-gray-800 font-semibold ">
-                          {interviewDetails.department ?? 'Template'}
-                        </span>
-                      </p>
-                    </div>
-                  </p>
-                  <InfoTab interviewDetails={interviewDetails} />
-                </>
-              ) : (
-                <HeadingMeeting />
-              )}
-              <div className="flex justify-end items-end">
-                <button
-                  className="text-primaryTextColor border border-primaryTextColor rounded-md py-2 px-4 flex right-0 justify-end w-fit items-center"
-                  onClick={() => setShowSecondComponent(!showSecondComponent)}
-                >
-                  Templates{' '}
-                  <img src={RightArrow} alt="arrow" className="pl-2" />
-                </button>
-              </div>
-            </>
-          ) : null}
-          {activeTab === 2 ? (
-            <Notes notesInfo={interviewDetails.notes} />
-          ) : null}
-          {activeTab === 3 ? (
-            <>
-              <p className="font-semibold text-2xl">
-                {interviewDetails.name}
-                <div className="bg-lightBg text-xs rounded-md p-2 my-2 flex items-center w-fit flex-col content-center">
-                  <p className="font-light ml-1 text-gray-500">
-                    Department:{' '}
-                    <span className="text-gray-800 font-semibold ">
-                      {interviewDetails.department ?? 'Template'}
-                    </span>
-                  </p>
-                </div>
-              </p>
-              <InterviewQuestionTab data={templateQuestionsAndTopics?.data} />
-            </>
-          ) : null}
-        </StyledTabInfo>
-      </StyledInnerDiv>
-    </>
+    <div className={`rounded-xl ${activeTab !== 3 ? 'bg-white' : ''}`}>
+      <div className="bg-white rounded-t-xl p-2 overflow-hidden flex justify-center items-center">
+        {sidebarTabs}{' '}
+      </div>
+      <div
+        className={`flex flex-col flex-grow overflow-x-hidden rounded-b-xl ${
+          activeTab !== 3 ? 'bg-white p-3 h-[75vh]' : ''
+        }`}
+      >
+        {activeTab === 1 ? (
+          <>
+            {showSecondComponent ? (
+              <>
+                <p className="font-semibold text-2xl">
+                  {interviewDetails.name}
+                  <div className="bg-lightBg text-xs rounded-md p-2 my-2 flex items-center w-fit flex-col content-center">
+                    <p className="font-light ml-1 text-gray-500">
+                      Department:{' '}
+                      <span className="text-gray-800 font-semibold ">
+                        {interviewDetails.department ?? 'Template'}
+                      </span>
+                    </p>
+                  </div>
+                </p>
+                <InfoTab interviewDetails={interviewDetails} />
+              </>
+            ) : (
+              <HeadingMeeting />
+            )}
+            <div className="flex justify-end items-end mb-10">
+              <button
+                className="text-primaryTextColor border border-primaryTextColor rounded-md py-2 px-4 flex right-0 justify-end w-fit items-center"
+                onClick={() => setShowSecondComponent(!showSecondComponent)}
+              >
+                Templates <img src={RightArrow} alt="arrow" className="pl-2" />
+              </button>
+            </div>
+          </>
+        ) : null}
+        {activeTab === 2 ? <Notes notesInfo={interviewDetails.notes} /> : null}
+        {activeTab === 3 ? (
+          <InterviewQuestionTab data={templateQuestionsAndTopics?.data} />
+        ) : null}
+      </div>
+    </div>
   );
 
   const getEmojiClickTime = () => {

@@ -59,7 +59,7 @@ export const WrongButtonL = (props: ICustomIconProps): JSX.Element => {
             style={{
               background: '#FABBCF',
               boxShadow: 'none',
-              outline: '1.7px solid black',
+              outline: '1.7px solid #F6F7FA',
               outlineOffset: '-1',
             }}
           >
@@ -73,7 +73,7 @@ export const WrongButtonL = (props: ICustomIconProps): JSX.Element => {
       <div style={{ marginRight: '5px' }}>
         <ElWrap w={40}>
           <StyledRatingBtnL
-            style={{ outline: '1.7px solid black', outlineOffset: '-1' }}
+            style={{ outline: '1.7px solid #F6F7FA', outlineOffset: '-1' }}
           >
             <WrongIcon />
           </StyledRatingBtnL>
@@ -93,7 +93,7 @@ export const DislikeButtonL = (props: ICustomIconProps): JSX.Element => {
             style={{
               background: '#FABBCF',
               boxShadow: 'none',
-              outline: '1.7px solid black',
+              outline: '1.7px solid #F6F7FA',
               outlineOffset: '-1',
             }}
           >
@@ -108,7 +108,7 @@ export const DislikeButtonL = (props: ICustomIconProps): JSX.Element => {
         {' '}
         <ElWrap w={40}>
           <StyledRatingBtnL
-            style={{ outline: '1.7px solid black', outlineOffset: '-1' }}
+            style={{ outline: '1.7px solid #F6F7FA', outlineOffset: '-1' }}
           >
             <DislikeIcon />
           </StyledRatingBtnL>
@@ -129,7 +129,7 @@ export const NeutralButtonL = (props: ICustomIconProps): JSX.Element => {
             style={{
               background: '#FFFABF',
               boxShadow: 'none',
-              outline: '1.7px solid black',
+              outline: '1.7px solid #F6F7FA',
               outlineOffset: '-1',
             }}
           >
@@ -144,7 +144,7 @@ export const NeutralButtonL = (props: ICustomIconProps): JSX.Element => {
         {' '}
         <ElWrap w={40}>
           <StyledRatingBtnL
-            style={{ outline: '1.7px solid black', outlineOffset: '-1' }}
+            style={{ outline: '1.7px solid #F6F7FA', outlineOffset: '-1' }}
           >
             <NeutralIcon />
           </StyledRatingBtnL>
@@ -164,7 +164,7 @@ export const LikeButtonL = (props: ICustomIconProps): JSX.Element => {
             style={{
               background: '#DBFDDC',
               boxShadow: 'none',
-              outline: '1.7px solid black',
+              outline: '1.7px solid #F6F7FA',
               outlineOffset: '-1',
             }}
           >
@@ -179,7 +179,7 @@ export const LikeButtonL = (props: ICustomIconProps): JSX.Element => {
         {' '}
         <ElWrap w={40}>
           <StyledRatingBtnL
-            style={{ outline: '1.7px solid black', outlineOffset: '-1' }}
+            style={{ outline: '1.7px solid #F6F7FA', outlineOffset: '-1' }}
           >
             <LikeIcon />
           </StyledRatingBtnL>
@@ -198,7 +198,7 @@ export const TopStarButtonL = (props: ICustomIconProps): JSX.Element => {
           style={{
             background: '#DBFDDC',
             boxShadow: 'none',
-            outline: '1.7px solid black',
+            outline: '1.7px solid #F6F7FA',
             outlineOffset: '-1',
           }}
         >
@@ -210,7 +210,7 @@ export const TopStarButtonL = (props: ICustomIconProps): JSX.Element => {
     return (
       <ElWrap w={40}>
         <StyledRatingBtnL
-          style={{ outline: '1.7px solid black', outlineOffset: '-1' }}
+          style={{ outline: '1.7px solid #F6F7FA', outlineOffset: '-1' }}
         >
           <TopStarIcon />
         </StyledRatingBtnL>

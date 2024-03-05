@@ -25,7 +25,7 @@ const Chat = (props: any) => {
   const dispatch = useDispatch(); // Get the dispatch function from Redux
   const [, setShowPrompt] = useState<boolean>(false);
   const [messages, setMessages] = useState<
-    { text: string; editing: boolean }[]
+    { text: string; timestamp: string; editing: boolean }[]
   >([]);
 
   const chatMessagesRef = useRef<HTMLDivElement>(null);
@@ -42,11 +42,13 @@ const Chat = (props: any) => {
   const handleSend = () => {
     const trimmedText = inputText.trim();
     if (trimmedText !== '') {
-      setMessages([...messages, { text: trimmedText, editing: false }]);
+      const timestamp = getCurrentTime();
+      const message = { text: trimmedText, timestamp, editing: false }; // Create a message object including text and timestamp
+      setMessages([...messages, message]); // Add the message to the messages state
+      // setMessages([...messages, { text: trimmedText, editing: false }]);
       setInputText('');
       setLastMessage(trimmedText);
       setShowPrompt(true);
-      const timestamp = getCurrentTime();
       const timeDelta = calculateTimeDelta(timestamp);
       dispatch(addNote({ comment: trimmedText, timestamp, timeDelta }));
       notesEntered(trimmedText, activeQuestionID);
@@ -77,8 +79,7 @@ const Chat = (props: any) => {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    return `${hours}:${minutes}:${seconds}`;
+    return `${hours}:${minutes}`;
   };
 
   const calculateTimeDelta = (timestamp: string): string => {
@@ -104,19 +105,23 @@ const Chat = (props: any) => {
       chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
     }
   }, [messages]);
-
   return (
-    <div className="w-full flex flex-col relative bg-white px-4">
+    <div className="w-full flex flex-col relative bg-white h-2/3 px-4">
       {messages.length > 0 && (
         <>
           <ChatMessages ref={chatMessagesRef}>
             {messages.map((message, index) => (
               <div
                 key={index}
-                className="whitespace-pre-wrap text-sm mb-2 rounded-lg p-1"
-                style={{ border: '2px solid lightgray' }}
+                className="text-sm p-1 flex flex-cols justify-end items-center gap-3"
               >
-                {message.text}
+                <div className="text-xs text-gray-400">{getCurrentTime()}</div>
+                <div
+                  className="rounded-xl p-2 max-w-xs whitespace-pre-wrap break-words border-gray-300"
+                  style={{ border: '2px solid lightgray' }}
+                >
+                  {message.text}
+                </div>
               </div>
             ))}
           </ChatMessages>
@@ -125,6 +130,7 @@ const Chat = (props: any) => {
           </div>
         </>
       )}
+
       <ChatInput>
         <div className="flex flex-row w-full">
           <Textarea

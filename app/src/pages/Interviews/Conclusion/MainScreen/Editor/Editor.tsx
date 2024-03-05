@@ -77,7 +77,7 @@ const TailwindEditor = ({
   }, [editorId, propData]);
   if (!initialContent) return null;
   return (
-    <div className="relative w-full max-w-screen-xl  h-full">
+    <div className="relative w-full max-w-screen-xl h-full rounded-xl">
       {showSaveStatus && (
         <div className="absolute right-5 z-10 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
           {saveStatus}
