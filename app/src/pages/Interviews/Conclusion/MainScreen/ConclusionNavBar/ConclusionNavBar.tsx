@@ -93,7 +93,7 @@ export const ConclusionToolbar = ({
     } catch (error) {
       console.error('Download error:', error);
       let action = undefined;
-      let title = '';
+      let title = 'Error';
       let message = 'An unexpected error occurred. Please try again later.';
       if (error.response) {
         switch (error.response.status) {
