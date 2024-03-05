@@ -8,18 +8,18 @@ import SummaryTab from './SummaryTab/SummaryTab';
 import {
   Avatar,
   Box,
-  Button,
   Card,
   Flex,
   Grid,
   Heading,
   Text,
+  Button,
 } from '@radix-ui/themes';
 import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { BoxShadow, FlexShadow } from '../../StyledConclusions';
 import { InformationBox } from './InformationBox/InformationBox';
 import { QuestionIcon } from '@/components/common/svgIcons/Icons';
-import { PersonIcon } from '@radix-ui/react-icons';
+import { ButtonIcon, PersonIcon } from '@radix-ui/react-icons';
 import { Skeleton } from '@/components/ui/skeleton';
 import { FileX2, TentTreeIcon } from 'lucide-react';
 import SkeletonLoading from './Ui/SkeletonLoading';
@@ -71,11 +71,6 @@ const InfoTabContainer = styled.div`
 
 const StyledNavButton = styled(Button)`
   color: black;
-  padding: 6px;
-  @media (min-width: 1000px) {
-    width: 100px;
-    margin-bottom: 0;
-  }
 `;
 
 const ContentContainer = styled.div`
@@ -91,9 +86,14 @@ const TabButton: React.FC<TabButtonProps> = ({
   isActive,
   children,
 }) => (
-  <StyledNavButton onClick={onClick} variant={isActive ? 'outline' : 'none'}>
+  <Button
+    onClick={onClick}
+    size="2"
+    className=" text-black  bg-black text-sm"
+    variant={isActive ? 'outline' : ''}
+  >
     <span>{children}</span>
-  </StyledNavButton>
+  </Button>
 );
 
 const EmptyStateComponent = ({ message }) => (

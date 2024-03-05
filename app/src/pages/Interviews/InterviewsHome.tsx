@@ -87,34 +87,32 @@ export default function BasicTabs() {
         <TopNavBar />
         <ContainerHome>
           {/* Skeleton loading state */}
-          <Grid
-            columns={{ xs: '1', md: '2', sm: '1', lg: '3', xl: '4' }}
-            gap="5"
-            className="px-6 justify-around py-9"
-          >
-            {' '}
-            <div className="flex flex-col space-y-3 py-9 px-1  ">
-              <Skeleton className="h-52 w-80 rounded-xl" />
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
+          <div className="flex flex-center px-11">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {' '}
+              <div className="flex flex-col space-y-3 py-9 px-1  ">
+                <Skeleton className="h-52 w-80 rounded-xl" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+              <div className="flex flex-col space-y-3 py-9 px-1  ">
+                <Skeleton className="h-52 w-80  rounded-xl" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+              <div className="flex flex-col space-y-3 py-9 px-1  ">
+                <Skeleton className="h-52 w-80 rounded-xl" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+              <div className="flex flex-col space-y-3 py-9 px-1  ">
+                <Skeleton className="h-52 w-80  rounded-xl" />
+              </div>
+              <div className="flex flex-col space-y-3 py-9 px-1  ">
+                <Skeleton className="h-52 w-80  rounded-xl" />
+              </div>
             </div>
-            <div className="flex flex-col space-y-3 py-9 px-1  ">
-              <Skeleton className="h-52 w-80  rounded-xl" />
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
-            </div>
-            <div className="flex flex-col space-y-3 py-9 px-1  ">
-              <Skeleton className="h-52 w-80 rounded-xl" />
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
-            </div>
-            <div className="flex flex-col space-y-3 py-9 px-1  ">
-              <Skeleton className="h-52 w-80  rounded-xl" />
-            </div>
-            <div className="flex flex-col space-y-3 py-9 px-1  ">
-              <Skeleton className="h-52 w-80  rounded-xl" />
-            </div>
-          </Grid>
+          </div>
         </ContainerHome>
       </>
     );
@@ -187,6 +185,7 @@ export default function BasicTabs() {
                     });
                   }}
                   key={index}
+                  className=" min-w-64"
                 >
                   <ConclusionInterviewCard
                     key={index}
