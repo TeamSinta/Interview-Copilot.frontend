@@ -10,7 +10,7 @@ import { ModalContentWrap } from './StyledModalContents';
 import { TextBtnL } from '../../buttons/textBtn/TextBtn';
 import { BinIcon } from '../../svgIcons/Icons';
 import { useDeleteDepartmentMutation } from '@/features/departments/departmentsAPI';
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import { resetCurrentDepartment } from '@/features/authentication/authenticationSlice';
 import { resetMemberInfo } from '@/features/members/memberSlice';
 

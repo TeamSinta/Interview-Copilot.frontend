@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { InterviewsBox, TemplateCardsBox } from '../Dashboard/StyledDashboard';
 import { CreateInterviewBox, DepartmentHeading } from './StyledTemplates';
 
-import templateImage from "@/assets/svg/'Empty Roles' Page Illustration.svg";
+import templateImage from '@/assets/images/LogInPageIllustration.jpg';
 import {
   IconBtnL,
   IconBtnM,
@@ -33,6 +33,9 @@ import { useGetTemplatesQuery } from '@/features/templates/templatesAPISlice';
 import { TemplateQuestions } from '@/features/templates/templatesInterface';
 import { useGetTemplateQuestionsQuery } from '@/features/templates/templatesQuestionsAPISlice';
 import { IMember } from '@/types/company';
+import { StyledImage } from '../Login/StyledLogin';
+import { Files, GalleryVerticalEnd, Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export interface Template {
   roundId: Key | null | undefined;
@@ -296,38 +299,30 @@ const Templates = () => {
         <>
           <H1>Templates</H1>
 
-          <Stack
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            spacing={4}
-            mt={12}
-          >
-            <img src={templateImage} alt="template_empty_screen" />
+          <div className="flex items-center flex-col mt-12  gap-4 h-96 justify-end ">
+            <div className="flex flex-col items-center text-center	  gap-4 w-[400px]">
+              <Files />
+              <div>
+                <h2 className="scroll-m-20 border-b mb-1 text-2xl font-semibold tracking-tight first:mt-0">
+                  No interview templates yet.
+                </h2>
+                <p className="leading-7 [&:not(:first-child)]: text-gray-500">
+                  {' '}
+                  Work’s always better together. Start by creating a interview
+                  template.{' '}
+                </p>
+              </div>
+            </div>
 
-            <H1>Work’s always better together.</H1>
-            <Box sx={{ textAlign: 'center' }}>
-              <BodyLMedium style={{ color: '#6C6685' }}>
-                {' '}
-                Start by creating a interview template.
-                <br /> Invite your teammates to collaborate and quickly get a
-                sense of what’s happening
-                <br /> with interviews.{' '}
-              </BodyLMedium>
-            </Box>
-            <ElWrap w={400} h={40}>
-              <TextIconBtnL
-                disable={false}
-                label="New Template"
-                icon={<PlusIcon />}
-                onClick={() => {
-                  onClickModalOpen(MODAL_TYPE.CREATE_INT);
-                }}
-                className={BackgroundColor.ACCENT_PURPLE}
-              />
-            </ElWrap>
-            <GlobalModal></GlobalModal>
-          </Stack>
+            <Button
+              onClick={() => {
+                onClickModalOpen(MODAL_TYPE.CREATE_INT);
+              }}
+            >
+              <Plus className="mr-2 h-4 w-4" /> New Template
+            </Button>
+          </div>
+          <GlobalModal></GlobalModal>
         </>
       );
     }

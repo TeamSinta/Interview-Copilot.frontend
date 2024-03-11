@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import TemplateInterviewCard from '@/components/common/cards/templateInterviewCard/TemplateInterviewCard';
 import Loading from '@/components/common/elements/loading/Loading';

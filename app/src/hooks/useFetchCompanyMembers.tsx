@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { useGetCompanyMembersQuery } from '@/features/company/companyAPI';
 import { setCurrentMembers } from '@/features/members/memberSlice';
 import { SortBy } from '@/types/common';

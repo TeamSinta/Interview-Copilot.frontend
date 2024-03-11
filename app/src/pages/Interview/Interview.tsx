@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import { StyledIconBtnM } from '@/components/common/buttons/button/StyledBtn';
 import {
   BottomArrowIcon,
@@ -563,14 +563,14 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
                 marginLeft: '2px',
               }}
             >
-              {interviewDetails.department}
+              {interviewDetails.department ?? 'General'}
             </span>{' '}
           </div>
         </Grid>{' '}
         <br></br>
         {sidebarTabs}{' '}
       </StyledTopView>
-      <br></br>
+
       <StyledInnerDiv>
         <StyledTabInfo>
           {activeTab === 1 ? (

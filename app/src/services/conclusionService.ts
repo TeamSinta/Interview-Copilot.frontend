@@ -10,45 +10,48 @@ const ConclusionData = (interviewRoundId: string) => {
   const [emojisData, setEmojisData] = useState([]);
   const [error, setError] = useState(null);
 
-  const TranscriptAPI = `${
-    import.meta.env.VITE_BACKEND_URL
-  }/transcription/get_transcripts_for_questions/${interviewRoundId}/`;
-  const summarizedAnswersAPI = `${
-    import.meta.env.VITE_BACKEND_URL
-  }/question_response/question_summarized_answers/${interviewRoundId}/`;
-  const summaryInfoAPI = `${
-    import.meta.env.VITE_BACKEND_URL
-  }/summary/generate/${interviewRoundId}/`;
-  const videoUrlAPI = `${
-    import.meta.env.VITE_BACKEND_URL
-  }/interview-rounds/interviewRoundVideo/${interviewRoundId}/`;
-  const emojiFeedbackApi = `${
-    import.meta.env.VITE_BACKEND_URL
-  }/question_response/interviewer-feedback/${interviewRoundId}/`;
-
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const TranscriptAPIResponse = await instance.get(TranscriptAPI);
-        const summarizedAnswersAPIResponse = await instance.get(
-          summarizedAnswersAPI
-        );
-        const summaryInfoAPIResponse = await instance.get(summaryInfoAPI);
-        const videoUrlAPIResponse = await instance.get(videoUrlAPI);
-        const emojiFeedbackApiResponse = await instance.get(emojiFeedbackApi);
+      const urls = [
+        `/transcription/get_transcripts_for_questions/${interviewRoundId}/`,
+        `/question_response/question_summarized_answers/${interviewRoundId}/`,
+        `/summary/generate/${interviewRoundId}/`,
+        `/interview-rounds/interviewRoundVideo/${interviewRoundId}/`,
+        `/question_response/interviewer-feedback/${interviewRoundId}/`,
+      ];
 
-        if (TranscriptAPIResponse?.status === 200)
-          setQuestionsTranscript(TranscriptAPIResponse.data);
-        if (summarizedAnswersAPIResponse?.status === 200)
-          setSummarizedAnswers(summarizedAnswersAPIResponse.data);
-        if (summaryInfoAPIResponse?.status === 200)
-          setSummaryInfo(summaryInfoAPIResponse.data);
-        if (videoUrlAPIResponse?.status === 200)
-          setVideoUrl(videoUrlAPIResponse.data);
-        if (emojiFeedbackApiResponse?.status === 200)
-          setEmojisData(emojiFeedbackApiResponse.data);
-      } catch (error: any) {
-        console.error('Error fetching data:', error);
+      try {
+        const results = await Promise.allSettled(
+          urls.map((url) => instance.get(`${import.meta.env.VITE_BACKEND_URL}${url}`))
+        );
+
+        results.forEach((result, index) => {
+          if (result.status === 'fulfilled') {
+            switch (index) {
+              case 0:
+                setQuestionsTranscript(result.value.data);
+                break;
+              case 1:
+                setSummarizedAnswers(result.value.data);
+                break;
+              case 2:
+                setSummaryInfo(result.value.data);
+                break;
+              case 3:
+                setVideoUrl(result.value.data);
+                break;
+              case 4:
+                setEmojisData(result.value.data);
+                break;
+              default:
+                break;
+            }
+          } else {
+            console.error(`Error fetching data from URL index ${index}:`, result.reason);
+          }
+        });
+      } catch (error) {
+        console.error('Unexpected error:', error);
         setError(error);
       } finally {
         setLoading(false);
@@ -56,23 +59,9 @@ const ConclusionData = (interviewRoundId: string) => {
     };
 
     fetchData();
-  }, [
-    TranscriptAPI,
-    emojiFeedbackApi,
-    summarizedAnswersAPI,
-    summaryInfoAPI,
-    videoUrlAPI,
-  ]);
+  }, [interviewRoundId]);
 
-  return [
-    summarizedAnswers,
-    questionsTranscript,
-    summaryInfo,
-    videoUrl,
-    emojisData,
-    loading,
-    error,
-  ];
+  return [summarizedAnswers, questionsTranscript, summaryInfo, videoUrl, emojisData, loading, error];
 };
 
 export default ConclusionData;

@@ -12,7 +12,7 @@ import TextInput from '@/components/common/form/textInput/TextInput';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import StatusFilter, {
   StatusFilterType,
 } from '@/components/common/filters/statusFilter/StatusFilter';

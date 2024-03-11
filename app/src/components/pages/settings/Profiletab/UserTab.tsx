@@ -1,4 +1,4 @@
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import TextInput from '@/components/common/form/textInput/TextInput';
 import { BinIcon, PlusIcon } from '@/components/common/svgIcons/Icons';

@@ -90,7 +90,7 @@ export const StyledInterviewContent = styled.div<StyledInterviewContent>`
 `;
 
 export const StyledTopView = styled.div`
-  height: 7.5em;
+  height: 9.5em;
   overflow: hidden;
 `;
 
@@ -105,7 +105,7 @@ export const StyledInnerDiv = styled.div`
 export const StyledTabInfo = styled.div`
   padding: 15px;
   background-color: #f6f6fb;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;

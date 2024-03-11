@@ -25,7 +25,7 @@ import {
   StyledStack,
 } from './StyledSideNavBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import { resetUserState } from '@/features/authentication/authenticationSlice';
 import { resetCurrentWorkspace } from '@/features/workspace/userWorkspaceSlice';
 import ProfileCard from './profieCard/ProfileCard';
@@ -137,9 +137,9 @@ const SideNavBar = (): ReactElement => {
           >
             <Link to={navButtonLink.to} className="link">
               {navButtonLink.icon}
-              <p className=" text-sm leading-tight font-medium ">
+              <BodyMMedium className=" text-sm leading-tight font-medium ">
                 {navButtonLink.text}
-              </p>
+              </BodyMMedium>
             </Link>
           </NavButton>
         ))}

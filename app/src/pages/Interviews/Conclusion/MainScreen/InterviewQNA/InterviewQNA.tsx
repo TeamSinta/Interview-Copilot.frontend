@@ -3,6 +3,7 @@ import './InterviewQNA.css';
 import styled from 'styled-components';
 import { QuestionsTabQNA, SummaryTabQNA, TranscriptionTabQNA } from './Tabs';
 import { NotesTabQNA } from './Tabs/NotesTabQNA';
+import { Flex } from '@radix-ui/themes';
 
 export const ChatStyled = styled.div`
   svg {
@@ -13,20 +14,21 @@ export const ChatStyled = styled.div`
 `;
 
 export const InterviewContainerStyle = styled.div`
-  font-weight: bold !important;
   cursor: pointer;
   padding: 10px;
   padding-left: 0px;
-  padding-right: 10px;
-  margin-bottom: 20px;
+
+  margin-bottom: 0px;
 `;
 
-export const IndexStyle = styled.div`
+export const IndexStyle = styled(Flex)`
   border-radius: 5px;
-  background-color: white;
-  padding: 8px 16px;
+  background-color: #f1f5ff;
+
+  margin-left: 8px;
   font-size: 10px;
-  margin-right: 10px;
+  align-items: center;
+  gap: 4px;
 `;
 
 const InterviewQNA: React.FC<any> = ({ propData, screen }) => {

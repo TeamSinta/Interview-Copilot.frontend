@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+const typography = require('@tailwindcss/typography');
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   darkMode: ['class'],
   content: [
@@ -19,6 +22,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         border: 'hsl(var(--foreground))',
         input: 'hsl(var(--input))',
@@ -75,5 +81,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [typography, require('tailwindcss-animate')],
 };

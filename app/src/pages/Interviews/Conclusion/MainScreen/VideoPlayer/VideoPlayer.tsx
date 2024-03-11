@@ -1,99 +1,53 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import './VideoPlayer.css'; // Import the CSS file
-import { VideoControlBtnM } from '@/components/common/buttons/button/StyledBtn';
-import {
-  MuteIcon,
-  PlayIcon,
-  SoundIcon,
-  FullScreenIcon,
-  PauseIcon,
-} from '@/components/common/svgIcons/Icons';
-import ElWrap from '@/components/layouts/elWrap/ElWrap';
+
 import { ICustomIconProps } from '@/components/common/svgIcons/CustomIcons';
-import { StyledInterviewerImage } from './StyledVideoPlayer';
+
+import { FullscreenIcon, Pause, Play, Volume2, VolumeX } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export const MuteButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
 
   return (
-    <div style={{ marginRight: '5px' }}>
-      <ElWrap w={24}>
-        <VideoControlBtnM
-          style={{
-            background: 'white',
-          }}
-        >
-          <MuteIcon />
-        </VideoControlBtnM>
-      </ElWrap>
-    </div>
+    <Button variant="outline">
+      <VolumeX className="h-4 w-4" />
+    </Button>
   );
 };
 export const SoundButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
 
   return (
-    <div style={{ marginRight: '5px' }}>
-      <ElWrap w={24}>
-        <VideoControlBtnM
-          style={{
-            background: 'white',
-          }}
-        >
-          <SoundIcon />
-        </VideoControlBtnM>
-      </ElWrap>
-    </div>
+    <Button variant="outline">
+      <Volume2 className="h-4 w-4" />
+    </Button>
   );
 };
 export const PauseButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
 
   return (
-    <div style={{ marginRight: '5px' }}>
-      <ElWrap w={24}>
-        <VideoControlBtnM
-          style={{
-            background: '#6462F1',
-          }}
-        >
-          <PauseIcon />
-        </VideoControlBtnM>
-      </ElWrap>
-    </div>
+    <Button>
+      <Pause className="h-4 w-4" />
+    </Button>
   );
 };
 export const PlayButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
 
   return (
-    <div style={{ marginRight: '5px' }}>
-      <ElWrap w={24}>
-        <VideoControlBtnM
-          style={{
-            background: '#6462F1',
-          }}
-        >
-          <PlayIcon />
-        </VideoControlBtnM>
-      </ElWrap>
-    </div>
+    <Button>
+      <Play className="h-4 w-4" />
+    </Button>
   );
 };
 export const FullscreenButton = (props: ICustomIconProps): JSX.Element => {
   // const { width, fill, active, height } = props;
   return (
-    <div style={{ marginRight: '5px' }}>
-      <ElWrap w={24}>
-        <VideoControlBtnM
-          style={{
-            background: 'white',
-          }}
-        >
-          <FullScreenIcon />
-        </VideoControlBtnM>
-      </ElWrap>
-    </div>
+    <Button variant="outline">
+      <FullscreenIcon className="h-4 w-4" />
+    </Button>
   );
 };
 
@@ -105,7 +59,6 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
   // const [isFullScreen, setIsFullScreen] = useState<any>(false);
   const [currentTime, setCurrentTime] = useState<any>(0);
   const [totalDuration, setTotalDuration] = useState<any>(0);
-  const currentQuestion = useRef('');
   const [emoticonData, setEmoticonData] = useState<any>([]);
   const timelineRef = useRef<any>(null);
   // const [timelineWidth, setTimelineWidth] = useState<any>(0);
@@ -114,10 +67,8 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
     question: '',
     time: 0,
   });
-  const [tooltipPosition, setTooltipPosition] = useState<any>({ x: 0, y: 0 });
 
   const [interviewerData, setInterviewerData] = useState<any>([]);
-  const [questionData, setQuestionData] = useState<any>([]);
 
   const emoticonKeyPairs = {
     '1': '🔥',
@@ -277,21 +228,12 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
     ],
   };
 
-  useEffect(
-    () => {
-      setInterviewerData(response?.interviewerData);
-      setQuestionData(response?.questionData);
-      setEmoticonData(emojisData);
-      // setTotalDuration(response?.videoDuration);
-    },
-    [
-      // response?.emoticonData,
-      // response?.interviewerData,
-      // response?.questionData,
-      // response?.videoDuration,
-      // emojisData,
-    ]
-  );
+  useEffect(() => {
+    setInterviewerData(response?.interviewerData);
+
+    setEmoticonData(emojisData);
+    // setTotalDuration(response?.videoDuration);
+  }, []);
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
@@ -332,47 +274,6 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
     handleTimeUpdate();
   };
 
-  const handleProgressBarHover = (event: any) => {
-    const video = videoRef.current;
-    // const progressBar = event.target;
-    const progressBarWidth = questionBarRef?.current?.offsetWidth;
-    const hoverPosition =
-      event.clientX - questionBarRef?.current.getBoundingClientRect().left;
-    const hoverTime = Math.floor(
-      (hoverPosition / progressBarWidth) * video.duration.toFixed(0)
-    );
-    const filteredQuestions = questionData?.filter(
-      (question: any) =>
-        convertTimeToSeconds(question?.startTime) <= hoverTime &&
-        convertTimeToSeconds(question?.endTime) >= hoverTime
-    );
-    const tooltipQuestion =
-      filteredQuestions.length > 0 ? filteredQuestions[0] : null;
-    setTooltipData({
-      question: tooltipQuestion?.question || '',
-      time: hoverTime,
-    });
-    setTooltipPosition({ x: event.clientX, y: event.clientY });
-    handleTimeUpdate();
-  };
-  const getCurrentQuestionNumber = () => {
-    const currentQuestion1 = questionData.find(
-      (question: any) =>
-        convertTimeToSeconds(question?.startTime) <= currentTime &&
-        convertTimeToSeconds(question?.endTime) >= currentTime
-    );
-    if (currentQuestion1) {
-      currentQuestion.current = currentQuestion1?.question;
-    }
-    return currentQuestion1 ? (
-      <p>
-        <span>{currentQuestion1.id}. </span> {currentQuestion1?.question}
-      </p>
-    ) : (
-      '...'
-    );
-  };
-
   const getQuestionWidth = useCallback(
     (question: any) => {
       if (question?.endTime) {
@@ -391,90 +292,9 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
     [totalDuration]
   );
 
-  const questionBar = useMemo(() => {
-    return (
-      <div
-        style={{ display: 'flex' }}
-        ref={questionBarRef}
-        className="ques-bar"
-      >
-        {questionData?.map((question: any, index: any) => (
-          <div
-            key={index}
-            style={{
-              width: '100%',
-              margin: '1px',
-              backgroundColor: 'white',
-              border: '1px solid white',
-              opacity:
-                currentQuestion.current !== question.question ? '0.5' : '1',
-            }}
-          ></div>
-        ))}
-      </div>
-    );
-  }, [questionData]);
   const interviewerCandidateBar = useMemo(() => {
     return (
       <>
-        <StyledInterviewerImage>
-          {/* <img
-            width="20"
-            height="20"
-            style={{
-              color: "white",
-              fontSize: "10px",
-              paddingLeft: "2px",
-              marginTop: "6px",
-            }}
-            src={
-              transcriptionInfo.questionData[0].transcription[0].userImageUrl
-            }
-            alt="styled interviewer img"
-          /> */}
-          <span style={{ color: 'white', fontSize: '10px', padding: '2px' }}>
-            {'Reactions'}
-          </span>
-        </StyledInterviewerImage>
-        {/* <StyledCandidateImage>
-          <img
-            width="20"
-            height="20"
-            style={{
-              color: "white",
-              fontSize: "10px",
-              paddingLeft: "2px",
-              marginTop: "6px",
-            }}
-            src={
-              transcriptionInfo.questionData[1].transcription[1].userImageUrl
-            }
-            alt="styled candidate img"
-          />
-          <span style={{ color: "white", fontSize: "10px", padding: "2px" }}>
-            {"Harry - Candidate"}
-          </span>
-        </StyledCandidateImage> */}
-        {/* <div style={{ display: "flex", margin: "0px" }}>
-          {interviewerData?.map((data: any) => {
-            return (
-              <>
-                <div
-                  key={data.id}
-                  style={{
-                    width: getQuestionWidth(data),
-                    marginRight: "0px",
-                    marginLeft: "0px",
-                    marginTop: "40px",
-                    border: "1px solid white",
-                    backgroundColor: "white",
-                    opacity: data.speaker === "interviewer" ? "0.75" : "0.5",
-                  }}
-                ></div>
-              </>
-            );
-          })}
-        </div> */}
         <div style={{ display: 'flex', margin: '0px' }}>
           {interviewerData?.map((data: any, index: any) => {
             return (
@@ -484,11 +304,11 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                   width: '100%',
                   marginRight: '0px',
                   marginLeft: '0px',
-                  marginTop: '45px',
-                  border: '1px solid white',
+                  marginTop: '10px',
+                  border: '1px solid #C1C3C5',
 
-                  backgroundColor: 'white',
-                  opacity: data.speaker === 'candidate' ? '0.75' : '0.5',
+                  backgroundColor: '#blaxk',
+                  opacity: data.speaker === 'candidate' ? '1' : '1',
                 }}
               ></div>
             );
@@ -550,7 +370,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
     if (timeline?.offsetWidth && emoticonData && totalDuration) {
       const videoDuration = convertTimeToSeconds(totalDuration);
       // const timelineWidth = timeline.offsetWidth;
-      const barWidth = questionBarRef?.current?.offsetWidth;
+      const barWidth = videoDuration;
       return emoticonData.map((emoticon: any, index: any) => {
         const timeInSeconds = convertTimeToSeconds(emoticon.time);
         const positionPercentage =
@@ -558,6 +378,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
             ? (timeInSeconds / videoDuration) * 100
             : 0;
         const positionPixels = (positionPercentage / 100) * barWidth;
+        console.log(questionBarRef);
         return (
           <div
             key={emoticon.id}
@@ -565,8 +386,8 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
             style={{
               position: 'absolute',
               left: `${(positionPixels / barWidth) * 100}%`,
-              fontSize: '12px',
-              marginTop: '38px',
+              fontSize: '14px',
+
               zIndex: '99',
             }}
           >
@@ -579,7 +400,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
 
   const Timer = () => {
     return (
-      <span style={{ color: 'white', fontSize: '10px' }}>
+      <span style={{ fontWeight: '600', fontSize: '12px' }}>
         {formatTime(currentTime ?? '0:00') +
           ' / ' +
           formatTime(convertTimeToSeconds(totalDuration ?? '0:00'))}
@@ -591,7 +412,7 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
     <>
       <div
         className="video-player-container"
-        style={{ position: 'relative', width: '95%' }}
+        style={{ position: 'relative', width: '100%' }}
       >
         {' '}
         <div
@@ -601,7 +422,8 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
             display: 'flex',
             flexDirection: 'column',
             borderRadius: '10px',
-            height: '98%',
+            height: '100%',
+            gap: '18px',
           }}
         >
           <div
@@ -625,69 +447,6 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
                 onTimeUpdate={handleTimeUpdate}
               ></video>
             </div>
-            <div>
-              <div
-                style={{
-                  position: 'absolute',
-                  left: '0',
-                  bottom: '0',
-                  marginBottom: '10px',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <div
-                  style={{
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                  }}
-                  onClick={handleMuteUnmute}
-                >
-                  {isMuted ? (
-                    <MuteButton width={30} height={30} active={0} />
-                  ) : (
-                    <SoundButton width={30} height={30} active={0} />
-                  )}
-                </div>
-                <span className="timer">
-                  <Timer />
-                </span>{' '}
-              </div>
-              <div
-                style={{
-                  position: 'absolute',
-                  left: '50%',
-                  transform: 'translate(-50%, 0)',
-                  bottom: '0',
-                  marginBottom: '10px',
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                }}
-                onClick={handlePlayPause}
-              >
-                {isPlaying ? (
-                  <PauseButton width={30} height={30} active={0} />
-                ) : (
-                  <PlayButton width={30} height={30} active={0} />
-                )}
-              </div>
-              <div
-                style={{
-                  position: 'absolute',
-                  right: '0',
-                  bottom: '0',
-                  marginBottom: '10px',
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                }}
-                onClick={handleFullScreen}
-              >
-                <FullscreenButton width={30} height={30} active={0} />
-              </div>
-            </div>
           </div>{' '}
           <div
             style={{
@@ -696,29 +455,72 @@ const VideoPlayer = ({ questionsTranscript, videoUrl, emojisData }) => {
               display: 'flex',
               flexDirection: 'column',
               borderRadius: '10px',
+              height: '120px',
             }}
+            className="text-black "
           >
             <div
               ref={timelineRef}
               className="timeline"
-              onClick={handleProgressBarClick}
               onMouseLeave={handleProgressBarLeave}
+              onClick={handleProgressBarClick}
             >
-              {tooltipData.question !== '' && (
-                <div
-                  className="tooltip"
-                  style={{
-                    left: tooltipPosition.x - 12,
-                    top: tooltipPosition.y - 30,
-                    display: 'block',
-                  }}
-                >
-                  <p style={{ fontWeight: '800' }}>
-                    {formatTime(tooltipData.time)}
-                  </p>
-                  <br></br>
+              <div className=" flex flex-col ">
+                <div className="mt-3 flex justify-between w-5/5 ">
+                  <div
+                    style={{
+                      left: '0',
+                      bottom: '0',
+
+                      alignItems: 'center',
+                    }}
+                  >
+                    <div
+                      style={{
+                        background: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                      }}
+                      onClick={handleMuteUnmute}
+                    >
+                      {isMuted ? (
+                        <MuteButton width={30} height={30} active={0} />
+                      ) : (
+                        <SoundButton width={30} height={30} active={0} />
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      bottom: '0',
+
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                    }}
+                    onClick={handlePlayPause}
+                  >
+                    {isPlaying ? (
+                      <PauseButton width={30} height={30} active={0} />
+                    ) : (
+                      <PlayButton width={30} height={30} active={0} />
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                    }}
+                    onClick={handleFullScreen}
+                  >
+                    <FullscreenButton width={30} height={30} active={0} />
+                  </div>
                 </div>
-              )}
+                <span className="timer ml-2">
+                  <Timer />
+                </span>{' '}
+              </div>
               {renderEmoticonsOnTimeline} {interviewerCandidateBar}
               <div
                 className="progress-indicator"

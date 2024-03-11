@@ -1,4 +1,4 @@
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { IDepartment, IDepartmentState } from '@/types/department';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 

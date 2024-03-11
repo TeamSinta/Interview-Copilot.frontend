@@ -1,4 +1,4 @@
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { createSlice } from '@reduxjs/toolkit';
 import { redirect } from 'react-router-dom';
 import {

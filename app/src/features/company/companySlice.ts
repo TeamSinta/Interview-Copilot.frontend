@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { ICompany, IMember } from '@/types/company';
 
 export interface CompanyState {

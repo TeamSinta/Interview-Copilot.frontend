@@ -35,12 +35,12 @@ export const SummaryTabQNA: React.FC<any> = ({
             spacing={1}
             key={index}
             onClick={() => handleClick(index)}
-            style={{ marginLeft: '5px'}}
+            style={{ marginLeft: '5px' }}
           >
             <Grid item xs={11} md={11}>
               <div>
-                <div style={{ display: 'flex'}}>
-                  <Grid xs={12} md={8} >
+                <div style={{ display: 'flex' }}>
+                  <Grid item xs={12} md={8}>
                     <div
                       className={`question-heading ${
                         activeIndex === index ? 'active' : ''
@@ -49,14 +49,21 @@ export const SummaryTabQNA: React.FC<any> = ({
                       <BodyMBold> {question.question}</BodyMBold>
                     </div>
                   </Grid>
-                  <Grid xs={12} md={4} display={'flex'} paddingLeft={2} justifyContent={'space-between'} >
+                  <Grid
+                    item
+                    xs={12}
+                    md={4}
+                    display={'flex'}
+                    paddingLeft={2}
+                    justifyContent={'space-between'}
+                  >
                     {question.competency !== null && (
                       <QuestionValue>
                         <BodySMedium>{question.competency}</BodySMedium>
                       </QuestionValue>
                     )}
-                      <div className="icon">
-                        <PredefinedRatingComponent rating={question.score} />
+                    <div className="icon">
+                      <PredefinedRatingComponent rating={question.score} />
                     </div>
                   </Grid>
                 </div>
@@ -66,7 +73,7 @@ export const SummaryTabQNA: React.FC<any> = ({
                     activeIndex === index ? 'show' : ''
                   }`}
                 >
-                {' '}
+                  {' '}
                   <BodySMedium> {question.answer}</BodySMedium>
                 </div>
               </div>

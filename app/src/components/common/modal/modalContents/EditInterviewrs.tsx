@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import Photo from '@/components/common/buttons/photo/Photo';
 import Photos from '@/components/common/buttons/photo/Photos';
 import { PhotoContainer } from '@/components/common/buttons/photo/StyledPhoto';
@@ -7,7 +7,7 @@ import Invite from '@/components/common/form/invite/Invite';
 import { BodySMedium } from '@/components/common/typeScale/StyledTypeScale';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { closeModal } from '@/features/modal/modalSlice';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { BackgroundColor, PhotoType } from '@/features/utils/utilEnum';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

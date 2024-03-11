@@ -16,4 +16,6 @@ export const StyledMain = styled.div`
   grid-area: main;
   padding: 30px !important;
   overflow-x: hidden;
+  height: 100vh;
+
 `;

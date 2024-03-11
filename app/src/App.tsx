@@ -4,7 +4,7 @@ import { StyledMain } from './components/layouts/container/StyledContainer';
 import Container from './components/layouts/container/Container';
 import Routers from './router/Routers';
 import { useSelector } from 'react-redux';
-import { RootState } from './app/store';
+import { RootState } from './store';
 import { Navigate, useLocation } from 'react-router-dom';
 import ConclusionContainer from './components/layouts/container/conclusionContainer/ConclusionContainer';
 import { ConclusionStyledMain } from './components/layouts/container/conclusionContainer/StyledConclusionContianer';
@@ -18,7 +18,8 @@ function App() {
   const isVideoCallRoute = location.pathname.startsWith('/video-call/');
   const isConclusionRoute =
     location.pathname === '/interviews/conclusion/' ||
-    location.pathname === '/dashboard';
+    location.pathname === '/dashboard' ||
+    location.pathname === '/interviews';
 
   if (isAuthenticated && location.pathname === '/login') {
     return <Navigate to="/dashboard" />;
@@ -41,6 +42,7 @@ function App() {
       </>
     );
   }
+
 
   return (
     <>

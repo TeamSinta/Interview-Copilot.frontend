@@ -6,4 +6,5 @@ export interface IInterviewRound {
   video_uri: string;
   created_at: string | number;
   thumbnail_uri?: string;
+  icon?: string;
 }

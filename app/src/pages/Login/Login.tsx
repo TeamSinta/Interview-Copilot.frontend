@@ -59,7 +59,7 @@ const LoginScreen = () => {
                 />
                 <TextBtn
                   label="Continue"
-                  className="hover:bg-slate-200"
+                  className="hover:bg-indigo-700 bg-indigo-500"
                   onClick={() => {
                     HandleAuthKitLogin({ email });
                   }}

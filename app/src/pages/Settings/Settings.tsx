@@ -8,7 +8,7 @@ import { TABS } from '@/features/utils/utilEnum';
 import UserTab from '@/components/pages/settings/Profiletab/UserTab';
 import DepartmentTab from '@/components/pages/settings/departmentsTab/DepartmentTab';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState(TABS.PROFILE);

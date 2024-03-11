@@ -9,7 +9,7 @@ import {
 } from './StyledModalContents';
 import TemplateInterviewCard from '../../cards/templateInterviewCard/TemplateInterviewCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { useEffect } from 'react';
 import {
   getQuestionsBanksAsync,
