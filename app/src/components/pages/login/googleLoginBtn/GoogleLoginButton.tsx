@@ -13,9 +13,10 @@ const GoogleLoginButton = (): JSX.Element => {
   return (
     <TextIconBtn
       icon={<GoogleIcon />}
-      label="Join with Google"
+      label="Continue with Google"
       onClick={HandleGoogleAuthUrl}
       variant={ICON_BUTTON_VARIANTS.outlined}
+      className=" hover:bg-slate-100"
     />
   );
 };

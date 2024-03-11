@@ -153,7 +153,7 @@ export function ThemeProvider({
           </div>
         </div>
       ) : null}
-
+      {/*
       <button
         onClick={() => {
           setShowDialog(
@@ -165,7 +165,7 @@ export function ThemeProvider({
         className="absolute bottom-2.5 right-2.5 rounded border p-[5px] border-foreground"
       >
         Customize
-      </button>
+      </button> */}
       {children}
     </ThemeProviderContext.Provider>
   );

@@ -62,7 +62,11 @@ export const TextBtn = ({
 }: ITextBtn) => {
   return (
     <button
-      className={clsx(className, variant, 'w-full py-2 rounded')}
+      className={clsx(
+        className,
+        variant,
+        'w-full py-2 rounded hover:bg-indigo-800'
+      )}
       onClick={onClick}
       disabled={disabled}
     >

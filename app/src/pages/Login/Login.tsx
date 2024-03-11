@@ -8,6 +8,7 @@ import { clsx } from 'clsx';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LoginLogo } from '@/assets/svg/login_logo.svg';
+import Terms from '@/components/pages/login/Terms/Terms';
 
 let pseudo = {
   before:
@@ -32,8 +33,8 @@ const LoginScreen = () => {
     <div className="flex">
       <div className="flex-initial w-1/2 h-dvh">
         <img
-          className="w-full h-dvh"
-          src="src/assets/images/login_cover.jpg"
+          className="object-cover w-full h-full p-8"
+          src="src/assets/images/Sinta_cover_bright.jpeg"
           alt="login"
         />
       </div>
@@ -42,48 +43,53 @@ const LoginScreen = () => {
           {/*  === TITELS ===  */}
           <LoginLogo />
           <TypographyH1 content="Sign in"></TypographyH1>
-          <p className="opacity-[.6]">
-            Sign in with Google or enter your email address to get started
-          </p>
+          <div className=" rt-Card rt-r-size-4  rt-variant-surface p-12 m-3">
+            <div className="w-[350px] flex flex-col gap-2">
+              <p className="font-semibold">Email</p>
 
-          {/*  === INPUTS ===  */}
-          <div className="flex flex-col w-full gap-y-[20px]">
-            <TextInput
-              disable={false}
-              name="email"
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@example.com"
-              value={email}
-              validate={() => null}
-            />
-            <TextBtn
-              label="Sign in with Email"
-              onClick={() => {
-                HandleAuthKitLogin({ email });
-              }}
-            ></TextBtn>
+              {/*  === INPUTS ===  */}
+              <div className="flex flex-col w-full gap-y-[20px]">
+                <TextInput
+                  disable={false}
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@example.com"
+                  value={email}
+                  validate={() => null}
+                />
+                <TextBtn
+                  label="Continue"
+                  className="hover:bg-slate-200"
+                  onClick={() => {
+                    HandleAuthKitLogin({ email });
+                  }}
+                ></TextBtn>
 
-            <div
-              className={clsx(
-                'text-foreground relative text-center opacity-[.6]',
-                pseudo.before,
-                pseudo.after
-              )}
-            >
-              or continue with
+                <div
+                  className={clsx(
+                    'text-foreground relative text-center opacity-[.6]',
+                    pseudo.before,
+                    pseudo.after
+                  )}
+                >
+                  or
+                </div>
+                <GoogleLoginButton />
+              </div>
+              {/*  === LAST ===  */}
+              <div className="opacity-[.6] mt-3">
+                No account?{' '}
+                <Link to={'/sign-up'} className="text-primary">
+                  Sign up
+                </Link>
+              </div>
             </div>
-            <GoogleLoginButton />
           </div>
-          {/*  === LAST ===  */}
-          <div className="opacity-[.6]">
-            Already using Sinta?{' '}
-            <Link to={'/sign-up'} className="text-primary">
-              Sign up
-            </Link>
-          </div>
+          <Terms />
         </div>
       </div>
     </div>
+
     // <Stack
     //   direction="column"
     //   alignItems="center"

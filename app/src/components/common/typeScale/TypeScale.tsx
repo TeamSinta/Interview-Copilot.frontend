@@ -18,7 +18,7 @@ export const BodyNMediumComponent = ({ children }: any) => {
 
 export const TypographyH1 = (props: { content: string }) => {
   return (
-    <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+    <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-3xl">
       {props.content}
     </h1>
   );
