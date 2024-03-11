@@ -53,19 +53,12 @@ export const BUTTON_VARIANTS = {
 };
 
 // ********* NEW
-export const TextBtn = ({
-  label,
-  className,
-  variant = BUTTON_VARIANTS.primary,
-  disabled,
-  onClick,
-}: ITextBtn) => {
+export const TextBtn = ({ label, className, disabled, onClick }: ITextBtn) => {
   return (
     <button
       className={clsx(
         className,
-        variant,
-        'w-full py-2 rounded hover:bg-indigo-800'
+        'w-full text-white py-2 rounded hover:bg-indigo-700'
       )}
       onClick={onClick}
       disabled={disabled}
