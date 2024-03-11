@@ -50,12 +50,14 @@ export default function VideoCall() {
     await newCallObject.startCamera();
   }, []);
 
-  const startTranscriptionBot = async (meetingUrl) => {
+
+  const startTranscriptionBot = async (meetingUrl, interviewRoundId) => {
     try {
       const response = await instance.post(
         `${BACKEND_URL}/new_transcription/start_transcription/`,
         {
           meeting_url: meetingUrl,
+          interviewRoundID: interviewRoundId,
         }
       );
 
@@ -158,9 +160,10 @@ export default function VideoCall() {
     function handleNewMeetingState() {
       switch (callObject?.meetingState?.()) {
         case 'joined-meeting':
+          const interviewRoundIdd = localStorage.getItem('interviewRoundId');
           setAppState(STATE.JOINED);
           if (roomUrl) {
-            startTranscriptionBot(roomUrl);
+            startTranscriptionBot(roomUrl, interviewRoundIdd);
           }
           break;
         case 'left-meeting':
@@ -174,7 +177,7 @@ export default function VideoCall() {
               console.log(hasContent);
               if (hasContent || hasRecordingStarted) {
                 navigate('/interviews/conclusion/', {
-                  state: { id: interviewRoundId, useTimer: true },
+                  state: { id: interviewRoundId, newInterview: true },
                 });
               } else {
                 navigate('/dashboard');
