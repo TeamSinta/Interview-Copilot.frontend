@@ -5,7 +5,9 @@ import {
   StyledButtonM,
   StyledButtonS,
 } from '../button/StyledBtn';
+import { type ClassValue, clsx } from 'clsx';
 
+// delete later
 export const TextBtnL = (props: IBtnProps) => {
   const { label, disable, onClick, className } = props;
 
@@ -18,6 +20,7 @@ export const TextBtnL = (props: IBtnProps) => {
   );
 };
 
+// delete later
 export const TextBtnM = (props: IBtnProps): JSX.Element => {
   const { label, disable, onClick, className } = props;
 
@@ -30,6 +33,7 @@ export const TextBtnM = (props: IBtnProps): JSX.Element => {
   );
 };
 
+// delete later
 export const TextBtnS = (props: IBtnProps): JSX.Element => {
   const { label, disable, onClick, className } = props;
 
@@ -41,3 +45,40 @@ export const TextBtnS = (props: IBtnProps): JSX.Element => {
     </>
   );
 };
+
+export const BUTTON_VARIANTS = {
+  primary: 'bg-primary text-primary-foreground',
+  outlined: 'bg-background text-foreground border-foreground',
+  danger: 'bg-red-500 hover:bg-red-600 text-white',
+};
+
+// ********* NEW
+export const TextBtn = ({
+  label,
+  className,
+  variant = BUTTON_VARIANTS.primary,
+  disabled,
+  onClick,
+}: ITextBtn) => {
+  return (
+    <button
+      className={clsx(
+        className,
+        variant,
+        'w-full py-2 rounded hover:bg-indigo-800'
+      )}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {label}
+    </button>
+  );
+};
+
+export interface ITextBtn {
+  label?: string;
+  disabled?: boolean;
+  onClick: () => void;
+  className?: ClassValue;
+  variant?: ClassValue;
+}

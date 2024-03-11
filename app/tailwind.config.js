@@ -10,6 +10,7 @@ module.exports = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
     './index.html',
+    './index.html',
   ],
   prefix: '',
   theme: {
@@ -25,7 +26,7 @@ module.exports = {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        border: 'hsl(var(--border))',
+        border: 'hsl(var(--foreground))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',

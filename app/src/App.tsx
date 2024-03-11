@@ -8,6 +8,7 @@ import { RootState } from './store';
 import { Navigate, useLocation } from 'react-router-dom';
 import ConclusionContainer from './components/layouts/container/conclusionContainer/ConclusionContainer';
 import { ConclusionStyledMain } from './components/layouts/container/conclusionContainer/StyledConclusionContianer';
+import { Theme, ThemeProvider } from './components/common/theme/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
 
 function App() {
@@ -45,18 +46,20 @@ function App() {
 
   return (
     <>
-      {isAuthenticated ? (
-        <Container>
-          <SideNavBar />
-          <TopNavBar />
-          <StyledMain>
-            <Routers />
-          </StyledMain>
-          <Toaster />
-        </Container>
-      ) : (
-        <Routers />
-      )}
+      <ThemeProvider defaultTheme={Theme.LIGHT} storageKey="vite-ui-theme">
+        {isAuthenticated ? (
+          <Container>
+            <SideNavBar />
+            <TopNavBar />
+            <StyledMain>
+              <Routers />
+            </StyledMain>
+            <Toaster />
+          </Container>
+        ) : (
+          <Routers />
+        )}
+      </ThemeProvider>
     </>
   );
 }
