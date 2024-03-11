@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LoginLogo } from '@/assets/svg/login_logo.svg';
 import Terms from '@/components/pages/login/Terms/Terms';
+import LoginPicture from '@/assets/images/Sinta_Cover_bright.jpeg';
 
 let pseudo = {
   before:
@@ -34,7 +35,7 @@ const LoginScreen = () => {
       <div className="flex-initial w-1/2 h-dvh">
         <img
           className="object-cover w-full h-full p-8"
-          src="src/assets/images/Sinta_cover_bright.jpeg"
+          src={LoginPicture}
           alt="login"
         />
       </div>
