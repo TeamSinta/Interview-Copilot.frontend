@@ -113,6 +113,7 @@
   justify-content: center;
   overflow-x: scroll;
   min-width: 60%;
+  padding: 0 8px;
   /* Use flexbox to align items */
 }
 
