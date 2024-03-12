@@ -193,7 +193,7 @@ export const QuestionTextDisplay: React.FC<QuestionTextDisplayProps> = ({
               propData={answer ?? ''}
               editorId={editorId}
               saveApiEndpoint={`${BACKEND_URL}/question_response/interviewer-feedback/${editorId}/update-answers`}
-              requestName={'Answer text'}
+              requestName={'html_content'}
             />
           </AccordionContent>
         </AccordionItem>

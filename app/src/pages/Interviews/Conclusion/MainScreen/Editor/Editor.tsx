@@ -14,6 +14,7 @@ import Document from '@tiptap/extension-document';
 import ListItem from '@tiptap/extension-list-item';
 import OrderedList from '@tiptap/extension-ordered-list';
 import Paragraph from '@tiptap/extension-paragraph';
+import Code from '@tiptap/extension-code';
 
 const extensions = [...defaultExtensions, SlashCommand];
 
@@ -43,6 +44,7 @@ const TailwindEditor = ({
         BulletList,
         OrderedList,
         ListItem,
+        Code,
         // Add other extensions as needed
       ]);
     }
@@ -55,13 +57,19 @@ const TailwindEditor = ({
   );
 
   const debouncedUpdates = useDebouncedCallback(async (editor) => {
-    const json = editor.getJSON();
+    const html = editor.getHTML();
     const localStorageKey = `novel-${requestName}-${editorId}`;
-    window.localStorage.setItem(localStorageKey, JSON.stringify(json));
-    const requestBody = { requestName: json };
+    window.localStorage.setItem(localStorageKey, html);
+    const formData = new FormData();
+    formData.append(requestName, editor.getHTML());
+
     setSaveStatus('Saving...');
     try {
-      const response = await instance.patch(saveApiEndpoint, requestBody);
+      const response = await fetch(saveApiEndpoint, {
+        method: 'PATCH', // or 'PATCH', depending on your backend setup
+        body: formData,
+        // Don't set Content-Type header; the browser will set it with the correct boundary
+      });
       if (response.status === 200) {
         setSaveStatus('Saved');
       } else {
