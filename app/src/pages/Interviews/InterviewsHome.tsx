@@ -87,29 +87,33 @@ export default function BasicTabs() {
         <TopNavBar />
         <ContainerHome>
           {/* Skeleton loading state */}
-          <div className="flex flex-center px-11">
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="flex flex-center px-1">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 max-h-16">
               {' '}
-              <div className="flex flex-col space-y-3 py-9 px-1  ">
+              <div className="flex flex-col space-y-3 py-6 px-1 min-w-64 ">
                 <Skeleton className="h-52 w-80 rounded-xl" />
                 <Skeleton className="h-4 w-[250px]" />
                 <Skeleton className="h-4 w-[200px]" />
               </div>
-              <div className="flex flex-col space-y-3 py-9 px-1  ">
+              <div className="flex flex-col space-y-3 py-6 px-1min-w-64  ">
                 <Skeleton className="h-52 w-80  rounded-xl" />
                 <Skeleton className="h-4 w-[250px]" />
                 <Skeleton className="h-4 w-[200px]" />
               </div>
-              <div className="flex flex-col space-y-3 py-9 px-1  ">
+              <div className="flex flex-col space-y-3 py-6 px-1 min-w-64 ">
                 <Skeleton className="h-52 w-80 rounded-xl" />
                 <Skeleton className="h-4 w-[250px]" />
                 <Skeleton className="h-4 w-[200px]" />
               </div>
-              <div className="flex flex-col space-y-3 py-9 px-1  ">
+              <div className="flex flex-col space-y-3 py-6 px-1 min-w-64  ">
                 <Skeleton className="h-52 w-80  rounded-xl" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
               </div>
-              <div className="flex flex-col space-y-3 py-9 px-1  ">
+              <div className="flex flex-col space-y-3 py-6 px-1 min-w-64 ">
                 <Skeleton className="h-52 w-80  rounded-xl" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
               </div>
             </div>
           </div>

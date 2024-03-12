@@ -26,11 +26,6 @@ import {
   SelectLabel,
   SelectGroup,
 } from '@/components/ui/select.js';
-import {
-  CaretDownIcon,
-  PersonIcon,
-  StarFilledIcon,
-} from '@radix-ui/react-icons';
 import { Title } from './Title';
 import { useUpdateInterviewRoundMutation } from '@/features/interviews/interviewsAPISlice';
 import {
@@ -43,10 +38,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
+
 import { Label } from '@/components/ui/label';
-import { Star1Icon } from '@/components/common/svgIcons/Icons';
-import { Toggle } from '@/components/ui/toggle';
+
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { CheckboxReactHookFormMultiple } from './ExportForm';
 import { AvatarFallback, Avatar, AvatarImage } from '@/components/ui/avatar';
@@ -202,11 +196,11 @@ export const ConclusionToolbar = ({
               </DialogHeader>
 
               <ToggleGroup
-                className="flex flex-col gap-2 p-2 "
+                className="flex flex-col gap-2 p-1 "
                 orientation={'horizontal'}
                 type="single"
               >
-                <div className="flex w-full gap-3 flex-item">
+                <div className="flex w-full gap-2 flex-item">
                   <ToggleGroupItem
                     value="a"
                     className="w-full flex-item h-5/5 "
