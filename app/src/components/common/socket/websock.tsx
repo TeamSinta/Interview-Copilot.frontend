@@ -18,7 +18,7 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
   const [progress, setProgress] = useState(1);
   const [toastId, setToastId] = useState(null);
 
-  const handleUpdate = (message) => {
+  const handleUpdate = (message: string) => {
     let newProgress = progress;
     switch (true) {
       case message === 'Summarization process started':
@@ -48,31 +48,44 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
       `${wsScheme}://${host}/ws/transcription_consumer/${interviewRoundId}/`
     );
 
+    let messageReceived = false;
+
     socket.onmessage = (event) => {
+      messageReceived = true;
       const { type, message } = JSON.parse(event.data);
       if (type === 'update') {
         handleUpdate(message);
       }
     };
 
+    const timeoutId = setTimeout(() => {
+      if (!messageReceived) {
+        setShowDialog(false);
+        if (toastId) {
+          toast.dismiss(toastId);
+        }
+      }
+    }, 30000); // 30 seconds
+
     return () => {
       socket.close();
+      clearTimeout(timeoutId);
     };
-  }, [interviewRoundId, newInterview]);
+  }, [interviewRoundId, newInterview, toast, toastId]);
 
   useEffect(() => {
     if (progress === 100) {
       // Close dialog and toast automatically when progress is complete
       setShowDialog(false);
       if (toastId) {
-        toast.close(toastId);
+        toast.dismiss(toastId); // Adjusted this line
       }
     }
   }, [progress, toast, toastId]);
 
   useEffect(() => {
     if (newInterview) {
-      const id = toast({
+      const id = toast.toast({
         title: 'Processing started',
         description: (
           <div className="flex flex-col items-start gap-1">
