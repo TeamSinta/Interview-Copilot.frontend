@@ -18,6 +18,9 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
   const [progress, setProgress] = useState(1);
   const [toastId, setToastId] = useState(null);
 
+  const [reconnectionAttempts, setReconnectionAttempts] = useState(0);
+  const maxReconnectionAttempts = 5;
+
   const handleUpdate = (message: string) => {
     let newProgress = progress;
     switch (true) {
@@ -37,7 +40,7 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
   };
 
   useEffect(() => {
-    if (!newInterview) {
+    if (!newInterview || reconnectionAttempts >= maxReconnectionAttempts) {
       return;
     }
 
@@ -49,6 +52,15 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
     );
 
     let messageReceived = false;
+
+    socket.onopen = () => {
+      setReconnectionAttempts(0); // Reset reconnection attempts on successful connection
+    };
+
+    socket.onerror = socket.onclose = () => {
+      // Increment reconnection attempts and possibly attempt to reconnect
+      setReconnectionAttempts((attempts) => attempts + 1);
+    };
 
     socket.onmessage = (event) => {
       messageReceived = true;
@@ -71,7 +83,7 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
       socket.close();
       clearTimeout(timeoutId);
     };
-  }, [interviewRoundId, newInterview]);
+  }, [interviewRoundId, newInterview, reconnectionAttempts]);
 
   useEffect(() => {
     if (progress === 100) {
