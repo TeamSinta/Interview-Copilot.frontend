@@ -5,27 +5,16 @@ import styled from 'styled-components';
 import ConclusionData from '@/services/conclusionService';
 import InterviewQNA from './InterviewQNA/InterviewQNA';
 import SummaryTab from './SummaryTab/SummaryTab';
-import {
-  Avatar,
-  Box,
-  Card,
-  Flex,
-  Grid,
-  Heading,
-  Text,
-  Button,
-} from '@radix-ui/themes';
-import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
+import { Avatar, Box, Card, Flex, Grid, Text, Button } from '@radix-ui/themes';
 import { BoxShadow, FlexShadow } from '../../StyledConclusions';
 import { InformationBox } from './InformationBox/InformationBox';
-import { QuestionIcon } from '@/components/common/svgIcons/Icons';
-import { ButtonIcon, PersonIcon } from '@radix-ui/react-icons';
-import { Skeleton } from '@/components/ui/skeleton';
-import { FileX2, TentTreeIcon } from 'lucide-react';
+
+import { TentTreeIcon } from 'lucide-react';
 import SkeletonLoading from './Ui/SkeletonLoading';
 
 import DeleteDialog from './Ui/DeleteHelper';
-import useTranscriptData from '@/services/TranscriptS3Service';
+import { useSelector } from 'react-redux';
+import SkeletonBodyLoading from './Ui/SkeletonBodyLoading';
 
 type summaryType = 'summary' | 'question' | 'transcription' | 'notes';
 
@@ -111,6 +100,7 @@ const MainScreen: React.FC<MainScreenProps> = ({
   const [informationType, setInformationType] = useState<'video' | 'info'>(
     'video'
   );
+  const websocketStatus = useSelector((state) => state.websocket.status);
 
   const [
     summarizedAnswers,
@@ -122,10 +112,8 @@ const MainScreen: React.FC<MainScreenProps> = ({
   ] = ConclusionData(interviewRoundId);
 
   const isEmptyOrError = (data) => {
-    // Check for null or undefined data
     if (!data) return true;
 
-    // If data has an 'error' property, check for 401 or 404 specifically
     if (data.error) {
       return data.error.statusCode === 401 || data.error.statusCode === 404;
     }
@@ -135,7 +123,6 @@ const MainScreen: React.FC<MainScreenProps> = ({
     return false;
   };
 
-  // Function to render the empty state based on the error code or null data
   const renderEmptyState = (errorCode) => {
     switch (errorCode) {
       case 401:
@@ -302,13 +289,17 @@ const MainScreen: React.FC<MainScreenProps> = ({
           {infoTabs}
           <ContentContainer>
             {summaryType === 'summary' ? (
-              isEmptyOrError(summarizedInterview?.data) ? (
+              websocketStatus === 'loading' ? (
+                <SkeletonBodyLoading />
+              ) : isEmptyOrError(summarizedInterview?.data) ? (
                 renderEmptyState(summarizedInterview?.error?.statusCode)
               ) : (
                 <SummaryTab summaryInfo={summarizedInterview?.data} />
               )
             ) : summaryType === 'question' ? (
-              isEmptyOrError(summarizedAnswers?.data) ? (
+              websocketStatus === 'loading' ? (
+                <SkeletonBodyLoading />
+              ) : isEmptyOrError(summarizedAnswers?.data) ? (
                 renderEmptyState(summarizedAnswers?.error?.statusCode)
               ) : (
                 <InterviewQNA

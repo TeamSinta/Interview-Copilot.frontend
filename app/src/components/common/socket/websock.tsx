@@ -11,6 +11,8 @@ import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import teamwork from '@/assets/images/teamwork.jpg';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { useDispatch } from 'react-redux';
+import { setStatus } from './websockSlice';
 
 const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
   const toast = useToast();
@@ -20,23 +22,29 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
 
   const [reconnectionAttempts, setReconnectionAttempts] = useState(0);
   const maxReconnectionAttempts = 5;
+  const dispatch = useDispatch();
 
   const handleUpdate = (message: string) => {
-    let newProgress = progress;
-    switch (true) {
-      case message === 'Summarization process started':
-        newProgress = Math.max(newProgress, 25);
-        break;
-      case message.startsWith('Processing Answers for:'):
-        const increment = 5 + Math.random() * 5;
-        newProgress = Math.min(75, newProgress + increment);
-        break;
-      case message === 'Summarization and QA processing completed':
-        newProgress = 100;
-        break;
-    }
-
-    setProgress(newProgress);
+    setProgress((currentProgress) => {
+      let newProgress = currentProgress;
+      switch (true) {
+        case message === 'Summarization process started':
+          newProgress = Math.max(newProgress, 25);
+          break;
+        case message.startsWith('Processing Answers for:'):
+          const increment = 5 + Math.random() * 5;
+          newProgress = Math.min(75, newProgress + increment);
+          break;
+        case message === 'Summarization and QA processing completed':
+          newProgress = 100;
+          break;
+      }
+      // Check for dispatching 'Completed' status if newProgress reaches 100%
+      if (newProgress === 100) {
+        dispatch(setStatus('Completed'));
+      }
+      return newProgress;
+    });
   };
 
   useEffect(() => {
@@ -51,10 +59,9 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
       `${wsScheme}://${host}/ws/transcription_consumer/${interviewRoundId}/`
     );
 
-    let messageReceived = false;
-
     socket.onopen = () => {
       setReconnectionAttempts(0); // Reset reconnection attempts on successful connection
+      dispatch(setStatus('loading'));
     };
 
     socket.onerror = socket.onclose = () => {
@@ -63,27 +70,28 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
     };
 
     socket.onmessage = (event) => {
-      messageReceived = true;
       const { type, message } = JSON.parse(event.data);
       if (type === 'update') {
         handleUpdate(message);
+        // Check for progress completion inside here to avoid overriding
+        if (progress >= 100) {
+          dispatch(setStatus('completed'));
+        }
       }
     };
 
-    const timeoutId = setTimeout(() => {
-      if (!messageReceived) {
-        setShowDialog(false);
-        if (toastId) {
-          toast.dismiss(toastId);
-        }
-      }
-    }, 30000); // 30 seconds
+    // Removed the second onmessage definition
 
     return () => {
       socket.close();
-      clearTimeout(timeoutId);
     };
-  }, [interviewRoundId, newInterview, reconnectionAttempts]);
+  }, [
+    interviewRoundId,
+    newInterview,
+    reconnectionAttempts,
+    dispatch,
+    progress,
+  ]);
 
   useEffect(() => {
     if (progress === 100 && toastId !== null) {

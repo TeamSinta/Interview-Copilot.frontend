@@ -21,6 +21,7 @@ import { departmentsAPI } from '@/features/departments/departmentsAPI';
 import companyReducer from '@/features/company/companySlice';
 import { companyAPI } from '@/features/company/companyAPI';
 import { InterviewRoundsAPI } from '@/features/interviews/interviewsAPISlice';
+import  websocketReducer  from './components/common/socket/websockSlice';
 
 export const store = configureStore({
   reducer: {
@@ -45,6 +46,7 @@ export const store = configureStore({
     questionBanks: questionBanksReducer,
     interviewDetail: interviewDetailReducer,
     questionsBankSlice: questionsBankSliceReducer,
+    websocket: websocketReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

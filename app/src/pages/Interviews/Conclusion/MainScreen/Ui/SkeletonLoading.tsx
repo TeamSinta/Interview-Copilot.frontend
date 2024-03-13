@@ -12,50 +12,6 @@ import { BoxShadow, FlexShadow } from '../../../StyledConclusions';
 import { Grid } from '@radix-ui/themes';
 
 const SkeletonLoading = () => {
-  // const { OVERALL_SCORE, SENTIMENT } = TOP_BAR_INFO;
-  // const [average, setAverage] = useState(0);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [overallScore, setOverallScore] = useState(0);
-  // const [candidateName, setCandidateName] = useState('');
-  // const [templateTitle, setTemplateTitle] = useState('');
-  // const [interviewDate, setInterviewRoundDate] = useState('');
-  // const [departmentTitle, setDepartmentTitle] = useState('');
-  // const [active, setActive] = useState(0);
-
-  // const [cookies, ,] = useCookies(['access_token']);
-
-  // useEffect(() => {
-  //   const fetchRatings = async () => {
-  //     setIsLoading(true);
-  //     const questions = await getInterviewRoundQuestions(interviewRoundId);
-
-  //     const interviewRound = await getInterview(
-  //       interviewRoundId,
-  //       cookies.access_token
-  //     );
-  //     const template = await getTemplate(
-  //       interviewRound.template_id,
-  //       cookies.access_token
-  //     );
-  //     setCandidateName(interviewRound.candidate_name);
-  //     setTemplateTitle(template.role_title);
-  //     setDepartmentTitle(template.department_name);
-  //     setInterviewRoundDate(interviewRound.created_at);
-  //     let ratingTotal = 0;
-  //     questions.map((question) => {
-  //       ratingTotal += question.rating;
-  //     });
-  //     const ratingAverage = ratingTotal / questions.length;
-  //     const ratingOverallScore = ratingAverage * 20;
-
-  //     setAverage(ratingAverage);
-  //     setOverallScore(ratingOverallScore);
-  //     setIsLoading(false);
-  //   };
-
-  //   fetchRatings();
-  // }, [cookies.access_token, interviewRoundId]);
-
   return (
     <Grid columns="1fr 2fr" gap="3" width="100%" height={'100%'}>
       <FlexShadow
