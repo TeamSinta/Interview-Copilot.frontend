@@ -10,6 +10,7 @@ module.exports = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
     './index.html',
+    './index.html',
   ],
   prefix: '',
   theme: {

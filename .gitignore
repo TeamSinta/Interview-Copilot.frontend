@@ -23,7 +23,7 @@
 #.env.production.local
 #.env
 .process.env
-#.env.staging
+.env.staging
 #.env.development
 #.env.dev
 # Ignore environment-specific files

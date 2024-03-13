@@ -1,4 +1,8 @@
-import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
+import {
+  ICON_BUTTON_VARIANTS,
+  TextIconBtn,
+  TextIconBtnL,
+} from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import { GoogleIcon } from '@/components/common/svgIcons/Icons';
 import { BackgroundColor } from '@/features/utils/utilEnum';
 import useAuth from '@/hooks/useGoogleLogin';
@@ -7,12 +11,12 @@ const GoogleLoginButton = (): JSX.Element => {
   const { HandleGoogleAuthUrl } = useAuth();
 
   return (
-    <TextIconBtnL
+    <TextIconBtn
       icon={<GoogleIcon />}
-      label="Sign in with Google"
-      disable={false}
+      label="Continue with Google"
       onClick={HandleGoogleAuthUrl}
-      className={BackgroundColor.ACCENT_PURPLE}
+      variant={ICON_BUTTON_VARIANTS.outlined}
+      className=" hover:bg-slate-100"
     />
   );
 };

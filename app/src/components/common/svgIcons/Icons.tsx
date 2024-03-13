@@ -142,7 +142,7 @@ export const DocumentIcon = (): JSX.Element => {
 };
 
 export const GoogleIcon = (): JSX.Element => {
-  return <Google />;
+  return <Google width="18" height="18" />;
 };
 
 export const PlusIcon = (): JSX.Element => {
@@ -346,4 +346,7 @@ export const MicMuteIcon = (): JSX.Element => {
 
 export const CamHideIcon = (): JSX.Element => {
   return <CamHide />;
+};
+export const MessageOutlinecon = (): JSX.Element => {
+  return <MessageOutline />;
 };

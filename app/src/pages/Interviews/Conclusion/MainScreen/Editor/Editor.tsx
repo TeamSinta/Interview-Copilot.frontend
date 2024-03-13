@@ -1,10 +1,5 @@
-import {
-  EditorContent,
-  EditorRoot,
-  defaultEditorProps,
-  type JSONContent,
-} from 'novel';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { EditorContent, EditorRoot, defaultEditorProps } from 'novel';
 import { useDebouncedCallback } from 'use-debounce';
 import { Editor as EditorInstance } from 'novel';
 import { defaultEditorContent } from './lib/content';
@@ -13,10 +8,20 @@ import SlashCommand from './extensions/slash-command';
 import DragAndDrop from './extensions/drag-and-drop';
 import { saveContentToBackend } from '@/features/interviewDetail/interviewDetailAPI';
 import { instance } from '@/utils/axiosService/customAxios';
+import Bold from '@tiptap/extension-bold';
+
+import Text from '@tiptap/extension-text';
+import { generateJSON } from '@tiptap/html';
+import Heading from '@tiptap/extension-heading';
+import BulletList from '@tiptap/extension-bullet-list';
+import Document from '@tiptap/extension-document';
+import ListItem from '@tiptap/extension-list-item';
+import OrderedList from '@tiptap/extension-ordered-list';
+import Paragraph from '@tiptap/extension-paragraph';
+import Code from '@tiptap/extension-code';
 
 const extensions = [...defaultExtensions, SlashCommand, DragAndDrop];
 
-// Updated the component to accept propData as a prop
 const TailwindEditor = ({
   propData,
   editorId,
@@ -35,18 +40,50 @@ const TailwindEditor = ({
   );
   const [saveStatus, setSaveStatus] = useState('Saved');
 
+  const transformContent = (data) => {
+    try {
+      // Attempt to parse as JSON first
+      return JSON.parse(data);
+    } catch {
+      // If parsing fails, assume HTML and convert to JSON
+      return generateJSON(data, [
+        Document,
+        Paragraph,
+        Text,
+        Bold,
+        Heading.configure({
+          levels: [1, 2, 3, 4, 5],
+        }),
+        BulletList,
+        OrderedList,
+        ListItem,
+        Code,
+        // Add other extensions as needed
+      ]);
+    }
+  };
+
+  // Use useMemo here for the transformation to avoid recalculations on each render
+  const transformedContent = useMemo(
+    () => (propData ? transformContent(propData) : null),
+    [propData]
+  );
+
   const debouncedUpdates = useDebouncedCallback(async (editor) => {
-    const json = editor.getJSON();
-    const localStorageKey = `novel-${requestName}-${editorId}`; // Unique key for local storage
-    window.localStorage.setItem(localStorageKey, JSON.stringify(json));
-    const requestBody = { requestName: json }; // Constructing requestBody dynamically
+    const html = editor.getHTML();
+    const localStorageKey = `novel-${requestName}-${editorId}`;
+    window.localStorage.setItem(localStorageKey, html);
+    const formData = new FormData();
+    formData.append(requestName, editor.getHTML());
+
     setSaveStatus('Saving...');
     try {
-      // Using axios instance to make a patch request
-      const response = await instance.patch(saveApiEndpoint, requestBody);
-
+      const response = await fetch(saveApiEndpoint, {
+        method: 'PATCH', // or 'PATCH', depending on your backend setup
+        body: formData,
+        // Don't set Content-Type header; the browser will set it with the correct boundary
+      });
       if (response.status === 200) {
-        // Checking response status code for success
         setSaveStatus('Saved');
       } else {
         throw new Error('Network response was not ok.');
@@ -102,7 +139,7 @@ const TailwindEditor = ({
           editorProps={{
             ...defaultEditorProps,
             attributes: {
-              class: `prose-lg prose-headings:font-title prose-sm sm:prose-base focus:outline-none max-w-full lg:prose-lg  `,
+              class: `prose-lg prose-headings:font-title prose-sm sm:prose-base focus:outline-none max-w-full lg:prose-lg`,
             },
           }}
         />
@@ -110,4 +147,5 @@ const TailwindEditor = ({
     </div>
   );
 };
+
 export default TailwindEditor;

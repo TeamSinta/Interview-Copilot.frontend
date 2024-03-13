@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import {
-  Input,
-  InputError,
-  InputLayout,
-} from '@/components/common/form/input/StyledInput';
+import { InputError } from '@/components/common/form/input/StyledInput';
+import { Input } from '@/components/ui/input';
 
 export interface ITextInput {
   disable: boolean;
@@ -52,8 +49,9 @@ const TextInput = (props: ITextInput, ref: React.Ref<any>) => {
   }, [ref]);
 
   return (
-    <InputLayout>
+    <div className="w-full">
       <Input
+        type="text"
         ref={inputRef} // Assign the ref to the input element
         name={name}
         disabled={disable}
@@ -65,7 +63,7 @@ const TextInput = (props: ITextInput, ref: React.Ref<any>) => {
         value={inputValue[name]}
       />
       {error ? <InputError>{error}</InputError> : <></>}
-    </InputLayout>
+    </div>
   );
 };
 

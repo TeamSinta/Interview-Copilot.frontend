@@ -27,7 +27,7 @@ import SkeletonLoading from './Ui/SkeletonLoading';
 import DeleteDialog from './Ui/DeleteHelper';
 import useTranscriptData from '@/services/TranscriptS3Service';
 
-type summaryType = 'summary' | 'question' | 'transcription' | 'notes' | 's3';
+type summaryType = 'summary' | 'question' | 'transcription' | 'notes';
 
 interface MainScreenProps {
   interviewRoundId: string;
@@ -67,10 +67,6 @@ const InfoTabContainer = styled.div`
   @media (min-width: 1200px) {
     flex-direction: row;
   }
-`;
-
-const StyledNavButton = styled(Button)`
-  color: black;
 `;
 
 const ContentContainer = styled.div`
@@ -124,10 +120,6 @@ const MainScreen: React.FC<MainScreenProps> = ({
     emojisData,
     loading,
   ] = ConclusionData(interviewRoundId);
-
-  const { transcript, error } = useTranscriptData(interviewRoundId);
-
-  console.log(transcript);
 
   const isEmptyOrError = (data) => {
     // Check for null or undefined data
@@ -201,12 +193,6 @@ const MainScreen: React.FC<MainScreenProps> = ({
           isActive={summaryType === 'notes'}
         >
           Notes
-        </TabButton>
-        <TabButton
-          onClick={() => setSummaryType('s3')}
-          isActive={summaryType === 's3'}
-        >
-          S3 Transcript
         </TabButton>
       </TabContainer>
     ),
@@ -338,12 +324,6 @@ const MainScreen: React.FC<MainScreenProps> = ({
                   propData={questionsTranscript?.data}
                   screen={'transcription'}
                 />
-              )
-            ) : summaryType === 's3' ? (
-              isEmptyOrError(transcript) ? (
-                renderEmptyState(transcript?.error?.statusCode)
-              ) : (
-                <h1>{JSON.stringify(transcript, null, 2)}</h1>
               )
             ) : (
               summaryType === 'notes' &&
