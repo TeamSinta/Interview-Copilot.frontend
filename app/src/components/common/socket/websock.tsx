@@ -24,12 +24,27 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
   const maxReconnectionAttempts = 5;
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const savedStatusJson = localStorage.getItem('websocketStatus');
+    if (savedStatusJson) {
+      const savedStatus = JSON.parse(savedStatusJson);
+      if (savedStatus) {
+        setProgress(savedStatus.progress);
+        dispatch(setStatus(savedStatus.status));
+      }
+    }
+  }, [dispatch]);
+
   const handleUpdate = (message: string) => {
     setProgress((currentProgress) => {
       let newProgress = currentProgress;
       switch (true) {
         case message === 'Summarization process started':
           newProgress = Math.max(newProgress, 25);
+          localStorage.setItem(
+            'websocketStatus',
+            JSON.stringify({ status: 'loading', progress: newProgress })
+          );
           break;
         case message.startsWith('Processing Answers for:'):
           const increment = 5 + Math.random() * 5;
@@ -37,11 +52,14 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
           break;
         case message === 'Summarization and QA processing completed':
           newProgress = 100;
+          localStorage.setItem(
+            'websocketStatus',
+            JSON.stringify({ status: 'completed', progress: newProgress })
+          );
           break;
       }
-      // Check for dispatching 'Completed' status if newProgress reaches 100%
       if (newProgress === 100) {
-        dispatch(setStatus('Completed'));
+        dispatch(setStatus('completed'));
       }
       return newProgress;
     });
@@ -60,38 +78,25 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
     );
 
     socket.onopen = () => {
-      setReconnectionAttempts(0); // Reset reconnection attempts on successful connection
-      dispatch(setStatus('loading'));
+      setReconnectionAttempts(0);
     };
 
     socket.onerror = socket.onclose = () => {
-      // Increment reconnection attempts and possibly attempt to reconnect
       setReconnectionAttempts((attempts) => attempts + 1);
     };
 
     socket.onmessage = (event) => {
       const { type, message } = JSON.parse(event.data);
+      console.log('Received message:', message);
       if (type === 'update') {
         handleUpdate(message);
-        // Check for progress completion inside here to avoid overriding
-        if (progress >= 100) {
-          dispatch(setStatus('completed'));
-        }
       }
     };
-
-    // Removed the second onmessage definition
 
     return () => {
       socket.close();
     };
-  }, [
-    interviewRoundId,
-    newInterview,
-    reconnectionAttempts,
-    dispatch,
-    progress,
-  ]);
+  }, [interviewRoundId, newInterview, reconnectionAttempts, dispatch]);
 
   useEffect(() => {
     if (progress === 100 && toastId !== null) {
