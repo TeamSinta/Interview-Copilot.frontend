@@ -71,7 +71,7 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
       socket.close();
       clearTimeout(timeoutId);
     };
-  }, [interviewRoundId, newInterview, toast, toastId]);
+  }, [interviewRoundId, newInterview]);
 
   useEffect(() => {
     if (progress === 100) {
