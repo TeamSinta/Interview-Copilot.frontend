@@ -262,7 +262,7 @@ const MainScreen: React.FC<MainScreenProps> = ({
                           Email
                         </Text>
                         <Text as="div" size="3" weight="normal">
-                          Teodros Girmay
+                          teodros.g@gmail.com
                         </Text>
                       </Box>
                       <Box>
@@ -270,7 +270,7 @@ const MainScreen: React.FC<MainScreenProps> = ({
                           Resume
                         </Text>
                         <Text as="div" size="3" weight="normal">
-                          Teodros Girmay
+                          Attached
                         </Text>
                       </Box>
                     </Flex>
