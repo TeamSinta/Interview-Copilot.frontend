@@ -99,7 +99,7 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
   }, [interviewRoundId, newInterview, reconnectionAttempts, dispatch]);
 
   useEffect(() => {
-    if (progress === 100 && toastId !== null) {
+    if (progress >= 100 && toastId !== null) {
       // Close dialog and toast automatically when progress is complete
       setShowDialog(false);
       toast.dismiss(toastId);

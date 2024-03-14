@@ -87,6 +87,29 @@ const TailwindEditor = ({
     }
   }, [transformedContent]);
 
+  useEffect(() => {
+    const localStorageKey = `novel-${requestName}-${editorId}`;
+    let content = window.localStorage.getItem(localStorageKey);
+
+    if (content && content.trim() !== '') {
+      try {
+        const parsedContent = JSON.parse(content);
+        setInitialContent(parsedContent);
+      } catch (error) {
+        console.error('Error parsing content from localStorage:', error);
+        // Handle error or set a fallback state
+      }
+    } else if (propData && propData.trim() !== '') {
+      try {
+        const parsedContent = JSON.parse(propData);
+        setInitialContent(parsedContent);
+      } catch (error) {
+        console.error('Error parsing propData:', error);
+        // Handle error or set a fallback state
+      }
+    }
+  }, [editorId, propData]);
+
   if (!initialContent) return null; // Adjust this as needed for your loading state
 
   return (

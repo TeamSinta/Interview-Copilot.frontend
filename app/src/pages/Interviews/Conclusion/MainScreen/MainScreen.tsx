@@ -102,6 +102,7 @@ const MainScreen: React.FC<MainScreenProps> = ({
   );
   const websocketStatus = useSelector((state) => state.websocket.status);
 
+  console.log(websocketStatus);
   const [
     summarizedAnswers,
     questionsTranscript,
@@ -146,7 +147,7 @@ const MainScreen: React.FC<MainScreenProps> = ({
               <TentTreeIcon size={'49'} />
               <div>
                 <EmptyStateComponent message="No data available." />{' '}
-                <DeleteDialog />
+                <DeleteDialog interviewRoundId={interviewRoundId} />
               </div>
             </div>
           </>
