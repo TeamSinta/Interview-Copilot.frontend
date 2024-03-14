@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import {
   IconBtnL,
   IconBtnM,
@@ -53,8 +53,8 @@ import { Stack } from '@mui/material';
 import GlobalModal, { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import { openModal } from '@/features/modal/modalSlice';
 import { useParams } from 'react-router-dom';
-import EmptyQuestionsImage from 'src/assets/svg/Empty Questions Illustration.svg';
-import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
+import EmptyQuestionsImage from 'src/assets/images/Empty Questions Illustration.jpg';
+import EmptySectionsImage from "src/assets/images/'Empty Questions Page Illustration.jpg";
 import CustomQuestionForm from './CustomQuestionForm';
 import {
   useAddTemplateQuestionMutation,

@@ -15,7 +15,7 @@ import {
 import { BodyMMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentWorkspace } from '@/features/workspace/userWorkspaceSlice';
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 
 interface ISideNavBarDropdown {
   optionArr: IOption[];

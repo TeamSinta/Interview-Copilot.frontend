@@ -1,4 +1,4 @@
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -31,7 +31,6 @@ const FrameContainer = styled('div')({
   left: `16px`,
   top: `40px`, // Adjust this value as needed
   height: `2px`,
-  width: `2px`,
 });
 
 const EmailText = styled('div')({
@@ -42,7 +41,7 @@ const EmailText = styled('div')({
   fontSynthesis: `none`,
   color: `rgba(18, 18, 18, 1)`,
   fontStyle: `normal`,
-  fontFamily: `Chillax`,
+  fontFamily: `Inter`,
   fontWeight: `500`,
   fontSize: `10px`,
   letterSpacing: `0px`,
@@ -63,7 +62,7 @@ const NameText = styled('div')({
   fontSynthesis: `none`,
   color: `rgba(18, 18, 18, 1)`,
   fontStyle: `normal`,
-  fontFamily: `Chillax`,
+  fontFamily: `Inter`,
   fontWeight: `600`,
   fontSize: `12px`,
   letterSpacing: `0px`,

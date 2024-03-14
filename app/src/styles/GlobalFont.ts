@@ -1,14 +1,27 @@
 import { createGlobalStyle } from 'styled-components';
-import ChillaxSemi from '../font/Chillax-Semibold.otf';
-import Chillax from '../font/Chillax-Medium.otf';
+import InterSemi from '../font/Inter-SemiBold.otf';
+import InterMedium from '../font/Inter-Medium.otf';
+import Inter from '../font/Inter-Regular.otf';
+import InterBold from '../font/Inter-Bold.otf';
+
 
 export default createGlobalStyle`
     @font-face {
-        font-family: "ChillaxSemi";
-        src: local("Chillax-Semibold"), url(${ChillaxSemi}) format('opentype'); 
+        font-family: "InterSemi";
+        src: local("Inter-Semibold"), url(${InterSemi}) format('opentype');
+    }
+
+    @font-face {
+        font-family: "Inter";
+        src: local("Inter-Regular"), url(${Inter}) format('opentype');
     }
     @font-face {
-        font-family: "Chillax";
-        src: local("Chillax-Medium"), url(${Chillax}) format('opentype'); 
+        font-family: "InterMedium";
+        src: local("Inter-Medium"), url(${InterMedium}) format('opentype');
+    }
+
+    @font-face {
+        font-family: "InterBold";
+        src: local("Inter-Bold"), url(${InterBold}) format('opentype');
     }
 `;

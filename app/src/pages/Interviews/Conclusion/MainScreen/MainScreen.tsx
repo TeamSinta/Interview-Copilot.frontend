@@ -1,26 +1,35 @@
 import React, { useMemo, useState, ReactNode } from 'react';
-import { Divider, Grid, Stack } from '@mui/material';
-import { NavButton } from '@/components/layouts/sidenavbar/StyledSideNavBar';
 import '../index.css';
 import VideoPlayer from './VideoPlayer/VideoPlayer';
-import { H3Bold } from '@/components/common/typeScale/StyledTypeScale';
 import styled from 'styled-components';
 import ConclusionData from '@/services/conclusionService';
 import InterviewQNA from './InterviewQNA/InterviewQNA';
 import SummaryTab from './SummaryTab/SummaryTab';
-import { ReactionButtonBox } from './reactionBox/ReactionBox';
+import { Avatar, Box, Card, Flex, Grid, Text, Button } from '@radix-ui/themes';
+import { BoxShadow, FlexShadow } from '../../StyledConclusions';
+import { InformationBox } from './InformationBox/InformationBox';
+
+import { TentTreeIcon } from 'lucide-react';
+import SkeletonLoading from './Ui/SkeletonLoading';
+
+import DeleteDialog from './Ui/DeleteHelper';
+import { useSelector } from 'react-redux';
+import SkeletonBodyLoading from './Ui/SkeletonBodyLoading';
+
+type summaryType = 'summary' | 'question' | 'transcription' | 'notes';
 
 interface MainScreenProps {
   interviewRoundId: string;
+  interviewRoundData: string[];
 }
 
 interface setActiveTabProps {
-  (tabNumber: number): void;
+  (tabType: summaryType): void;
 }
 
 interface TabButtonProps {
-  setActiveTab: setActiveTabProps;
-  tabNumber: number;
+  onClick: () => any;
+  // tabType: summaryType;
   isActive: boolean;
   children: ReactNode;
 }
@@ -32,62 +41,68 @@ const TabContainer = styled.div`
   margin-top: 0;
   padding-bottom: 20px;
   flex-direction: column;
+  gap: 8px;
 
   @media (min-width: 1200px) {
     flex-direction: row;
   }
 `;
 
-const StyledNavButton = styled(NavButton)`
-  font-size: 12px;
-  width: 100%;
-  height: 35px;
-  border-radius: 10px;
-  margin-right: 5px;
-  margin-bottom: 5px;
+const InfoTabContainer = styled.div`
+  display: flex;
+  margin-top: 0;
+  flex-direction: column;
 
   @media (min-width: 1200px) {
-    width: 100px;
-    margin-bottom: 0;
-  }
-
-  &.active {
-    // style for active class here
+    flex-direction: row;
   }
 `;
 
 const ContentContainer = styled.div`
-  background-color: #f6f6fb;
-  padding: 10px 20px;
   border-radius: 10px;
   margin-top: 0px;
   overflow-y: auto;
-  max-height: calc(100vh - 40vh);
-  min-height: 580px;
-
-  @media (min-width: 1200px) {
-    padding: 20px 20px;
-  }
+  max-height: calc(100vh - 20vh);
+  min-height: calc(100vh - 20vh);
 `;
 
 const TabButton: React.FC<TabButtonProps> = ({
-  setActiveTab,
-  tabNumber,
+  onClick,
   isActive,
   children,
 }) => (
-  <StyledNavButton
-    onClick={() => setActiveTab(tabNumber)}
-    direction="row"
-    className={isActive ? 'rightTabs active' : 'rightTabs'}
+  <Button
+    onClick={onClick}
+    size="2"
+    className=" text-black  bg-black text-sm"
+    variant={isActive ? 'outline' : ''}
   >
     <span>{children}</span>
-  </StyledNavButton>
+  </Button>
 );
 
-const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
-  const [activeTab, setActiveTab] = useState<number>(1);
+const EmptyStateComponent = ({ message }) => (
+  <div style={{ textAlign: 'center', padding: '10px' }}>
+    {/* Adjust size as needed */}
+    <Text color={'gray'} size={'5'}>
+      {message}
+    </Text>
+  </div>
+);
 
+const MainScreen: React.FC<MainScreenProps> = ({
+  interviewRoundId,
+  interviewRoundData,
+}) => {
+  const [summaryType, setSummaryType] = useState<
+    'summary' | 'question' | 'transcription' | 'notes' | 's3'
+  >('summary');
+  const [informationType, setInformationType] = useState<'video' | 'info'>(
+    'video'
+  );
+  const websocketStatus = useSelector((state) => state.websocket.status);
+
+  console.log(websocketStatus);
   const [
     summarizedAnswers,
     questionsTranscript,
@@ -95,110 +110,223 @@ const MainScreen: React.FC<MainScreenProps> = ({ interviewRoundId }) => {
     videoUrl,
     emojisData,
     loading,
-    error,
-  ] = ConclusionData(interviewRoundId);
+  ] = ConclusionData(interviewRoundId, websocketStatus);
+
+  const isEmptyOrError = (data) => {
+    if (!data) return true;
+
+    if (data.error) {
+      return data.error.statusCode === 401 || data.error.statusCode === 404;
+    }
+    if (Array.isArray(data) && data.length === 0) return true;
+    if (typeof data === 'object' && Object.keys(data).length === 0) return true;
+
+    return false;
+  };
+
+  const renderEmptyState = (errorCode) => {
+    switch (errorCode) {
+      case 401:
+        return (
+          <>
+            <EmptyStateComponent message="Unauthorized access." />
+          </>
+        );
+      case 404:
+        return (
+          <>
+            <EmptyStateComponent message="Content not found." />
+          </>
+        );
+      default:
+        return (
+          <>
+            {' '}
+            <div className="flex flex-col items-center text-center justify-center	h-[600px] gap-2 w-4/4">
+              {' '}
+              <TentTreeIcon size={'49'} />
+              <div>
+                <EmptyStateComponent message="No data available." />{' '}
+                <DeleteDialog interviewRoundId={interviewRoundId} />
+              </div>
+            </div>
+          </>
+        );
+    }
+  };
 
   const infoTabs = useMemo(
     () => (
       <TabContainer>
         <TabButton
-          setActiveTab={setActiveTab}
-          tabNumber={1}
-          isActive={activeTab === 1}
+          onClick={() => setSummaryType('summary')}
+          isActive={summaryType === 'summary'}
         >
           Summary
         </TabButton>
         <TabButton
-          setActiveTab={setActiveTab}
-          tabNumber={2}
-          isActive={activeTab === 2}
+          onClick={() => setSummaryType('question')}
+          isActive={summaryType === 'question'}
         >
           Questions
         </TabButton>
         <TabButton
-          setActiveTab={setActiveTab}
-          tabNumber={3}
-          isActive={activeTab === 3}
+          onClick={() => setSummaryType('transcription')}
+          isActive={summaryType === 'transcription'}
         >
           Transcription
         </TabButton>
         <TabButton
-          setActiveTab={setActiveTab}
-          tabNumber={4}
-          isActive={activeTab === 4}
+          onClick={() => setSummaryType('notes')}
+          isActive={summaryType === 'notes'}
         >
           Notes
         </TabButton>
       </TabContainer>
     ),
-    [activeTab]
+    [summaryType]
+  );
+
+  const mainTabs = useMemo(
+    () => (
+      <InfoTabContainer>
+        <TabButton
+          onClick={() => setInformationType('video')}
+          isActive={informationType === 'video'}
+        >
+          Video
+        </TabButton>
+        <TabButton
+          onClick={() => setInformationType('info')}
+          isActive={informationType === 'info'}
+        >
+          Info
+        </TabButton>
+      </InfoTabContainer>
+    ),
+    [informationType]
   );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <SkeletonLoading />
+      </>
+    );
   }
-
-  // Need to handle this properly later
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
 
   return (
     <>
-      <Grid container spacing={0}>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={12}
-          lg={5}
-          style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}
+      <Grid columns="1fr 2fr" gap="3" width="100%" height={'100%'}>
+        <FlexShadow
+          style={{
+            background: 'white',
+          }}
+          direction={'column'}
         >
-          <Stack direction={'column'} spacing={2}>
-            <H3Bold>Technical Interview</H3Bold>
-            <div className="video-player-wrapper">
-              <VideoPlayer
-                questionsTranscript={questionsTranscript?.data}
-                videoUrl={videoUrl?.url}
-                emojisData={emojisData}
-              />
-            </div>
-            <Divider
-              style={{
-                width: '50%',
-                alignSelf: 'center',
-              }}
+          {mainTabs}
+          <Grid gap="6" width="100%">
+            <Box>
+              {informationType === 'video' && (
+                <Flex className="mt-3">
+                  <VideoPlayer
+                    questionsTranscript={questionsTranscript?.data}
+                    videoUrl={videoUrl?.url}
+                    emojisData={emojisData}
+                  />
+                </Flex>
+              )}
+              {informationType === 'info' && (
+                <Flex className="mt-3 m-0 " direction="column">
+                  <Card size="3" className="bg-blue-400">
+                    <Flex gap="3" align="center" className="mb-3">
+                      <Avatar
+                        size="5"
+                        radius="medium"
+                        fallback="T"
+                        color="indigo"
+                      />
+                      <Box>
+                        <Text as="div" size="2" color="gray">
+                          Engineering
+                        </Text>
+                        <Text as="div" size="4" weight="bold">
+                          Teodros Girmay
+                        </Text>
+                      </Box>
+                    </Flex>
+                    <Flex direction={'row'} gap={'9'} style={{}}>
+                      {' '}
+                      <Box>
+                        <Text as="div" size="2" color="gray">
+                          Email
+                        </Text>
+                        <Text as="div" size="3" weight="normal">
+                          teodros.g@gmail.com
+                        </Text>
+                      </Box>
+                      <Box>
+                        <Text as="div" size="2" color="gray">
+                          Resume
+                        </Text>
+                        <Text as="div" size="3" weight="normal">
+                          Attached
+                        </Text>
+                      </Box>
+                    </Flex>
+                  </Card>
+                </Flex>
+              )}
+            </Box>
+            <InformationBox
+              interviewRoundData={interviewRoundData}
+              questionsData={summarizedAnswers}
+              transcriptData={questionsTranscript}
             />
-            <div className="button-container">
-              <ReactionButtonBox />
-            </div>
-          </Stack>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={7}>
+          </Grid>
+        </FlexShadow>
+
+        <BoxShadow style={{ background: 'white' }} grow={'1'}>
           {infoTabs}
           <ContentContainer>
-            {activeTab === 1 && (
-              <SummaryTab summaryInfo={summarizedInterview?.data} />
-            )}
-
-            {activeTab === 2 && (
-              <InterviewQNA
-                propData={summarizedAnswers?.data}
-                screen={'question'}
-              />
-            )}
-
-            {activeTab === 3 && (
-              <InterviewQNA
-                propData={questionsTranscript?.data}
-                screen={'transcription'}
-              />
-            )}
-            {activeTab === 4 && (
-              <InterviewQNA propData={emojisData} screen={'notes'} />
+            {summaryType === 'summary' ? (
+              websocketStatus === 'loading' ? (
+                <SkeletonBodyLoading />
+              ) : isEmptyOrError(summarizedInterview?.data) ? (
+                renderEmptyState(summarizedInterview?.error?.statusCode)
+              ) : (
+                <SummaryTab summaryInfo={summarizedInterview?.data} />
+              )
+            ) : summaryType === 'question' ? (
+              websocketStatus === 'loading' ? (
+                <SkeletonBodyLoading />
+              ) : isEmptyOrError(summarizedAnswers?.data) ? (
+                renderEmptyState(summarizedAnswers?.error?.statusCode)
+              ) : (
+                <InterviewQNA
+                  propData={summarizedAnswers?.data}
+                  screen={'question'}
+                />
+              )
+            ) : summaryType === 'transcription' ? (
+              isEmptyOrError(questionsTranscript?.data) ? (
+                renderEmptyState(questionsTranscript?.error?.statusCode)
+              ) : (
+                <InterviewQNA
+                  propData={questionsTranscript?.data}
+                  screen={'transcription'}
+                />
+              )
+            ) : (
+              summaryType === 'notes' &&
+              (isEmptyOrError(emojisData) ? (
+                renderEmptyState(emojisData?.error?.statusCode)
+              ) : (
+                <InterviewQNA propData={emojisData} screen={'notes'} />
+              ))
             )}
           </ContentContainer>
-        </Grid>
+        </BoxShadow>
       </Grid>
     </>
   );

@@ -31,7 +31,7 @@ const InterviewSideBarWaiting = () => {
       <span
         style={{
           fontWeight: '600',
-          fontFamily: 'ChillaxSemi',
+          fontFamily: 'InterSemi',
           fontSize: '1.5em',
           width: '100%',
           opacity: opacity, // Apply dynamic opacity value

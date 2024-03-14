@@ -28,14 +28,14 @@ export const StyledCandidateImage = styled.div`
 
 export const StyledProfile = styled.div`
   img {
-    color: white;
-    font-size: 10px;
+    color: black;
+    font-size: 16px;
     padding-left: 2px;
     margin-top: 10px;
   }
   span {
-    color: white;
-    font-size: 10px;
+    color: black;
+    font-size: 16px;
     padding: 2px;
   }
 `;

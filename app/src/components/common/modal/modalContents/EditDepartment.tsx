@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import { PhotoContainer } from '@/components/common/buttons/photo/StyledPhoto';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import {

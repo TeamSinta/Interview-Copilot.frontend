@@ -13,7 +13,5 @@ export const StyledTopNavBar = styled(Box)`
   grid-area: header;
   padding: 30px 30px 24px 30px;
   position: sticky;
-  top: 0; // Stick to the top of the viewport
-  z-index: 1000; // Ensures the navbar is above other content
-  background-color: white;
+  background: white;
 `;

@@ -37,7 +37,7 @@ const IndexContainer = styled.div`
 
 export const IndexStyle = styled.div`
   border-radius: 5px;
-  background-color: white;
+  background-color: #f1f5ff;
   padding: 8px 16px;
   font-size: 10px;
   margin-right: 10px;

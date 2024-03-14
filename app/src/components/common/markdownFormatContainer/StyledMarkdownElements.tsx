@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const StyledP = styled.p`
   padding: 5px;
   strong {
-    font-family: 'ChillaxSemi';
+    font-family: 'InterSemi';
   }
 
   em {

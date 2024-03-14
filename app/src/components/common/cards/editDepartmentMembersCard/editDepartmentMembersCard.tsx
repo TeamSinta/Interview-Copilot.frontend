@@ -16,7 +16,7 @@ import { BackgroundColor } from '@/features/utils/utilEnum';
 import { useDeleteDepartmentMemberMutation } from '@/features/departments/departmentsAPI';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import { resetMemberSelection } from '@/features/members/memberSlice';
 
 interface UserCardProps {

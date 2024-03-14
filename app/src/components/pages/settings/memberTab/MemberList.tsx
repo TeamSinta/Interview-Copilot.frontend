@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import SettingsMemberCard from '@/components/common/cards/settingsMemberCard/SettingsMemberCard';
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import PaginationComponent from '@/components/common/pagination/PaginationComponent';

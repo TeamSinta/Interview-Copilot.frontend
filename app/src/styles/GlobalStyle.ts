@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import './margin.sass';
+import '@radix-ui/themes/styles.css';
+
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -21,9 +23,21 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  font-family: Inter;
 }
 svg{
-  fill:none;
+fill:none;
+}
+.radix-themes {
+  --cursor-button: pointer;
+  --cursor-checkbox: default;
+  --cursor-disabled: not-allowed;
+  --cursor-link: pointer;
+  --cursor-menu-item: default;
+  --cursor-radio: default;
+  --cursor-slider-thumb: default;
+  --cursor-slider-thumb-active: default;
+  --cursor-switch: default;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -56,8 +70,8 @@ table {
   box-sizing: border-box;
 }
 body{
-  font-weight: 100;
-  font-family: 'Chillax';
+
+  font-family: 'GeistSans';
 }
 
 a{

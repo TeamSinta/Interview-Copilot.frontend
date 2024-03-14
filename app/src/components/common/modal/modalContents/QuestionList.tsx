@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
 import {
@@ -139,9 +139,9 @@ const QuestionList = () => {
                 </div>
                 <div className="body">
                   {question.competency !== null && (
-                     <QuestionValue>
-                     <BodySMedium>{question.competency}</BodySMedium>
-                   </QuestionValue>
+                    <QuestionValue>
+                      <BodySMedium>{question.competency}</BodySMedium>
+                    </QuestionValue>
                   )}
                   <div className="iconDiv">
                     <TimeIcon />

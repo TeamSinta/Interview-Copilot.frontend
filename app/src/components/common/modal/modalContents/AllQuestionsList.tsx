@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
 import {
   selectInterview,
@@ -128,12 +128,12 @@ const AllQuestionsList = () => {
                   </DetailOpenIcon>
                 </div>
                 <div className="body">
-                    {question.competency !== null && (
+                  {question.competency !== null && (
                     <QuestionValue>
-                        <BodySMedium>{question.competency}</BodySMedium>
+                      <BodySMedium>{question.competency}</BodySMedium>
                     </QuestionValue>
-                    )}
-                    
+                  )}
+
                   <div className="iconDiv">
                     <TimeIcon />
                     <BodySMedium>{question.reply_time}min</BodySMedium>

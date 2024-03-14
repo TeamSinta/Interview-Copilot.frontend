@@ -1,8 +1,6 @@
 import { GrayBodyMMedium, TextBox } from './StyledTerms';
 
-import {
-  BodyMSemiBold
-} from '@/components/common/typeScale/StyledTypeScale';
+import { BodyMSemiBold } from '@/components/common/typeScale/StyledTypeScale';
 
 const Terms = () => {
   return (

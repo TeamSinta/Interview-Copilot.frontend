@@ -1,6 +1,4 @@
-import {
-  BodyLMedium
-} from '@/components/common/typeScale/StyledTypeScale';
+import { BodyLMedium } from '@/components/common/typeScale/StyledTypeScale';
 import { Box } from '@mui/material';
 import styled from 'styled-components';
 

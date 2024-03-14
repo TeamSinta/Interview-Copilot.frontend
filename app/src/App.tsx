@@ -4,10 +4,12 @@ import { StyledMain } from './components/layouts/container/StyledContainer';
 import Container from './components/layouts/container/Container';
 import Routers from './router/Routers';
 import { useSelector } from 'react-redux';
-import { RootState } from './app/store';
+import { RootState } from './store';
 import { Navigate, useLocation } from 'react-router-dom';
 import ConclusionContainer from './components/layouts/container/conclusionContainer/ConclusionContainer';
 import { ConclusionStyledMain } from './components/layouts/container/conclusionContainer/StyledConclusionContianer';
+import { Theme, ThemeProvider } from './components/common/theme/ThemeProvider';
+import { Toaster } from '@/components/ui/toaster';
 
 function App() {
   const location = useLocation();
@@ -16,7 +18,8 @@ function App() {
   const isVideoCallRoute = location.pathname.startsWith('/video-call/');
   const isConclusionRoute =
     location.pathname === '/interviews/conclusion/' ||
-    location.pathname === '/dashboard';
+    location.pathname === '/dashboard' ||
+    location.pathname === '/interviews';
 
   if (isAuthenticated && location.pathname === '/login') {
     return <Navigate to="/dashboard" />;
@@ -34,24 +37,29 @@ function App() {
             <SideNavBar />
             <Routers />
           </ConclusionStyledMain>
+          <Toaster />
         </ConclusionContainer>
       </>
     );
   }
 
+
   return (
     <>
-      {isAuthenticated ? (
-        <Container>
-          <SideNavBar />
-          <TopNavBar />
-          <StyledMain>
-            <Routers />
-          </StyledMain>
-        </Container>
-      ) : (
-        <Routers />
-      )}
+      <ThemeProvider defaultTheme={Theme.LIGHT} storageKey="vite-ui-theme">
+        {isAuthenticated ? (
+          <Container>
+            <SideNavBar />
+            <TopNavBar />
+            <StyledMain>
+              <Routers />
+            </StyledMain>
+            <Toaster />
+          </Container>
+        ) : (
+          <Routers />
+        )}
+      </ThemeProvider>
     </>
   );
 }

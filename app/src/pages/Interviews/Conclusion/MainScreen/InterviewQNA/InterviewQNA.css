@@ -2,11 +2,6 @@
   margin-top: '10px' !important;
 }
 
-/* .question-heading::after {
-  content: "v";
-  float: right;
-} */
-
 .question-answer {
   display: none;
   overflow: hidden;

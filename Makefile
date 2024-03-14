@@ -59,4 +59,6 @@ docker-down:
 # Setup Command
 .PHONY: setup
 setup:
-	make install install-pre-commit make build-dev
+	$(MAKE) install && \
+	$(MAKE) install-pre-commit \
+	$(MAKE) build-dev

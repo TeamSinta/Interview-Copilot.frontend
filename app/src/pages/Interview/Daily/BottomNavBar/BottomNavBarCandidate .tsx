@@ -32,7 +32,7 @@ import { Grid } from '@mui/material';
 import './index.css';
 import { openModal } from '@/features/modal/modalSlice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/app/store';
+import { AppDispatch } from '@/store';
 import { MODAL_TYPE } from '@/components/common/modal/GlobalModal';
 import Chat from '../Chat/Chat';
 

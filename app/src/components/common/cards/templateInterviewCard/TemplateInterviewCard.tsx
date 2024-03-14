@@ -13,7 +13,7 @@ import {
   CardCover,
   CardSubTitle,
 } from '../card/StyledCard';
-import TempCover from '@/assets/svg/questions_cover.svg';
+import TempCover from '@/assets/images/questions_cover.jpg';
 
 interface ITemplateInterviewCardProps extends IQuestionsBanks {
   //temporary

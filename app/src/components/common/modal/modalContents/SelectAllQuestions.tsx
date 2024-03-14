@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import ElWrap from '@/components/layouts/elWrap/ElWrap';
 import { IQuestion } from '@/features/interviews/interviewsInterface';
 import {
@@ -32,7 +32,10 @@ import {
   TemplateLayout,
 } from './StyledModalContents';
 import AllQuestionsList from './AllQuestionsList';
-import { useGetQuestionBankDetailQuery, useUpdateQuestionBankMutation } from '@/features/questions/questionsAPISlice';
+import {
+  useGetQuestionBankDetailQuery,
+  useUpdateQuestionBankMutation,
+} from '@/features/questions/questionsAPISlice';
 
 const SelectAllQuestions = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -44,9 +47,7 @@ const SelectAllQuestions = () => {
   const navigate = useNavigate();
   const [upadateQuestionBanks] = useUpdateQuestionBankMutation();
   const { questionBankId } = useParams();
-  const {
-  refetch
-  } = useGetQuestionBankDetailQuery(questionBankId);
+  const { refetch } = useGetQuestionBankDetailQuery(questionBankId);
   const addQuestionsToQuestionBank = async () => {
     try {
       const payload = {
@@ -58,7 +59,7 @@ const SelectAllQuestions = () => {
         dispatch(resetQuestionBank());
         dispatch(closeModal());
         navigate(`/questionbank/${response.id}`);
-        await refetch()
+        await refetch();
       } else {
         // Handle unsuccessful response here
         console.error('Failed to add questions to the Question Bank.');

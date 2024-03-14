@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import { TextIconBtnL } from '@/components/common/buttons/textIconBtn/TextIconBtn';
 import TemplateHomeCard from '@/components/common/cards/teamplateHomeCard/TemplateHomeCard';
 import Loading from '@/components/common/elements/loading/Loading';
@@ -21,8 +21,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import EmptySectionsImage from "src/assets/svg/'Empty Questions Page Illustration.svg";
-import dashboardImage from 'src/assets/svg/HomePage_2.svg';
+import EmptySectionsImage from "src/assets/images/'Empty Questions Page Illustration.jpg";
+import dashboardImage from 'src/assets/images/HomePage_2.jpg';
 import {
   DescriptionText,
   EmptySectionContainer,
@@ -49,20 +49,16 @@ const DashBoard = () => {
   const workspaceData = {
     title: 'Workspace',
     items: [
-      { label: 'Plan type', value: 'Free' },
-      { label: 'Collaborators', value: '2 of 3' },
+      { label: 'Plan type', value: 'Pro' },
+      { label: 'Collaborators', value: '1 of 3' },
       { label: 'Summaries', value: '1 of 3' },
       { label: 'Interviews', value: '1' },
-      { label: 'Templates', value: '12' },
+      { label: 'Templates', value: '9' },
     ],
     buttonText: 'Upgrade',
   };
 
-  const {
-    data: templates,
-    isLoading,
-    isSuccess,
-  } = useGetTemplatesQuery();
+  const { data: templates, isLoading, isSuccess } = useGetTemplatesQuery();
 
   const handleButtonClick = () => {
     navigate('/templates');
@@ -171,7 +167,10 @@ const DashBoard = () => {
   return (
     <Container
       maxWidth={'lg'}
-      style={{ marginTop: '20px', marginBottom: '20px' }}
+      style={{
+        marginTop: '20px',
+        marginBottom: '20px',
+      }}
     >
       <TopNavBarDash />
 

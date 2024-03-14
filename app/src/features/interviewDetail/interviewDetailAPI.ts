@@ -1,11 +1,3 @@
-// import { InterviewDetailResponse } from "./inverviewDetailInterface";
-// import { interviewDetail } from "@/mocks/mockDatas";
-// export const getInterviewDetail = () => {
-//   return new Promise<{ data: IInterviewDetailStaging }>((resolve) =>
-//     setTimeout(() => resolve({ data: interviewDetail }), 500)
-//   );
-// };
-
 import { instance } from '@/utils/axiosService/customAxios';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -45,6 +37,21 @@ export const getInterviewDetail = async (templateId: string) => {
     );
 
     return filteredQuestions;
+  } catch (error) {
+    // Handle errors as needed
+    throw error;
+  }
+};
+
+export const saveContentToBackend = async (summaryId: string, description: any) => {
+  try {
+    const response = await instance.patch(
+      `${BACKEND_URL}/summary/${summaryId}/update-description/`,
+      {
+        description: description // Assuming you want to update the description field
+      }
+    );
+    return response.data;
   } catch (error) {
     // Handle errors as needed
     throw error;

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // import { IMockMembers } from "../roles/rolesInterface";
 // import { InterviewDetailResponse } from "./inverviewDetailInterface";
-import { RootState } from '@/app/store';
+import { RootState } from '@/store';
 import { DataLoading } from '../utils/utilEnum';
 import {
   getInterviewTemplate,

@@ -15,6 +15,7 @@ import { ReactComponent as Time } from '@/assets/svg/time.svg';
 import { ReactComponent as Graph } from '@/assets/svg/graph.svg';
 import { ReactComponent as Star } from '@/assets/svg/star.svg';
 import { ReactComponent as Message } from '@/assets/svg/message.svg';
+import { ReactComponent as MessageOutline } from '@/assets/svg/MessageOutline.svg';
 import { ReactComponent as Location } from '@/assets/svg/location.svg';
 import { ReactComponent as Call } from '@/assets/svg/call.svg';
 import { ReactComponent as Info } from '@/assets/svg/info.svg';
@@ -136,15 +137,15 @@ export const DocumentIcon = (): JSX.Element => {
 };
 
 export const GoogleIcon = (): JSX.Element => {
-  return <Google />;
+  return <Google width="18" height="18" />;
 };
 
 export const PlusIcon = (): JSX.Element => {
   return <Plus />;
 };
 
-export const RightBracketIcon = (): JSX.Element => {
-  return <RightBracket />;
+export const RightBracketIcon = ({ className = '' }): JSX.Element => {
+  return <RightBracket className={className} />;
 };
 
 export const PaperIcon = (): JSX.Element => {
@@ -340,4 +341,7 @@ export const MicMuteIcon = (): JSX.Element => {
 
 export const CamHideIcon = (): JSX.Element => {
   return <CamHide />;
+};
+export const MessageOutlinecon = (): JSX.Element => {
+  return <MessageOutline />;
 };

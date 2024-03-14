@@ -13,6 +13,7 @@ import {
 } from './StyledVideoCall'; // Update the import path
 import { Interview } from '@/pages/Interview';
 import { useNavigate } from 'react-router-dom';
+import { instance } from '../axiosService/customAxios';
 
 const STATE = {
   IDLE: 'STATE_IDLE',
@@ -31,7 +32,10 @@ export default function VideoCall() {
   const [roomUrl, setRoomUrl] = useState(null);
   const [callObject, setCallObject] = useState(null);
   const [interviewRoundDetails, setInterviewRoundDetails] = useState(null);
+  const [hasRecordingStarted, setHasRecordingStarted] = useState(false);
   const [apiError] = useState(false);
+
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const startHairCheck = useCallback(async (url) => {
     const existingInstance = DailyIframe.getCallInstance();
@@ -46,6 +50,26 @@ export default function VideoCall() {
     await newCallObject.startCamera();
   }, []);
 
+
+  const startTranscriptionBot = async (meetingUrl, interviewRoundId) => {
+    try {
+      const response = await instance.post(
+        `${BACKEND_URL}/new_transcription/start_transcription/`,
+        {
+          meeting_url: meetingUrl,
+          interviewRoundID: interviewRoundId,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to start transcription bot');
+      }
+      console.log('Transcription bot started successfully');
+    } catch (error) {
+      console.error('Error starting transcription bot:', error);
+    }
+  };
+
   const setDetails = async (details: any) => {
     new Promise((res, rej) => {
       setInterviewRoundDetails(details);
@@ -53,6 +77,13 @@ export default function VideoCall() {
       res(true);
     });
   };
+
+  // const { ejectDate } = useRoomExp({
+  //   onCountdown: useCallback(({ hours, minutes, seconds }) => {
+  //     // Update the countdown in the state
+  //     setMeetingExpiration(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+  //   }, []),
+  // });
 
   const joinCall = useCallback(async () => {
     callObject?.join({ url: roomUrl });
@@ -84,6 +115,7 @@ export default function VideoCall() {
 
   const startRecordingCall = useCallback(() => {
     callObject?.startRecording();
+    setHasRecordingStarted(true);
   }, [callObject]);
 
   const stopRecordingCall = useCallback(() => {
@@ -128,18 +160,39 @@ export default function VideoCall() {
     function handleNewMeetingState() {
       switch (callObject?.meetingState?.()) {
         case 'joined-meeting':
+          const interviewRoundIdd = localStorage.getItem('interviewRoundId');
           setAppState(STATE.JOINED);
+          if (roomUrl) {
+            startTranscriptionBot(roomUrl, interviewRoundIdd);
+          }
           break;
         case 'left-meeting':
           const interviewRoundId = localStorage.getItem('interviewRoundId');
+          const checkContentAndNavigate = async () => {
+            try {
+              const response = await instance.get(
+                `${BACKEND_URL}/interview-rounds/check-content/${interviewRoundId}/`
+              );
+              const { hasContent } = response.data;
+              console.log(hasContent);
+              if (hasContent || hasRecordingStarted) {
+                navigate('/interviews/conclusion/', {
+                  state: { id: interviewRoundId, newInterview: true },
+                });
+              } else {
+                navigate('/dashboard');
+              }
+            } catch (error) {
+              console.error('Error checking interview content:', error);
+              navigate('/dashboard');
+            }
+          };
           localStorage.clear();
           callObject?.destroy?.().then(() => {
             setRoomUrl(null);
             setCallObject(null);
             setAppState(STATE.IDLE);
-            navigate('/interviews/conclusion/', {
-              state: { id: interviewRoundId, useTimer: true },
-            });
+            checkContentAndNavigate();
           });
           break;
         case 'error':

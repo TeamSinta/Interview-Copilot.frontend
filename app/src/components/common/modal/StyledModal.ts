@@ -100,7 +100,7 @@ export const IconContainer = styled.div`
 
 export const IconWithText = styled.div`
   color: var(--Black-main, #121212);
-  font-family: Chillax;
+  font-family: Inter;
   font-size: 8.606px;
   font-style: normal;
   font-weight: 500;

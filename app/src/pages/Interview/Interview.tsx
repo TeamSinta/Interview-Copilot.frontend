@@ -1,4 +1,4 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { AppDispatch, RootState } from '@/store';
 import { StyledIconBtnM } from '@/components/common/buttons/button/StyledBtn';
 import {
   BottomArrowIcon,
@@ -227,7 +227,12 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
         [question.id]: rating,
       }));
 
-      updateInterviewQuestionRating(rating, question.id, interviewDetails.id, interviewDetails.template_id);
+      updateInterviewQuestionRating(
+        rating,
+        question.id,
+        interviewDetails.id,
+        interviewDetails.template_id
+      );
     };
 
     useEffect(() => {
@@ -307,7 +312,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
                         margin: '5px',
                         marginBottom: '10px',
                         cursor: 'pointer',
-                        opacity: index === 0 ? '0.5' : '1',
+                        opacity: index === 0 ? '1' : '1',
                       }}
                       onClick={() => {
                         showQuestionDetail(a, index);
@@ -520,7 +525,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
         <Grid lg={12}>
           <Grid container>
             <Grid item lg={10} md={10} sm={10} xs={10}>
-              <span style={{ fontWeight: '600', fontFamily: 'ChillaxSemi' }}>
+              <span style={{ fontWeight: '600', fontFamily: 'InterSemi' }}>
                 {interviewDetails.title}
               </span>
             </Grid>
@@ -549,23 +554,23 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
             }}
           >
             <span style={{ fontWeight: 'lighter', marginLeft: '2px' }}>
-              {stage + ': '}
+              {'Deparment: '}
             </span>
             <span
               style={{
                 fontWeight: '600',
-                fontFamily: 'ChillaxSemi',
+                fontFamily: 'InterSemi',
                 marginLeft: '2px',
               }}
             >
-              {stageName}
+              {interviewDetails.department ?? 'General'}
             </span>{' '}
           </div>
         </Grid>{' '}
         <br></br>
         {sidebarTabs}{' '}
       </StyledTopView>
-      <br></br>
+
       <StyledInnerDiv>
         <StyledTabInfo>
           {activeTab === 1 ? (
@@ -573,7 +578,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
               <p
                 style={{
                   fontWeight: '600',
-                  fontFamily: 'ChillaxSemi',
+                  fontFamily: 'InterSemi',
                   fontSize: activeTab === 1 ? '20px' : '12px',
                 }}
               >
@@ -677,7 +682,9 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
       overlayRef.current.removeChild(node);
     }, []);
 
-    function handleSendFlyingEmoji(e: { detail: { message: any; position: any; }; }) {
+    function handleSendFlyingEmoji(e: {
+      detail: { message: any; position: any };
+    }) {
       const emoji = e.detail.message;
       const position = e.detail.position;
 
