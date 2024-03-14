@@ -110,7 +110,7 @@ const MainScreen: React.FC<MainScreenProps> = ({
     videoUrl,
     emojisData,
     loading,
-  ] = ConclusionData(interviewRoundId);
+  ] = ConclusionData(interviewRoundId, websocketStatus);
 
   const isEmptyOrError = (data) => {
     if (!data) return true;

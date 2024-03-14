@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -18,11 +18,25 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
   const toast = useToast();
   const [showDialog, setShowDialog] = useState(newInterview);
   const [progress, setProgress] = useState(1);
-  const [toastId, setToastId] = useState(null);
+  const toastIdRef = useRef<string | null>(null);
 
   const [reconnectionAttempts, setReconnectionAttempts] = useState(0);
   const maxReconnectionAttempts = 5;
   const dispatch = useDispatch();
+
+  // const simulateProgressUpdates = () => {
+  //   // Mock messages at different intervals
+  //   const messages = [
+  //     { delay: 1000, message: 'Summarization process started' }, // After 1 second
+  //     { delay: 3000, message: 'Processing Answers for: Question 1' }, // After 3 seconds
+  //     { delay: 5000, message: 'Processing Answers for: Question 2' }, // After 5 seconds
+  //     { delay: 7000, message: 'Summarization and QA processing completed' }, // After 7 seconds
+  //   ];
+
+  //   messages.forEach(({ delay, message }) => {
+  //     setTimeout(() => handleUpdate(message), delay);
+  //   });
+  // };
 
   useEffect(() => {
     const savedStatusJson = localStorage.getItem('websocketStatus');
@@ -41,6 +55,7 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
       switch (true) {
         case message === 'Summarization process started':
           newProgress = Math.max(newProgress, 25);
+          dispatch(setStatus('loading'));
           localStorage.setItem(
             'websocketStatus',
             JSON.stringify({ status: 'loading', progress: newProgress })
@@ -60,10 +75,20 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
       }
       if (newProgress === 100) {
         dispatch(setStatus('completed'));
+        if (toastIdRef.current) {
+          toast.dismiss(toastIdRef.current);
+          toastIdRef.current = null;
+        }
       }
       return newProgress;
     });
   };
+
+  // useEffect(() => {
+  //   if (!newInterview) {
+  //     // simulateProgressUpdates();
+  //   }
+  // }, [newInterview]);
 
   useEffect(() => {
     if (!newInterview || reconnectionAttempts >= maxReconnectionAttempts) {
@@ -79,6 +104,7 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
 
     socket.onopen = () => {
       setReconnectionAttempts(0);
+      dispatch(setStatus('loading'));
     };
 
     socket.onerror = socket.onclose = () => {
@@ -99,16 +125,14 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
   }, [interviewRoundId, newInterview, reconnectionAttempts, dispatch]);
 
   useEffect(() => {
-    if (progress >= 100 && toastId !== null) {
+    if (progress === 100) {
       // Close dialog and toast automatically when progress is complete
       setShowDialog(false);
-      toast.dismiss(toastId);
-      setToastId(null);
     }
-  }, [progress, toast, toastId]);
+  }, [progress]);
 
   useEffect(() => {
-    if (newInterview && toastId === null && !showDialog) {
+    if (newInterview && toastIdRef.current === null && !showDialog) {
       const id = toast.toast({
         title: 'Processing started',
         description: (
@@ -119,11 +143,13 @@ const WebSocketComponent = ({ interviewRoundId, newInterview }) => {
             <Progress value={progress} className="w-[360px]" />
           </div>
         ),
-        duration: Infinity,
+        duration: progress === 100 ? 1000 : Infinity,
       });
-      setToastId(id);
+      toastIdRef.current = id;
     }
-  }, [newInterview, progress, toast]);
+  }, [newInterview, progress, showDialog, toast]);
+
+  console.log(progress);
 
   return (
     <>
