@@ -168,7 +168,7 @@ const SideNavBar = (): ReactElement => {
       </StyledSideNavLinksWrap>
       <Spacer />
       <a
-        href="https://discord.gg/u8F6SQ7V"
+        href="https://discord.com/invite/kvbQ8MDpag"
         target="_blank"
         rel="noopener noreferrer"
         className="link"
