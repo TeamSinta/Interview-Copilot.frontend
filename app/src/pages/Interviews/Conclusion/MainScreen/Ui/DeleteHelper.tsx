@@ -1,6 +1,5 @@
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -10,15 +9,39 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Text } from '@radix-ui/themes';
+import { instance } from '@/utils/axiosService/customAxios';
+import { useNavigate } from 'react-router-dom';
 
-const DeleteDialog = () => {
+const DeleteDialog = ({ interviewRoundId }) => {
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    try {
+      // Using Axios for the delete request
+      await instance.delete(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/interview-rounds/delete/${interviewRoundId}/`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            // Include other necessary headers, such as authorization tokens
+          },
+        }
+      );
+
+      navigate('/interviews');
+    } catch (error) {
+      console.error('Failed to delete interview round:', error);
+      // Handle error based on error.response or error.message as needed
+    }
+  };
+
   return (
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant={'link'} className=" decoration-transparent">
-            {' '}
+          <Button variant={'link'} className="decoration-transparent">
             Delete this Interview?
           </Button>
         </AlertDialogTrigger>
@@ -31,8 +54,10 @@ const DeleteDialog = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>{' '}
-            <Button variant={'destructive'}>Delete</Button>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <Button variant={'destructive'} onClick={handleDelete}>
+              Delete
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

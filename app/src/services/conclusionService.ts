@@ -1,7 +1,7 @@
 import { instance } from '@/utils/axiosService/customAxios';
 import { useState, useEffect } from 'react';
 
-const ConclusionData = (interviewRoundId: string) => {
+const ConclusionData = (interviewRoundId: string, websocketStatus: string) => {
   const [summaryInfo, setSummaryInfo] = useState([]);
   const [questionsTranscript, setQuestionsTranscript] = useState([]);
   const [summarizedAnswers, setSummarizedAnswers] = useState([]);
@@ -9,6 +9,8 @@ const ConclusionData = (interviewRoundId: string) => {
   const [videoUrl, setVideoUrl] = useState(null);
   const [emojisData, setEmojisData] = useState([]);
   const [error, setError] = useState(null);
+
+  const shouldRefetch = websocketStatus === 'completed';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +23,7 @@ const ConclusionData = (interviewRoundId: string) => {
       ];
 
       try {
+        setLoading(true);
         const results = await Promise.allSettled(
           urls.map((url) => instance.get(`${import.meta.env.VITE_BACKEND_URL}${url}`))
         );
@@ -48,6 +51,7 @@ const ConclusionData = (interviewRoundId: string) => {
             }
           } else {
             console.error(`Error fetching data from URL index ${index}:`, result.reason);
+            setError(result.reason);
           }
         });
       } catch (error) {
@@ -59,7 +63,7 @@ const ConclusionData = (interviewRoundId: string) => {
     };
 
     fetchData();
-  }, [interviewRoundId]);
+  }, [interviewRoundId, shouldRefetch]);
 
   return [summarizedAnswers, questionsTranscript, summaryInfo, videoUrl, emojisData, loading, error];
 };
