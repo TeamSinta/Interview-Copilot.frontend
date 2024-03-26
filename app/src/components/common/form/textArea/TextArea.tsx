@@ -23,10 +23,11 @@ interface ITextAreaProps {
   onChange: (e: any) => void;
   value: string;
   validate: (value: string) => string | null; // Validation function
+  key?: React.Key; // Add key prop
 }
 
 const TextArea = forwardRef<HTMLInputElement, ITextAreaProps>((props, ref) => {
-  const { value, onChange, placeholder, validate } = props;
+  const { value, onChange, placeholder, validate, key } = props;
   const [inputValue, setInputValue] = useState<string>(value);
   const [error, setError] = useState<string | null>(null);
 
@@ -83,6 +84,7 @@ const TextArea = forwardRef<HTMLInputElement, ITextAreaProps>((props, ref) => {
             }),
             markdownShortcutPlugin(),
           ]}
+          key={key} // Set key prop
         />
       </StyledTextareaDiv>
       {error && <div className="error-message">{error}</div>}

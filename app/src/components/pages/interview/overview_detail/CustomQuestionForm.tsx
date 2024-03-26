@@ -213,6 +213,7 @@ function CustomQuestionForm(
           }
           validate={validateDescription}
           ref={descriptionInputRef}
+          key={addMoreQuestion.toString()}
         />
       </InputLayout>
       <CustomQuestionFilterDiv>
