@@ -1,8 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { EditorContent, EditorRoot, defaultEditorProps } from 'novel';
 import { useDebouncedCallback } from 'use-debounce';
+import { Editor as EditorInstance } from 'novel';
+import { defaultEditorContent } from './lib/content';
 import { defaultExtensions } from './extensions';
 import SlashCommand from './extensions/slash-command';
+import DragAndDrop from './extensions/drag-and-drop';
+import { saveContentToBackend } from '@/features/interviewDetail/interviewDetailAPI';
 import { instance } from '@/utils/axiosService/customAxios';
 import Bold from '@tiptap/extension-bold';
 
@@ -16,15 +20,24 @@ import OrderedList from '@tiptap/extension-ordered-list';
 import Paragraph from '@tiptap/extension-paragraph';
 import Code from '@tiptap/extension-code';
 
-const extensions = [...defaultExtensions, SlashCommand];
+const extensions = [...defaultExtensions, SlashCommand, DragAndDrop];
 
 const TailwindEditor = ({
   propData,
   editorId,
   saveApiEndpoint,
   requestName,
+  showSaveStatus,
+}: {
+  propData: any;
+  editorId: string;
+  saveApiEndpoint: string;
+  requestName: string;
+  showSaveStatus?: boolean;
 }) => {
-  const [initialContent, setInitialContent] = useState(null);
+  const [initialContent, setInitialContent] = useState<null | JSONContent>(
+    null
+  );
   const [saveStatus, setSaveStatus] = useState('Saved');
 
   const transformContent = (data) => {
@@ -82,8 +95,29 @@ const TailwindEditor = ({
   }, 500);
 
   useEffect(() => {
-    if (transformedContent) {
-      setInitialContent(transformedContent);
+    const localStorageKey = `novel-${requestName}-${editorId}`;
+    let content = window.localStorage.getItem(localStorageKey);
+
+    if (content && content.trim() !== '') {
+      try {
+        const parsedContent = JSON.parse(content);
+        setInitialContent(parsedContent);
+      } catch (error) {
+        console.error('Error parsing content from localStorage:', error);
+        // Handle error or set a fallback state
+      }
+    } else if (propData && propData.trim() !== '') {
+      try {
+        const parsedContent = JSON.parse(propData);
+        setInitialContent(parsedContent);
+      } catch (error) {
+        console.error('Error parsing propData:', error);
+        // Handle error or set a fallback state
+      }
+    } else {
+      // Fallback to propData if local storage is empty
+      // Assuming propData is an object. If it's a string, you may need JSON.parse(propData)
+      setInitialContent(propData ? propData : defaultEditorContent);
     }
   }, [transformedContent]);
 
@@ -113,10 +147,12 @@ const TailwindEditor = ({
   if (!initialContent) return null; // Adjust this as needed for your loading state
 
   return (
-    <div className="relative w-full max-w-screen-xl h-full">
-      <div className="absolute right-5 z-10 mb-5 ml-4 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
-        {saveStatus}
-      </div>
+    <div className="relative w-full max-w-screen-xl h-full rounded-xl">
+      {showSaveStatus && (
+        <div className="absolute right-5 z-10 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
+          {saveStatus}
+        </div>
+      )}
       <EditorRoot>
         <EditorContent
           initialContent={initialContent}

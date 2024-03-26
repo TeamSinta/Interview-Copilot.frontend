@@ -8,12 +8,9 @@ import {
 import { Grid } from '@mui/material';
 import { useMemo } from 'react';
 import { CANDIDATE_DETAILS } from '../InterviewConstant';
-import {
-  StyledIcon,
-  StyledInfoDescription,
-  CompetencyStyle,
-} from '../StyledInterview';
+import { StyledIcon } from '../StyledInterview';
 import ImageLinkText from './ImageLinkText';
+import JobDescription from './JobDescription';
 
 interface IInfoTab {
   interviewDetails: any;
@@ -24,18 +21,11 @@ const InfoTab: React.FC<IInfoTab> = ({ interviewDetails }) => {
     return (
       <>
         <Grid container>
-          {' '}
-          <ImageText icon={<EmailIcon />} text={interviewDetails.email} />
-        </Grid>
-        <br></br>
-        <Grid container>
+          <Grid md={12}>
+            <ImageText icon={<EmailIcon />} text={interviewDetails.email} />
+          </Grid>
           <Grid md={6}>
-            {' '}
-            <ImageText
-              icon={<MapIcon />}
-              text={CANDIDATE_DETAILS.LOCATION}
-            />{' '}
-            <br></br>
+            <ImageText icon={<MapIcon />} text={CANDIDATE_DETAILS.LOCATION} />
             <ImageLinkText
               icon={<ResumeIcon />}
               text={'Resume.pdf'}
@@ -44,12 +34,7 @@ const InfoTab: React.FC<IInfoTab> = ({ interviewDetails }) => {
             />
           </Grid>
           <Grid md={6}>
-            {' '}
-            <ImageText
-              icon={<PhoneIcon />}
-              text={CANDIDATE_DETAILS.PHONE}
-            />{' '}
-            <br></br>
+            <ImageText icon={<PhoneIcon />} text={CANDIDATE_DETAILS.PHONE} />
             <ImageLinkText
               icon={<LinkedinIcon />}
               text={'LinkedIn '}
@@ -61,65 +46,41 @@ const InfoTab: React.FC<IInfoTab> = ({ interviewDetails }) => {
       </>
     );
   }, [interviewDetails]);
-  const jobDescription = useMemo(() => {
-    return (
-      <StyledInfoDescription>
-        {CANDIDATE_DETAILS.DESCRIPTION}
-      </StyledInfoDescription>
-    );
-  }, []);
 
   const competencies = useMemo(() => {
     return (
-      <div style={{ fontSize: '12px' }}>
-        <p
-          style={{
-            fontWeight: '600',
-            fontSize: '12px',
-            fontFamily: 'InterSemi',
-          }}
-        >
-          {'Competencies'}
-        </p>
-        <br></br>
-        <div style={{ display: 'flex' }}>
-          {CANDIDATE_DETAILS.COMPETENCIES.map((a) => {
-            return <CompetencyStyle key={a}>{a}</CompetencyStyle>;
-          })}{' '}
-        </div>
+      <div className="flex text-xs flex-wrap gap-3">
+        {CANDIDATE_DETAILS.COMPETENCIES.map((a) => {
+          return (
+            <div
+              className="border border-white border-solid rounded-lg bg-white p-2"
+              key={a}
+            >
+              {a}
+            </div>
+          );
+        })}
       </div>
     );
   }, []);
 
   return (
-    <>
+    <div className="bg-lightBg p-4 my-3 rounded-lg flex flex-col gap-4 h-full">
       {briefInfo}
-      <br></br>
-      {jobDescription} <br></br>
+      <JobDescription CANDIDATE_DETAILS={CANDIDATE_DETAILS} />
       {competencies}
-    </>
+    </div>
   );
 };
 
 const ImageText = (data: any) => {
   const { icon, text } = data;
   return (
-    <div
-      style={{
-        display: 'flex',
-        fontSize: '10px',
-        alignContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <span
-        style={{
-          marginRight: '5px',
-        }}
-      >
+    <div className="flex text-xs content-center items-center pb-3">
+      <span className="mr-1">
         <StyledIcon>{icon}</StyledIcon>
       </span>
-      <span>{text}</span>
+      <span className="">{text}</span>
     </div>
   );
 };

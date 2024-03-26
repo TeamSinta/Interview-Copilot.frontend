@@ -14,9 +14,8 @@ import {
 } from './StyledChatBot';
 import { IconBtnL } from '../../buttons/iconBtn/IconBtn';
 import { BackgroundColor } from '@/features/utils/utilEnum';
-import { PencilIcon, Send } from '../../svgIcons/Icons';
+import { SendMessageIcon } from '../../svgIcons/Icons';
 import { useDispatch } from 'react-redux';
-
 import { addNote } from '@/features/interviews/notesSlice';
 
 const Chat = (props: any) => {
@@ -26,7 +25,7 @@ const Chat = (props: any) => {
   const dispatch = useDispatch(); // Get the dispatch function from Redux
   const [, setShowPrompt] = useState<boolean>(false);
   const [messages, setMessages] = useState<
-    { text: string; editing: boolean }[]
+    { text: string; timestamp: string; editing: boolean }[]
   >([]);
 
   const chatMessagesRef = useRef<HTMLDivElement>(null);
@@ -43,11 +42,13 @@ const Chat = (props: any) => {
   const handleSend = () => {
     const trimmedText = inputText.trim();
     if (trimmedText !== '') {
-      setMessages([...messages, { text: trimmedText, editing: false }]);
+      const timestamp = getCurrentTime();
+      const message = { text: trimmedText, timestamp, editing: false }; // Create a message object including text and timestamp
+      setMessages([...messages, message]); // Add the message to the messages state
+      // setMessages([...messages, { text: trimmedText, editing: false }]);
       setInputText('');
       setLastMessage(trimmedText);
       setShowPrompt(true);
-      const timestamp = getCurrentTime();
       const timeDelta = calculateTimeDelta(timestamp);
       dispatch(addNote({ comment: trimmedText, timestamp, timeDelta }));
       notesEntered(trimmedText, activeQuestionID);
@@ -78,8 +79,7 @@ const Chat = (props: any) => {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    return `${hours}:${minutes}:${seconds}`;
+    return `${hours}:${minutes}`;
   };
 
   const calculateTimeDelta = (timestamp: string): string => {
@@ -105,14 +105,34 @@ const Chat = (props: any) => {
       chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
     }
   }, [messages]);
-
   return (
-    <ChatContainer>
+    <div className="w-full flex flex-col relative bg-white h-2/3 px-4">
+      {messages.length > 0 && (
+        <>
+          <ChatMessages ref={chatMessagesRef}>
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className="text-sm p-1 flex flex-cols justify-end items-center gap-3"
+              >
+                <div className="text-xs text-gray-400">{getCurrentTime()}</div>
+                <div
+                  className="rounded-xl p-2 max-w-xs whitespace-pre-wrap break-words border-gray-300"
+                  style={{ border: '2px solid lightgray' }}
+                >
+                  {message.text}
+                </div>
+              </div>
+            ))}
+          </ChatMessages>
+          <div className="text-end text-xs p-2 text-gray-400">
+            To see all your notes, see the "Notes" tab.
+          </div>
+        </>
+      )}
+
       <ChatInput>
-        <ElWrap w={32}>
-          <PencilIcon />
-        </ElWrap>
-        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+        <div className="flex flex-row w-full">
           <Textarea
             value={inputText}
             onChange={handleInputChange}
@@ -121,26 +141,16 @@ const Chat = (props: any) => {
             rows={1}
           />
         </div>
-        <ElWrap w={40} h={35}>
+        <ElWrap w={50} h={50}>
           <IconBtnL
             disable={false}
             onClick={handleSend} // Use the handleSend function
             className={BackgroundColor.ACCENT_PURPLE}
-            icon={<Send />}
+            icon={<SendMessageIcon />}
           />
         </ElWrap>
       </ChatInput>
-      {messages.length > 0 && (
-        <>
-          <div style={{ textAlign: 'center', padding: '8px', color: 'gray' }}>
-            To see all your notes, see the "Notes" tab.
-          </div>
-          <ChatMessages ref={chatMessagesRef}>
-            <div style={{ whiteSpace: 'pre-wrap' }}>{lastMessage}</div>
-          </ChatMessages>
-        </>
-      )}
-    </ChatContainer>
+    </div>
   );
 };
 

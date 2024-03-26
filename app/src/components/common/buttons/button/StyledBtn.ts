@@ -18,12 +18,9 @@ export const StyledButton = styled.button`
   /* padding: 10px 28px; */
   gap: 10px;
   background: transparent;
-  border: 0;
   position: relative;
-  outline: 1px solid ${(props) => props.theme.colors.black};
-  outline-offset: -1px;
+  outline: 1px solid ${(props) => props.theme.colors.white};
   border-radius: 8px;
-  box-shadow: 0px 2px 0px #121212;
   height: 40px;
   width: 100%;
 
@@ -238,20 +235,14 @@ export const SmallButtonLayout = styled.div<IButtonLayout>`
   }}
 `;
 
-
-
 export const StyledRatingBtnL = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  background-color: white;
-  border: 0;
   position: relative;
-  outline: 1px solid ${(props) => props.theme.colors.black};
   outline-offset: -1px;
   border-radius: 8px;
-  box-shadow: 0px 2px 0px #121212;
   height: 40px;
   width: 100%;
   text-align: center;
@@ -333,14 +324,9 @@ export const StyledRatingBtnS = styled(StyledButtonM)`
   }
 `;
 
-
-
-
 export const StyledIconSVG = styled.div`
-
   svg {
-      width: 28px;
-      height: 28px;
-    }
-
+    width: 28px;
+    height: 28px;
+  }
 `;

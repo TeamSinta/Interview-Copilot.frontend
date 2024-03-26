@@ -8,11 +8,12 @@ export const ChatContainer = styled.div`
 `;
 
 export const ChatMessages = styled.div`
-  background: ${(props) => props.theme.colors.accentPurple};
-  color: #fff;
+  background: ${(props) => props.theme.colors.white};
+  color: #000;
   border-radius: 10px;
-  padding: 8px 12px;
-  margin: 8px 0;
+  padding: 0px 12px;
+  margin: 8px;
+  margin-bottom: 0px;
   max-width: 80%; /* Adjust the max-width as needed */
   align-self: flex-end; /* Right-align the sent messages */
   max-height: 90px; /* Limit the max height of chat messages */
@@ -23,10 +24,10 @@ export const ChatMessages = styled.div`
 
 export const ChatInput = styled.div`
   border-radius: 12px;
-  background: ${(props) => props.theme.colors.white};
+  background: #eceff6;
   border: none;
   outline: none;
-  padding: 16px 10px;
+  padding: 6px;
   font: inherit;
   font-size: 14px;
   display: flex;
@@ -57,7 +58,7 @@ export const Textarea = styled.textarea`
   max-height: 100px; /* Set a maximum height for the input box */
   display: flex;
   width: 100%;
-  background: ${(props) => props.theme.colors.white};
+  background: #eceff6;
   font: inherit;
   font-size: 14px;
   position: relative;

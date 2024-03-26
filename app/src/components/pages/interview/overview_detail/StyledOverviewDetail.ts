@@ -167,7 +167,7 @@ export const InputLabelDiv = styled.div`
   }
 
   ${OptionUl} {
-    background-color: ${(props) => props.theme.colors.lightPurple};
+    background-color: ${(props) => props.theme.colors.white};
   }
 
   ${DropdownEl} {

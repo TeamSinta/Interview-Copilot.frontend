@@ -26,7 +26,9 @@ module.exports = {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        border: 'hsl(var(--foreground))',
+        primaryTextColor: '#3E63DD',
+        lightBg: '#F6F7FA',
+        border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',

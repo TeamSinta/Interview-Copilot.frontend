@@ -56,6 +56,8 @@ import MarkdownFromatConatiner from '@/components/common/markdownFormatContainer
 import InfoTab from './Components/InfoTab';
 import InterviewSideBar from './Components/InterviewSideBar';
 import { IReactClickedState } from './Daily/BottomNavBar/BottomNavBar';
+import HeadingMeeting from './Components/HeadingMeeting';
+import RightArrow from 'src/assets/svg/rightArrowIcon.svg';
 
 // const components = {
 //   h3: H3,
@@ -81,6 +83,7 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
   });
 
   const [startTime, setStartTime] = useState<Date | null>(null);
+  const [showSecondComponent, setShowSecondComponent] = useState(false);
 
   useEffect(() => {
     const now = new Date();
@@ -148,15 +151,9 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
               setActiveTab(1);
             }}
             direction="row"
-            style={{
-              fontSize: '12px',
-              height: '30px',
-              borderRadius: '10px',
-              width: 'fit-content',
-              padding: '17px 19px',
-              lineHeight: '125%',
-            }}
-            className={activeTab === 1 ? 'rightTabs active' : 'rightTabs'}
+            className={`text-xs h-7 rounded-lg px-5 leading-snug ${
+              activeTab === 1 ? 'rightTabs active' : 'rightTabs'
+            }`}
           >
             <span>Info</span>
           </NavButton>{' '}
@@ -165,34 +162,22 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
           <NavButton
             onClick={() => setActiveTab(2)}
             direction="row"
-            style={{
-              fontSize: '12px',
-              height: '30px',
-              borderRadius: '10px',
-              width: 'fit-content',
-              marginLeft: '5px',
-              padding: '17px 19px',
-            }}
-            className={activeTab === 2 ? 'rightTabs active' : 'rightTabs'}
+            className={`text-xs h-7 rounded-lg px-5 leading-snug ${
+              activeTab === 2 ? 'rightTabs active' : 'rightTabs'
+            }`}
           >
-            <span>Questions</span>
+            <span>Notes</span>
           </NavButton>{' '}
         </span>
         <span>
           <NavButton
             onClick={() => setActiveTab(3)}
             direction="row"
-            style={{
-              fontSize: '12px',
-              height: '30px',
-              borderRadius: '10px',
-              width: 'fit-content',
-              marginLeft: '5px',
-              padding: '17px 19px',
-            }}
-            className={activeTab === 3 ? 'rightTabs active' : 'rightTabs'}
+            className={`text-xs h-7 rounded-lg px-5 leading-snug ${
+              activeTab === 3 ? 'rightTabs active' : 'rightTabs'
+            }`}
           >
-            <span>Notes</span>
+            <span>Questions</span>
           </NavButton>
         </span>
       </div>
@@ -246,15 +231,19 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
     }
 
     return (
-      <>
-        <div
-          style={{
-            padding: '2px',
-            flex: '1',
-            flexDirection: 'column',
-            display: 'flex',
-          }}
-        >
+      <div className="h-full flex flex-col gap-2">
+        <div className="p-3 rounded-b-xl bg-white mb-2">
+          <p className="font-semibold text-2xl">
+            {interviewDetails.name}
+            <div className="bg-lightBg text-xs rounded-md p-2 my-2 flex items-center w-fit flex-col content-center">
+              <p className="font-light ml-1 text-gray-500">
+                Department:{' '}
+                <span className="text-gray-800 font-semibold ">
+                  {interviewDetails.department ?? 'Template'}
+                </span>
+              </p>
+            </div>
+          </p>
           {collapseQuestion ? (
             <Stack direction="row" justifyContent="space-between">
               <InterviewStageSlider
@@ -262,31 +251,6 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
                 setActiveData={setActiveData}
                 resetList={resetList}
               />
-              <span
-                style={{
-                  marginLeft: '18px',
-
-                  backgroundColor: 'transparent',
-                }}
-                onClick={() => {
-                  setCollapseQuestion(false);
-                }}
-              >
-                <ElWrap w={50}>
-                  <StyledIconBtnM
-                    style={{ backgroundColor: 'white', stroke: 'white' }}
-                  >
-                    <div
-                      style={{
-                        transform: 'rotate(45deg)',
-                        stroke: '${(props) => props.theme.colors.white',
-                      }}
-                    >
-                      <TwoArrowIcon />
-                    </div>
-                  </StyledIconBtnM>
-                </ElWrap>
-              </span>
             </Stack>
           ) : (
             <InterviewStageSlider
@@ -295,25 +259,13 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
               resetList={resetList}
             />
           )}
-          <StyledInnerWrapper>
-            {' '}
+
+          <div className="flex flex-col h-[36vh] overflow-y-auto min-h-0 relative interview-details bg-lightBg rounded-xl p-2">
             {!collapseQuestion
               ? activeData?.questions?.map((a: any, index: any) => {
                   return (
                     <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        fontSize: '12px',
-                        lineHeight: '15px',
-                        borderRadius: '10px',
-                        padding: '15px 10px',
-                        backgroundColor: 'white',
-                        margin: '5px',
-                        marginBottom: '10px',
-                        cursor: 'pointer',
-                        opacity: index === 0 ? '1' : '1',
-                      }}
+                      className="flex items-center text-xs leading-4 rounded-lg p-4 bg-white m-1 mb-2 cursor-pointer opacity-100"
                       onClick={() => {
                         showQuestionDetail(a, index);
                       }}
@@ -492,120 +444,79 @@ const Interview = ({ leaveCall, interviewDetails }: any) => {
                 </div>
               </div>
             ) : null}
-          </StyledInnerWrapper>
-
-          {collapseQuestion ? (
-            <BottomQuestionButtons>
-              <Stack
-                direction="row"
-                justifyContent="flex-end"
-                spacing={1}
-                alignItems="flex-end"
-              >
-                <InputLabelDiv style={{ width: '100%' }}>
-                  <Chat
-                    notesEntered={notesEntered}
-                    elapsedTime={initTime}
-                    setReactClicked={setReactClicked}
-                    activeQuestionID={activeQuestionInfo.id}
-                    reactClicked={reactClicked}
-                  />
-                </InputLabelDiv>
-              </Stack>
-            </BottomQuestionButtons>
-          ) : null}
+          </div>
         </div>
-      </>
+        {collapseQuestion ? (
+          <div className="bg-white py-2 rounded-xl">
+            <Stack
+              direction="row"
+              justifyContent="flex-end"
+              spacing={1}
+              alignItems="flex-end"
+              className="bg-white py-2"
+            >
+              <InputLabelDiv style={{ width: '100%' }}>
+                <Chat
+                  notesEntered={notesEntered}
+                  elapsedTime={initTime}
+                  setReactClicked={setReactClicked}
+                  activeQuestionID={activeQuestionInfo.id}
+                  reactClicked={reactClicked}
+                />
+              </InputLabelDiv>
+            </Stack>
+          </div>
+        ) : null}
+      </div>
     );
   };
 
   const interviewSideBarData = (
-    <>
-      <StyledTopView>
-        <Grid lg={12}>
-          <Grid container>
-            <Grid item lg={10} md={10} sm={10} xs={10}>
-              <span style={{ fontWeight: '600', fontFamily: 'InterSemi' }}>
-                {interviewDetails.title}
-              </span>
-            </Grid>
-            <Grid lg={2} md={2} sm={2} xs={2}>
-              <span
-                onClick={collapseInterviewSideBar}
-                style={{ float: 'right' }}
-              >
-                <BottomArrowIcon />
-              </span>
-            </Grid>
-          </Grid>
-        </Grid>
-        <br></br>
-        <Grid lg={11}>
-          <div
-            style={{
-              backgroundColor: '#F6F6FB',
-              padding: '10px',
-              borderRadius: '10px',
-              display: 'flex',
-              fontSize: '9px',
-              alignItems: 'center',
-              alignContent: 'center',
-              width: 'fit-content',
-            }}
-          >
-            <span style={{ fontWeight: 'lighter', marginLeft: '2px' }}>
-              {'Deparment: '}
-            </span>
-            <span
-              style={{
-                fontWeight: '600',
-                fontFamily: 'InterSemi',
-                marginLeft: '2px',
-              }}
-            >
-              {interviewDetails.department ?? 'General'}
-            </span>{' '}
-          </div>
-        </Grid>{' '}
-        <br></br>
+    <div className={`rounded-xl ${activeTab !== 3 ? 'bg-white' : ''}`}>
+      <div className="bg-white rounded-t-xl p-2 overflow-hidden flex justify-center items-center">
         {sidebarTabs}{' '}
-      </StyledTopView>
-
-      <StyledInnerDiv>
-        <StyledTabInfo>
-          {activeTab === 1 ? (
-            <>
-              <p
-                style={{
-                  fontWeight: '600',
-                  fontFamily: 'InterSemi',
-                  fontSize: activeTab === 1 ? '20px' : '12px',
-                }}
+      </div>
+      <div
+        className={`flex flex-col flex-grow overflow-x-hidden rounded-b-xl ${
+          activeTab !== 3 ? 'bg-white p-3 h-[75vh]' : ''
+        }`}
+      >
+        {activeTab === 1 ? (
+          <>
+            {showSecondComponent ? (
+              <>
+                <p className="font-semibold text-2xl">
+                  {interviewDetails.name}
+                  <div className="bg-lightBg text-xs rounded-md p-2 my-2 flex items-center w-fit flex-col content-center">
+                    <p className="font-light ml-1 text-gray-500">
+                      Department:{' '}
+                      <span className="text-gray-800 font-semibold ">
+                        {interviewDetails.department ?? 'Template'}
+                      </span>
+                    </p>
+                  </div>
+                </p>
+                <InfoTab interviewDetails={interviewDetails} />
+              </>
+            ) : (
+              <HeadingMeeting />
+            )}
+            <div className="flex justify-end items-end mb-10">
+              <button
+                className="text-primaryTextColor border border-primaryTextColor rounded-md py-2 px-4 flex right-0 justify-end w-fit items-center"
+                onClick={() => setShowSecondComponent(!showSecondComponent)}
               >
-                {interviewDetails.name}
-              </p>{' '}
-              <br></br>
-            </>
-          ) : null}
-
-          {activeTab === 1 ? (
-            <InfoTab interviewDetails={interviewDetails} />
-          ) : null}
-          {activeTab === 2 ? (
-            <InterviewQuestionTab data={templateQuestionsAndTopics?.data} />
-          ) : null}
-          {activeTab === 3 ? (
-            <Notes
-              notesEntered={notesEntered}
-              elapsedTime={initTime}
-              setReactClicked={setReactClicked}
-              reactClicked={reactClicked}
-            />
-          ) : null}
-        </StyledTabInfo>
-        <br></br>
-      </StyledInnerDiv>
-    </>
+                Templates <img src={RightArrow} alt="arrow" className="pl-2" />
+              </button>
+            </div>
+          </>
+        ) : null}
+        {activeTab === 2 ? <Notes notesInfo={interviewDetails.notes} /> : null}
+        {activeTab === 3 ? (
+          <InterviewQuestionTab data={templateQuestionsAndTopics?.data} />
+        ) : null}
+      </div>
+    </div>
   );
 
   const getEmojiClickTime = () => {

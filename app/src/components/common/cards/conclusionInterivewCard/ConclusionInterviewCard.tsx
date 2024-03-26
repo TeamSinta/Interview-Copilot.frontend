@@ -9,7 +9,14 @@ import { H2Bold, BodySMedium } from '../../typeScale/StyledTypeScale';
 //   CardSubTitle,
 //   CardSubTitleContent,
 // } from '../card/StyledCard';
-import { CardDescription, CardFooter, CardHeader, CardTitle , Card, CardContent} from '@/components/ui/card';
+import {
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  Card,
+  CardContent,
+} from '@/components/ui/card';
 interface IConclusionInterviewCardProps {
   name: string;
   title: string;
@@ -29,11 +36,10 @@ const formatDateDifference = (creationDate: string | number) => {
 
 const ConclusionInterviewCard = (props: IConclusionInterviewCardProps) => {
   const [hover, setHover] = useState(false);
-  const { icon, name, title, disable, date, video_uri } = props;
+  const { icon, name, date } = props;
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const formattedDate = formatDateDifference(date);
-
 
   const toggleVideo = () => {
     setIsVideoPlaying(!isVideoPlaying);

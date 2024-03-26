@@ -26,7 +26,6 @@ export const LogoImage = styled.img`
 
 export const NavButton = styled(Stack)`
   height: 38px;
-  width: 218px;
   color: ${(props) => props.theme.colors.black};
   gap: 8px;
   border-radius: 6px;
@@ -40,7 +39,6 @@ export const NavButton = styled(Stack)`
   }
 
   &:hover {
-    background: #dcdfe5;
     cursor: pointer;
     transition: 0.2s ease-in-out;
     transform: none;
@@ -51,7 +49,7 @@ export const NavButton = styled(Stack)`
   }
 
   &.active {
-    background: #dcdfe5;
+    border: 1px solid #3e63dd;
     /* border: 1.2px solid ${(props) => props.theme.colors.black}; */
     color: black;
   }
