@@ -74,7 +74,7 @@ const TabButton: React.FC<TabButtonProps> = ({
   <Button
     onClick={onClick}
     size="2"
-    className=" text-black  bg-black text-sm"
+    className=" text-black text-sm"
     variant={isActive ? 'outline' : ''}
   >
     <span>{children}</span>

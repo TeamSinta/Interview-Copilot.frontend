@@ -7,7 +7,7 @@ import {
   useScreenShare,
   useVideoTrack,
 } from '@daily-co/daily-react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import {
   CamHideIcon,
@@ -43,6 +43,7 @@ import {
 } from './StyledBottomNavBar';
 import './index.css';
 import { CustomSwitch } from '@/components/common/form/input/StyledInput';
+import { useNavigate } from 'react-router-dom';
 
 export interface IReactClickedState {
   clicked: number;
@@ -105,6 +106,7 @@ function BottomNavBar(props: IBottomNavBar) {
   const mutedVideo = localVideo.isOff;
   const mutedAudio = localAudio.isOff;
   const { width } = useWindowSize();
+  const navigate = useNavigate();
 
   const getMeetingURL = async (recordingId: string) => {
     const response = await RoomService.finishMeeting(recordingId);
@@ -192,6 +194,8 @@ function BottomNavBar(props: IBottomNavBar) {
     if (recordingId) {
       getMeetingURL(recordingId);
     }
+    // Navigate to the call-end-screen
+    navigate('/end-call-screen');
   };
 
   return (

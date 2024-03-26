@@ -29,7 +29,7 @@ const Routers = () => {
         <Route path="/sign-up" element={<SignUpScreen />} />
       </Route>
       <Route path="/video-call" element={<CheckType />} />
-      <Route path="end-call-screen" element={<EndCallScreen />} />
+      <Route path="/end-call-screen" element={<EndCallScreen />} />
 
       <Route path="" element={<ProtectedRoutes />}>
         <Route path="/" element={<Navigate to="/dashboard" />} />
@@ -51,7 +51,6 @@ const Routers = () => {
         />
         <Route path="/interviews/Conclusion" element={<Conclusion />} />
         <Route path="/interviews/:id" element={<Conclusion />} />
-        <Route path="/video-call" element={<VideoCallComponent />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
